@@ -1,0 +1,6 @@
+source_role	unified_role
+client	Client
+driver	Driver
+Scaffold	Driver
+NULL	NULL
+# Add other source_role values after running parsers.
