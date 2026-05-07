@@ -208,3 +208,35 @@ __marimo__/
 
 .idea
 CLAUDE.md
+
+# =============================================================
+# MLOsMetaDB — project-specific
+# =============================================================
+
+# --- Frontend ---
+# npm dependencies — restore with: npm install
+frontend/node_modules/
+# Vite internal cache
+frontend/.vite/
+# VS Code workspace settings
+frontend/.vscode/
+# Build output served by FastAPI — regenerate with: cd frontend && npm run build
+api/static/
+
+# --- Database: heavy and generated files ---
+# Main SQLite database — regenerate with: python scripts/build_db.py
+database/mlosmetadb.db
+# Any other SQLite databases at the database/ root level
+database/*.db
+# API fetch caches — regenerate with the fetch_*.py scripts
+database/cache/
+# External crossref / ortholog bulk downloads (~14 GB, download separately)
+database/crossref/
+# Raw source-database downloads — can be re-downloaded or obtained from databases_input_data/
+database/raw/
+# Intermediate parser outputs — regenerate with: python parsers/parse_*.py
+database/interim/*.tsv
+
+# --- Local dev config ---
+# MCP server local configuration (local paths, not for repo)
+.mcp.json

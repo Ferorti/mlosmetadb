@@ -1,4 +1,5 @@
 source_role	unified_role
+Client	Client
 client	Client
 driver	Driver
 Scaffold	Driver

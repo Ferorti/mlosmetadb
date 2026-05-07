@@ -1,0 +1,243 @@
+from __future__ import annotations
+
+from typing import Any
+
+from pydantic import BaseModel, field_validator
+
+
+# ── shared ──────────────────────────────────────────────────────────────────
+
+class ErrorResponse(BaseModel):
+    error: str
+    message: str
+
+
+# ── /proteins (list) ─────────────────────────────────────────────────────────
+
+class ProteinSummary(BaseModel):
+    uniprot_id: str
+    gene_name: str | None = None
+    protein_name: str | None = None
+    organism: str | None = None
+    sequence_length: int | None = None
+    disorder_mobidb_lite_dc: float | None = None
+    disorder_alphafold_dc: float | None = None
+    idr_regions: dict | None = None
+    lcr_regions: dict | None = None
+    domains: dict | None = None
+    mlo_count: int = 0
+    mlos: list[str] = []
+
+
+class ProteinsResponse(BaseModel):
+    total: int
+    page: int
+    per_page: int
+    filters_applied: dict[str, Any]
+    proteins: list[ProteinSummary]
+
+
+# ── /protein/{id} ────────────────────────────────────────────────────────────
+
+class MloAnnotation(BaseModel):
+    unified_mlo: str
+    category: str | None
+    source_db: str
+    source_mlo: str | None
+    unified_role: str | None
+    evidence_pmids: list[str]   # parsed from semicolon-separated evidence field
+
+
+class IdrRegion(BaseModel):
+    start: int
+    end: int
+    score: float | None
+    source: str
+
+
+class DomainRegion(BaseModel):
+    start: int
+    end: int
+    label: str | None
+    accession: str | None
+    database: str | None    # source field value (pfam / smart / etc.)
+
+
+class LcdRegion(BaseModel):
+    start: int
+    end: int
+    label: str | None
+    source: str
+
+
+class MorfRegion(BaseModel):
+    start: int
+    end: int
+    score: float | None
+    source: str
+
+
+class PlddtRegion(BaseModel):
+    start: int
+    end: int
+    mean_score: float | None
+    category: str | None    # very_low / low / confident / very_high
+
+
+class SequenceFeatures(BaseModel):
+    idrs: list[IdrRegion]
+    domains: list[DomainRegion]
+    lcds: list[LcdRegion]
+    morfs: list[MorfRegion]
+    plddt_regions: list[PlddtRegion]
+
+
+class PpiInteractionItem(BaseModel):
+    partner_uniprot_id: str
+    partner_gene: str | None
+    in_mlosmetadb: bool
+    evidence_types: list[str]
+    pubmed_id: str | None
+    source: str
+
+
+class PpiInteractions(BaseModel):
+    page: int
+    per_page: int
+    total: int
+    items: list[PpiInteractionItem]
+
+
+class PpiSummary(BaseModel):
+    total_partners: int
+    partners_in_mlosmetadb: int
+    interactions: PpiInteractions | None
+
+
+class ProteinDetail(BaseModel):
+    uniprot_id: str
+    gene_name: str | None
+    protein_name: str | None
+    organism: str | None
+    taxon_id: int | None
+    sequence_length: int | None
+    disorder_mobidb_lite_dc: float | None
+    disorder_alphafold_dc: float | None
+    mlo_annotations: list[MloAnnotation]
+    sequence_features: SequenceFeatures
+    ppi: PpiSummary
+
+
+# ── /mlo/{id} ────────────────────────────────────────────────────────────────
+
+class MloDefinition(BaseModel):
+    source_db: str
+    source_name: str | None
+    definition: str | None
+
+
+class MloStats(BaseModel):
+    total_proteins: int
+    by_source: dict[str, int]
+    by_role: dict[str, int]
+    organisms: list[str]
+
+
+class MloProteinItem(BaseModel):
+    uniprot_id: str
+    gene_name: str | None
+    organism: str | None
+    unified_role: str | None
+    sources: list[str]
+    disorder_mobidb_lite_dc: float | None
+    disorder_alphafold_dc: float | None
+    idr_regions: dict | None
+    lcr_regions: dict | None
+    domains: dict | None
+
+
+class MloProteins(BaseModel):
+    page: int
+    per_page: int
+    total: int
+    items: list[MloProteinItem]
+
+
+class MloDetail(BaseModel):
+    unified_mlo: str
+    category: str | None
+    definitions: list[MloDefinition]
+    stats: MloStats
+    proteins: MloProteins
+
+
+# ── /mlos ────────────────────────────────────────────────────────────────────
+
+class MloListItem(BaseModel):
+    unified_mlo: str
+    category: str | None
+    protein_count: int
+
+
+class MlosResponse(BaseModel):
+    total: int
+    mlos: list[MloListItem]
+
+
+# ── /search ──────────────────────────────────────────────────────────────────
+
+class SearchProteinHit(BaseModel):
+    uniprot_id: str
+    gene_name: str | None
+    protein_name: str | None
+    organism: str | None
+    match_field: str
+
+
+class SearchMloHit(BaseModel):
+    unified_mlo: str
+    category: str | None
+    match_field: str
+
+
+class SearchResponse(BaseModel):
+    query: str
+    mode: str
+    total_hits: int
+    proteins: list[SearchProteinHit]
+    mlos: list[SearchMloHit]
+
+
+# ── /stats ───────────────────────────────────────────────────────────────────
+
+class ProteinStats(BaseModel):
+    total: int
+    by_organism: dict[str, int]
+    top_organisms: int
+
+
+class MloAnnotationStats(BaseModel):
+    total: int
+    unique_mlos: int
+    by_source: dict[str, int]
+    by_role: dict[str, int]
+
+
+class FeatureStats(BaseModel):
+    total: int
+    by_type: dict[str, int]
+    proteins_with_features: int
+
+
+class PpiStats(BaseModel):
+    total_interactions: int
+    proteins_with_ppi: int
+
+
+class StatsResponse(BaseModel):
+    database_version: str
+    last_updated: str
+    proteins: ProteinStats
+    mlo_annotations: MloAnnotationStats
+    sequence_features: FeatureStats
+    ppi: PpiStats

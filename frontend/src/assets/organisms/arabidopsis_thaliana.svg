@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Main stem -->
+  <rect x="47" y="30" width="6" height="58" rx="3" fill="#000"/>
+  <!-- Rosette leaves -->
+  <ellipse cx="35" cy="72" rx="14" ry="7" transform="rotate(-20 35 72)" fill="#000"/>
+  <ellipse cx="65" cy="72" rx="14" ry="7" transform="rotate(20 65 72)" fill="#000"/>
+  <ellipse cx="30" cy="60" rx="13" ry="6" transform="rotate(-40 30 60)" fill="#000"/>
+  <ellipse cx="70" cy="60" rx="13" ry="6" transform="rotate(40 70 60)" fill="#000"/>
+  <!-- Cauline leaves -->
+  <ellipse cx="38" cy="50" rx="11" ry="5" transform="rotate(-30 38 50)" fill="#000"/>
+  <ellipse cx="62" cy="45" rx="11" ry="5" transform="rotate(30 62 45)" fill="#000"/>
+  <!-- Flowers (siliques) -->
+  <circle cx="42" cy="25" r="4" fill="#000"/>
+  <circle cx="50" cy="18" r="4" fill="#000"/>
+  <circle cx="58" cy="25" r="4" fill="#000"/>
+  <circle cx="36" cy="32" r="3" fill="#000"/>
+  <circle cx="64" cy="32" r="3" fill="#000"/>
+</svg>
