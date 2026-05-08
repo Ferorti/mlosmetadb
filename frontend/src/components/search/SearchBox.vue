@@ -55,16 +55,25 @@ watch(searchQuery, val => {
 async function fetchSuggestions(q) {
   const lower = q.toLowerCase()
 
-  dropdownMlos.value = PLACEHOLDER_MLOS.filter(mlo =>
+  const localMlos = PLACEHOLDER_MLOS.filter(mlo =>
     formatMlo(mlo.unified_mlo).toLowerCase().includes(lower) ||
     mlo.unified_mlo.toLowerCase().includes(lower)
   )
 
   try {
     const res = await searchBasic(q, 'fuzzy')
-    dropdownProteins.value = (res.data.results ?? []).slice(0, 5)
+    dropdownProteins.value = (res.data.proteins ?? []).slice(0, 5)
+
+    // Merge API MLO hits with local placeholder data (API may have entries not in PLACEHOLDER_MLOS)
+    const apiMlos = res.data.mlos ?? []
+    const localKeys = new Set(localMlos.map(m => m.unified_mlo))
+    const extraMlos = apiMlos
+      .filter(m => !localKeys.has(m.unified_mlo))
+      .map(m => ({ unified_mlo: m.unified_mlo, category: m.category, protein_count: null, driver_count: null }))
+    dropdownMlos.value = [...localMlos, ...extraMlos]
   } catch {
     dropdownProteins.value = []
+    dropdownMlos.value = localMlos
   }
 
   showDropdown.value = dropdownProteins.value.length > 0 || dropdownMlos.value.length > 0
@@ -197,7 +206,7 @@ function handleSearch() {
     >
       <!-- Proteins group -->
       <template v-if="dropdownProteins.length">
-        <div class="px-3 pt-2 pb-1 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+        <div class="px-3 pt-2 pb-1 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
           Proteins
         </div>
         <div
@@ -212,8 +221,8 @@ function handleSearch() {
           <span class="text-sm font-medium text-[#185FA5] truncate">
             {{ protein.protein_name || protein.gene_name || protein.uniprot_id }}
           </span>
-          <span class="font-mono text-[11px] text-gray-400 flex-shrink-0">{{ protein.uniprot_id }}</span>
-          <span class="text-[11px] text-gray-400 italic truncate flex-shrink-0">{{ protein.organism }}</span>
+          <span class="font-mono text-[11px] text-gray-500 flex-shrink-0">{{ protein.uniprot_id }}</span>
+          <span class="text-[11px] text-gray-500 italic truncate flex-shrink-0">{{ protein.organism }}</span>
         </div>
       </template>
 
@@ -237,7 +246,7 @@ function handleSearch() {
           @mousedown.prevent="selectMlo(mlo)"
         >
           <span class="text-sm text-gray-700">{{ formatMlo(mlo.unified_mlo) }}</span>
-          <span class="text-[11px] text-gray-400">{{ mlo.protein_count.toLocaleString() }} proteins</span>
+          <span v-if="mlo.protein_count != null" class="text-[11px] text-gray-500">{{ mlo.protein_count.toLocaleString() }} proteins</span>
         </div>
       </template>
     </div>

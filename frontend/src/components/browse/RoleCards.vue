@@ -64,7 +64,7 @@ function navigate(role) {
           {{ formatCount(card.count) }}
         </div>
         <div class="text-sm font-semibold text-gray-700 mt-1">{{ card.label }}</div>
-        <div class="text-xs text-gray-400 mt-2 leading-relaxed">{{ card.description }}</div>
+        <div class="text-xs text-gray-600 mt-2 leading-relaxed">{{ card.description }}</div>
       </button>
     </template>
 

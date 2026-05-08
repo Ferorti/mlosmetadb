@@ -158,7 +158,7 @@ function applyPfam() {
           @click="open.role = !open.role"
         >
           LLPS role
-          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform" :class="open.role ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.role ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
         </button>
@@ -180,7 +180,7 @@ function applyPfam() {
                 @click="applyFilter('role', opt.v)"
               >
                 <span>{{ opt.l }}</span>
-                <span v-if="facets?.by_role?.[opt.v] != null" class="text-xs text-gray-400">
+                <span v-if="facets?.by_role?.[opt.v] != null" class="text-xs text-gray-500">
                   ({{ facets.by_role[opt.v].toLocaleString() }})
                 </span>
               </div>
@@ -196,7 +196,7 @@ function applyPfam() {
           @click="open.organelle = !open.organelle"
         >
           Organelle
-          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform" :class="open.organelle ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.organelle ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
         </button>
@@ -225,7 +225,7 @@ function applyPfam() {
                   @click="applyFilter('mlo', mlo.value)"
                 >
                   <span>{{ mlo.label }}</span>
-                  <span v-if="mlo.count != null" class="text-xs text-gray-400">({{ mlo.count.toLocaleString() }})</span>
+                  <span v-if="mlo.count != null" class="text-xs text-gray-500">({{ mlo.count.toLocaleString() }})</span>
                 </div>
               </div>
               <button
@@ -254,7 +254,7 @@ function applyPfam() {
           @click="open.organism = !open.organism"
         >
           Organism
-          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform" :class="open.organism ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.organism ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
         </button>
@@ -285,9 +285,9 @@ function applyPfam() {
                   @click="applyFilter('organism', result.organism)"
                 >
                   <span>{{ result.organism }}</span>
-                  <span class="text-xs text-gray-400">{{ formatCount(result.protein_count) }}</span>
+                  <span class="text-xs text-gray-500">{{ formatCount(result.protein_count) }}</span>
                 </div>
-                <div v-if="orgSearchResults.length === 0" class="text-[11px] text-gray-400 py-1">
+                <div v-if="orgSearchResults.length === 0" class="text-[11px] text-gray-500 py-1">
                   No organisms found.
                 </div>
               </div>
@@ -314,7 +314,7 @@ function applyPfam() {
           @click="open.features = !open.features"
         >
           Molecular features
-          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform" :class="open.features ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.features ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
         </button>
@@ -364,7 +364,7 @@ function applyPfam() {
           <div class="mt-2 opacity-50">
             <label class="text-[10px] text-gray-500 font-medium block mb-1">
               Disorder content (%)
-              <span class="text-gray-400 font-normal ml-1" title="Coming soon — requires API update">ⓘ Coming soon</span>
+              <span class="text-gray-500 font-normal ml-1" title="Coming soon — requires API update">ⓘ Coming soon</span>
             </label>
             <input type="range" min="0" max="100" disabled class="w-full cursor-not-allowed" />
           </div>

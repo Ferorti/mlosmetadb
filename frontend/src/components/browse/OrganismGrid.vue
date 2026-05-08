@@ -39,7 +39,7 @@ defineProps({
           style="filter: invert(20%) sepia(80%) saturate(600%) hue-rotate(195deg) brightness(80%);"
         />
         <span class="text-xs italic text-gray-600 leading-tight mt-1">{{ org.name }}</span>
-        <span class="text-[10px] text-gray-400">{{ formatCount(org.protein_count) }} proteins</span>
+        <span class="text-[10px] text-gray-500">{{ formatCount(org.protein_count) }} proteins</span>
         <span class="text-[10px] text-[#185FA5]">{{ formatCount(org.driver_count) }} drivers</span>
       </button>
     </div>

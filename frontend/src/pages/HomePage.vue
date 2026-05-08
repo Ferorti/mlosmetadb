@@ -61,7 +61,7 @@ function searchExample(term) {
           />
         </div>
 
-        <div class="mt-2 text-xs text-gray-400">
+        <div class="mt-2 text-xs text-gray-500">
           Examples:
           <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('FUS')">FUS</button>·
           <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('P35637')">P35637</button>·

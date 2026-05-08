@@ -144,6 +144,12 @@ function goToProtein(id) {
   router.push(`/protein/${id}`)
 }
 
+function titleColor(protein) {
+  if (protein.has_driver) return 'text-[#185FA5]'
+  if (protein.has_client) return 'text-[#3B6D11]'
+  return 'text-[#4B5563]'
+}
+
 // ---- TanStack Table ----
 const col = createColumnHelper()
 
@@ -199,7 +205,7 @@ const table = useVueTable({
           </template>
           <template v-else-if="total > 0">Browsing proteins</template>
         </span>
-        <span v-if="total > 0" class="text-xs text-gray-400 ml-3">
+        <span v-if="total > 0" class="text-xs text-gray-500 ml-3">
           {{ rangeStart }}–{{ rangeEnd }} of {{ total.toLocaleString() }} proteins
         </span>
       </div>
@@ -281,7 +287,7 @@ const table = useVueTable({
         <div class="flex flex-col items-center justify-center py-24 text-center">
           <div class="text-4xl mb-4">⚠️</div>
           <p class="text-sm text-red-600 font-medium">Search error</p>
-          <p class="text-xs text-gray-400 mt-1 max-w-xs">{{ error }}</p>
+          <p class="text-xs text-gray-500 mt-1 max-w-xs">{{ error }}</p>
         </div>
       </template>
 
@@ -292,7 +298,7 @@ const table = useVueTable({
           <p class="text-sm text-gray-500 max-w-xs leading-relaxed">
             Search for proteins by gene name, UniProt accession, or organelle.
           </p>
-          <p class="text-xs text-gray-400 mt-1 max-w-xs">
+          <p class="text-xs text-gray-500 mt-1 max-w-xs">
             Use the filters on the left to browse by role, MLO, or organism.
           </p>
         </div>
@@ -301,8 +307,8 @@ const table = useVueTable({
       <!-- No results: filters applied but nothing found -->
       <template v-else-if="results !== null && results.length === 0 && !loading">
         <div class="flex flex-col items-center justify-center py-16 text-center">
-          <p class="text-sm text-gray-400">No proteins found matching your search.</p>
-          <p class="mt-1 text-xs text-gray-300">Try different search terms or remove some filters.</p>
+          <p class="text-sm text-gray-600">No proteins found matching your search.</p>
+          <p class="mt-1 text-xs text-gray-500">Try different search terms or remove some filters.</p>
         </div>
       </template>
 
@@ -310,8 +316,8 @@ const table = useVueTable({
       <template v-else-if="viewMode === 'cards'">
 
         <!-- Track legend — shown once above the results list -->
-        <div class="flex items-center gap-4 text-[10px] text-gray-400 mb-3 mt-1">
-          <span class="font-medium text-gray-500">Track:</span>
+        <div class="flex items-center gap-4 text-[10px] text-gray-500 mb-3 mt-1">
+          <span class="font-medium">Track:</span>
           <span class="flex items-center gap-1.5">
             <span class="inline-block w-3 h-3 rounded-sm bg-[#e9bdbd]"></span> IDR
           </span>
@@ -325,14 +331,14 @@ const table = useVueTable({
           :key="protein.uniprot_id"
           class="py-4 border-b border-gray-200 hover:bg-slate-50 transition-colors last:border-b-0"
         >
-          <!-- Line 1: protein name + UniProt accession + role badges -->
+          <!-- Line 1: gene name (or uniprot_id) + UniProt accession + role badges -->
           <div class="flex items-start justify-between gap-4">
             <div class="flex items-baseline gap-2 flex-1 min-w-0">
               <span
-                class="text-[18px] font-semibold text-[#185FA5] hover:underline cursor-pointer leading-snug"
+                :class="['text-[18px] font-semibold hover:underline cursor-pointer leading-snug', titleColor(protein)]"
                 @click.stop="goToProtein(protein.uniprot_id)"
               >
-                {{ protein.protein_name || protein.gene_name || protein.uniprot_id }}
+                {{ protein.gene_name || protein.uniprot_id }}
               </span>
               <span class="font-mono text-[12px] text-gray-500 flex-shrink-0">
                 {{ protein.uniprot_id }}
@@ -347,17 +353,13 @@ const table = useVueTable({
           <!-- Lines 2–5: indented body -->
           <div class="pl-4">
 
-          <!-- Line 2: gene name · organism -->
+          <!-- Line 2: organism · reviewed star -->
           <div class="flex items-center gap-2 mt-0.5">
-            <span v-if="protein.gene_name" class="text-[13px] font-medium text-gray-700">
-              {{ protein.gene_name }}
-            </span>
-            <span v-if="protein.gene_name" class="text-gray-300 text-xs">·</span>
             <span class="text-[13px] italic text-gray-600">{{ protein.organism }}</span>
             <span
-              v-if="protein.reviewed === true"
+              v-if="protein.reviewed === 1"
               title="Reviewed (Swiss-Prot)"
-              class="text-amber-400 text-xs ml-1"
+              class="text-amber-400 text-xs"
             >★</span>
           </div>
 
@@ -374,7 +376,7 @@ const table = useVueTable({
                   class="hover:text-[#185FA5] cursor-pointer transition-colors"
                   @click.stop="applyFilter('mlo', mlo)"
                 >{{ formatMlo(mlo) }}</span>
-                <span v-if="i < visibleMlos(protein).length - 1" class="text-gray-300 mx-1">·</span>
+                <span v-if="i < visibleMlos(protein).length - 1" class="text-gray-400 mx-1">·</span>
               </template>
               <button
                 v-if="protein.mlos.length > 5 && !expandedRows.has(protein.uniprot_id)"
@@ -444,7 +446,7 @@ const table = useVueTable({
                   />
                   <span v-if="header.column.getIsSorted() === 'asc'" class="ml-1">↑</span>
                   <span v-else-if="header.column.getIsSorted() === 'desc'" class="ml-1">↓</span>
-                  <span v-else-if="header.column.getCanSort()" class="ml-1 text-gray-300">↕</span>
+                  <span v-else-if="header.column.getCanSort()" class="ml-1 text-gray-400">↕</span>
                 </th>
               </tr>
             </thead>
@@ -478,7 +480,7 @@ const table = useVueTable({
       v-if="results?.length && total > perPage"
       class="border-t border-gray-200 px-6 py-3 flex items-center justify-between flex-shrink-0"
     >
-      <span class="text-xs text-gray-400">
+      <span class="text-xs text-gray-500">
         Showing {{ rangeStart }}–{{ rangeEnd }} of {{ total.toLocaleString() }} proteins
       </span>
 

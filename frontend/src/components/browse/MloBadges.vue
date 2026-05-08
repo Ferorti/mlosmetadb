@@ -65,7 +65,7 @@ function browseMlo(unified_mlo) {
           <div>
             <div class="flex items-center gap-1 mb-1">
               <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="categoryColor(mlo.category)"></span>
-              <span class="text-[9px] uppercase tracking-wide text-gray-400 font-medium">
+              <span class="text-[9px] uppercase tracking-wide text-gray-500 font-medium">
                 {{ compartmentLabel(mlo.category) }}
               </span>
             </div>
@@ -74,7 +74,7 @@ function browseMlo(unified_mlo) {
             </span>
           </div>
           <div class="flex items-center gap-2 mt-2">
-            <span class="text-[10px] text-gray-400">
+            <span class="text-[10px] text-gray-500">
               {{ formatCount(mlo.protein_count) }} proteins
             </span>
             <span v-if="mlo.driver_count != null" class="text-[10px] text-[#185FA5]">
