@@ -1,6 +1,11 @@
-import statsData from '../data/stats.json'
+import client from './client'
+import fallbackStats from '../data/stats.json'
 
-// Replace import + return with client.get('/stats') when the API is ready.
 export async function getStats() {
-  return { data: statsData }
+  try {
+    return await client.get('/stats')
+  } catch {
+    console.warn('[stats] API unavailable, using static fallback')
+    return { data: fallbackStats }
+  }
 }

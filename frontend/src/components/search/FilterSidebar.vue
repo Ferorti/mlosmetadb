@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { formatMlo } from '@/utils/format'
+import { formatMlo, formatCount, formatOrganism } from '@/utils/format'
 import { PLACEHOLDER_MLOS } from '@/data/mlos.js'
 import statsData from '@/data/stats.json'
+import { searchOrganisms } from '@/api/proteins'
 
 const props = defineProps({
   filters: { type: Object, default: () => ({}) },
@@ -15,7 +16,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:filters', 'reset-filters'])
 
-const open = ref({ role: true, organelle: true, organism: true, source: true, features: false })
+const open = ref({ role: true, organelle: true, organism: true, features: false })
 
 // Local state only for Pfam domain text input (applied on Enter)
 const pfamInput = ref(props.filters.feature_accession ?? '')
@@ -38,38 +39,13 @@ const mloOptions = computed(() => {
 const allOrganisms = Object.entries(statsData.proteins.by_organism)
   .sort((a, b) => b[1] - a[1])
   .map(([name]) => name)
-const totalOrganisms = statsData.proteins.total_organisms
 
-const organismOptions = computed(() => {
-  if (props.facets?.by_organism) {
-    return Object.entries(props.facets.by_organism)
-      .sort((a, b) => b[1] - a[1])
-      .map(([value, count]) => ({ value, label: value, count }))
-  }
-  return allOrganisms.map(name => ({ value: name, label: name, count: null }))
-})
-
-const SOURCE_DBS = [
-  { label: 'PhaseDB',  value: 'PhaseDB'  },
-  { label: 'DrLLPS',   value: 'DrLLPS'   },
-  { label: 'PhasePro', value: 'PhasePro' },
-  { label: 'LLPSDB',   value: 'LLPSDB'   },
-  { label: 'CD-CODE',  value: 'CDCODE'   },
-]
-
-const sourceDbOptions = computed(() => {
-  return SOURCE_DBS.map(db => ({
-    ...db,
-    count: props.facets?.by_source_db?.[db.value] ?? null,
-  }))
-})
-
-const FEATURE_TYPES = [
-  { value: 'IDR',           label: 'IDR (disordered region)'   },
-  { value: 'LCD',           label: 'LCD (low complexity)'       },
-  { value: 'MoRF',          label: 'MoRF (recognition feature)' },
-  { value: 'coiled_coil',   label: 'Coiled coil'                },
-  { value: 'transmembrane', label: 'Transmembrane'              },
+const featureTypeOptions = [
+  { value: 'IDR',         label: 'Intrinsically disordered region' },
+  { value: 'LCD',         label: 'Low complexity domain'           },
+  { value: 'domain',      label: 'PFAM domain'                     },
+  { value: 'coiled_coil', label: 'Coiled coil'                     },
+  { value: 'MoRF',        label: 'Molecular recognition feature'   },
 ]
 
 // ---- MLO search/expand ----
@@ -87,14 +63,46 @@ const mloHiddenCount = computed(() => Math.max(0, filteredMlos.value.length - 8)
 
 // ---- Organism search/expand ----
 const orgSearch  = ref('')
-const orgShowAll = ref(false)
-const filteredOrgs = computed(() => {
-  const s = orgSearch.value.toLowerCase()
-  if (!s) return organismOptions.value
-  return organismOptions.value.filter(o => o.label.toLowerCase().includes(s))
+const orgSearchResults = ref([])
+
+const displayedOrgs = computed(() =>
+  allOrganisms.slice(0, 9).map(name => ({ value: name, label: formatOrganism(name) }))
+)
+
+async function onOrganismSearch() {
+  if (orgSearch.value.length < 3) {
+    orgSearchResults.value = []
+    return
+  }
+  try {
+    const res = await searchOrganisms(orgSearch.value)
+    orgSearchResults.value = res.data.results ?? []
+  } catch {
+    orgSearchResults.value = []
+  }
+}
+
+// ---- Molecular features multi-select ----
+const activeFeatureTypes = computed(() => {
+  const val = props.filters.feature_type
+  if (!val) return []
+  return Array.isArray(val) ? val : val.split(',')
 })
-const displayedOrgs  = computed(() => orgShowAll.value ? filteredOrgs.value : filteredOrgs.value.slice(0, 9))
-const orgHiddenCount = computed(() => Math.max(0, totalOrganisms - 9))
+
+function toggleFeatureType(value) {
+  const current = activeFeatureTypes.value
+  const updated = current.includes(value)
+    ? current.filter(v => v !== value)
+    : [...current, value]
+  const newFilters = { ...props.filters }
+  if (updated.length === 0) {
+    delete newFilters.feature_type
+  } else {
+    // TODO: API needs to support feature_type as array for multi-select
+    newFilters.feature_type = updated.join(',')
+  }
+  emit('update:filters', { ...newFilters, page: 1 })
+}
 
 // ---- Filter state helpers ----
 const hasActiveFilters = computed(() => {
@@ -254,7 +262,7 @@ function applyPfam() {
           <!-- Active chip -->
           <div v-if="filters.organism" class="mb-1">
             <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5] font-medium">
-              <em>{{ filters.organism }}</em>
+              <em>{{ formatOrganism(filters.organism) }}</em>
               <button @click="removeFilter('organism')" class="opacity-60 hover:opacity-100 transition-opacity" aria-label="Remove filter">×</button>
             </span>
           </div>
@@ -264,69 +272,35 @@ function applyPfam() {
               <input
                 v-model="orgSearch"
                 type="text"
-                placeholder="Filter organisms…"
+                placeholder="Search organisms..."
                 class="w-full text-xs border border-gray-200 rounded px-2 py-1 mb-1.5 focus:outline-none focus:border-[#185FA5]"
+                @input="onOrganismSearch"
               />
-              <div>
+              <!-- API results when query >= 3 chars -->
+              <div v-if="orgSearch.length >= 3">
+                <div
+                  v-for="result in orgSearchResults"
+                  :key="result.organism"
+                  class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-[13px] text-gray-600"
+                  @click="applyFilter('organism', result.organism)"
+                >
+                  <span>{{ result.organism }}</span>
+                  <span class="text-xs text-gray-400">{{ formatCount(result.protein_count) }}</span>
+                </div>
+                <div v-if="orgSearchResults.length === 0" class="text-[11px] text-gray-400 py-1">
+                  No organisms found.
+                </div>
+              </div>
+              <!-- Static top-9 when query is empty or < 3 chars -->
+              <div v-else>
                 <div
                   v-for="org in displayedOrgs"
                   :key="org.value"
-                  class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-xs text-gray-600"
+                  class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-[13px] text-gray-600"
                   @click="applyFilter('organism', org.value)"
                 >
-                  <span class="italic">{{ org.label }}</span>
-                  <span v-if="org.count != null" class="text-xs text-gray-400">({{ org.count.toLocaleString() }})</span>
+                  <span>{{ org.label }}</span>
                 </div>
-              </div>
-              <button
-                v-if="!orgShowAll && orgHiddenCount > 0"
-                class="text-[10px] text-[#2B6CB0] hover:underline mt-1"
-                @click="orgShowAll = true"
-              >
-                + {{ orgHiddenCount }} more ↓
-              </button>
-              <button
-                v-else-if="orgShowAll"
-                class="text-[10px] text-[#2B6CB0] hover:underline mt-1"
-                @click="orgShowAll = false"
-              >
-                ↑ Show less
-              </button>
-            </div>
-          </Transition>
-        </div>
-      </div>
-
-      <!-- Source database -->
-      <div class="border-b border-gray-100 pb-3">
-        <button
-          class="flex items-center justify-between w-full text-xs font-semibold text-gray-700 uppercase tracking-wide py-2"
-          @click="open.source = !open.source"
-        >
-          Source database
-          <svg class="w-3.5 h-3.5 text-gray-400 transition-transform" :class="open.source ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-          </svg>
-        </button>
-        <div v-if="open.source">
-          <!-- Active chip -->
-          <div v-if="filters.source_db" class="mb-1">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5] font-medium">
-              {{ filters.source_db }}
-              <button @click="removeFilter('source_db')" class="opacity-60 hover:opacity-100 transition-opacity" aria-label="Remove filter">×</button>
-            </span>
-          </div>
-          <!-- Options — fully hidden when filter active -->
-          <Transition name="fade">
-            <div v-if="!filters.source_db">
-              <div
-                v-for="db in sourceDbOptions"
-                :key="db.value"
-                class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-xs text-gray-600"
-                @click="applyFilter('source_db', db.value)"
-              >
-                <span>{{ db.label }}</span>
-                <span v-if="db.count != null" class="text-xs text-gray-400">({{ db.count.toLocaleString() }})</span>
               </div>
             </div>
           </Transition>
@@ -345,22 +319,20 @@ function applyPfam() {
           </svg>
         </button>
         <div v-if="open.features" class="space-y-0.5 mt-1">
-          <!-- Active chip for feature_type -->
-          <div v-if="isFilterActive('feature_type')" class="flex items-center gap-1 mb-2">
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5]">
-              {{ filters.feature_type }}
-              <button @click="removeFilter('feature_type')" class="ml-1 hover:text-[#0C447C] leading-none" aria-label="Remove feature filter">×</button>
-            </span>
-          </div>
-          <div
-            v-for="ft in FEATURE_TYPES"
+          <label
+            v-for="ft in featureTypeOptions"
             :key="ft.value"
-            class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-xs text-gray-600 transition-opacity"
-            :class="{ 'opacity-30 pointer-events-none': isFilterActive('feature_type') }"
-            @click="applyFilter('feature_type', ft.value)"
+            class="flex items-center gap-2 py-1 cursor-pointer text-xs text-gray-600 hover:text-gray-800"
           >
-            <span>{{ ft.label }}</span>
-          </div>
+            <input
+              type="checkbox"
+              :value="ft.value"
+              :checked="activeFeatureTypes.includes(ft.value)"
+              @change="toggleFeatureType(ft.value)"
+              class="w-3 h-3 rounded accent-[#185FA5] cursor-pointer"
+            />
+            {{ ft.label }}
+          </label>
 
           <!-- Pfam domain text input -->
           <div class="mt-2">

@@ -1,36 +1,50 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getMlos } from '@/api/mlos'
 import { formatMlo, formatCount } from '@/utils/format'
 import { PLACEHOLDER_MLOS } from '@/data/mlos.js'
 
-const props = defineProps({
-  mlos: { type: Array, default: () => PLACEHOLDER_MLOS }
-})
+const DISPLAY_LIMIT = 20
 
+const mlos = ref(null)
 const router = useRouter()
 
-function categoryColor(category) {
-  const map = {
-    cytoplasmic_rnp: 'bg-amber-400',
-    cytoplasmic_membraneless: 'bg-amber-300',
-    nuclear_body: 'bg-blue-500',
-    nuclear_rnp: 'bg-blue-400',
-    in_vitro: 'bg-gray-300',
-    unclassified: 'bg-gray-200',
+onMounted(async () => {
+  try {
+    const res = await getMlos()
+    const all = res.data.mlos ?? []
+    // Sort by protein_count desc, keep top N for the landing page grid
+    mlos.value = [...all]
+      .sort((a, b) => (b.driver_count ?? 0) - (a.driver_count ?? 0))
+      .slice(0, DISPLAY_LIMIT)
+  } catch {
+    mlos.value = PLACEHOLDER_MLOS
   }
-  return map[category] ?? 'bg-gray-200'
+})
+
+// The DB stores categories in Spanish. Map to display color.
+function categoryColor(category) {
+  const c = (category ?? '').toLowerCase()
+  if (c === 'nuclear')                        return 'bg-blue-500'
+  if (c === 'citoplasmático' || c === 'citoplasma') return 'bg-amber-400'
+  if (c === 'germinal')                       return 'bg-amber-400'
+  if (c === 'neuronal')                       return 'bg-amber-300'
+  if (c === 'in vitro')                       return 'bg-gray-300'
+  // nuclear subtypes
+  if (c.includes('nuclear'))                  return 'bg-blue-400'
+  // cytoplasmic subtypes
+  if (c.includes('cito'))                     return 'bg-amber-300'
+  return 'bg-gray-200'
 }
 
 function compartmentLabel(category) {
-  const map = {
-    cytoplasmic_rnp: 'Cytoplasmic',
-    cytoplasmic_membraneless: 'Cytoplasmic',
-    nuclear_body: 'Nuclear',
-    nuclear_rnp: 'Nuclear',
-    in_vitro: 'In vitro',
-    unclassified: 'Other',
-  }
-  return map[category] ?? 'Other'
+  const c = (category ?? '').toLowerCase()
+  if (c === 'nuclear' || c.includes('nuclear')) return 'Nuclear'
+  if (c === 'citoplasmático' || c === 'citoplasma' || c === 'germinal' || c === 'neuronal') return 'Cytoplasmic'
+  if (c.includes('cito'))                       return 'Cytoplasmic'
+  if (c === 'in vitro')                         return 'In vitro'
+  return 'Other'
 }
 
 function browseMlo(unified_mlo) {

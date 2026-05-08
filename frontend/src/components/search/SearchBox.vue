@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   initialQuery:      { type: String,  default: '' },
@@ -17,6 +17,13 @@ const exactMatch  = ref(false)
 
 watch(() => props.initialQuery, v => { searchQuery.value = v })
 watch(() => props.initialField, v => { searchField.value = v })
+
+const inputPlaceholder = computed(() => {
+  if (searchField.value === 'uniprot_id') return 'e.g. P35637, Q9NR30'
+  if (searchField.value === 'gene_name')  return 'e.g. FUS, TDP43, hnRNPA1'
+  if (searchField.value === 'mlo')        return 'e.g. stress granule, paraspeckle'
+  return 'Search by UniProt accession, gene name, or organelle'
+})
 
 function handleSearch() {
   const q = searchQuery.value.trim()
@@ -44,7 +51,7 @@ function handleSearch() {
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Search by UniProt accession, gene name, or organelle"
+          :placeholder="inputPlaceholder"
           class="flex-1 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none min-w-0"
           @keydown.enter="handleSearch"
         />

@@ -10,7 +10,6 @@ from models.schemas import (
     ProteinsResponse,
     ProteinSummary,
     SearchMloHit,
-    SearchProteinHit,
     SearchResponse,
 )
 from queries.search_queries import (
@@ -40,6 +39,13 @@ def _parse_mlos(val: str | None) -> list[str]:
     except (json.JSONDecodeError, TypeError):
         return []
 
+
+def _parse_source_dbs(val: str | None) -> list[str]:
+    if not val:
+        return []
+    return [s for s in val.split(",") if s]
+
+
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
@@ -65,12 +71,25 @@ async def search(
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
-    protein_hits = [SearchProteinHit(
+    protein_hits = [ProteinSummary(
         uniprot_id=r["uniprot_id"],
         gene_name=r.get("gene_name"),
         protein_name=r.get("protein_name"),
         organism=r.get("organism"),
-        match_field=r.get("match_field", ""),
+        sequence_length=r.get("sequence_length"),
+        disorder_mobidb_lite_dc=r.get("disorder_mobidb_lite_dc"),
+        disorder_alphafold_dc=r.get("disorder_alphafold_dc"),
+        reviewed=r.get("reviewed"),
+        idr_regions=_parse_json(r.get("idr_regions")),
+        lcr_regions=_parse_json(r.get("lcr_regions")),
+        domains=_parse_json(r.get("domains")),
+        has_driver=bool(r.get("has_driver", 0)),
+        has_client=bool(r.get("has_client", 0)),
+        source_db_count=r.get("source_db_count", 0),
+        source_dbs=_parse_source_dbs(r.get("source_dbs")),
+        mlo_count=r.get("mlo_count", 0),
+        mlos=_parse_mlos(r.get("mlos")),
+        match_field=r.get("match_field"),
     ) for r in proteins]
 
     mlo_hits = [SearchMloHit(
@@ -148,9 +167,14 @@ async def search_advanced(
             sequence_length=r.get("sequence_length"),
             disorder_mobidb_lite_dc=r.get("disorder_mobidb_lite_dc"),
             disorder_alphafold_dc=r.get("disorder_alphafold_dc"),
+            reviewed=r.get("reviewed"),
             idr_regions=_parse_json(r.get("idr_regions")),
             lcr_regions=_parse_json(r.get("lcr_regions")),
             domains=_parse_json(r.get("domains")),
+            has_driver=bool(r.get("has_driver", 0)),
+            has_client=bool(r.get("has_client", 0)),
+            source_db_count=r.get("source_db_count", 0),
+            source_dbs=_parse_source_dbs(r.get("source_dbs")),
             mlo_count=r.get("mlo_count", 0),
             mlos=_parse_mlos(r.get("mlos")),
         ))

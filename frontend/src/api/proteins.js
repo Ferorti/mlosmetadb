@@ -8,3 +8,7 @@ export function getProtein(uniprotId, ppiPage = null) {
   const params = ppiPage ? { ppi_page: ppiPage } : {}
   return client.get(`/protein/${uniprotId}`, { params })
 }
+
+export function searchOrganisms(q, limit = 10) {
+  return client.get('/organisms/search', { params: { q, limit } })
+}

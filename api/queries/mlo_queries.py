@@ -118,21 +118,25 @@ async def get_all_mlos(category: str | None) -> list[dict]:
     if category:
         return await fetchall(
             """
-            SELECT mv.unified_mlo, mv.category, COUNT(DISTINCT ma.uniprot_id) AS protein_count
+            SELECT mv.unified_mlo, mv.category,
+                   COUNT(DISTINCT ma.uniprot_id) AS protein_count,
+                   COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count
             FROM mlo_vocabulary mv
             LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo
             WHERE mv.category = ?
-            GROUP BY mv.unified_mlo
+            GROUP BY mv.unified_mlo, mv.category
             ORDER BY mv.unified_mlo
             """,
             (category,),
         )
     return await fetchall(
         """
-        SELECT mv.unified_mlo, mv.category, COUNT(DISTINCT ma.uniprot_id) AS protein_count
+        SELECT mv.unified_mlo, mv.category,
+               COUNT(DISTINCT ma.uniprot_id) AS protein_count,
+               COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count
         FROM mlo_vocabulary mv
         LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo
-        GROUP BY mv.unified_mlo
+        GROUP BY mv.unified_mlo, mv.category
         ORDER BY mv.unified_mlo
         """,
     )

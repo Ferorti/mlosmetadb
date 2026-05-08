@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 import database
 from config import CORS_ORIGINS
-from routers import mlos, proteins, search, stats
+from routers import mlos, organisms, proteins, search, stats
 
 logging.basicConfig(
     level=logging.INFO,
@@ -45,6 +45,8 @@ async def _compute_stats() -> dict:
     ppi_total = await database.fetchval("SELECT COUNT(*) FROM ppi") or 0
     prot_with_ppi = await database.fetchval("SELECT COUNT(DISTINCT uniprot_id_a) FROM ppi") or 0
 
+    total_organisms = await database.fetchval("SELECT COUNT(DISTINCT organism) FROM proteins") or 0
+
     return {
         "database_version": "2.0",
         "last_updated": "2026-05-04",
@@ -52,6 +54,7 @@ async def _compute_stats() -> dict:
             "total": prot_total,
             "by_organism": {r["organism"]: r["cnt"] for r in org_rows},
             "top_organisms": 10,
+            "total_organisms": total_organisms,
         },
         "mlo_annotations": {
             "total": ann_total,
@@ -123,3 +126,4 @@ app.include_router(proteins.router)
 app.include_router(mlos.router)
 app.include_router(search.router)
 app.include_router(stats.router)
+app.include_router(organisms.router)

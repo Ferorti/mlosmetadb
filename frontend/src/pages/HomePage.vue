@@ -7,8 +7,6 @@ import RoleCards from '@/components/browse/RoleCards.vue'
 import MloBadges from '@/components/browse/MloBadges.vue'
 import OrganismGrid from '@/components/browse/OrganismGrid.vue'
 import SearchBox from '@/components/search/SearchBox.vue'
-import { PLACEHOLDER_MLOS } from '@/data/mlos.js'
-
 const router = useRouter()
 const stats = ref(null)
 
@@ -83,7 +81,7 @@ function searchExample(term) {
     <!-- Browse by role -->
     <section class="max-w-4xl mx-auto px-6 pb-10">
       <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
-        Browse by LLPS role
+        Browse by component role
       </h2>
       <RoleCards :stats="stats" />
     </section>
@@ -95,7 +93,7 @@ function searchExample(term) {
       <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
         Browse by membraneless organelle
       </h2>
-      <MloBadges :mlos="PLACEHOLDER_MLOS" />
+      <MloBadges />
     </section>
 
     <div class="border-t border-gray-100 mx-6 my-8"></div>

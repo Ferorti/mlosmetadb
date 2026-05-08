@@ -52,6 +52,12 @@ def _parse_mlos(val: str | None) -> list[str]:
         return []
 
 
+def _parse_source_dbs(val: str | None) -> list[str]:
+    if not val:
+        return []
+    return [s for s in val.split(",") if s]
+
+
 def _plddt_category(score: float) -> str:
     if score < 50:
         return "very_low"
@@ -171,16 +177,18 @@ async def list_proteins(
     mlo: str | None = None,
     role: str | None = None,
     source_db: str | None = None,
+    uniprot_id: str | None = None,
     page: int = Query(default=DEFAULT_PAGE, ge=1),
     per_page: int = Query(default=DEFAULT_PER_PAGE, ge=1, le=MAX_PER_PAGE),
 ):
     per_page = min(per_page, MAX_PER_PAGE)
     try:
-        total, rows = await get_proteins_page(organism, taxon_id, mlo, role, source_db, page, per_page)
+        total, rows = await get_proteins_page(organism, taxon_id, mlo, role, source_db, uniprot_id, page, per_page)
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
     filters = {k: v for k, v in {
+        "uniprot_id": uniprot_id,
         "organism": organism,
         "taxon_id": taxon_id,
         "mlo": mlo,
@@ -198,9 +206,14 @@ async def list_proteins(
             sequence_length=r.get("sequence_length"),
             disorder_mobidb_lite_dc=r.get("disorder_mobidb_lite_dc"),
             disorder_alphafold_dc=r.get("disorder_alphafold_dc"),
+            reviewed=r.get("reviewed"),
             idr_regions=_parse_json(r.get("idr_regions")),
             lcr_regions=_parse_json(r.get("lcr_regions")),
             domains=_parse_json(r.get("domains")),
+            has_driver=bool(r.get("has_driver", 0)),
+            has_client=bool(r.get("has_client", 0)),
+            source_db_count=r.get("source_db_count", 0),
+            source_dbs=_parse_source_dbs(r.get("source_dbs")),
             mlo_count=r.get("mlo_count", 0),
             mlos=_parse_mlos(r.get("mlos")),
         ))

@@ -9,7 +9,9 @@ import {
   FlexRender,
 } from '@tanstack/vue-table'
 import RoleBadge from '@/components/ui/RoleBadge.vue'
+import SequenceFeatureViewer from '@/components/results/SequenceFeatureViewer.vue'
 import { formatMlo, formatCount } from '@/utils/format'
+import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
 
 const props = defineProps({
   results:       { type: Array,   default: null },
@@ -80,6 +82,20 @@ function domainExtra(protein) {
 function applyFilter(key, value) {
   router.push({ query: { ...route.query, [key]: value, page: 1 } })
 }
+
+// Pre-parse feature data for all results so each card row reads from a Map
+const resultsWithFeatures = computed(() => {
+  if (!props.results) return []
+  return props.results.map(p => {
+    const idrRegions   = parseIdrRegions(p.idr_regions)
+    const lcdRegions   = parseLcdRegions(p.lcr_regions)
+    const domains      = parseDomains(p.domains)
+    const featureStats = buildFeatureStats({ idrRegions, lcdRegions, domains, sequenceLength: p.sequence_length })
+    const hasFeatures  = idrRegions.length > 0 || lcdRegions.length > 0 || domains.length > 0 || !!p.sequence_length
+    return { protein: p, idrRegions, lcdRegions, domains, featureStats, hasFeatures }
+  })
+})
+
 const sortField   = ref('relevance')
 const tableSorting = ref([])
 
@@ -143,7 +159,7 @@ const columns = [
       const [d, c] = info.getValue()
       const badges = []
       if (d) badges.push(h(RoleBadge, { role: 'driver', key: 'driver' }))
-      if (c) badges.push(h(RoleBadge, { role: 'client', key: 'client' }))
+      if (c && !d) badges.push(h(RoleBadge, { role: 'client', key: 'client' }))
       return h('div', { class: 'flex gap-1 flex-wrap' }, badges)
     },
   }),
@@ -247,7 +263,7 @@ const table = useVueTable({
 
       <!-- Loading skeleton -->
       <template v-if="loading">
-        <div v-for="i in 5" :key="i" class="py-3 border-b border-gray-100 last:border-b-0 space-y-2 animate-pulse">
+        <div v-for="i in 5" :key="i" class="py-3 border-b border-gray-200 last:border-b-0 space-y-2 animate-pulse">
           <div class="flex justify-between">
             <div class="h-3.5 bg-gray-200 rounded w-48"></div>
             <div class="h-3.5 bg-gray-100 rounded w-16"></div>
@@ -270,7 +286,7 @@ const table = useVueTable({
       </template>
 
       <!-- Empty state: no search, no filters -->
-      <template v-else-if="results === null">
+      <template v-else-if="results === null && !loading">
         <div class="flex flex-col items-center justify-center py-24 text-center">
           <div class="text-4xl mb-4">🔬</div>
           <p class="text-sm text-gray-500 max-w-xs leading-relaxed">
@@ -282,43 +298,62 @@ const table = useVueTable({
         </div>
       </template>
 
-      <!-- Empty state: query returned nothing -->
-      <template v-else-if="results.length === 0">
-        <div class="flex flex-col items-center justify-center py-24 text-center">
-          <div class="text-4xl mb-4">😕</div>
-          <p class="text-sm text-gray-600">
-            No proteins found<template v-if="query"> for <span class="font-medium">"{{ query }}"</span></template>.
-          </p>
-          <p class="text-xs text-gray-400 mt-1">Try a different search term or remove some filters.</p>
+      <!-- No results: filters applied but nothing found -->
+      <template v-else-if="results !== null && results.length === 0 && !loading">
+        <div class="flex flex-col items-center justify-center py-16 text-center">
+          <p class="text-sm text-gray-400">No proteins found matching your search.</p>
+          <p class="mt-1 text-xs text-gray-300">Try different search terms or remove some filters.</p>
         </div>
       </template>
 
       <!-- Card (row) view -->
       <template v-else-if="viewMode === 'cards'">
+
+        <!-- Track legend — shown once above the results list -->
+        <div class="flex items-center gap-4 text-[10px] text-gray-400 mb-3 mt-1">
+          <span class="font-medium text-gray-500">Track:</span>
+          <span class="flex items-center gap-1.5">
+            <span class="inline-block w-3 h-3 rounded-sm bg-[#e9bdbd]"></span> IDR
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="inline-block w-3 h-3 rounded-sm bg-[#86b9eb]"></span> Domain
+          </span>
+        </div>
+
         <div
-          v-for="protein in results"
+          v-for="{ protein, idrRegions, lcdRegions, domains, featureStats, hasFeatures } in resultsWithFeatures"
           :key="protein.uniprot_id"
-          class="py-4 border-b border-gray-100 cursor-pointer hover:bg-slate-50 transition-colors last:border-b-0"
-          @click="goToProtein(protein.uniprot_id)"
+          class="py-4 border-b border-gray-200 hover:bg-slate-50 transition-colors last:border-b-0"
         >
-          <!-- Line 1: protein name + role badges -->
+          <!-- Line 1: protein name + UniProt accession + role badges -->
           <div class="flex items-start justify-between gap-4">
-            <span class="text-[16px] font-medium text-[#185FA5] hover:underline leading-snug">
-              {{ protein.protein_name || protein.gene_name || protein.uniprot_id }}
-            </span>
-            <div class="flex gap-1 flex-shrink-0">
-              <RoleBadge v-if="protein.has_driver === true" role="driver" />
-              <RoleBadge v-if="protein.has_client === true" role="client" />
+            <div class="flex items-baseline gap-2 flex-1 min-w-0">
+              <span
+                class="text-[18px] font-semibold text-[#185FA5] hover:underline cursor-pointer leading-snug"
+                @click.stop="goToProtein(protein.uniprot_id)"
+              >
+                {{ protein.protein_name || protein.gene_name || protein.uniprot_id }}
+              </span>
+              <span class="font-mono text-[12px] text-gray-500 flex-shrink-0">
+                {{ protein.uniprot_id }}
+              </span>
+            </div>
+            <div class="flex gap-1 flex-shrink-0 mt-1">
+              <RoleBadge v-if="protein.has_driver" role="driver" />
+              <RoleBadge v-if="protein.has_client && !protein.has_driver" role="client" />
             </div>
           </div>
 
-          <!-- Line 2: UniProt acc · gene name · organism · reviewed star -->
-          <div class="flex items-center gap-1.5 mt-1 flex-wrap">
-            <span class="font-mono text-xs text-gray-500">{{ protein.uniprot_id }}</span>
-            <span v-if="protein.gene_name" class="text-gray-300 text-xs" aria-hidden>·</span>
-            <span v-if="protein.gene_name" class="text-xs font-medium text-gray-600">{{ protein.gene_name }}</span>
-            <span class="text-gray-300 text-xs" aria-hidden>·</span>
-            <span class="text-xs italic text-gray-500">{{ protein.organism }}</span>
+          <!-- Lines 2–5: indented body -->
+          <div class="pl-4">
+
+          <!-- Line 2: gene name · organism -->
+          <div class="flex items-center gap-2 mt-0.5">
+            <span v-if="protein.gene_name" class="text-[13px] font-medium text-gray-700">
+              {{ protein.gene_name }}
+            </span>
+            <span v-if="protein.gene_name" class="text-gray-300 text-xs">·</span>
+            <span class="text-[13px] italic text-gray-600">{{ protein.organism }}</span>
             <span
               v-if="protein.reviewed === true"
               title="Reviewed (Swiss-Prot)"
@@ -326,66 +361,64 @@ const table = useVueTable({
             >★</span>
           </div>
 
-          <!-- Row: Organelles (plain text, clickable, · separated) -->
-          <div v-if="protein.mlos?.length" class="flex items-baseline gap-2 mt-2">
-            <span class="text-[11px] text-gray-400 flex-shrink-0"
-                  style="width:80px;font-family:'IBM Plex Sans',sans-serif;font-weight:500">
-              Organelles
+          <!-- Row: MLOs (plain text, clickable, · separated) -->
+          <!-- mlo values are raw slugs from the API — formatMlo() is display only -->
+          <div v-if="protein.mlos?.length" class="flex items-baseline gap-2 mt-2.5">
+            <span class="text-[11px] text-gray-500 flex-shrink-0"
+                  style="width:72px;font-family:'IBM Plex Sans',sans-serif;font-weight:500">
+              MLOs
             </span>
-            <span class="text-[11px] text-gray-600 leading-relaxed">
+            <span class="text-[12px] text-gray-700 leading-relaxed">
               <template v-for="(mlo, i) in visibleMlos(protein)" :key="mlo">
                 <span
                   class="hover:text-[#185FA5] cursor-pointer transition-colors"
                   @click.stop="applyFilter('mlo', mlo)"
-                >{{ formatMlo(mlo) }}</span><span
-                  v-if="i < visibleMlos(protein).length - 1"
-                  class="text-gray-300 mx-1"
-                >·</span>
+                >{{ formatMlo(mlo) }}</span>
+                <span v-if="i < visibleMlos(protein).length - 1" class="text-gray-300 mx-1">·</span>
               </template>
               <button
                 v-if="protein.mlos.length > 5 && !expandedRows.has(protein.uniprot_id)"
-                class="text-[#185FA5] hover:underline ml-1 text-[11px]"
+                class="text-[#185FA5] hover:underline ml-1 text-[12px] font-medium"
                 @click.stop="expandedRows.add(protein.uniprot_id)"
               >+{{ protein.mlos.length - 5 }} more</button>
             </span>
           </div>
 
-          <!-- Row: Domains (green muted badges, deduplicated) -->
-          <div v-if="uniqueDomains(protein).length" class="flex items-baseline gap-2 mt-1">
-            <span class="text-[11px] text-gray-400 flex-shrink-0"
-                  style="width:80px;font-family:'IBM Plex Sans',sans-serif;font-weight:500">
-              Domains
+          <!-- Row: Source databases -->
+          <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2 mt-1">
+            <span class="text-[11px] text-gray-500 flex-shrink-0"
+                  style="width: 72px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;">
+              Source
             </span>
-            <div class="flex flex-wrap gap-1">
-              <span
-                v-for="domain in uniqueDomains(protein)"
-                :key="domain"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#EAF3DE] text-[#27500A] border border-[#C0DD97]"
-              >{{ domain }}</span>
+            <span class="text-[12px] text-gray-600">
+              {{ protein.source_dbs.join(' · ') }}
+            </span>
+          </div>
+
+          <!-- Row: Features — inline stats + D3 sequence track -->
+          <div v-if="hasFeatures" class="flex items-start gap-2 mt-1">
+            <span
+              class="text-[11px] text-gray-500 flex-shrink-0 mt-0.5"
+              style="width:72px;font-family:'IBM Plex Sans',sans-serif;font-weight:500"
+            >
+              Features
+            </span>
+            <div class="flex-1 min-w-0">
+              <div class="text-[12px] text-gray-600 mb-1.5">{{ featureStats }}</div>
+              <div style="max-width: 65%; margin-left: -8px;">
+                <SequenceFeatureViewer
+                  v-if="protein.sequence_length"
+                  :sequence-length="protein.sequence_length"
+                  :idr-regions="idrRegions"
+                  :lcd-regions="lcdRegions"
+                  :domains="domains"
+                  :llps-regions="[]"
+                />
+              </div>
             </div>
           </div>
 
-          <!-- Row: Features (IDR/LCD badges + sequence length) -->
-          <div
-            v-if="protein.has_idr || protein.has_lcd || protein.sequence_length"
-            class="flex items-center gap-2 mt-1"
-          >
-            <span class="text-[11px] text-gray-400 flex-shrink-0"
-                  style="width:80px;font-family:'IBM Plex Sans',sans-serif;font-weight:500">
-              Features
-            </span>
-            <div class="flex items-center gap-1.5">
-              <span v-if="protein.has_idr"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#FCEBEB] text-[#791F1F] border border-[#F7C1C1]"
-              >IDR</span>
-              <span v-if="protein.has_lcd"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#FAEEDA] text-[#633806] border border-[#FAC775]"
-              >LCD</span>
-              <span v-if="protein.sequence_length" class="text-[11px] text-gray-400 ml-1">
-                {{ formatCount(protein.sequence_length) }} aa
-              </span>
-            </div>
-          </div>
+          </div><!-- end indented body -->
         </div>
       </template>
 
@@ -419,7 +452,7 @@ const table = useVueTable({
               <tr
                 v-for="row in table.getRowModel().rows"
                 :key="row.id"
-                class="border-b border-gray-100 hover:bg-slate-50 cursor-pointer transition-colors"
+                class="border-b border-gray-200 hover:bg-slate-50 cursor-pointer transition-colors"
                 @click="goToProtein(row.original.uniprot_id)"
               >
                 <td

@@ -5,6 +5,12 @@ async def search_proteins_fts(q: str) -> list[dict]:
     return await fetchall(
         """
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
+               p.length AS sequence_length,
+               p.disorder_mobidb_lite_dc, p.disorder_alphafold_dc,
+               p.reviewed,
+               ps.idr_regions, ps.lcr_regions, ps.domains,
+               ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
+               ps.source_dbs,
                CASE
                    WHEN LOWER(p.uniprot_id) = LOWER(?) THEN 'uniprot_id'
                    WHEN LOWER(p.gene_name) = LOWER(?) THEN 'gene_name'
@@ -12,6 +18,7 @@ async def search_proteins_fts(q: str) -> list[dict]:
                END AS match_field
         FROM fts_proteins ft
         JOIN proteins p ON p.rowid = ft.rowid
+        LEFT JOIN protein_summary ps ON ps.uniprot_id = p.uniprot_id
         WHERE fts_proteins MATCH ?
         ORDER BY rank
         LIMIT 50
@@ -21,21 +28,28 @@ async def search_proteins_fts(q: str) -> list[dict]:
 
 
 async def search_proteins_like(q: str) -> list[dict]:
-    sub = f"%{q}%"        # substring match for codes (uniprot_id, gene_name)
-    word = f"% {q} %"    # whole-word match for prose (protein_name)
+    sub = f"%{q}%"
+    word = f"% {q} %"
     return await fetchall(
         """
-        SELECT uniprot_id, gene_name, protein_name, organism,
+        SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
+               p.length AS sequence_length,
+               p.disorder_mobidb_lite_dc, p.disorder_alphafold_dc,
+               p.reviewed,
+               ps.idr_regions, ps.lcr_regions, ps.domains,
+               ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
+               ps.source_dbs,
                CASE
-                   WHEN LOWER(uniprot_id) LIKE LOWER(?) THEN 'uniprot_id'
-                   WHEN LOWER(gene_name) LIKE LOWER(?) THEN 'gene_name'
+                   WHEN LOWER(p.uniprot_id) LIKE LOWER(?) THEN 'uniprot_id'
+                   WHEN LOWER(p.gene_name) LIKE LOWER(?) THEN 'gene_name'
                    ELSE 'protein_name'
                END AS match_field
-        FROM proteins
-        WHERE LOWER(uniprot_id) LIKE LOWER(?)
-           OR LOWER(gene_name) LIKE LOWER(?)
-           OR LOWER(' ' || protein_name || ' ') LIKE LOWER(?)
-        ORDER BY uniprot_id
+        FROM proteins p
+        LEFT JOIN protein_summary ps ON ps.uniprot_id = p.uniprot_id
+        WHERE LOWER(p.uniprot_id) LIKE LOWER(?)
+           OR LOWER(p.gene_name) LIKE LOWER(?)
+           OR LOWER(' ' || p.protein_name || ' ') LIKE LOWER(?)
+        ORDER BY p.uniprot_id
         LIMIT 50
         """,
         (sub, sub, sub, sub, word),
@@ -150,8 +164,10 @@ async def advanced_search(
             p.uniprot_id, p.gene_name, p.protein_name, p.organism,
             p.length AS sequence_length,
             p.disorder_mobidb_lite_dc, p.disorder_alphafold_dc,
+            p.reviewed,
             ps.idr_regions, ps.lcr_regions, ps.domains,
-            ps.mlo_count, ps.mlos
+            ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
+            ps.source_dbs
         FROM filtered f
         JOIN proteins p ON p.uniprot_id = f.uniprot_id
         LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id

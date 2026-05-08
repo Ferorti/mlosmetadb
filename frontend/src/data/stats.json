@@ -1,35 +1,36 @@
 {
   "database_version": "2.0",
-  "last_updated": "2025-08-01",
+  "last_updated": "2026-05-08",
   "proteins": {
     "total": 15409,
     "by_organism": {
-      "Homo sapiens": 8432,
-      "Arabidopsis thaliana": 1203,
-      "Mus musculus": 2341,
-      "Saccharomyces cerevisiae": 891,
-      "Caenorhabditis elegans": 534,
-      "Bos taurus": 312,
-      "Drosophila melanogaster": 298,
-      "Rattus norvegicus": 287,
-      "Xenopus laevis": 201
+      "Homo sapiens": 6536,
+      "Mus musculus": 2470,
+      "Arabidopsis thaliana": 2049,
+      "Caenorhabditis elegans": 928,
+      "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)": 769,
+      "Xenopus laevis": 700,
+      "Bos taurus": 251,
+      "Danio rerio": 236,
+      "Drosophila melanogaster": 216,
+      "Rattus norvegicus": 93
     },
-    "total_organisms": 950
+    "total_organisms": 156
   },
   "mlo_annotations": {
     "total": 37990,
-    "unique_mlos": 164,
+    "unique_mlos": 161,
     "by_source": {
-      "PhaseDB": 12000,
-      "DrLLPS": 9500,
-      "PhasePro": 7200,
-      "LLPSDB": 5100,
-      "CDCODE": 4190
+      "CDCODE": 13850,
+      "DrLLPS": 10873,
+      "LLPSDB": 380,
+      "PhaseDB": 12688,
+      "PhasePro": 199
     },
     "by_role": {
-      "driver": 8200,
-      "client": 22100,
-      "unknown": 7690
+      "driver": 2673,
+      "client": 10947,
+      "unknown": 24370
     }
   }
 }

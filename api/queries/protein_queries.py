@@ -8,6 +8,7 @@ async def get_proteins_page(
     mlo: str | None,
     role: str | None,
     source_db: str | None,
+    uniprot_id: str | None,
     page: int,
     per_page: int,
 ) -> tuple[int, list[dict]]:
@@ -19,6 +20,9 @@ async def get_proteins_page(
     if needs_mlo:
         from_clause += " JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id"
 
+    if uniprot_id is not None:
+        conditions.append("p.uniprot_id = ?")
+        params.append(uniprot_id)
     if organism:
         conditions.append("LOWER(p.organism) = LOWER(?)")
         params.append(organism)
@@ -54,8 +58,10 @@ async def get_proteins_page(
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
                p.length AS sequence_length,
                p.disorder_mobidb_lite_dc, p.disorder_alphafold_dc,
+               p.reviewed,
                ps.idr_regions, ps.lcr_regions, ps.domains,
-               ps.mlo_count, ps.mlos
+               ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
+               ps.source_dbs
         FROM filtered f
         JOIN proteins p          ON p.uniprot_id  = f.uniprot_id
         JOIN protein_summary ps  ON ps.uniprot_id = f.uniprot_id

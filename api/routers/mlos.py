@@ -101,5 +101,6 @@ async def list_mlos(category: str | None = None):
             unified_mlo=r["unified_mlo"],
             category=r.get("category"),
             protein_count=r.get("protein_count", 0),
+            driver_count=r.get("driver_count", 0),
         ) for r in rows],
     )

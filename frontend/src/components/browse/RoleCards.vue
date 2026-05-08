@@ -16,30 +16,33 @@ const cards = computed(() => {
     {
       role: 'driver',
       count: r.driver,
-      label: 'Drivers',
-      description: 'Directly drives MLO formation or stability through LLPS.',
+      label: 'LLPS Drivers',
+      description: 'Proteins with direct experimental evidence of driving liquid-liquid phase separation and/or MLO formation. Annotated as driver or scaffold in at least one source database.',
       countClass: 'text-brand-blue',
     },
     {
       role: 'client',
       count: r.client,
-      label: 'Clients',
-      description: 'Recruited to MLOs without actively driving phase separation.',
+      label: 'MLO Clients',
+      description: 'Proteins recruited to membraneless organelles without direct evidence of driving phase separation. Enriched in MLOs under specific conditions but lacking annotation as LLPS drivers.',
       countClass: 'text-brand-green',
     },
     {
-      role: 'unknown',
-      count: r.unknown,
-      label: 'Unknown / unassigned',
-      description: 'No structured role data in the source database.',
-      countClass: 'text-gray-400',
+      role: 'all',
+      count: props.stats.proteins.total,
+      label: 'MLO-associated proteins',
+      description: 'All proteins annotated in at least one MLO across source databases. Includes drivers, clients, and proteins with undetermined or conflicting role assignments. The full dataset.',
+      countClass: 'text-amber-500 opacity-80',
     },
   ]
 })
 
 function navigate(role) {
-  if (role === 'unknown') return
-  router.push({ path: '/results', query: { role } })
+  if (role === 'all') {
+    router.push({ path: '/results' })
+  } else {
+    router.push({ path: '/results', query: { role } })
+  }
 }
 </script>
 
@@ -49,16 +52,13 @@ function navigate(role) {
       <button
         v-for="card in cards"
         :key="card.role"
-        :class="[
-          'text-left bg-white border border-gray-200 rounded-lg p-5 overflow-hidden transition-all hover:border-gray-300 hover:shadow-sm focus:outline-none',
-          card.role !== 'unknown' ? 'cursor-pointer' : 'cursor-default opacity-80'
-        ]"
+        class="text-left bg-white border border-gray-200 rounded-lg p-5 overflow-hidden transition-all hover:border-gray-300 hover:shadow-sm focus:outline-none cursor-pointer"
         @click="navigate(card.role)"
       >
         <div :class="[
           'h-[3px] -mx-5 -mt-5 mb-4',
           card.role === 'driver' ? 'bg-brand-blue' :
-          card.role === 'client' ? 'bg-brand-green' : 'bg-gray-300'
+          card.role === 'client' ? 'bg-brand-green' : 'bg-amber-400 opacity-60'
         ]"></div>
         <div :class="['text-3xl font-bold tabular-nums', card.countClass]">
           {{ formatCount(card.count) }}

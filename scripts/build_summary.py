@@ -147,19 +147,21 @@ def _build_mlo_aggregates(conn: sqlite3.Connection) -> dict[str, dict]:
             MAX(CASE WHEN LOWER(unified_role)='client' THEN 1 ELSE 0 END) AS has_client,
             COUNT(DISTINCT source_db)  AS source_db_count,
             COUNT(DISTINCT unified_mlo) AS mlo_count,
-            GROUP_CONCAT(DISTINCT unified_mlo) AS mlos_concat
+            GROUP_CONCAT(DISTINCT unified_mlo) AS mlos_concat,
+            GROUP_CONCAT(DISTINCT source_db) AS source_dbs_concat
         FROM mlo_annotations
         GROUP BY uniprot_id
         """
     ).fetchall()
     result = {}
-    for uid, has_driver, has_client, sdb_count, mlo_count, mlos_concat in rows:
+    for uid, has_driver, has_client, sdb_count, mlo_count, mlos_concat, source_dbs_concat in rows:
         result[uid] = {
             "has_driver": has_driver,
             "has_client": has_client,
             "source_db_count": sdb_count,
             "mlo_count": mlo_count,
             "mlos": sorted(mlos_concat.split(",")) if mlos_concat else [],
+            "source_dbs": source_dbs_concat or None,
         }
     return result
 
@@ -177,7 +179,8 @@ def create_and_populate_summary(conn: sqlite3.Connection) -> None:
             has_client      INTEGER,
             source_db_count INTEGER,
             mlo_count       INTEGER,
-            mlos            TEXT
+            mlos            TEXT,
+            source_dbs      TEXT
         )
     """)
     conn.execute("DELETE FROM protein_summary")
@@ -208,13 +211,14 @@ def create_and_populate_summary(conn: sqlite3.Connection) -> None:
             mlo.get("source_db_count", 0),
             mlo.get("mlo_count", 0),
             json.dumps(mlo["mlos"]) if mlo.get("mlos") else None,
+            mlo.get("source_dbs"),
         ))
         if len(batch) >= BATCH_SIZE:
-            conn.executemany("INSERT INTO protein_summary VALUES (?,?,?,?,?,?,?,?,?)", batch)
+            conn.executemany("INSERT INTO protein_summary VALUES (?,?,?,?,?,?,?,?,?,?)", batch)
             batch = []
 
     if batch:
-        conn.executemany("INSERT INTO protein_summary VALUES (?,?,?,?,?,?,?,?,?)", batch)
+        conn.executemany("INSERT INTO protein_summary VALUES (?,?,?,?,?,?,?,?,?,?)", batch)
     conn.commit()
 
     total = conn.execute("SELECT COUNT(*) FROM protein_summary").fetchone()[0]

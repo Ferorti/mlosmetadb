@@ -45,7 +45,10 @@ defineProps({
     </div>
 
     <RouterLink to="/results" class="text-[#2B6CB0] text-xs hover:underline block">
-      View all organisms →
+      <template v-if="stats?.proteins?.total_organisms">
+        View all {{ formatCount(stats.proteins.total_organisms) }} organisms →
+      </template>
+      <template v-else>View all organisms →</template>
     </RouterLink>
   </div>
 </template>

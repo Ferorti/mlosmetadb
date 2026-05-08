@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { searchAdvanced } from '@/api/search'
+import { searchBasic, searchAdvanced } from '@/api/search'
 import { getProteins } from '@/api/proteins'
+import { toMloSlug } from '@/utils/format'
 import SearchBox from '@/components/search/SearchBox.vue'
 import FilterSidebar from '@/components/search/FilterSidebar.vue'
 import ResultsPanel from '@/components/results/ResultsPanel.vue'
@@ -21,54 +22,83 @@ function hasAnyFilter(f) {
   return Object.keys(f).some(k => !['page', 'per_page', 'mode'].includes(k) && f[k])
 }
 
-function buildAdvancedParams(f) {
-  const p = {}
-  if (f.q) {
-    if (f.field === 'gene_name')  p.gene_name  = f.q
-    if (f.field === 'uniprot_id') p.uniprot_id = f.q
-  }
-  if (f.role)               p.role               = f.role
-  if (f.mlo)                p.mlo                = f.mlo
-  if (f.organism)           p.organism           = f.organism
-  if (f.source_db)          p.source_db          = f.source_db
-  if (f.feature_type)       p.feature_type       = f.feature_type
-  if (f.feature_accession)  p.feature_accession  = f.feature_accession
-  p.page     = Number(f.page     ?? 1)
-  p.per_page = Number(f.per_page ?? 20)
-  return p
+function buildExtraFilters(f) {
+  const params = {}
+  if (f.role?.trim())              params.role              = f.role
+  if (f.mlo?.trim())               params.mlo               = f.mlo
+  if (f.organism?.trim())          params.organism          = f.organism
+  if (f.feature_type?.trim())      params.feature_type      = f.feature_type
+  if (f.feature_accession?.trim()) params.feature_accession = f.feature_accession
+  params.page     = Number(f.page)     || 1
+  params.per_page = Number(f.per_page) || 20
+  return params
 }
 
 async function fetchResults() {
   const f = activeFilters.value
+
   if (!hasAnyFilter(f)) {
     results.value = null
     total.value   = 0
-    error.value   = null
     return
   }
+
   loading.value = true
   error.value   = null
-  try {
-    if (f.q) {
-      const params = buildAdvancedParams(f)
-      if (!f.field || f.field === 'all') {
-        params.gene_name = f.q
-      } else if (f.field === 'mlo') {
-        params.mlo = f.q
-      }
-      const res    = await searchAdvanced(params)
-      results.value = res.data.proteins ?? []
-      total.value   = res.data.total ?? results.value.length
 
+  try {
+    const field = f.field ?? 'all'
+    let res
+
+    if (f.q) {
+      if (field === 'all') {
+        const q = f.q.trim()
+        // Detect UniProt accession: letter + 5 alphanums + optional 2-char suffix
+        const uniprotPattern = /^[A-Z][0-9][A-Z0-9]{3}[0-9]([A-Z][A-Z0-9]{1}[0-9])?$/i
+        if (uniprotPattern.test(q)) {
+          res = await getProteins({ uniprot_id: q.toUpperCase(), ...buildExtraFilters(f) })
+        } else {
+          const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
+          const mloHits = searchRes.data?.mlos ?? []
+          if (mloHits.length > 0) {
+            // MLO match found — fetch all proteins for that MLO (paginated, with filters)
+            res = await getProteins({ mlo: mloHits[0].unified_mlo, ...buildExtraFilters(f) })
+          } else if (f.organism || f.role) {
+            // No MLO match but has filters — use advanced search by gene_name
+            res = await searchAdvanced({ gene_name: q, ...buildExtraFilters(f) })
+          } else {
+            res = searchRes
+          }
+        }
+      } else if (field === 'uniprot_id') {
+        res = await getProteins({ uniprot_id: f.q, ...buildExtraFilters(f) })
+      } else if (field === 'gene_name') {
+        res = await getProteins({ gene_name: f.q, ...buildExtraFilters(f) })
+      } else if (field === 'mlo') {
+        res = await getProteins({ mlo: toMloSlug(f.q), ...buildExtraFilters(f) })
+      }
     } else {
-      const params = buildAdvancedParams(f)
-      const res    = await getProteins(params)
-      results.value = res.data.proteins ?? []
-      total.value   = res.data.total ?? results.value.length
+      res = await getProteins(buildExtraFilters(f))
     }
-  } catch (err) {
-    console.error('[fetchResults]', err?.response?.status, err?.response?.data ?? err?.message)
-    error.value   = err?.response?.data?.message ?? err?.message ?? 'Error fetching results'
+
+    if (!res) {
+      results.value = []
+      total.value   = 0
+      return
+    }
+
+    const data    = res.data
+    results.value = data.proteins ?? data.items ?? data.results ?? []
+    total.value   = data.total    ?? data.total_hits ?? 0
+
+    // TODO: move to server-side when API supports ?sort=mlo_count
+    results.value = [...results.value].sort(
+      (a, b) => (b.mlo_count ?? 0) - (a.mlo_count ?? 0)
+    )
+
+  } catch (e) {
+    console.error('[fetchResults error]', e)
+    error.value   = e?.response?.data?.message ?? e?.message ?? 'Error fetching results'
     results.value = []
     total.value   = 0
   } finally {
@@ -78,12 +108,10 @@ async function fetchResults() {
 
 watch(() => route.query, fetchResults, { immediate: true, deep: true })
 
-function onSearch({ q, field, mode, role }) {
+function onSearch({ q, field }) {
   const query = {}
-  if (q)                        query.q    = q
+  if (q)                        query.q     = q
   if (field && field !== 'all') query.field = field
-  if (mode && mode !== 'fuzzy') query.mode  = mode
-  if (role)                     query.role  = role
   router.push({ query })
 }
 

@@ -1,7 +1,88 @@
 # MLOsMetaDB Frontend — Dev Log
 
+---
+
+## Sesión 2026-05-07 — Corrections round 6 (11 tasks)
+
+### Qué se hizo
+
+- **`src/api/client.js`**: añadidos interceptores Axios para logging en consola:
+  - Request: `%c→ METHOD /api/path` en azul + params.
+  - Response OK: `%c← STATUS /path` en verde + `{ total: N }`.
+  - Response error: `%c✗ STATUS /path` en rojo + message.
+- **`ResultsPanel.vue`** — layout y estilo:
+  - Body rows (líneas 2–5: gene/organism, MLOs, Source, Features) envueltas en `<div class="pl-4">` — la línea 1 (título + accession + badge) no tiene indentación.
+  - Sequence track: `style="max-width: 65%; margin-left: -8px;"` — ligeramente menos indentado que el texto.
+  - Divider en rows de resultados cambiado de `border-gray-100` → `border-gray-200` (también en skeleton y tabla).
+  - Comentario en MLO row: `mlo values are raw slugs — formatMlo() is display only`.
+- **`ResultsPage.vue`** — bug fix de búsqueda + mejoras:
+  - Import cambiado de `searchAdvanced` → `searchBasic`.
+  - Reemplazados `buildAdvancedParams` + `fetchResults` con nueva lógica: `field=all` → `GET /api/search`, `field=uniprot_id` → `GET /api/proteins?uniprot_id=`, `field=gene_name` → `GET /api/proteins?gene_name=`, sin `q` → `GET /api/proteins` con filtros.
+  - Response shape manejada para `/search` (total_hits) y `/proteins` (total).
+  - Sort por `source_db_count` descendente (client-side, default "relevance") — TODO server-side.
+  - `buildExtraFilters()` sin `source_db` (eliminado Task 8).
+  - `onSearch({ q, field })` — eliminados mode y role (SearchBox compact solo emite q + field).
+- **`FilterSidebar.vue`** — múltiples cambios:
+  - **Task 7**: Molecular Features reemplazado con checkboxes multi-select. `featureTypeOptions` con 5 opciones (IDR, LCD, domain, coiled_coil, MoRF). `activeFeatureTypes` computed lee `feature_type` como comma-separated. `toggleFeatureType()` añade/quita valores. Sin chip activo — checkboxes siempre visibles.
+  - **Task 8**: Sección "Source database" eliminada completamente. `SOURCE_DBS`, `sourceDbOptions`, `open.source` eliminados.
+  - **Task 9**: Organismo: quitado `italic` del span; `text-xs` → `text-[13px]` (Task 11). Botones "+ N more / ↑ Show less" reemplazados por `<input disabled>` con placeholder "Search other organisms..." + texto explicativo `formatCount(totalOrganisms - 9)`. `orgShowAll` eliminado. `displayedOrgs` siempre slice(0, 9). Importado `formatCount`.
+- **`RoleCards.vue`** — Task 10: Tres cards rediseñadas:
+  - Card 1: "LLPS Drivers", count de `by_role.driver`, descripción con evidencia experimental.
+  - Card 2: "MLO Clients", count de `by_role.client`, descripción clientes.
+  - Card 3: "MLO-associated proteins", count de `stats.proteins.total`, barra acento amber, navega a `/results` sin filtros.
+  - `navigate('all')` → `/results`; drivers → `/results?role=driver`; clients → `/results?role=client`.
+- **`HomePage.vue`** — Task 10: título de sección "Browse by LLPS role" → "Browse by component role".
+- Build: `✓ 677 modules, 0 errores`.
+
+### Decisiones técnicas
+
+- **`searchBasic` para All Fields**: el endpoint `/search?q=&mode=` usa FTS5 — devuelve resultados relevantes para cualquier campo (gene_name, uniprot_id, protein_name, mlo_name). El workaround anterior (`searchAdvanced` con `gene_name=q`) solo buscaba por nombre de gen. Con FTS5 la búsqueda es genuinamente multi-field.
+- **Response shape dual**: `/search` devuelve `{ items: [...], total_hits: N }` y `/proteins` devuelve `{ proteins: [...], total: N }`. El handler usa `?? res.data.items ?? res.data.results ?? []` y `?? res.data.total_hits ?? 0` para cubrir ambos.
+- **Client-side sort por source_db_count**: sin soporte server-side aún. Siempre activo cuando sort='relevance' (default — `f.sort` no está en la URL). La ordenación es estable y no afecta la paginación server-side (solo reordena la página actual).
+- **Checkboxes en lugar de click-to-apply para features**: UX más claro para multi-select. La feature_type se serializa como `IDR,LCD` en la URL. El API actualmente acepta un solo valor — TODO para array support.
+- **`orgShowAll` eliminado**: el botón "+N more" no funcionaba bien (mostraba todos los ~950 organismos). El disabled input es más honesto — autocomplete real requiere API.
+- **MLO raw slugs confirmados**: `protein.mlos` contiene slugs (e.g. `stress_granule`). `formatMlo()` solo para display. El comentario en template lo documenta explícitamente.
+
+
+
 Registro acumulativo de decisiones, estado y pendientes.
 Actualizar en cada sesión de trabajo.
+
+---
+
+## Sesión 2026-05-07 — D3 Sequence Feature Viewer
+
+### Qué se hizo
+
+- **`npm install d3`**: d3 v7.9.0 instalado. Bundle ResultsPage: 123 KB → 175 KB (esperado).
+- **`src/utils/parseFeatures.js`** (nuevo): utilidades de parsing y stats:
+  - `parseIdrRegions(idrJson)`: parsea `{ mobidb_lite: [[start,end],...] }` → `[{start,end}]`. Fallback a `alphafold`.
+  - `parseLcdRegions(lcrJson)`: parsea `{ mobidb_lite: [{start,end,label},...] }` → array con `label ?? 'LCD'`.
+  - `parseDomains(domainsJson)`: parsea `{Pfam:[{start,end,label,accession},...], SMART:[...]}`, aplana, deduplica por label.
+  - `calcCoverage(regions, seqLen)`: máscara `Uint8Array` para porcentaje de cobertura sin solapamiento.
+  - `buildFeatureStats({...})`: genera string "IDRs: 54% · LCD: 12% · 3 domains · 526 aa".
+- **`src/components/results/SequenceFeatureViewer.vue`** (nuevo): visor SVG D3 compacto (34px height):
+  - Props: `sequenceLength`, `idrRegions`, `lcdRegions`, `domains`, `llpsRegions`.
+  - Capas en orden: baseline → IDR (rosa, h=24) → LCD (amber, h=18) → Domain (verde, h=18) → LLPS (azul, thin bar h=4).
+  - Labels inline en regiones si el ancho renderizado es suficiente (minLabelWidth por tipo).
+  - `ResizeObserver` para re-render responsive. `watch` para actualizar si cambian los datos.
+  - Tooltip `position:fixed` con `clientX/clientY` (corrección: spec usaba `pageX/Y` que es incorrecto para `fixed`). Teleported a `body`.
+- **`ResultsPanel.vue`** — cambios:
+  - Imports: `SequenceFeatureViewer`, `parseIdrRegions`, `parseLcdRegions`, `parseDomains`, `buildFeatureStats`.
+  - Computed `resultsWithFeatures`: pre-parsea feature data de todos los resultados, empareja con el objeto `protein`. La template itera `resultsWithFeatures` con destructuring `{ protein, idrRegions, lcdRegions, domains, featureStats, hasFeatures }`.
+  - Eliminadas filas "Domains" (badges verdes) y "Features" (badges IDR/LCD + aa count).
+  - Nueva fila "Features": label 80px + columna derecha con stats text + `<SequenceFeatureViewer>`.
+  - Leyenda (Track: IDR / LCD / Domain) antes del primer resultado, solo en card view.
+- Build: `✓ 677 modules, 0 errores`.
+
+### Decisiones técnicas
+
+- **`resultsWithFeatures` computed en lugar de computed por-proteína**: en la template, `v-for` itera el resultado computable directamente — el destructuring `{ protein, idrRegions, ... }` permite acceder a todo sin repetir `Map.get()` por cada prop. Más limpio que un `Map` separado.
+- **`clientX/clientY` en tooltip**: el tooltip usa `position: fixed` (coordenadas de viewport). `pageX/pageY` son coordenadas de documento — incorrectas si la página está scrolleada. Corregido silenciosamente.
+- **Capas D3 en orden**: IDR se dibuja primero (layer inferior) para que LCD y Domain queden encima. El rect transparente de hit-area se añade al final para cubrir todo el SVG sin interferir con la visual.
+- **`minLabelWidth` por tipo**: IDR no recibe label (`null`). LCD y Domain solo muestran label si la región es suficientemente ancha para no colisionar.
+- **Un tooltip por visor**: cada `SequenceFeatureViewer` teleporta su propio `div` tooltip al body. Con 20 resultados, hay 20 divs ocultos. Aceptable — todos son `display:none` hasta hover. Una alternativa sería un tooltip global singleton, pero eso requiere estado compartido.
+- **Formato `idr_regions`**: `parseIdrRegions` espera `{ mobidb_lite: [[start,end],...] }` (arrays de 2 elementos). `parseLcdRegions` espera `{ mobidb_lite: [{start,end,label},...] }` (objetos). Estos formatos deben coincidir con lo que devuelve la API — verificar con datos reales.
 
 ---
 

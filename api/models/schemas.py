@@ -22,11 +22,17 @@ class ProteinSummary(BaseModel):
     sequence_length: int | None = None
     disorder_mobidb_lite_dc: float | None = None
     disorder_alphafold_dc: float | None = None
+    reviewed: int | None = None
     idr_regions: dict | None = None
     lcr_regions: dict | None = None
     domains: dict | None = None
+    has_driver: bool = False
+    has_client: bool = False
+    source_db_count: int = 0
+    source_dbs: list[str] = []
     mlo_count: int = 0
     mlos: list[str] = []
+    match_field: str | None = None
 
 
 class ProteinsResponse(BaseModel):
@@ -177,6 +183,7 @@ class MloListItem(BaseModel):
     unified_mlo: str
     category: str | None
     protein_count: int
+    driver_count: int = 0
 
 
 class MlosResponse(BaseModel):
@@ -185,14 +192,6 @@ class MlosResponse(BaseModel):
 
 
 # ── /search ──────────────────────────────────────────────────────────────────
-
-class SearchProteinHit(BaseModel):
-    uniprot_id: str
-    gene_name: str | None
-    protein_name: str | None
-    organism: str | None
-    match_field: str
-
 
 class SearchMloHit(BaseModel):
     unified_mlo: str
@@ -204,7 +203,7 @@ class SearchResponse(BaseModel):
     query: str
     mode: str
     total_hits: int
-    proteins: list[SearchProteinHit]
+    proteins: list[ProteinSummary]
     mlos: list[SearchMloHit]
 
 
@@ -214,6 +213,7 @@ class ProteinStats(BaseModel):
     total: int
     by_organism: dict[str, int]
     top_organisms: int
+    total_organisms: int = 0
 
 
 class MloAnnotationStats(BaseModel):
@@ -241,3 +241,15 @@ class StatsResponse(BaseModel):
     mlo_annotations: MloAnnotationStats
     sequence_features: FeatureStats
     ppi: PpiStats
+
+
+# ── /organisms/search ────────────────────────────────────────────────────────
+
+class OrganismResult(BaseModel):
+    organism: str
+    protein_count: int
+
+
+class OrganismsSearchResponse(BaseModel):
+    query: str
+    results: list[OrganismResult]
