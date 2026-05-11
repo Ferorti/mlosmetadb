@@ -14,7 +14,6 @@ const props = defineProps({
 })
 
 // ─── Feature parsing ──────────────────────────────────────────────────────────
-// Try both possible API field names (idr_regions or idrs, lcr_regions or lcds)
 const idrRegions  = computed(() => parseIdrRegions(
   props.sequenceFeatures?.idr_regions ?? props.sequenceFeatures?.idrs ?? null
 ))
@@ -25,10 +24,14 @@ const domains      = computed(() => parseDomains(props.sequenceFeatures?.domains
 const morfs        = computed(() => props.sequenceFeatures?.morfs ?? [])
 const plddtRegions = computed(() => props.sequenceFeatures?.plddt_regions ?? [])
 
-// ─── Track-visible subsets (filtered by primary source) ──────────────────────
-// SVG track shows only the primary curated source for each feature type
+// ─── Track-visible subsets (SVG only shows primary curated sources) ───────────
 const trackIdrs = computed(() => idrRegions.value.filter(r => r.source === 'MobiDB-lite'))
 const trackLcds = computed(() => lcdRegions.value.filter(r => r.source === 'MobiDB-lite-sub'))
+
+// ─── Table-visible subsets (broader, but still curated) ──────────────────────
+const IDR_TABLE_SOURCES = new Set(['MobiDB-lite', 'AlphaFold-disorder'])
+const tableIdrs = computed(() => idrRegions.value.filter(r => IDR_TABLE_SOURCES.has(r.source)))
+const tableLcds = computed(() => lcdRegions.value.filter(r => r.source === 'MobiDB-lite-sub'))
 
 // Table: deduplicate domains by accession (show each domain type once)
 const tableDomainsDeduped = computed(() => {
@@ -56,16 +59,17 @@ const hasFeatures = computed(() =>
   plddtRegions.value.length > 0
 )
 
-// ─── SVG constants ────────────────────────────────────────────────────────────
+// ─── SVG constants — all layers share a single centerY ───────────────────────
 const TRACK_HEIGHT = 80
-const BG_Y = 32
+const CENTER_Y = TRACK_HEIGHT / 2   // 40
+const BG_Y = CENTER_Y - 8          // 32
 const BG_H = 16
 
 const LAYERS = {
-  IDR:  { y: 33, h: 14, fill: '#F5A0A0', textFill: '#7F1D1D' },
-  LCD:  { y: 30, h: 8,  fill: '#FAC775', textFill: '#7C2D12' },
-  DOM:  { y: 30, h: 20, fill: '#86C865', textFill: '#ffffff' },
-  MORF: { y: 6,  h: 5,  fill: '#C4B5FD', textFill: '#6B21A8' },
+  IDR:  { y: CENTER_Y - 7,  h: 14, fill: '#F5A0A0', textFill: '#7F1D1D' },
+  LCD:  { y: CENTER_Y - 4,  h: 8,  fill: '#FAC775', textFill: '#7C2D12' },
+  DOM:  { y: CENTER_Y - 10, h: 20, fill: '#86C865', textFill: '#ffffff' },
+  MORF: { y: CENTER_Y - 14, h: 5,  fill: '#C4B5FD', textFill: '#6B21A8' },
 }
 
 const CHAR_W = 6.5
@@ -79,6 +83,26 @@ function fitLabel(label, avail) {
     if (t.length * CHAR_W + 8 <= avail) return t
   }
   return null
+}
+
+// ─── Display helpers ──────────────────────────────────────────────────────────
+function formatSource(src) {
+  if (!src) return '—'
+  if (src.toLowerCase() === 'pfam')  return 'Pfam'
+  if (src.toLowerCase() === 'smart') return 'SMART'
+  return src
+}
+
+const TYPE_LABELS = {
+  IDR:           'Intrinsically Disordered Region',
+  LCD:           'Low Complexity Region',
+  Domain:        'Domain',
+  MoRF:          'MoRF',
+  'pLDDT region': 'pLDDT Region',
+}
+
+function expandType(type) {
+  return TYPE_LABELS[type] ?? type
 }
 
 // ─── D3 rendering ────────────────────────────────────────────────────────────
@@ -108,13 +132,13 @@ function render(width) {
     .attr('stroke-width', 1)
     .attr('rx', 2)
 
-  // 2. IDRs — MobiDB-lite source only
+  // 2. IDRs — MobiDB-lite only
   trackIdrs.value.forEach(r => drawRegion(svg, x, r, LAYERS.IDR, null))
 
-  // 3. LCDs — MobiDB-lite-sub source only, fixed label
+  // 3. LCDs — MobiDB-lite-sub only
   trackLcds.value.forEach(r => drawRegion(svg, x, r, LAYERS.LCD, 'Low complexity region'))
 
-  // 4. Domains — all Pfam instances, label only if > 40px wide
+  // 4. Domains — all Pfam instances, label only if rendered width > 40px
   domains.value.forEach(r => {
     const px = x(r.start)
     const pw = Math.max(2, x(r.end) - px)
@@ -124,7 +148,7 @@ function render(width) {
   // 5. MoRFs — top strip
   morfs.value.forEach(r => drawRegion(svg, x, r, LAYERS.MORF, null))
 
-  // pLDDT regions are NOT rendered in the SVG track
+  // pLDDT regions: table only, not in SVG
 
   // Sequence length label
   svg.append('text')
@@ -177,7 +201,7 @@ function onMouseMove(event, x) {
     ...trackLcds.value.filter(r => aa >= r.start && aa <= r.end)
       .map(r => ({ type: 'LCD', range: `${r.start}–${r.end}`, label: 'Low complexity region', source: r.source })),
     ...domains.value.filter(r => aa >= r.start && aa <= r.end)
-      .map(r => ({ type: 'Domain', range: `${r.start}–${r.end}`, label: r.label, source: r.database ?? 'pfam' })),
+      .map(r => ({ type: 'Domain', range: `${r.start}–${r.end}`, label: r.label, source: formatSource(r.database) })),
     ...morfs.value.filter(r => aa >= r.start && aa <= r.end)
       .map(r => ({ type: 'MoRF', range: `${r.start}–${r.end}`, label: null, source: r.source })),
   ]
@@ -227,22 +251,22 @@ watch(
 
 // ─── Feature table ────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
-  IDR:    '#F5A0A0',
-  LCD:    '#FAC775',
-  Domain: '#86C865',
-  MoRF:   '#C4B5FD',
-  pLDDT:  '#93C5FD',
+  IDR:           '#F5A0A0',
+  LCD:           '#FAC775',
+  Domain:        '#86C865',
+  MoRF:          '#C4B5FD',
+  'pLDDT region': '#93C5FD',
 }
 
 const featureGroups = computed(() => {
   const groups = []
 
-  // IDR — show ALL sources in table
-  if (idrRegions.value.length) {
+  // IDR — only MobiDB-lite and AlphaFold-disorder
+  if (tableIdrs.value.length) {
     groups.push({
       type: 'IDR',
       color: TYPE_COLORS.IDR,
-      items: idrRegions.value.map(r => ({
+      items: tableIdrs.value.map(r => ({
         region: `${r.start}–${r.end}`,
         source: r.source ?? '—',
         label:  '—',
@@ -250,12 +274,12 @@ const featureGroups = computed(() => {
     })
   }
 
-  // LCD — show ALL sources in table, label always "Low complexity region"
-  if (lcdRegions.value.length) {
+  // LCD — only MobiDB-lite-sub
+  if (tableLcds.value.length) {
     groups.push({
       type: 'LCD',
       color: TYPE_COLORS.LCD,
-      items: lcdRegions.value.map(r => ({
+      items: tableLcds.value.map(r => ({
         region: `${r.start}–${r.end}`,
         source: r.source ?? '—',
         label:  'Low complexity region',
@@ -263,14 +287,14 @@ const featureGroups = computed(() => {
     })
   }
 
-  // Domains — deduplicated by accession
+  // Domains — deduplicated by accession, Pfam source capitalized
   if (tableDomainsDeduped.value.length) {
     groups.push({
       type: 'Domain',
       color: TYPE_COLORS.Domain,
       items: tableDomainsDeduped.value.map(r => ({
         region: `${r.start}–${r.end}`,
-        source: r.database ?? 'pfam',
+        source: formatSource(r.database),
         label:  r.accession ? `${r.label} (${r.accession})` : (r.label ?? '—'),
       })),
     })
@@ -289,14 +313,14 @@ const featureGroups = computed(() => {
     })
   }
 
-  // pLDDT — table only, not in SVG track
+  // pLDDT — table only (source always AlphaFold2)
   if (plddtRegions.value.length) {
     groups.push({
       type: 'pLDDT region',
-      color: TYPE_COLORS.pLDDT,
+      color: TYPE_COLORS['pLDDT region'],
       items: plddtRegions.value.map(r => ({
         region: `${r.start}–${r.end}`,
-        source: '—',
+        source: 'AlphaFold2',
         label:  r.label ?? '—',
       })),
     })
@@ -349,15 +373,15 @@ const featureGroups = computed(() => {
                 class="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
                 :style="{ backgroundColor: group.color }"
               ></span>
-              <span class="text-[#484E59] font-medium uppercase tracking-wide text-[10px]">
-                {{ group.type }}
+              <span class="text-[#484E59] font-medium text-[10px]">
+                {{ expandType(group.type) }}
               </span>
             </div>
           </td>
         </tr>
         <!-- Feature rows -->
         <tr v-for="(item, i) in group.items" :key="i" class="border-t border-slate-100">
-          <td class="py-1 px-2 w-24 text-[#484E59]">{{ group.type }}</td>
+          <td class="py-1 px-2 text-[#484E59]">{{ expandType(group.type) }}</td>
           <td class="py-1 px-2 w-28 font-mono text-gray-700">{{ item.region }}</td>
           <td class="py-1 px-2 w-32 text-[#484E59]">{{ item.source }}</td>
           <td class="py-1 px-2 text-gray-700">{{ item.label }}</td>
