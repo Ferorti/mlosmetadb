@@ -170,6 +170,9 @@ async def get_protein(
     )
 
 
+_VALID_SORT_BY = {"gene_name", "mlo_count", "source_db_count", "disorder_mobidb_lite_dc", "role"}
+
+
 @router.get("/proteins", response_model=ProteinsResponse)
 async def list_proteins(
     organism: str | None = None,
@@ -178,12 +181,19 @@ async def list_proteins(
     role: str | None = None,
     source_db: str | None = None,
     uniprot_id: str | None = None,
+    sort_by: str | None = None,
+    sort_order: str = Query(default="asc"),
     page: int = Query(default=DEFAULT_PAGE, ge=1),
     per_page: int = Query(default=DEFAULT_PER_PAGE, ge=1, le=MAX_PER_PAGE),
 ):
     per_page = min(per_page, MAX_PER_PAGE)
+    if sort_by is not None and sort_by not in _VALID_SORT_BY:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": f"sort_by must be one of: {', '.join(sorted(_VALID_SORT_BY))}"})
+    if sort_order.lower() not in {"asc", "desc"}:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": "sort_order must be 'asc' or 'desc'"})
+    sort_order = sort_order.lower()
     try:
-        total, rows = await get_proteins_page(organism, taxon_id, mlo, role, source_db, uniprot_id, page, per_page)
+        total, rows = await get_proteins_page(organism, taxon_id, mlo, role, source_db, uniprot_id, sort_by, sort_order, page, per_page)
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 

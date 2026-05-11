@@ -26,11 +26,16 @@ export function parseDomains(domainsJson) {
   if (!domainsJson) return []
   try {
     const parsed = typeof domainsJson === 'string' ? JSON.parse(domainsJson) : domainsJson
-    const all = Object.values(parsed).flat()
-    // Deduplicate by label
+    // Only use Pfam — SMART and other sources are excluded
+    const all = parsed.Pfam ?? []
     const seen = new Set()
     return all
-      .filter(d => { if (seen.has(d.label)) return false; seen.add(d.label); return true })
+      .filter(d => {
+        const key = `${d.label}|${d.start}|${d.end}`
+        if (seen.has(key)) return false
+        seen.add(key)
+        return true
+      })
       .map(d => ({ start: d.start, end: d.end, label: d.label, accession: d.accession }))
   } catch { return [] }
 }

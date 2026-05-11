@@ -32,7 +32,7 @@ async def _compute_stats() -> dict:
         "SELECT source_db, COUNT(*) AS cnt FROM mlo_annotations GROUP BY source_db"
     )
     role_rows = await database.fetchall(
-        "SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(*) AS cnt "
+        "SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(DISTINCT uniprot_id) AS cnt "
         "FROM mlo_annotations GROUP BY role"
     )
 

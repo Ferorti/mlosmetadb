@@ -14,17 +14,18 @@ import { formatMlo, formatCount } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
 
 const props = defineProps({
-  results:       { type: Array,   default: null },
-  total:         { type: Number,  default: 0 },
-  page:          { type: Number,  default: 1 },
-  perPage:       { type: Number,  default: 20 },
-  loading:       { type: Boolean, default: false },
-  query:         { type: String,  default: '' },
-  activeFilters: { type: Object,  default: () => ({}) },
-  error:         { type: String,  default: null },
+  results:         { type: Array,   default: null },
+  total:           { type: Number,  default: 0 },
+  page:            { type: Number,  default: 1 },
+  perPage:         { type: Number,  default: 20 },
+  loading:         { type: Boolean, default: false },
+  query:           { type: String,  default: '' },
+  activeFilters:   { type: Object,  default: () => ({}) },
+  error:           { type: String,  default: null },
+  downloadLoading: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['page-change', 'sort-change', 'remove-filter'])
+const emit = defineEmits(['page-change', 'sort-change', 'remove-filter', 'download'])
 
 const route  = useRoute()
 const router = useRouter()
@@ -36,7 +37,7 @@ const expandedRows = reactive(new Set())
 function visibleMlos(protein) {
   if (!protein.mlos?.length) return []
   if (expandedRows.has(protein.uniprot_id)) return protein.mlos
-  return protein.mlos.slice(0, 5)
+  return protein.mlos.slice(0, 10)
 }
 
 function hasIdr(protein) {
@@ -91,16 +92,37 @@ const resultsWithFeatures = computed(() => {
     const lcdRegions   = parseLcdRegions(p.lcr_regions)
     const domains      = parseDomains(p.domains)
     const featureStats = buildFeatureStats({ idrRegions, lcdRegions, domains, sequenceLength: p.sequence_length })
+    // Strip the trailing " · NNN aa" so column 3 can show length separately
+    const featureStatsShort = featureStats
+      ? featureStats.replace(/\s*·\s*[\d,]+ aa$/, '').trim()
+      : ''
     const hasFeatures  = idrRegions.length > 0 || lcdRegions.length > 0 || domains.length > 0 || !!p.sequence_length
-    return { protein: p, idrRegions, lcdRegions, domains, featureStats, hasFeatures }
+    return { protein: p, idrRegions, lcdRegions, domains, featureStats, featureStatsShort, hasFeatures }
   })
 })
 
-const sortField   = ref('relevance')
 const tableSorting = ref([])
 
+const currentSort = computed(() => {
+  const { sort_by, sort_order } = props.activeFilters
+  return `${sort_by || 'mlo_count'}:${sort_order || 'desc'}`
+})
+
+function onSortSelect(event) {
+  const val = event.target.value
+  if (!val) return
+  const [sort_by, sort_order] = val.split(':')
+  const q = { ...route.query, sort_by, sort_order, page: 1 }
+  // Keep URL clean when user picks the default
+  if (sort_by === 'mlo_count' && sort_order === 'desc') {
+    delete q.sort_by
+    delete q.sort_order
+  }
+  router.push({ query: q })
+}
+
 // ---- Active filter chips (exclude q, page, per_page, mode) ----
-const SKIP_KEYS = new Set(['page', 'per_page', 'mode'])
+const SKIP_KEYS = new Set(['page', 'per_page', 'mode', 'sort_by', 'sort_order'])
 const filterChips = computed(() =>
   Object.entries(props.activeFilters)
     .filter(([k, v]) => !SKIP_KEYS.has(k) && k !== 'q' && v)
@@ -148,6 +170,12 @@ function titleColor(protein) {
   if (protein.has_driver) return 'text-[#185FA5]'
   if (protein.has_client) return 'text-[#3B6D11]'
   return 'text-[#4B5563]'
+}
+
+function shortOrganism(name) {
+  if (!name) return ''
+  const words = name.split(' ')
+  return words.length > 2 ? words.slice(0, 2).join(' ') : name
 }
 
 // ---- TanStack Table ----
@@ -231,18 +259,29 @@ const table = useVueTable({
 
         <!-- Sort -->
         <select
-          v-model="sortField"
+          :value="currentSort"
           class="text-xs border border-gray-200 rounded px-2 py-1.5 text-gray-600 focus:outline-none"
+          @change="onSortSelect"
         >
-          <option value="relevance">Relevance</option>
-          <option value="gene_name">Gene name</option>
-          <option value="organism">Organism</option>
-          <option value="sequence_length">Length</option>
+          <option value="mlo_count:desc">Most MLOs</option>
+          <option value="gene_name:asc">Gene name A→Z</option>
+          <option value="gene_name:desc">Gene name Z→A</option>
+          <option value="source_db_count:desc">Best supported</option>
+          <option value="disorder_mobidb_lite_dc:desc">Highly disordered</option>
+          <option value="disorder_mobidb_lite_dc:asc">Least disordered</option>
+          <option value="role:asc">Drivers first</option>
         </select>
 
-        <!-- Download placeholder -->
-        <button class="text-xs text-gray-500 border border-gray-200 rounded px-2 py-1.5 hover:border-gray-400 transition-colors">
-          ↓ Download
+        <!-- Download -->
+        <button
+          class="text-xs border border-gray-200 rounded px-2 py-1.5 transition-colors"
+          :class="downloadLoading
+            ? 'text-gray-400 cursor-not-allowed'
+            : 'text-gray-500 hover:border-gray-400'"
+          :disabled="downloadLoading"
+          @click="emit('download')"
+        >
+          {{ downloadLoading ? 'Downloading…' : '↓ Download' }}
         </button>
       </div>
     </div>
@@ -315,113 +354,86 @@ const table = useVueTable({
       <!-- Card (row) view -->
       <template v-else-if="viewMode === 'cards'">
 
-        <!-- Track legend — shown once above the results list -->
-        <div class="flex items-center gap-4 text-[10px] text-gray-500 mb-3 mt-1">
-          <span class="font-medium">Track:</span>
-          <span class="flex items-center gap-1.5">
-            <span class="inline-block w-3 h-3 rounded-sm bg-[#e9bdbd]"></span> IDR
-          </span>
-          <span class="flex items-center gap-1.5">
-            <span class="inline-block w-3 h-3 rounded-sm bg-[#86b9eb]"></span> Domain
-          </span>
-        </div>
-
+        <!-- mlo values are raw slugs from the API — formatMlo() is display only -->
         <div
           v-for="{ protein, idrRegions, lcdRegions, domains, featureStats, hasFeatures } in resultsWithFeatures"
           :key="protein.uniprot_id"
-          class="py-4 border-b border-gray-200 hover:bg-slate-50 transition-colors last:border-b-0"
+          class="py-4 px-6 border-b border-gray-200 hover:bg-slate-50/70 transition-colors last:border-b-0"
         >
-          <!-- Line 1: gene name (or uniprot_id) + UniProt accession + role badges -->
-          <div class="flex items-start justify-between gap-4">
-            <div class="flex items-baseline gap-2 flex-1 min-w-0">
-              <span
-                :class="['text-[18px] font-semibold hover:underline cursor-pointer leading-snug', titleColor(protein)]"
-                @click.stop="goToProtein(protein.uniprot_id)"
-              >
-                {{ protein.gene_name || protein.uniprot_id }}
-              </span>
-              <span class="font-mono text-[12px] text-gray-500 flex-shrink-0">
+          <!-- Two-column layout -->
+          <div class="flex gap-8">
+
+            <!-- Column 1: Identity (~150px) -->
+            <div class="w-[150px] flex-shrink-0 flex flex-col gap-0.5">
+              <!-- Gene name + role badge inline -->
+              <div class="flex items-center gap-2 flex-wrap">
+                <span
+                  class="text-[17px] font-semibold cursor-pointer hover:underline leading-snug"
+                  :class="titleColor(protein)"
+                  @click.stop="goToProtein(protein.uniprot_id)"
+                >
+                  {{ protein.gene_name || protein.uniprot_id }}
+                </span>
+                <RoleBadge v-if="protein.has_driver" role="driver" />
+                <RoleBadge v-else-if="protein.has_client" role="client" />
+              </div>
+              <span class="font-mono text-[11px] text-gray-400 mt-0.5">
                 {{ protein.uniprot_id }}
               </span>
+              <span class="text-[12px] italic text-[#484E59] mt-0.5">
+                {{ shortOrganism(protein.organism) }}
+              </span>
             </div>
-            <div class="flex gap-1 flex-shrink-0 mt-1">
-              <RoleBadge v-if="protein.has_driver" role="driver" />
-              <RoleBadge v-if="protein.has_client && !protein.has_driver" role="client" />
-            </div>
-          </div>
 
-          <!-- Lines 2–5: indented body -->
-          <div class="pl-4">
-
-          <!-- Line 2: organism · reviewed star -->
-          <div class="flex items-center gap-2 mt-0.5">
-            <span class="text-[13px] italic text-gray-600">{{ protein.organism }}</span>
-            <span
-              v-if="protein.reviewed === 1"
-              title="Reviewed (Swiss-Prot)"
-              class="text-amber-400 text-xs"
-            >★</span>
-          </div>
-
-          <!-- Row: MLOs (plain text, clickable, · separated) -->
-          <!-- mlo values are raw slugs from the API — formatMlo() is display only -->
-          <div v-if="protein.mlos?.length" class="flex items-baseline gap-2 mt-2.5">
-            <span class="text-[11px] text-gray-500 flex-shrink-0"
-                  style="width:72px;font-family:'IBM Plex Sans',sans-serif;font-weight:500">
-              MLOs
-            </span>
-            <span class="text-[12px] text-gray-700 leading-relaxed">
-              <template v-for="(mlo, i) in visibleMlos(protein)" :key="mlo">
-                <span
-                  class="hover:text-[#185FA5] cursor-pointer transition-colors"
-                  @click.stop="applyFilter('mlo', mlo)"
-                >{{ formatMlo(mlo) }}</span>
-                <span v-if="i < visibleMlos(protein).length - 1" class="text-gray-400 mx-1">·</span>
-              </template>
-              <button
-                v-if="protein.mlos.length > 5 && !expandedRows.has(protein.uniprot_id)"
-                class="text-[#185FA5] hover:underline ml-1 text-[12px] font-medium"
-                @click.stop="expandedRows.add(protein.uniprot_id)"
-              >+{{ protein.mlos.length - 5 }} more</button>
-            </span>
-          </div>
-
-          <!-- Row: Source databases -->
-          <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2 mt-1">
-            <span class="text-[11px] text-gray-500 flex-shrink-0"
-                  style="width: 72px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;">
-              Source
-            </span>
-            <span class="text-[12px] text-gray-600">
-              {{ protein.source_dbs.join(' · ') }}
-            </span>
-          </div>
-
-          <!-- Row: Features — inline stats + D3 sequence track -->
-          <div v-if="hasFeatures" class="flex items-start gap-2 mt-1">
-            <span
-              class="text-[11px] text-gray-500 flex-shrink-0 mt-0.5"
-              style="width:72px;font-family:'IBM Plex Sans',sans-serif;font-weight:500"
-            >
-              Features
-            </span>
-            <div class="flex-1 min-w-0">
-              <div class="text-[12px] text-gray-600 mb-1.5">{{ featureStats }}</div>
-              <div style="max-width: 65%; margin-left: -8px;">
-                <SequenceFeatureViewer
-                  v-if="protein.sequence_length"
-                  :sequence-length="protein.sequence_length"
-                  :idr-regions="idrRegions"
-                  :lcd-regions="lcdRegions"
-                  :domains="domains"
-                  :llps-regions="[]"
-                />
+            <!-- Column 2: Annotations (flex-1) -->
+            <div class="flex-1 min-w-0 flex flex-col gap-1.5 justify-center">
+              <!-- MLOs row -->
+              <div v-if="protein.mlos?.length" class="flex items-baseline gap-2">
+                <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">MLOs</span>
+                <span class="text-[12px] text-gray-700 leading-relaxed">
+                  <template v-for="(mlo, i) in visibleMlos(protein)" :key="mlo">
+                    <span
+                      class="hover:text-[#185FA5] cursor-pointer transition-colors"
+                      @click.stop="applyFilter('mlo', mlo)"
+                    >{{ formatMlo(mlo) }}</span>
+                    <span v-if="i < visibleMlos(protein).length - 1" class="text-gray-400 mx-1">·</span>
+                  </template>
+                  <button
+                    v-if="protein.mlos.length > 10 && !expandedRows.has(protein.uniprot_id)"
+                    class="text-[#185FA5] hover:underline ml-1 text-[12px] font-medium"
+                    @click.stop="expandedRows.add(protein.uniprot_id)"
+                  >+{{ protein.mlos.length - 10 }} more</button>
+                </span>
+              </div>
+              <!-- Sources row -->
+              <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2">
+                <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Sources</span>
+                <span class="text-[12px] text-gray-600">{{ protein.source_dbs.join(' · ') }}</span>
+              </div>
+              <!-- Features row -->
+              <div v-if="featureStats" class="flex items-baseline gap-2">
+                <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Features</span>
+                <span class="text-[12px] text-gray-700">{{ featureStats }}</span>
+              </div>
+              <!-- Compact D3 track — aligned with value column, max 75% of column width -->
+              <div v-if="hasFeatures && protein.sequence_length" class="flex items-center gap-2">
+                <span class="flex-shrink-0 w-14"></span>
+                <div class="flex-1 min-w-0 max-w-[80%]">
+                  <SequenceFeatureViewer
+                    :sequence-length="protein.sequence_length"
+                    :idr-regions="idrRegions"
+                    :lcd-regions="lcdRegions"
+                    :domains="domains"
+                    :llps-regions="[]"
+                    :compact="true"
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          </div><!-- end indented body -->
-        </div>
+          </div><!-- end two columns -->
+
+        </div><!-- end row -->
       </template>
 
       <!-- Table view -->

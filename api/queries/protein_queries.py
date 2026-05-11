@@ -2,6 +2,61 @@ from database import fetchone, fetchall, fetchval
 
 # ── protein list ─────────────────────────────────────────────────────────────
 
+# sort_by values that require a protein_summary join inside the CTE
+_SORT_NEEDS_PS = {"mlo_count", "source_db_count", "role"}
+
+
+def _build_sort(sort_by: str | None, sort_order: str) -> tuple[str, str, str]:
+    """Return (cte_extra_select, cte_order_by, outer_order_by).
+
+    sort_by and sort_order must already be validated by the caller.
+    NULL values are always sorted last regardless of direction.
+    For role: asc=drivers first, desc=clients first (encoded in rank, always ORDER BY ASC).
+    """
+    if sort_by is None:
+        return "", "p.uniprot_id", "f.uniprot_id"
+
+    asc = sort_order == "asc"
+    dir_sql = "ASC" if asc else "DESC"
+
+    if sort_by == "gene_name":
+        return (
+            ", p.gene_name AS _sk",
+            f"(p.gene_name IS NULL), p.gene_name {dir_sql}, p.uniprot_id",
+            f"(f._sk IS NULL), f._sk {dir_sql}, f.uniprot_id",
+        )
+    if sort_by == "disorder_mobidb_lite_dc":
+        return (
+            ", p.disorder_mobidb_lite_dc AS _sk",
+            f"(p.disorder_mobidb_lite_dc IS NULL), p.disorder_mobidb_lite_dc {dir_sql}, p.uniprot_id",
+            f"(f._sk IS NULL), f._sk {dir_sql}, f.uniprot_id",
+        )
+    if sort_by == "mlo_count":
+        return (
+            ", ps_s.mlo_count AS _sk",
+            f"(ps_s.mlo_count IS NULL), ps_s.mlo_count {dir_sql}, p.uniprot_id",
+            f"(f._sk IS NULL), f._sk {dir_sql}, f.uniprot_id",
+        )
+    if sort_by == "source_db_count":
+        return (
+            ", ps_s.source_db_count AS _sk",
+            f"(ps_s.source_db_count IS NULL), ps_s.source_db_count {dir_sql}, p.uniprot_id",
+            f"(f._sk IS NULL), f._sk {dir_sql}, f.uniprot_id",
+        )
+    if sort_by == "role":
+        # Direction is encoded in the rank; always ORDER BY ASC so no NULLs-last needed.
+        if asc:
+            rank = "CASE WHEN ps_s.has_driver = 1 THEN 0 WHEN ps_s.has_client = 1 THEN 1 ELSE 2 END"
+        else:
+            rank = "CASE WHEN ps_s.has_client = 1 THEN 0 WHEN ps_s.has_driver = 1 THEN 1 ELSE 2 END"
+        return (
+            f", {rank} AS _sk",
+            "_sk, p.uniprot_id",
+            "f._sk, f.uniprot_id",
+        )
+    return "", "p.uniprot_id", "f.uniprot_id"
+
+
 async def get_proteins_page(
     organism: str | None,
     taxon_id: int | None,
@@ -9,16 +64,21 @@ async def get_proteins_page(
     role: str | None,
     source_db: str | None,
     uniprot_id: str | None,
+    sort_by: str | None,
+    sort_order: str,
     page: int,
     per_page: int,
 ) -> tuple[int, list[dict]]:
     conditions: list[str] = []
     params: list = []
     needs_mlo = any(x is not None for x in [mlo, role, source_db])
+    needs_ps_sort = sort_by in _SORT_NEEDS_PS
 
     from_clause = "FROM proteins p"
     if needs_mlo:
         from_clause += " JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id"
+    if needs_ps_sort:
+        from_clause += " LEFT JOIN protein_summary ps_s ON p.uniprot_id = ps_s.uniprot_id"
 
     if uniprot_id is not None:
         conditions.append("p.uniprot_id = ?")
@@ -41,6 +101,8 @@ async def get_proteins_page(
 
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
+    cte_extra, cte_order, outer_order = _build_sort(sort_by, sort_order)
+
     total = await fetchval(
         f"SELECT COUNT(DISTINCT p.uniprot_id) {from_clause} {where}",
         tuple(params),
@@ -50,9 +112,9 @@ async def get_proteins_page(
     rows = await fetchall(
         f"""
         WITH filtered AS (
-            SELECT DISTINCT p.uniprot_id
+            SELECT DISTINCT p.uniprot_id{cte_extra}
             {from_clause} {where}
-            ORDER BY p.uniprot_id
+            ORDER BY {cte_order}
             LIMIT ? OFFSET ?
         )
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
@@ -65,7 +127,7 @@ async def get_proteins_page(
         FROM filtered f
         JOIN proteins p          ON p.uniprot_id  = f.uniprot_id
         JOIN protein_summary ps  ON ps.uniprot_id = f.uniprot_id
-        ORDER BY f.uniprot_id
+        ORDER BY {outer_order}
         """,
         tuple(params) + (per_page, offset),
     )

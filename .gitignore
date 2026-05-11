@@ -240,3 +240,6 @@ database/interim/*.tsv
 # --- Local dev config ---
 # MCP server local configuration (local paths, not for repo)
 .mcp.json
+
+frontend/DEVLOG.md
+frontend/DEVLOG.md

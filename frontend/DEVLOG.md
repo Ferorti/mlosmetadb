@@ -2,6 +2,25 @@
 
 ---
 
+## Registro de Cambios (Conciso)
+
+| Fecha | Cambio | Autor |
+|-------|--------|-------|
+| 2026-05-08 | Añadida sección 'Diálogo entre IA' a CLAUDE.md y este registro de cambios. | GEMINI |
+| 2026-05-08 | Verificación de estadísticas (DB vs API vs stats.json): coincidencia confirmada. | GEMINI |
+| 2026-05-08 | Investigada discrepancia de roles: Stats contaba anotaciones, Resultados cuenta proteínas únicas. | GEMINI |
+| 2026-05-08 | Corregidas estadísticas en backend (main.py) y stats.json para usar COUNT(DISTINCT uniprot_id). | GEMINI |
+| 2026-05-11 | Result row redesign: accent bar por rol, layout 3 columnas (Identity/Annotations/Stats), D3 track full-width. | CLAUDE |
+| 2026-05-11 | Result rows: quitada accent bar y sombreado D3, columna 1 a 140px, Sources arriba de MLOs, ★ en UniProt, organismo truncado a 2 palabras. | CLAUDE |
+| 2026-05-11 | Fix parseDomains: deduplicación por label+start+end en lugar de solo label — preserva copias múltiples del mismo dominio (e.g. 4× RRM en O60506). | CLAUDE |
+| 2026-05-11 | parseDomains solo usa Pfam (excluye SMART). Columnas reordenadas: Identity | Features+Size | Sources+MLOs(flex). Badge rol inline junto al gene name. | CLAUDE |
+| 2026-05-11 | Layout 2 columnas: Identity 200px (gene→acc→organismo→badge) + flex-1 (Features/Sources/MLOs en filas key-value). UniProt acc sin pill. | CLAUDE |
+| 2026-05-11 | Row tweaks: badge alineado a la derecha del gene name, col1 a 170px, etiquetas key sin uppercase a text-[9px], UniProt sin ★ ni pill. | CLAUDE |
+| 2026-05-11 | D3 track movido a columna 2 (después de MLOs), modo compact (20px, sin labels). Leyenda eliminada. SequenceFeatureViewer: prop compact + COMPACT constants. | CLAUDE |
+| 2026-05-11 | Sort funcional (10 opciones asc/desc) con sort_by+sort_order en URL; download TSV paginado (lotes 200, MAX_PER_PAGE backend); fixes: disorder_mobidb_lite_dc (nombre correcto), role:asc=drivers first (dirección correcta). | CLAUDE |
+
+---
+
 ## Sesión 2026-05-07 — Corrections round 6 (11 tasks)
 
 ### Qué se hizo

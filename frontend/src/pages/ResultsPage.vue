@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { searchBasic, searchAdvanced } from '@/api/search'
 import { getProteins } from '@/api/proteins'
 import { toMloSlug } from '@/utils/format'
+import { parseIdrRegions, parseLcdRegions, parseDomains, calcCoverage } from '@/utils/parseFeatures'
 import SearchBox from '@/components/search/SearchBox.vue'
 import FilterSidebar from '@/components/search/FilterSidebar.vue'
 import ResultsPanel from '@/components/results/ResultsPanel.vue'
@@ -11,91 +12,74 @@ import ResultsPanel from '@/components/results/ResultsPanel.vue'
 const route  = useRoute()
 const router = useRouter()
 
-const results = ref(null)
-const total   = ref(0)
-const loading = ref(false)
-const error   = ref(null)
+const results         = ref(null)
+const total           = ref(0)
+const loading         = ref(false)
+const error           = ref(null)
+const downloadLoading = ref(false)
 
 const activeFilters = computed(() => ({ ...route.query }))
 
 function hasAnyFilter(f) {
-  return Object.keys(f).some(k => !['page', 'per_page', 'mode'].includes(k) && f[k])
+  return Object.keys(f).some(k => !['page', 'per_page', 'mode', 'sort_by', 'sort_order'].includes(k) && f[k])
 }
 
-function buildExtraFilters(f) {
+function buildExtraFilters(f, overrides = {}) {
   const params = {}
   if (f.role?.trim())              params.role              = f.role
   if (f.mlo?.trim())               params.mlo               = f.mlo
   if (f.organism?.trim())          params.organism          = f.organism
   if (f.feature_type?.trim())      params.feature_type      = f.feature_type
   if (f.feature_accession?.trim()) params.feature_accession = f.feature_accession
+  params.sort_by    = f.sort_by?.trim()    || 'mlo_count'
+  params.sort_order = f.sort_order?.trim() || 'desc'
   params.page     = Number(f.page)     || 1
   params.per_page = Number(f.per_page) || 20
-  return params
+  return { ...params, ...overrides }
+}
+
+async function runSearch(f, overrides = {}) {
+  const field       = f.field ?? 'all'
+  const extraFilters = buildExtraFilters(f, overrides)
+
+  if (f.q) {
+    const q = f.q.trim()
+    if (field === 'all') {
+      const uniprotPattern = /^[A-Z][0-9][A-Z0-9]{3}[0-9]([A-Z][A-Z0-9]{1}[0-9])?$/i
+      if (uniprotPattern.test(q)) {
+        return getProteins({ uniprot_id: q.toUpperCase(), ...extraFilters })
+      }
+      const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
+      const mloHits   = searchRes.data?.mlos ?? []
+      if (mloHits.length > 0) {
+        return getProteins({ mlo: mloHits[0].unified_mlo, ...extraFilters })
+      } else if (f.organism || f.role) {
+        return searchAdvanced({ gene_name: q, ...extraFilters })
+      }
+      return searchRes
+    } else if (field === 'uniprot_id') {
+      return getProteins({ uniprot_id: q, ...extraFilters })
+    } else if (field === 'gene_name') {
+      return getProteins({ gene_name: q, ...extraFilters })
+    } else if (field === 'mlo') {
+      return getProteins({ mlo: toMloSlug(q), ...extraFilters })
+    }
+  }
+  return getProteins(extraFilters)
 }
 
 async function fetchResults() {
   const f = activeFilters.value
-
-  if (!hasAnyFilter(f)) {
-    results.value = null
-    total.value   = 0
-    return
-  }
+  if (!hasAnyFilter(f)) { results.value = null; total.value = 0; return }
 
   loading.value = true
   error.value   = null
-
   try {
-    const field = f.field ?? 'all'
-    let res
-
-    if (f.q) {
-      if (field === 'all') {
-        const q = f.q.trim()
-        // Detect UniProt accession: letter + 5 alphanums + optional 2-char suffix
-        const uniprotPattern = /^[A-Z][0-9][A-Z0-9]{3}[0-9]([A-Z][A-Z0-9]{1}[0-9])?$/i
-        if (uniprotPattern.test(q)) {
-          res = await getProteins({ uniprot_id: q.toUpperCase(), ...buildExtraFilters(f) })
-        } else {
-          const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
-          const mloHits = searchRes.data?.mlos ?? []
-          if (mloHits.length > 0) {
-            // MLO match found — fetch all proteins for that MLO (paginated, with filters)
-            res = await getProteins({ mlo: mloHits[0].unified_mlo, ...buildExtraFilters(f) })
-          } else if (f.organism || f.role) {
-            // No MLO match but has filters — use advanced search by gene_name
-            res = await searchAdvanced({ gene_name: q, ...buildExtraFilters(f) })
-          } else {
-            res = searchRes
-          }
-        }
-      } else if (field === 'uniprot_id') {
-        res = await getProteins({ uniprot_id: f.q, ...buildExtraFilters(f) })
-      } else if (field === 'gene_name') {
-        res = await getProteins({ gene_name: f.q, ...buildExtraFilters(f) })
-      } else if (field === 'mlo') {
-        res = await getProteins({ mlo: toMloSlug(f.q), ...buildExtraFilters(f) })
-      }
-    } else {
-      res = await getProteins(buildExtraFilters(f))
-    }
-
-    if (!res) {
-      results.value = []
-      total.value   = 0
-      return
-    }
-
+    const res = await runSearch(f)
+    if (!res) { results.value = []; total.value = 0; return }
     const data    = res.data
     results.value = data.proteins ?? data.items ?? data.results ?? []
     total.value   = data.total    ?? data.total_hits ?? 0
-
-    // TODO: move to server-side when API supports ?sort=mlo_count
-    results.value = [...results.value].sort(
-      (a, b) => (b.mlo_count ?? 0) - (a.mlo_count ?? 0)
-    )
-
   } catch (e) {
     console.error('[fetchResults error]', e)
     error.value   = e?.response?.data?.message ?? e?.message ?? 'Error fetching results'
@@ -103,6 +87,75 @@ async function fetchResults() {
     total.value   = 0
   } finally {
     loading.value = false
+  }
+}
+
+function buildTsv(proteins) {
+  const header = [
+    'uniprot_id', 'gene_name', 'protein_name', 'organism', 'role',
+    'mlos', 'source_dbs', 'idr_percent', 'lcd_percent', 'domain_count', 'sequence_length',
+  ].join('\t')
+  const rows = proteins.map(p => {
+    const idrPct  = calcCoverage(parseIdrRegions(p.idr_regions), p.sequence_length) ?? ''
+    const lcdPct  = calcCoverage(parseLcdRegions(p.lcr_regions), p.sequence_length) ?? ''
+    const domains = parseDomains(p.domains)
+    const role    = p.has_driver && p.has_client ? 'driver;client'
+                  : p.has_driver ? 'driver'
+                  : p.has_client ? 'client' : ''
+    return [
+      p.uniprot_id    ?? '',
+      p.gene_name     ?? '',
+      p.protein_name  ?? '',
+      p.organism      ?? '',
+      role,
+      (p.mlos       ?? []).join(';'),
+      (p.source_dbs ?? []).join(';'),
+      idrPct,
+      lcdPct,
+      domains.length,
+      p.sequence_length ?? '',
+    ].join('\t')
+  })
+  return [header, ...rows].join('\n')
+}
+
+function triggerDownload(content, filename) {
+  const blob = new Blob([content], { type: 'text/tab-separated-values' })
+  const url  = URL.createObjectURL(blob)
+  const a    = document.createElement('a')
+  a.href     = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
+
+async function downloadResults() {
+  const f = activeFilters.value
+  if (!hasAnyFilter(f)) return
+  downloadLoading.value = true
+  // MAX_PER_PAGE on the backend is 200 — paginate in batches
+  const BATCH = 200
+  try {
+    const all = []
+    let page  = 1
+    let total = null
+    do {
+      const res = await runSearch(f, { per_page: BATCH, page, sort_by: undefined, sort_order: undefined })
+      if (!res) break
+      const data  = res.data
+      const batch = data.proteins ?? data.items ?? data.results ?? []
+      all.push(...batch)
+      if (total === null) total = data.total ?? data.total_hits ?? batch.length
+      if (batch.length < BATCH) break
+      page++
+    } while (all.length < total)
+    triggerDownload(buildTsv(all), 'mlosmetadb_results.tsv')
+  } catch (e) {
+    console.error('[downloadResults error]', e)
+  } finally {
+    downloadLoading.value = false
   }
 }
 
@@ -170,8 +223,10 @@ function onResetFilters() {
         :query="route.query.q ?? ''"
         :active-filters="activeFilters"
         :error="error"
+        :download-loading="downloadLoading"
         @page-change="onPageChange"
         @remove-filter="onRemoveFilter"
+        @download="downloadResults"
       />
     </div>
 
