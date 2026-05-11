@@ -18,6 +18,7 @@
 | 2026-05-11 | Row tweaks: badge alineado a la derecha del gene name, col1 a 170px, etiquetas key sin uppercase a text-[9px], UniProt sin ★ ni pill. | CLAUDE |
 | 2026-05-11 | D3 track movido a columna 2 (después de MLOs), modo compact (20px, sin labels). Leyenda eliminada. SequenceFeatureViewer: prop compact + COMPACT constants. | CLAUDE |
 | 2026-05-11 | Sort funcional (10 opciones asc/desc) con sort_by+sort_order en URL; download TSV paginado (lotes 200, MAX_PER_PAGE backend); fixes: disorder_mobidb_lite_dc (nombre correcto), role:asc=drivers first (dirección correcta). | CLAUDE |
+| 2026-05-11 | implement ProteinPage — tabbed layout (Structure/MLOs/Interactions/Ortologs), ProteinHeader con source DB links, ProteinMLOs grouped table, ProteinFeatureTrack D3 viewer, SourceDbBadge, PPI summary stub, useProtein composable, LoadingSpinner, MolStarViewer stub | CLAUDE |
 
 ---
 

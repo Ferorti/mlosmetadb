@@ -1,88 +1,167 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { getProtein } from '@/api/proteins'
+import { useProtein } from '@/composables/useProtein.js'
+import { formatCount } from '@/utils/format.js'
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
+import ProteinHeader from '@/components/protein/ProteinHeader.vue'
+import ProteinMLOs from '@/components/protein/ProteinMLOs.vue'
+import ProteinFeatureTrack from '@/components/protein/ProteinFeatureTrack.vue'
+import MolStarViewer from '@/components/viewers/MolStarViewer.vue'
 
-const route   = useRoute()
-const protein = ref(null)
-const loading = ref(true)
-const notFound = ref(false)
-const error   = ref(null)
+const route = useRoute()
+const { protein, loading, error, fetchProtein } = useProtein()
 
-onMounted(async () => {
-  try {
-    const res = await getProtein(route.params.id)
-    protein.value = res.data
-  } catch (err) {
-    if (err.response?.status === 404) {
-      notFound.value = true
-    } else {
-      error.value = err.message || 'An unexpected error occurred.'
-    }
-  } finally {
-    loading.value = false
-  }
+const activeTab   = ref('overview')
+const mountedTabs = reactive(new Set(['overview']))
+
+function activateTab(tab) {
+  activeTab.value = tab
+  mountedTabs.add(tab)
+}
+
+const TABS = [
+  { id: 'overview',      label: 'Overview' },
+  { id: 'mlos',          label: 'MLO Annotations' },
+  { id: 'interactions',  label: 'Interactions' },
+  { id: 'orthologs',     label: 'Orthologs' },
+]
+
+onMounted(() => {
+  fetchProtein(route.params.id)
 })
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-6 py-8">
+  <div class="max-w-6xl mx-auto px-6 py-6">
 
     <!-- Loading -->
-    <div v-if="loading" class="flex items-center justify-center py-24 text-sm text-gray-400 animate-pulse">
-      Loading protein…
-    </div>
+    <LoadingSpinner v-if="loading" />
 
     <!-- Not found -->
-    <div v-else-if="notFound" class="flex flex-col items-center justify-center py-24 text-center">
-      <div class="text-4xl mb-4">🔍</div>
-      <p class="text-gray-600 font-medium">Protein not found</p>
-      <p class="text-sm text-gray-400 mt-1">
-        <span class="font-mono">{{ route.params.id }}</span> is not in the database.
-      </p>
-      <RouterLink to="/" class="mt-4 text-sm text-[#185FA5] hover:underline">← Back to home</RouterLink>
+    <div v-else-if="error === 'not_found'" class="py-24 text-center text-sm text-[#484E59]">
+      Protein not found.
+      <RouterLink to="/" class="ml-2 text-[#185FA5] hover:underline">← Back to home</RouterLink>
     </div>
 
     <!-- Generic error -->
-    <div v-else-if="error" class="flex flex-col items-center justify-center py-24 text-center">
-      <div class="text-4xl mb-4">⚠️</div>
-      <p class="text-sm text-red-600 font-medium">Failed to load protein</p>
-      <p class="text-xs text-gray-400 mt-1 max-w-xs">{{ error }}</p>
+    <div v-else-if="error" class="py-24 text-center text-sm text-[#484E59]">
+      Could not load protein data.
     </div>
 
     <!-- Protein data -->
     <template v-else-if="protein">
 
-      <!-- Header -->
-      <div class="border-b border-gray-200 pb-6 mb-6">
-        <h1 class="text-2xl font-bold text-[#1B3D6F] mb-3 leading-snug">
-          {{ protein.protein_name || protein.gene_name || protein.uniprot_id }}
-        </h1>
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-1.5 text-sm text-gray-700">
-          <span class="flex items-center gap-1.5">
-            <span class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">UniProt</span>
-            <span class="font-mono font-medium">{{ protein.uniprot_id }}</span>
-          </span>
-          <span v-if="protein.gene_name" class="flex items-center gap-1.5">
-            <span class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Gene</span>
-            <span class="font-medium">{{ protein.gene_name }}</span>
-          </span>
-          <span v-if="protein.organism" class="flex items-center gap-1.5">
-            <span class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Organism</span>
-            <span class="italic">{{ protein.organism }}</span>
-          </span>
+      <ProteinHeader :protein="protein" />
+
+      <!-- Tab nav -->
+      <div class="sticky top-0 z-10 bg-white border-b border-slate-200 mb-6">
+        <nav class="flex">
+          <button
+            v-for="tab in TABS"
+            :key="tab.id"
+            class="px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors"
+            :class="activeTab === tab.id
+              ? 'border-[#185FA5] text-[#185FA5]'
+              : 'border-transparent text-[#484E59] hover:text-[#185FA5]'"
+            @click="activateTab(tab.id)"
+          >
+            {{ tab.label }}
+          </button>
+        </nav>
+      </div>
+
+      <!-- Overview -->
+      <div v-if="mountedTabs.has('overview')" v-show="activeTab === 'overview'">
+        <div class="flex gap-6 items-start">
+
+          <!-- Left: AlphaFold structure -->
+          <div class="w-64 flex-shrink-0">
+            <div class="text-sm font-medium text-gray-700 mb-2">AlphaFold Structure</div>
+            <div class="h-72 rounded border border-slate-200 overflow-hidden">
+              <MolStarViewer :uniprot-id="protein.uniprot_id" />
+            </div>
+            <a
+              :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
+              target="_blank" rel="noopener"
+              class="text-xs text-[#185FA5] mt-1 inline-block hover:underline"
+            >View in AlphaFold DB →</a>
+          </div>
+
+          <!-- Right: Sequence & features -->
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium text-gray-700 mb-2">Sequence & Features</div>
+            <ProteinFeatureTrack
+              v-if="protein.sequence_features"
+              :sequence-features="protein.sequence_features"
+              :sequence-length="protein.sequence_length ?? 0"
+            />
+            <div v-else class="text-sm text-[#484E59]">No sequence features available.</div>
+          </div>
+
+        </div>
+
+        <!-- External resources -->
+        <div class="mt-6">
+          <div class="text-sm font-medium text-gray-700 mb-2">External resources</div>
+          <div class="text-sm">
+            <a
+              :href="`https://www.uniprot.org/uniprotkb/${protein.uniprot_id}`"
+              target="_blank" rel="noopener"
+              class="text-[#185FA5] hover:underline"
+            >UniProt</a>
+            <span class="text-[#484E59]"> · </span>
+            <a
+              :href="`https://mobidb.org/${protein.uniprot_id}`"
+              target="_blank" rel="noopener"
+              class="text-[#185FA5] hover:underline"
+            >MobiDB</a>
+            <span class="text-[#484E59]"> · </span>
+            <a
+              :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
+              target="_blank" rel="noopener"
+              class="text-[#185FA5] hover:underline"
+            >AlphaFold DB</a>
+            <span class="text-[#484E59]"> · </span>
+            <a
+              :href="`https://string-db.org/network/${protein.uniprot_id}`"
+              target="_blank" rel="noopener"
+              class="text-[#185FA5] hover:underline"
+            >STRING</a>
+          </div>
         </div>
       </div>
 
-      <!-- Raw JSON (temporary) -->
-      <div>
-        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
-          Raw API response (temporary)
-        </p>
-        <pre class="bg-gray-50 border border-gray-200 rounded p-4 text-xs text-gray-700 overflow-x-auto whitespace-pre-wrap">{{ JSON.stringify(protein, null, 2) }}</pre>
+      <!-- MLO Annotations -->
+      <div v-if="mountedTabs.has('mlos')" v-show="activeTab === 'mlos'">
+        <ProteinMLOs
+          :mlo-annotations="protein.mlo_annotations ?? []"
+          :uniprot-id="protein.uniprot_id"
+        />
+      </div>
+
+      <!-- Interactions -->
+      <div v-if="mountedTabs.has('interactions')" v-show="activeTab === 'interactions'">
+        <div class="text-lg font-semibold text-gray-800 mb-2">Protein-Protein Interactions</div>
+        <template v-if="protein.ppi && protein.ppi.total_partners > 0">
+          <div class="text-sm text-[#484E59]">
+            {{ formatCount(protein.ppi.total_partners) }} known partners
+          </div>
+          <div class="text-sm text-[#484E59]">
+            {{ formatCount(protein.ppi.partners_in_mlosmetadb) }} partners present in MLOsMetaDB
+          </div>
+        </template>
+        <div v-else class="text-sm text-[#484E59]">No PPI data available.</div>
+        <!-- TODO: paginated interactions table — requires ppi_page param on demand -->
+      </div>
+
+      <!-- Orthologs -->
+      <div v-if="mountedTabs.has('orthologs')" v-show="activeTab === 'orthologs'">
+        <div class="text-sm text-[#484E59]">
+          Ortholog data is not yet available in this version of MLOsMetaDB.
+        </div>
       </div>
 
     </template>
-
   </div>
 </template>
