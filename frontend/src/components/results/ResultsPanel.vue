@@ -368,7 +368,7 @@ const table = useVueTable({
               <!-- Gene name + role badge inline -->
               <div class="flex items-center gap-2 flex-wrap">
                 <span
-                  class="text-[17px] font-semibold cursor-pointer hover:underline leading-snug"
+                  class="text-[18px] font-semibold cursor-pointer hover:underline leading-snug"
                   :class="titleColor(protein)"
                   @click.stop="goToProtein(protein.uniprot_id)"
                 >
@@ -377,7 +377,7 @@ const table = useVueTable({
                 <RoleBadge v-if="protein.has_driver" role="driver" />
                 <RoleBadge v-else-if="protein.has_client" role="client" />
               </div>
-              <span class="font-mono text-[11px] text-gray-400 mt-0.5">
+              <span class="font-mono text-[12px] text-gray-400 mt-0.5">
                 {{ protein.uniprot_id }}
               </span>
               <span class="text-[12px] italic text-[#484E59] mt-0.5">
@@ -390,25 +390,24 @@ const table = useVueTable({
               <!-- MLOs row -->
               <div v-if="protein.mlos?.length" class="flex items-baseline gap-2">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">MLOs</span>
-                <span class="text-[12px] text-gray-700 leading-relaxed">
-                  <template v-for="(mlo, i) in visibleMlos(protein)" :key="mlo">
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 leading-snug">
+                  <template v-for="mlo in visibleMlos(protein)" :key="mlo">
                     <span
-                      class="hover:text-[#185FA5] cursor-pointer transition-colors"
+                      class="text-[13px] text-gray-700 cursor-pointer hover:underline"
                       @click.stop="applyFilter('mlo', mlo)"
                     >{{ formatMlo(mlo) }}</span>
-                    <span v-if="i < visibleMlos(protein).length - 1" class="text-gray-400 mx-1">·</span>
                   </template>
                   <button
                     v-if="protein.mlos.length > 10 && !expandedRows.has(protein.uniprot_id)"
-                    class="text-[#185FA5] hover:underline ml-1 text-[12px] font-medium"
+                    class="text-[12px] text-gray-500 hover:underline"
                     @click.stop="expandedRows.add(protein.uniprot_id)"
                   >+{{ protein.mlos.length - 10 }} more</button>
-                </span>
+                </div>
               </div>
               <!-- Sources row -->
               <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Sources</span>
-                <span class="text-[12px] text-gray-600">{{ protein.source_dbs.join(' · ') }}</span>
+                <span class="text-[11px] text-gray-500">{{ protein.source_dbs.join(' · ') }}</span>
               </div>
               <!-- Features row -->
               <div v-if="featureStats" class="flex items-baseline gap-2">

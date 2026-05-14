@@ -21,8 +21,7 @@ const lcdRegions  = computed(() => parseLcdRegions(
   props.sequenceFeatures?.lcr_regions ?? props.sequenceFeatures?.lcds ?? null
 ))
 const domains      = computed(() => parseDomains(props.sequenceFeatures?.domains ?? null))
-const morfs        = computed(() => props.sequenceFeatures?.morfs ?? [])
-const plddtRegions = computed(() => props.sequenceFeatures?.plddt_regions ?? [])
+const morfs = computed(() => props.sequenceFeatures?.morfs ?? [])
 
 // ─── Track-visible subsets (SVG only shows primary curated sources) ───────────
 const trackIdrs = computed(() => idrRegions.value.filter(r => r.source === 'MobiDB-lite'))
@@ -55,8 +54,7 @@ const hasFeatures = computed(() =>
   idrRegions.value.length > 0 ||
   lcdRegions.value.length > 0 ||
   domains.value.length > 0 ||
-  morfs.value.length > 0 ||
-  plddtRegions.value.length > 0
+  morfs.value.length > 0
 )
 
 // ─── SVG constants — all layers share a single centerY ───────────────────────
@@ -94,11 +92,10 @@ function formatSource(src) {
 }
 
 const TYPE_LABELS = {
-  IDR:           'Intrinsically Disordered Region',
-  LCD:           'Low Complexity Region',
-  Domain:        'Domain',
-  MoRF:          'MoRF',
-  'pLDDT region': 'pLDDT Region',
+  IDR:    'Intrinsically Disordered Region',
+  LCD:    'Composition Bias',
+  Domain: 'Domain',
+  MoRF:   'MoRF',
 }
 
 function expandType(type) {
@@ -251,51 +248,50 @@ watch(
 
 // ─── Feature table ────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
-  IDR:           '#F5A0A0',
-  LCD:           '#FAC775',
-  Domain:        '#86C865',
-  MoRF:          '#C4B5FD',
-  'pLDDT region': '#93C5FD',
+  IDR:    '#F5A0A0',
+  LCD:    '#FAC775',
+  Domain: '#86C865',
+  MoRF:   '#C4B5FD',
 }
 
 const featureGroups = computed(() => {
   const groups = []
 
-  // IDR — only MobiDB-lite and AlphaFold-disorder
+  // IDR — MobiDB-lite and AlphaFold-disorder; cols: label | start | end | predictor
   if (tableIdrs.value.length) {
     groups.push({
       type: 'IDR',
       color: TYPE_COLORS.IDR,
       items: tableIdrs.value.map(r => ({
-        region: `${r.start}–${r.end}`,
+        start:  r.start,
+        end:    r.end,
         source: r.source ?? '—',
-        label:  '—',
       })),
     })
   }
 
-  // LCD — only MobiDB-lite-sub
+  // LCD — MobiDB-lite-sub; cols: label | start | end (no predictor)
   if (tableLcds.value.length) {
     groups.push({
       type: 'LCD',
       color: TYPE_COLORS.LCD,
       items: tableLcds.value.map(r => ({
-        region: `${r.start}–${r.end}`,
-        source: r.source ?? '—',
-        label:  'Low complexity region',
+        start: r.start,
+        end:   r.end,
       })),
     })
   }
 
-  // Domains — deduplicated by accession, Pfam source capitalized
+  // Domains — Pfam; cols: accession | start | end | name
   if (tableDomainsDeduped.value.length) {
     groups.push({
       type: 'Domain',
       color: TYPE_COLORS.Domain,
       items: tableDomainsDeduped.value.map(r => ({
-        region: `${r.start}–${r.end}`,
-        source: formatSource(r.database),
-        label:  r.accession ? `${r.label} (${r.accession})` : (r.label ?? '—'),
+        accession: r.accession ?? '—',
+        start:     r.start,
+        end:       r.end,
+        label:     r.label ?? '—',
       })),
     })
   }
@@ -306,21 +302,9 @@ const featureGroups = computed(() => {
       type: 'MoRF',
       color: TYPE_COLORS.MoRF,
       items: morfs.value.map(r => ({
-        region: `${r.start}–${r.end}`,
+        start:  r.start,
+        end:    r.end,
         source: r.source ?? '—',
-        label:  r.label ?? '—',
-      })),
-    })
-  }
-
-  // pLDDT — table only (source always AlphaFold2)
-  if (plddtRegions.value.length) {
-    groups.push({
-      type: 'pLDDT region',
-      color: TYPE_COLORS['pLDDT region'],
-      items: plddtRegions.value.map(r => ({
-        region: `${r.start}–${r.end}`,
-        source: 'AlphaFold2',
         label:  r.label ?? '—',
       })),
     })
@@ -373,19 +357,51 @@ const featureGroups = computed(() => {
                 class="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
                 :style="{ backgroundColor: group.color }"
               ></span>
-              <span class="text-[#484E59] font-medium text-[10px]">
-                {{ expandType(group.type) }}
-              </span>
+              <span class="text-[#484E59] font-medium text-[10px]">{{ expandType(group.type) }}</span>
             </div>
           </td>
         </tr>
-        <!-- Feature rows -->
-        <tr v-for="(item, i) in group.items" :key="i" class="border-t border-slate-100">
-          <td class="py-1 px-2 text-[#484E59]">{{ expandType(group.type) }}</td>
-          <td class="py-1 px-2 w-28 font-mono text-gray-700">{{ item.region }}</td>
-          <td class="py-1 px-2 w-32 text-[#484E59]">{{ item.source }}</td>
-          <td class="py-1 px-2 text-gray-700">{{ item.label }}</td>
-        </tr>
+
+        <!-- IDR rows: IDR | Start | End | Predictor -->
+        <template v-if="group.type === 'IDR'">
+          <tr v-for="(item, i) in group.items" :key="i" class="border-t border-slate-100">
+            <td class="py-1 px-2 text-[#484E59]">IDR</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.start }}</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.end }}</td>
+            <td class="py-1 px-2 text-[#484E59]">{{ item.source }}</td>
+          </tr>
+        </template>
+
+        <!-- LCD rows: Low complexity region | Start | End -->
+        <template v-else-if="group.type === 'LCD'">
+          <tr v-for="(item, i) in group.items" :key="i" class="border-t border-slate-100">
+            <td class="py-1 px-2 text-[#484E59]">Low complexity region</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.start }}</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.end }}</td>
+            <td class="py-1 px-2"></td>
+          </tr>
+        </template>
+
+        <!-- Domain rows: Pfam ID | Start | End | Pfam name -->
+        <template v-else-if="group.type === 'Domain'">
+          <tr v-for="(item, i) in group.items" :key="i" class="border-t border-slate-100">
+            <td class="py-1 px-2 font-mono text-[#484E59] text-[10px]">{{ item.accession }}</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.start }}</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.end }}</td>
+            <td class="py-1 px-2 text-gray-700">{{ item.label }}</td>
+          </tr>
+        </template>
+
+        <!-- MoRF rows: MoRF | Start | End | Source -->
+        <template v-else>
+          <tr v-for="(item, i) in group.items" :key="i" class="border-t border-slate-100">
+            <td class="py-1 px-2 text-[#484E59]">MoRF</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.start }}</td>
+            <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.end }}</td>
+            <td class="py-1 px-2 text-[#484E59]">{{ item.source }}</td>
+          </tr>
+        </template>
+
       </template>
     </table>
   </div>

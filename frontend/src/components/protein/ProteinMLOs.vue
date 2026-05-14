@@ -12,7 +12,7 @@ const props = defineProps({
 const SOURCE_ORDER = ['PhaseDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
 
 const SOURCE_URLS = {
-  PhaseDB:  (id) => `https://db.phasep.pro/uniprot/search?q=${id}`,
+  PhaseDB:  (id) => `https://db.phasep.pro/uniprot/${id}`,
   PhasePro: (id) => `https://phasepro.elte.hu/entry/${id}`,
   CDCODE:   (id) => `https://cd-code.org/search?q=${id}&p=proteins`,
   LLPSDB:   (id) => `http://bio-comp.org.cn/llpsdbv2/search.php?keyword=UniprotID&words=${id}&pmid=&species=ALL&pro_struc_type=ALL&pro_type=ALL&pro_seq_len=ALL&main_comp_type=ALL&post_trans_mod=ALL&main_comp_num=ALL&mut_type=ALL&mutst=&mutend=&phase=None`,
@@ -55,7 +55,9 @@ const groupedRows = computed(() => {
   const rows = []
   let groupIndex = 0
   for (const [, anns] of Object.entries(groups)) {
-    const displayRole = anns.find(a => a.unified_role != null)?.unified_role ?? null
+    // Prioritize: if any source says 'driver', use driver
+    const roles = anns.map(a => a.unified_role).filter(Boolean)
+    const displayRole = roles.includes('driver') ? 'driver' : (roles[0] ?? null)
     anns.forEach((ann, i) => {
       rows.push({
         isFirstInGroup: i === 0,
@@ -100,8 +102,8 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
             row.isFirstInGroup && row.groupIndex > 0 ? 'border-t border-slate-200' : '',
           ]"
         >
-          <!-- Organelle column -->
-          <td class="w-48 align-top py-2 pr-4">
+          <!-- Organelle name -->
+          <td class="w-44 align-top py-2 pr-3">
             <template v-if="row.isFirstInGroup">
               <RouterLink
                 :to="`/mlo/${row.unified_mlo}`"
@@ -109,10 +111,12 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
               >
                 {{ formatMlo(row.unified_mlo) }}
               </RouterLink>
-              <div class="mt-1">
-                <RoleBadge v-if="row.displayRole" :role="row.displayRole" />
-              </div>
             </template>
+          </td>
+
+          <!-- Role badge column -->
+          <td class="w-20 align-top py-2 pr-3">
+            <RoleBadge v-if="row.isFirstInGroup && row.displayRole" :role="row.displayRole" />
           </td>
 
           <!-- Source badge as link -->

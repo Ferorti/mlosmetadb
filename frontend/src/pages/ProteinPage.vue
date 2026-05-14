@@ -55,7 +55,7 @@ onMounted(() => {
       <ProteinHeader :protein="protein" />
 
       <!-- Tab nav -->
-      <div class="sticky top-0 z-10 bg-white border-b border-slate-200 mb-6">
+      <div class="sticky top-14 z-10 bg-white border-b border-slate-200 mb-6">
         <nav class="flex">
           <button
             v-for="tab in TABS"
@@ -75,7 +75,20 @@ onMounted(() => {
       <div v-if="mountedTabs.has('overview')" v-show="activeTab === 'overview'">
         <div class="flex gap-6 items-start">
 
-          <!-- Left: Sequence & features -->
+          <!-- Left: AlphaFold structure (larger) -->
+          <div class="w-[520px] flex-shrink-0">
+            <div class="text-sm font-medium text-gray-700 mb-2">AlphaFold Structure</div>
+            <div class="h-[420px] rounded border border-slate-200 overflow-hidden">
+              <MolStarViewer :uniprot-id="protein.uniprot_id" />
+            </div>
+            <a
+              :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
+              target="_blank" rel="noopener"
+              class="text-xs text-[#185FA5] mt-1 inline-block hover:underline"
+            >View in AlphaFold DB →</a>
+          </div>
+
+          <!-- Right: Sequence & features -->
           <div class="flex-1 min-w-0">
             <div class="text-sm font-medium text-gray-700 mb-2">Sequence & Features</div>
             <ProteinFeatureTrack
@@ -84,19 +97,6 @@ onMounted(() => {
               :sequence-length="protein.sequence_length ?? 0"
             />
             <div v-else class="text-sm text-[#484E59]">No sequence features available.</div>
-          </div>
-
-          <!-- Right: AlphaFold structure -->
-          <div class="w-80 flex-shrink-0">
-            <div class="text-sm font-medium text-gray-700 mb-2">AlphaFold Structure</div>
-            <div class="h-72 rounded border border-slate-200 overflow-hidden">
-              <MolStarViewer :uniprot-id="protein.uniprot_id" />
-            </div>
-            <a
-              :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
-              target="_blank" rel="noopener"
-              class="text-xs text-[#185FA5] mt-1 inline-block hover:underline"
-            >View in AlphaFold DB →</a>
           </div>
 
         </div>
