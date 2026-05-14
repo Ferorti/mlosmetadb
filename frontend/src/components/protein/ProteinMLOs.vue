@@ -52,18 +52,24 @@ const groupedRows = computed(() => {
     })
   }
 
+  // Sort groups: driver annotations first, then by number of source DBs desc
+  const sortedEntries = Object.entries(groups).sort(([, annsA], [, annsB]) => {
+    const aIsDriver = annsA.some(a => a.unified_role === 'driver') ? 0 : 1
+    const bIsDriver = annsB.some(b => b.unified_role === 'driver') ? 0 : 1
+    if (aIsDriver !== bIsDriver) return aIsDriver - bIsDriver
+    return annsB.length - annsA.length
+  })
+
   const rows = []
   let groupIndex = 0
-  for (const [, anns] of Object.entries(groups)) {
-    // Prioritize: if any source says 'driver', use driver
-    const roles = anns.map(a => a.unified_role).filter(Boolean)
-    const displayRole = roles.includes('driver') ? 'driver' : (roles[0] ?? null)
+  for (const [, anns] of sortedEntries) {
+    const isDriver = anns.some(a => a.unified_role === 'driver')
     anns.forEach((ann, i) => {
       rows.push({
         isFirstInGroup: i === 0,
         groupIndex,
         unified_mlo:  ann.unified_mlo,
-        displayRole:  i === 0 ? displayRole : null,
+        displayRole:  i === 0 && isDriver ? 'driver' : null,
         source_db:    ann.source_db,
         source_mlo:   ann.source_mlo,
       })
@@ -81,7 +87,7 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
   <div>
     <!-- Section header -->
     <div class="mb-4">
-      <span class="text-lg font-semibold text-gray-800">MLO Annotations</span>
+      <span class="text-lg font-semibold text-gray-800">MLOs</span>
       <span v-if="totalAnnotations" class="text-sm text-[#484E59] ml-2 font-normal">
         {{ totalAnnotations }} record{{ totalAnnotations !== 1 ? 's' : '' }} across
         {{ groupCount }} organelle{{ groupCount !== 1 ? 's' : '' }}

@@ -32,6 +32,7 @@ const badgeStyle = computed(() => {
     :href="href"
     target="_blank"
     rel="noopener"
+    :title="`View this protein's entry in ${source}`"
     class="text-xs px-2 py-0.5 rounded font-medium inline-block"
     :style="badgeStyle"
   >{{ source }}</a>

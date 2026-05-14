@@ -124,8 +124,11 @@ def _build_advanced_clauses(
         conditions.append("ma.unified_mlo = ?")
         params.append(mlo)
     if role:
-        conditions.append("LOWER(ma.unified_role) = LOWER(?)")
-        params.append(role)
+        if role.lower() == "component":
+            conditions.append("LOWER(ma.unified_role) != 'driver'")
+        else:
+            conditions.append("LOWER(ma.unified_role) = LOWER(?)")
+            params.append(role)
     if source_db:
         conditions.append("ma.source_db = ?")
         params.append(source_db)
@@ -177,8 +180,7 @@ async def get_advanced_search_facets(
         f"""
         SELECT
             SUM(ps.has_driver) AS driver,
-            SUM(ps.has_client) AS client,
-            SUM(CASE WHEN ps.has_driver = 0 AND ps.has_client = 0 THEN 1 ELSE 0 END) AS unknown
+            SUM(CASE WHEN ps.has_driver = 0 THEN 1 ELSE 0 END) AS component
         FROM ({base_cte}) f
         LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
         """,
@@ -201,7 +203,7 @@ async def get_advanced_search_facets(
     by_role: dict[str, int] = {}
     if role_rows:
         r = role_rows[0]
-        for k in ("driver", "client", "unknown"):
+        for k in ("driver", "component"):
             v = r.get(k)
             if v:
                 by_role[k] = int(v)

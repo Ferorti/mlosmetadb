@@ -29,7 +29,9 @@ async def get_mlo_stats(unified_mlo: str) -> dict:
 
     role_rows = await fetchall(
         """
-        SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(DISTINCT uniprot_id) AS cnt
+        SELECT
+            CASE WHEN LOWER(unified_role) = 'driver' THEN 'driver' ELSE 'component' END AS role,
+            COUNT(DISTINCT uniprot_id) AS cnt
         FROM mlo_annotations
         WHERE unified_mlo = ?
         GROUP BY role
@@ -73,8 +75,11 @@ async def get_mlo_proteins_page(
         conditions.append("LOWER(p.organism) = LOWER(?)")
         params.append(organism)
     if role:
-        conditions.append("LOWER(ma.unified_role) = LOWER(?)")
-        params.append(role)
+        if role.lower() == "component":
+            conditions.append("LOWER(ma.unified_role) != 'driver'")
+        else:
+            conditions.append("LOWER(ma.unified_role) = LOWER(?)")
+            params.append(role)
     if source_db:
         conditions.append("ma.source_db = ?")
         params.append(source_db)

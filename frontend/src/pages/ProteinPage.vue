@@ -2,11 +2,11 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProtein } from '@/composables/useProtein.js'
-import { formatCount } from '@/utils/format.js'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import ProteinHeader from '@/components/protein/ProteinHeader.vue'
 import ProteinMLOs from '@/components/protein/ProteinMLOs.vue'
 import ProteinFeatureTrack from '@/components/protein/ProteinFeatureTrack.vue'
+import ProteinPPI from '@/components/protein/ProteinPPI.vue'
 import MolStarViewer from '@/components/viewers/MolStarViewer.vue'
 
 const route = useRoute()
@@ -142,17 +142,8 @@ onMounted(() => {
 
       <!-- Interactions -->
       <div v-if="mountedTabs.has('interactions')" v-show="activeTab === 'interactions'">
-        <div class="text-lg font-semibold text-gray-800 mb-2">Protein-Protein Interactions</div>
-        <template v-if="protein.ppi && protein.ppi.total_partners > 0">
-          <div class="text-sm text-[#484E59]">
-            {{ formatCount(protein.ppi.total_partners) }} known partners
-          </div>
-          <div class="text-sm text-[#484E59]">
-            {{ formatCount(protein.ppi.partners_in_mlosmetadb) }} partners present in MLOsMetaDB
-          </div>
-        </template>
-        <div v-else class="text-sm text-[#484E59]">No PPI data available.</div>
-        <!-- TODO: paginated interactions table — requires ppi_page param on demand -->
+        <div class="text-lg font-semibold text-gray-800 mb-4">Protein–Protein Interactions</div>
+        <ProteinPPI :protein="protein" />
       </div>
 
       <!-- Orthologs -->

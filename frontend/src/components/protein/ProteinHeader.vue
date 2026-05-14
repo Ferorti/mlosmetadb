@@ -12,9 +12,7 @@ const titleRight = computed(() => props.protein.protein_name || null)
 
 const displayRole = computed(() => {
   const annotations = props.protein.mlo_annotations ?? []
-  if (annotations.some(a => a.unified_role === 'driver')) return 'driver'
-  if (annotations.some(a => a.unified_role === 'client')) return 'client'
-  return null
+  return annotations.some(a => a.unified_role === 'driver') ? 'driver' : null
 })
 
 const SOURCE_ORDER = ['PhaseDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
@@ -66,8 +64,6 @@ function sourceHref(source) {
       <div v-if="displayRole" class="flex items-center border-r border-slate-200 pr-3 mr-1">
         <RoleBadge :role="displayRole" />
       </div>
-
-      <span class="text-xs text-[#484E59] mr-2 self-center">Annotated in</span>
 
       <SourceDbBadge
         v-for="src in sourceDbs"

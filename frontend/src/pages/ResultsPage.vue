@@ -27,8 +27,7 @@ function computeFacetsFromProteins(proteins) {
   for (const p of proteins) {
     if (p.organism) by_organism[p.organism] = (by_organism[p.organism] || 0) + 1
     if (p.has_driver) by_role.driver = (by_role.driver || 0) + 1
-    if (p.has_client) by_role.client = (by_role.client || 0) + 1
-    if (!p.has_driver && !p.has_client) by_role.unknown = (by_role.unknown || 0) + 1
+    if (!p.has_driver) by_role.component = (by_role.component || 0) + 1
     for (const m of p.mlos ?? []) by_mlo[m] = (by_mlo[m] || 0) + 1
   }
   return { by_organism, by_role, by_mlo }
@@ -117,9 +116,7 @@ function buildTsv(proteins) {
     const idrPct  = calcCoverage(parseIdrRegions(p.idr_regions), p.sequence_length) ?? ''
     const lcdPct  = calcCoverage(parseLcdRegions(p.lcr_regions), p.sequence_length) ?? ''
     const domains = parseDomains(p.domains)
-    const role    = p.has_driver && p.has_client ? 'driver;client'
-                  : p.has_driver ? 'driver'
-                  : p.has_client ? 'client' : ''
+    const role    = p.has_driver ? 'driver' : 'component'
     return [
       p.uniprot_id    ?? '',
       p.gene_name     ?? '',

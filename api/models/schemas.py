@@ -141,6 +141,26 @@ class ProteinDetail(BaseModel):
     ppi: PpiSummary
 
 
+# ── /protein/{id}/ppi ────────────────────────────────────────────────────────
+
+class PpiPartner(BaseModel):
+    partner_uniprot_id: str
+    partner_gene: str | None
+    in_db: bool
+    has_driver: bool
+    mlos: list[str]
+    experimental_systems: list[str]
+    evidence_count: int
+    pubmed_ids: list[str]
+
+
+class PpiAllResponse(BaseModel):
+    uniprot_id: str
+    total: int
+    total_returned: int
+    items: list[PpiPartner]
+
+
 # ── /mlo/{id} ────────────────────────────────────────────────────────────────
 
 class MloDefinition(BaseModel):

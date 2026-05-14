@@ -41,7 +41,7 @@ const allOrganisms = Object.entries(statsData.proteins.by_organism)
   .map(([name]) => name)
 
 const roleOptions = computed(() => {
-  const all = [{ v: 'driver', l: 'Driver' }, { v: 'client', l: 'Client' }, { v: 'unknown', l: 'Unknown' }]
+  const all = [{ v: 'driver', l: 'Driver' }, { v: 'component', l: 'MLO component' }]
   if (!props.facets?.by_role) return all
   return all.filter(opt => props.facets.by_role[opt.v] != null)
 })
@@ -177,7 +177,7 @@ function applyPfam() {
           <!-- Active chip — only when filter is set -->
           <div v-if="filters.role" class="mb-1">
             <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5] font-medium">
-              {{ filters.role.charAt(0).toUpperCase() + filters.role.slice(1) }}
+              {{ filters.role === 'component' ? 'MLO component' : filters.role.charAt(0).toUpperCase() + filters.role.slice(1) }}
               <button @click="removeFilter('role')" class="opacity-60 hover:opacity-100 transition-opacity" aria-label="Remove filter">×</button>
             </span>
           </div>

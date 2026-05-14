@@ -11,7 +11,7 @@ def _build_sort(sort_by: str | None, sort_order: str) -> tuple[str, str, str]:
 
     sort_by and sort_order must already be validated by the caller.
     NULL values are always sorted last regardless of direction.
-    For role: asc=drivers first, desc=clients first (encoded in rank, always ORDER BY ASC).
+    For role: asc=drivers first, desc=components first (encoded in rank, always ORDER BY ASC).
     """
     if sort_by is None:
         return "", "p.uniprot_id", "f.uniprot_id"
@@ -93,8 +93,11 @@ async def get_proteins_page(
         conditions.append("ma.unified_mlo = ?")
         params.append(mlo)
     if role:
-        conditions.append("LOWER(ma.unified_role) = LOWER(?)")
-        params.append(role)
+        if role.lower() == "component":
+            conditions.append("LOWER(ma.unified_role) != 'driver'")
+        else:
+            conditions.append("LOWER(ma.unified_role) = LOWER(?)")
+            params.append(role)
     if source_db:
         conditions.append("ma.source_db = ?")
         params.append(source_db)
@@ -163,8 +166,11 @@ async def get_proteins_facets(
         conditions.append("ma.unified_mlo = ?")
         params.append(mlo)
     if role:
-        conditions.append("LOWER(ma.unified_role) = LOWER(?)")
-        params.append(role)
+        if role.lower() == "component":
+            conditions.append("LOWER(ma.unified_role) != 'driver'")
+        else:
+            conditions.append("LOWER(ma.unified_role) = LOWER(?)")
+            params.append(role)
     if source_db:
         conditions.append("ma.source_db = ?")
         params.append(source_db)
@@ -187,8 +193,7 @@ async def get_proteins_facets(
         f"""
         SELECT
             SUM(ps.has_driver) AS driver,
-            SUM(ps.has_client) AS client,
-            SUM(CASE WHEN ps.has_driver = 0 AND ps.has_client = 0 THEN 1 ELSE 0 END) AS unknown
+            SUM(CASE WHEN ps.has_driver = 0 THEN 1 ELSE 0 END) AS component
         FROM ({base_cte}) f
         LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
         """,
@@ -211,7 +216,7 @@ async def get_proteins_facets(
     by_role: dict[str, int] = {}
     if role_rows:
         r = role_rows[0]
-        for k in ("driver", "client", "unknown"):
+        for k in ("driver", "component"):
             v = r.get(k)
             if v:
                 by_role[k] = int(v)
@@ -273,6 +278,79 @@ async def get_ppi_summary(uniprot_id: str) -> dict:
         (uniprot_id,),
     ) or 0
     return {"total_partners": total, "partners_in_mlosmetadb": in_db}
+
+
+async def get_ppi_all(
+    uniprot_id: str,
+    in_db_only: bool,
+    role: str | None,
+    mlo: str | None,
+    limit: int = 2000,
+) -> tuple[int, list[dict]]:
+    extra_where: list[str] = []
+    extra_params: list = []
+
+    if in_db_only:
+        extra_where.append("pt.in_db = 1")
+    if role == "driver":
+        extra_where.append("COALESCE(ps.has_driver, 0) = 1")
+    elif role == "component":
+        extra_where.append("COALESCE(ps.has_driver, 0) = 0")
+    if mlo:
+        extra_where.append(
+            "EXISTS (SELECT 1 FROM mlo_annotations ma "
+            "WHERE ma.uniprot_id = pt.partner_uniprot_id AND ma.unified_mlo = ?)"
+        )
+        extra_params.append(mlo)
+
+    where_clause = ("AND " + " AND ".join(extra_where)) if extra_where else ""
+
+    cte = """
+    WITH partners AS (
+        SELECT
+            p.uniprot_id_b AS partner_uniprot_id,
+            MAX(p.in_db) AS in_db,
+            GROUP_CONCAT(DISTINCT p.experimental_system) AS experimental_systems,
+            COUNT(p.id) AS evidence_count,
+            GROUP_CONCAT(DISTINCT p.pubmed_id) AS pubmed_ids
+        FROM ppi p
+        WHERE p.uniprot_id_a = ?
+        GROUP BY p.uniprot_id_b
+    )
+    """
+    base_params = (uniprot_id,) + tuple(extra_params)
+
+    total = await fetchval(
+        cte + f"""
+        SELECT COUNT(*)
+        FROM partners pt
+        LEFT JOIN protein_summary ps ON ps.uniprot_id = pt.partner_uniprot_id
+        WHERE 1=1 {where_clause}
+        """,
+        base_params,
+    ) or 0
+
+    rows = await fetchall(
+        cte + f"""
+        SELECT
+            pt.partner_uniprot_id,
+            pr.gene_name AS partner_gene,
+            pt.in_db,
+            COALESCE(ps.has_driver, 0) AS has_driver,
+            ps.mlos,
+            pt.experimental_systems,
+            pt.evidence_count,
+            pt.pubmed_ids
+        FROM partners pt
+        LEFT JOIN proteins pr ON pr.uniprot_id = pt.partner_uniprot_id
+        LEFT JOIN protein_summary ps ON ps.uniprot_id = pt.partner_uniprot_id
+        WHERE 1=1 {where_clause}
+        ORDER BY pt.in_db DESC, COALESCE(ps.has_driver, 0) DESC, pr.gene_name ASC
+        LIMIT ?
+        """,
+        base_params + (limit,),
+    )
+    return total, rows
 
 
 async def get_ppi_page(uniprot_id: str, page: int, per_page: int) -> tuple[int, list[dict]]:

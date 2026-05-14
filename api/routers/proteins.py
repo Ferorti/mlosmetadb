@@ -12,6 +12,8 @@ from models.schemas import (
     MloAnnotation,
     MorfRegion,
     PlddtRegion,
+    PpiAllResponse,
+    PpiPartner,
     ProteinDetail,
     ProteinsResponse,
     ProteinSummary,
@@ -27,6 +29,7 @@ from queries.protein_queries import (
     get_protein_mlo_annotations,
     get_proteins_facets,
     get_proteins_page,
+    get_ppi_all,
     get_ppi_page,
     get_ppi_summary,
 )
@@ -96,6 +99,15 @@ def _build_features(rows: list[dict]) -> SequenceFeatures:
     return SequenceFeatures(idrs=idrs, domains=domains, lcds=lcds, morfs=morfs, plddt_regions=plddt_regions)
 
 
+_COMPONENT_ROLES = {"client", "unknown", "unmapped"}
+
+
+def _normalize_role(role: str | None) -> str | None:
+    if role and role.lower() in _COMPONENT_ROLES:
+        return "component"
+    return role
+
+
 def _build_mlo_annotation(row: dict) -> MloAnnotation:
     raw = row.get("evidence") or ""
     pmids = [p.strip() for p in raw.split(";") if p.strip() and p.strip().upper() != "NULL"]
@@ -104,7 +116,7 @@ def _build_mlo_annotation(row: dict) -> MloAnnotation:
         category=row.get("category"),
         source_db=row["source_db"],
         source_mlo=row.get("source_mlo"),
-        unified_role=row.get("unified_role"),
+        unified_role=_normalize_role(row.get("unified_role")),
         evidence_pmids=pmids,
     )
 
@@ -169,6 +181,51 @@ async def get_protein(
             partners_in_mlosmetadb=ppi_summary["partners_in_mlosmetadb"],
             interactions=interactions,
         ),
+    )
+
+
+@router.get("/protein/{uniprot_id}/ppi", response_model=PpiAllResponse)
+async def get_protein_ppi(
+    uniprot_id: str,
+    in_db_only: bool = Query(default=False),
+    role: str | None = Query(default=None),
+    mlo: str | None = Query(default=None),
+    limit: int = Query(default=2000, ge=1, le=5000),
+):
+    try:
+        meta = await get_protein_meta(uniprot_id)
+    except aiosqlite.Error:
+        raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
+
+    if meta is None:
+        raise HTTPException(404, {"error": "protein_not_found", "message": f"No protein with UniProt ID '{uniprot_id}'"})
+
+    try:
+        total, rows = await get_ppi_all(uniprot_id, in_db_only, role, mlo, limit)
+    except aiosqlite.Error:
+        raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
+
+    items = []
+    for r in rows:
+        mlos = _parse_mlos(r.get("mlos"))
+        exp_systems = list({s for s in (r.get("experimental_systems") or "").split(",") if s})
+        pmids = list({p for p in (r.get("pubmed_ids") or "").split(",") if p and p.upper() != "NONE"})
+        items.append(PpiPartner(
+            partner_uniprot_id=r["partner_uniprot_id"],
+            partner_gene=r.get("partner_gene"),
+            in_db=bool(r.get("in_db")),
+            has_driver=bool(r.get("has_driver")),
+            mlos=mlos,
+            experimental_systems=exp_systems,
+            evidence_count=r.get("evidence_count", 1),
+            pubmed_ids=pmids,
+        ))
+
+    return PpiAllResponse(
+        uniprot_id=uniprot_id,
+        total=total,
+        total_returned=len(items),
+        items=items,
     )
 
 

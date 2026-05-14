@@ -123,10 +123,17 @@ function onSortSelect(event) {
 
 // ---- Active filter chips (exclude q, page, per_page, mode) ----
 const SKIP_KEYS = new Set(['page', 'per_page', 'mode', 'sort_by', 'sort_order'])
+const ROLE_LABELS = { driver: 'Driver', component: 'MLO component' }
+
 const filterChips = computed(() =>
   Object.entries(props.activeFilters)
     .filter(([k, v]) => !SKIP_KEYS.has(k) && k !== 'q' && v)
-    .map(([k, v]) => ({ key: k, label: `${chipLabel(k)}: ${v}` }))
+    .map(([k, v]) => ({
+      key: k,
+      label: k === 'role'
+        ? `Role: ${ROLE_LABELS[v] ?? v}`
+        : `${chipLabel(k)}: ${v}`,
+    }))
 )
 
 function chipLabel(key) {
@@ -168,7 +175,6 @@ function goToProtein(id) {
 
 function titleColor(protein) {
   if (protein.has_driver) return 'text-[#185FA5]'
-  if (protein.has_client) return 'text-[#3B6D11]'
   return 'text-[#4B5563]'
 }
 
@@ -187,15 +193,11 @@ const columns = [
   col.accessor('gene_name',     { header: 'Gene name',   enableSorting: true }),
   col.accessor('organism',      { header: 'Organism',    enableSorting: true,
     cell: info => h('span', { class: 'italic' }, info.getValue()) }),
-  col.accessor(row => [row.has_driver, row.has_client], {
+  col.accessor('has_driver', {
     id: 'role', header: 'Role', enableSorting: false,
-    cell: info => {
-      const [d, c] = info.getValue()
-      const badges = []
-      if (d) badges.push(h(RoleBadge, { role: 'driver', key: 'driver' }))
-      if (c && !d) badges.push(h(RoleBadge, { role: 'client', key: 'client' }))
-      return h('div', { class: 'flex gap-1 flex-wrap' }, badges)
-    },
+    cell: info => info.getValue()
+      ? h(RoleBadge, { role: 'driver' })
+      : h('span', { class: 'text-gray-400 text-xs' }, '—'),
   }),
   col.accessor(row => row.mlos?.length ?? 0, {
     id: 'mlos', header: 'MLOs', enableSorting: true,
@@ -375,7 +377,6 @@ const table = useVueTable({
                   {{ protein.gene_name || protein.uniprot_id }}
                 </span>
                 <RoleBadge v-if="protein.has_driver" role="driver" />
-                <RoleBadge v-else-if="protein.has_client" role="client" />
               </div>
               <span class="font-mono text-[12px] text-gray-400 mt-0.5">
                 {{ protein.uniprot_id }}

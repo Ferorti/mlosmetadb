@@ -12,6 +12,7 @@ const router = useRouter()
 const cards = computed(() => {
   if (!props.stats) return []
   const r = props.stats.mlo_annotations.by_role
+  const componentCount = r.component ?? ((r.client || 0) + (r.unknown || 0))
   return [
     {
       role: 'driver',
@@ -21,17 +22,17 @@ const cards = computed(() => {
       countClass: 'text-brand-blue',
     },
     {
-      role: 'client',
-      count: r.client,
-      label: 'MLO Clients',
-      description: 'Proteins recruited to membraneless organelles without direct evidence of driving phase separation. Enriched in MLOs under specific conditions but lacking annotation as LLPS drivers.',
-      countClass: 'text-brand-green',
+      role: 'component',
+      count: componentCount,
+      label: 'MLO Components',
+      description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients and proteins with undetermined or unmapped role assignments.',
+      countClass: 'text-gray-500',
     },
     {
       role: 'all',
       count: props.stats.proteins.total,
       label: 'MLO-associated proteins',
-      description: 'All proteins annotated in at least one MLO across source databases. Includes drivers, clients, and proteins with undetermined or conflicting role assignments. The full dataset.',
+      description: 'All proteins annotated in at least one MLO across source databases. Includes drivers, components, and proteins with undetermined role assignments. The full dataset.',
       countClass: 'text-amber-500 opacity-80',
     },
   ]
@@ -58,7 +59,7 @@ function navigate(role) {
         <div :class="[
           'h-[3px] -mx-5 -mt-5 mb-4',
           card.role === 'driver' ? 'bg-brand-blue' :
-          card.role === 'client' ? 'bg-brand-green' : 'bg-amber-400 opacity-60'
+          card.role === 'component' ? 'bg-gray-300' : 'bg-amber-400 opacity-60'
         ]"></div>
         <div :class="['text-3xl font-bold tabular-nums', card.countClass]">
           {{ formatCount(card.count) }}
