@@ -14,9 +14,25 @@ const router = useRouter()
 
 const results         = ref(null)
 const total           = ref(0)
+const facets          = ref(null)
 const loading         = ref(false)
 const error           = ref(null)
 const downloadLoading = ref(false)
+
+function computeFacetsFromProteins(proteins) {
+  if (!proteins?.length) return null
+  const by_organism = {}
+  const by_role = {}
+  const by_mlo = {}
+  for (const p of proteins) {
+    if (p.organism) by_organism[p.organism] = (by_organism[p.organism] || 0) + 1
+    if (p.has_driver) by_role.driver = (by_role.driver || 0) + 1
+    if (p.has_client) by_role.client = (by_role.client || 0) + 1
+    if (!p.has_driver && !p.has_client) by_role.unknown = (by_role.unknown || 0) + 1
+    for (const m of p.mlos ?? []) by_mlo[m] = (by_mlo[m] || 0) + 1
+  }
+  return { by_organism, by_role, by_mlo }
+}
 
 const activeFilters = computed(() => ({ ...route.query }))
 
@@ -70,21 +86,23 @@ async function runSearch(f, overrides = {}) {
 
 async function fetchResults() {
   const f = activeFilters.value
-  if (!hasAnyFilter(f)) { results.value = null; total.value = 0; return }
+  if (!hasAnyFilter(f)) { results.value = null; total.value = 0; facets.value = null; return }
 
   loading.value = true
   error.value   = null
   try {
     const res = await runSearch(f)
-    if (!res) { results.value = []; total.value = 0; return }
+    if (!res) { results.value = []; total.value = 0; facets.value = null; return }
     const data    = res.data
     results.value = data.proteins ?? data.items ?? data.results ?? []
     total.value   = data.total    ?? data.total_hits ?? 0
+    facets.value  = data.facets ?? computeFacetsFromProteins(results.value)
   } catch (e) {
     console.error('[fetchResults error]', e)
     error.value   = e?.response?.data?.message ?? e?.message ?? 'Error fetching results'
     results.value = []
     total.value   = 0
+    facets.value  = null
   } finally {
     loading.value = false
   }
@@ -210,7 +228,7 @@ function onResetFilters() {
     <div class="max-w-6xl mx-auto px-6 w-full flex flex-1 gap-0 mt-6">
       <FilterSidebar
         :filters="activeFilters"
-        :facets="null"
+        :facets="facets"
         @update:filters="onFiltersUpdate"
         @reset-filters="onResetFilters"
       />

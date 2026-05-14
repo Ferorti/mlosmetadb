@@ -18,12 +18,14 @@ from models.schemas import (
     PpiInteractionItem,
     PpiInteractions,
     PpiSummary,
+    SearchFacets,
     SequenceFeatures,
 )
 from queries.protein_queries import (
     get_protein_features,
     get_protein_meta,
     get_protein_mlo_annotations,
+    get_proteins_facets,
     get_proteins_page,
     get_ppi_page,
     get_ppi_summary,
@@ -194,6 +196,7 @@ async def list_proteins(
     sort_order = sort_order.lower()
     try:
         total, rows = await get_proteins_page(organism, taxon_id, mlo, role, source_db, uniprot_id, sort_by, sort_order, page, per_page)
+        facets_data = await get_proteins_facets(organism, taxon_id, mlo, role, source_db, uniprot_id)
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
@@ -228,4 +231,9 @@ async def list_proteins(
             mlos=_parse_mlos(r.get("mlos")),
         ))
 
-    return ProteinsResponse(total=total, page=page, per_page=per_page, filters_applied=filters, proteins=proteins)
+    return ProteinsResponse(
+        total=total, page=page, per_page=per_page,
+        filters_applied=filters,
+        facets=SearchFacets(**facets_data),
+        proteins=proteins,
+    )

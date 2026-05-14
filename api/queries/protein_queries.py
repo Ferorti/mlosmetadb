@@ -134,6 +134,91 @@ async def get_proteins_page(
     return total, rows
 
 
+async def get_proteins_facets(
+    organism: str | None,
+    taxon_id: int | None,
+    mlo: str | None,
+    role: str | None,
+    source_db: str | None,
+    uniprot_id: str | None,
+) -> dict:
+    conditions: list[str] = []
+    params: list = []
+    needs_mlo = any(x is not None for x in [mlo, role, source_db])
+
+    from_clause = "FROM proteins p"
+    if needs_mlo:
+        from_clause += " JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id"
+
+    if uniprot_id is not None:
+        conditions.append("p.uniprot_id = ?")
+        params.append(uniprot_id)
+    if organism:
+        conditions.append("LOWER(p.organism) = LOWER(?)")
+        params.append(organism)
+    if taxon_id is not None:
+        conditions.append("p.taxon_id = ?")
+        params.append(taxon_id)
+    if mlo:
+        conditions.append("ma.unified_mlo = ?")
+        params.append(mlo)
+    if role:
+        conditions.append("LOWER(ma.unified_role) = LOWER(?)")
+        params.append(role)
+    if source_db:
+        conditions.append("ma.source_db = ?")
+        params.append(source_db)
+
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    p = tuple(params)
+    base_cte = f"SELECT DISTINCT p.uniprot_id {from_clause} {where}"
+
+    org_rows = await fetchall(
+        f"""
+        SELECT p.organism, COUNT(DISTINCT p.uniprot_id) AS cnt
+        {from_clause} {where}
+        GROUP BY p.organism
+        ORDER BY cnt DESC
+        """,
+        p,
+    )
+
+    role_rows = await fetchall(
+        f"""
+        SELECT
+            SUM(ps.has_driver) AS driver,
+            SUM(ps.has_client) AS client,
+            SUM(CASE WHEN ps.has_driver = 0 AND ps.has_client = 0 THEN 1 ELSE 0 END) AS unknown
+        FROM ({base_cte}) f
+        LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
+        """,
+        p,
+    )
+
+    mlo_rows = await fetchall(
+        f"""
+        SELECT ma2.unified_mlo, COUNT(DISTINCT ma2.uniprot_id) AS cnt
+        FROM ({base_cte}) f
+        JOIN mlo_annotations ma2 ON ma2.uniprot_id = f.uniprot_id
+        GROUP BY ma2.unified_mlo
+        ORDER BY cnt DESC
+        """,
+        p,
+    )
+
+    by_organism = {r["organism"]: r["cnt"] for r in org_rows if r["organism"]}
+    by_mlo = {r["unified_mlo"]: r["cnt"] for r in mlo_rows if r["unified_mlo"]}
+    by_role: dict[str, int] = {}
+    if role_rows:
+        r = role_rows[0]
+        for k in ("driver", "client", "unknown"):
+            v = r.get(k)
+            if v:
+                by_role[k] = int(v)
+
+    return {"by_organism": by_organism, "by_role": by_role, "by_mlo": by_mlo}
+
+
 # ── single protein ───────────────────────────────────────────────────────────
 
 async def get_protein_meta(uniprot_id: str) -> dict | None:

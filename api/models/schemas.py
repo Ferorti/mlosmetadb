@@ -35,11 +35,18 @@ class ProteinSummary(BaseModel):
     match_field: str | None = None
 
 
+class SearchFacets(BaseModel):
+    by_organism: dict[str, int] = {}
+    by_role: dict[str, int] = {}
+    by_mlo: dict[str, int] = {}
+
+
 class ProteinsResponse(BaseModel):
     total: int
     page: int
     per_page: int
     filters_applied: dict[str, Any]
+    facets: SearchFacets | None = None
     proteins: list[ProteinSummary]
 
 

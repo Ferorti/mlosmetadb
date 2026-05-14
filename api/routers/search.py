@@ -9,11 +9,13 @@ from config import DEFAULT_PAGE, DEFAULT_PER_PAGE, MAX_PER_PAGE
 from models.schemas import (
     ProteinsResponse,
     ProteinSummary,
+    SearchFacets,
     SearchMloHit,
     SearchResponse,
 )
 from queries.search_queries import (
     advanced_search,
+    get_advanced_search_facets,
     search_mlos_fts,
     search_mlos_like,
     search_proteins_fts,
@@ -154,6 +156,18 @@ async def search_advanced(
             page=page,
             per_page=per_page,
         )
+        facets_data = await get_advanced_search_facets(
+            gene_name=gene_name,
+            uniprot_id=uniprot_id,
+            organism=organism,
+            taxon_id=taxon_id,
+            mlo=mlo,
+            role=role,
+            source_db=source_db,
+            feature_type=feature_type,
+            feature_label=feature_label,
+            feature_accession=feature_accession,
+        )
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
@@ -179,4 +193,9 @@ async def search_advanced(
             mlos=_parse_mlos(r.get("mlos")),
         ))
 
-    return ProteinsResponse(total=total, page=page, per_page=per_page, filters_applied=filters, proteins=proteins)
+    return ProteinsResponse(
+        total=total, page=page, per_page=per_page,
+        filters_applied=filters,
+        facets=SearchFacets(**facets_data),
+        proteins=proteins,
+    )

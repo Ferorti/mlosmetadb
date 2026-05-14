@@ -84,7 +84,7 @@ async def search_mlos_like(q: str) -> list[dict]:
     )
 
 
-async def advanced_search(
+def _build_advanced_clauses(
     gene_name: str | None,
     uniprot_id: str | None,
     organism: str | None,
@@ -95,11 +95,7 @@ async def advanced_search(
     feature_type: str | None,
     feature_label: str | None,
     feature_accession: str | None,
-    page: int,
-    per_page: int,
-) -> tuple[int, list[dict]]:
-    from database import fetchval
-
+) -> tuple[list[str], list[str], list]:
     joins = ["FROM proteins p"]
     conditions: list[str] = []
     params: list = []
@@ -143,6 +139,96 @@ async def advanced_search(
         conditions.append("sf.accession = ?")
         params.append(feature_accession)
 
+    return joins, conditions, params
+
+
+async def get_advanced_search_facets(
+    gene_name: str | None,
+    uniprot_id: str | None,
+    organism: str | None,
+    taxon_id: int | None,
+    mlo: str | None,
+    role: str | None,
+    source_db: str | None,
+    feature_type: str | None,
+    feature_label: str | None,
+    feature_accession: str | None,
+) -> dict:
+    joins, conditions, params = _build_advanced_clauses(
+        gene_name, uniprot_id, organism, taxon_id, mlo, role, source_db,
+        feature_type, feature_label, feature_accession,
+    )
+    from_clause = " ".join(joins)
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+    p = tuple(params)
+    base_cte = f"SELECT DISTINCT p.uniprot_id {from_clause} {where}"
+
+    org_rows = await fetchall(
+        f"""
+        SELECT p.organism, COUNT(DISTINCT p.uniprot_id) AS cnt
+        {from_clause} {where}
+        GROUP BY p.organism
+        ORDER BY cnt DESC
+        """,
+        p,
+    )
+
+    role_rows = await fetchall(
+        f"""
+        SELECT
+            SUM(ps.has_driver) AS driver,
+            SUM(ps.has_client) AS client,
+            SUM(CASE WHEN ps.has_driver = 0 AND ps.has_client = 0 THEN 1 ELSE 0 END) AS unknown
+        FROM ({base_cte}) f
+        LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
+        """,
+        p,
+    )
+
+    mlo_rows = await fetchall(
+        f"""
+        SELECT ma2.unified_mlo, COUNT(DISTINCT ma2.uniprot_id) AS cnt
+        FROM ({base_cte}) f
+        JOIN mlo_annotations ma2 ON ma2.uniprot_id = f.uniprot_id
+        GROUP BY ma2.unified_mlo
+        ORDER BY cnt DESC
+        """,
+        p,
+    )
+
+    by_organism = {r["organism"]: r["cnt"] for r in org_rows if r["organism"]}
+    by_mlo = {r["unified_mlo"]: r["cnt"] for r in mlo_rows if r["unified_mlo"]}
+    by_role: dict[str, int] = {}
+    if role_rows:
+        r = role_rows[0]
+        for k in ("driver", "client", "unknown"):
+            v = r.get(k)
+            if v:
+                by_role[k] = int(v)
+
+    return {"by_organism": by_organism, "by_role": by_role, "by_mlo": by_mlo}
+
+
+async def advanced_search(
+    gene_name: str | None,
+    uniprot_id: str | None,
+    organism: str | None,
+    taxon_id: int | None,
+    mlo: str | None,
+    role: str | None,
+    source_db: str | None,
+    feature_type: str | None,
+    feature_label: str | None,
+    feature_accession: str | None,
+    page: int,
+    per_page: int,
+) -> tuple[int, list[dict]]:
+    from database import fetchval
+
+    joins, conditions, params = _build_advanced_clauses(
+        gene_name, uniprot_id, organism, taxon_id, mlo, role, source_db,
+        feature_type, feature_label, feature_accession,
+    )
     from_clause = " ".join(joins)
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 

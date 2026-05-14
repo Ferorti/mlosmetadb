@@ -40,6 +40,12 @@ const allOrganisms = Object.entries(statsData.proteins.by_organism)
   .sort((a, b) => b[1] - a[1])
   .map(([name]) => name)
 
+const roleOptions = computed(() => {
+  const all = [{ v: 'driver', l: 'Driver' }, { v: 'client', l: 'Client' }, { v: 'unknown', l: 'Unknown' }]
+  if (!props.facets?.by_role) return all
+  return all.filter(opt => props.facets.by_role[opt.v] != null)
+})
+
 const featureTypeOptions = [
   { value: 'IDR',         label: 'Intrinsically disordered region' },
   { value: 'LCD',         label: 'Low complexity domain'           },
@@ -65,9 +71,14 @@ const mloHiddenCount = computed(() => Math.max(0, filteredMlos.value.length - 8)
 const orgSearch  = ref('')
 const orgSearchResults = ref([])
 
-const displayedOrgs = computed(() =>
-  allOrganisms.slice(0, 9).map(name => ({ value: name, label: formatOrganism(name) }))
-)
+const displayedOrgs = computed(() => {
+  if (props.facets?.by_organism) {
+    return Object.entries(props.facets.by_organism)
+      .sort((a, b) => b[1] - a[1])
+      .map(([name]) => ({ value: name, label: formatOrganism(name) }))
+  }
+  return allOrganisms.slice(0, 9).map(name => ({ value: name, label: formatOrganism(name) }))
+})
 
 async function onOrganismSearch() {
   if (orgSearch.value.length < 3) {
@@ -174,7 +185,7 @@ function applyPfam() {
           <Transition name="fade">
             <div v-if="!filters.role">
               <div
-                v-for="opt in [{ v: 'driver', l: 'Driver' }, { v: 'client', l: 'Client' }, { v: 'unknown', l: 'Unknown' }]"
+                v-for="opt in roleOptions"
                 :key="opt.v"
                 class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-xs text-gray-600"
                 @click="applyFilter('role', opt.v)"
