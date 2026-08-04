@@ -17,6 +17,9 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(ROOT))
+import policy
+
 DB_PATH = ROOT / "database" / "mlosmetadb.db"
 MOBIDB_CACHE_PATH = ROOT / "database" / "cache" / "mobidb_cache.db"
 BATCH_SIZE = 500
@@ -139,8 +142,9 @@ def _build_domains(conn: sqlite3.Connection) -> dict[str, dict]:
 
 
 def _build_mlo_aggregates(conn: sqlite3.Connection) -> dict[str, dict]:
+    active = policy.active_annotation_clause("ma")
     rows = conn.execute(
-        """
+        f"""
         SELECT
             uniprot_id,
             MAX(CASE WHEN LOWER(unified_role)='driver' THEN 1 ELSE 0 END) AS has_driver,
@@ -149,7 +153,8 @@ def _build_mlo_aggregates(conn: sqlite3.Connection) -> dict[str, dict]:
             COUNT(DISTINCT unified_mlo) AS mlo_count,
             GROUP_CONCAT(DISTINCT unified_mlo) AS mlos_concat,
             GROUP_CONCAT(DISTINCT source_db) AS source_dbs_concat
-        FROM mlo_annotations
+        FROM mlo_annotations ma
+        WHERE {active}
         GROUP BY uniprot_id
         """
     ).fetchall()
