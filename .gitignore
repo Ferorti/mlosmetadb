@@ -256,3 +256,6 @@ frontend/DEVLOG.md
 frontend/DEVLOG.md
 *.db-wal
 *.db-shm
+
+# Git worktrees for isolated plan execution
+.worktrees/
