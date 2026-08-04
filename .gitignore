@@ -247,6 +247,13 @@ refactor/database/cache/
 refactor/database/crossref/
 refactor/database/raw/
 refactor/database/interim/*.tsv
+# Trailing-slash patterns above never match a symlink (even one pointing
+# to a directory) — worktrees set up for this refactor symlink cache/,
+# crossref/, raw/ back to the main checkout's copy, so mirror each as a
+# no-trailing-slash pattern too, or `git add -A` would stage the symlinks.
+refactor/database/cache
+refactor/database/crossref
+refactor/database/raw
 
 # --- Local dev config ---
 # MCP server local configuration (local paths, not for repo)
