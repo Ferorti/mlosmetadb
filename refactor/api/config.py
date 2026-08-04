@@ -1,5 +1,10 @@
 import os
+import sys
 from pathlib import Path
+
+_REFACTOR_ROOT = Path(__file__).resolve().parent.parent
+if str(_REFACTOR_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REFACTOR_ROOT))
 
 _default_db = Path(__file__).parent.parent / "database" / "mlosmetadb.db"
 DB_PATH = Path(os.environ["MLOSMETADB_PATH"]) if "MLOSMETADB_PATH" in os.environ else _default_db
