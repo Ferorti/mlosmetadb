@@ -1,3 +1,4 @@
+import policy
 from database import fetchone, fetchall, fetchval
 
 
@@ -16,24 +17,31 @@ async def get_mlo_definitions(unified_mlo: str) -> list[dict]:
 
 
 async def get_mlo_stats(unified_mlo: str) -> dict:
+    active = policy.active_annotation_clause("ma")
+
     total = await fetchval(
-        "SELECT COUNT(DISTINCT uniprot_id) FROM mlo_annotations WHERE unified_mlo = ?",
+        f"SELECT COUNT(DISTINCT ma.uniprot_id) FROM mlo_annotations ma WHERE ma.unified_mlo = ? AND {active}",
         (unified_mlo,),
     ) or 0
 
     source_rows = await fetchall(
-        "SELECT source_db, COUNT(DISTINCT uniprot_id) AS cnt FROM mlo_annotations WHERE unified_mlo = ? GROUP BY source_db",
+        f"""
+        SELECT ma.source_db, COUNT(DISTINCT ma.uniprot_id) AS cnt
+        FROM mlo_annotations ma
+        WHERE ma.unified_mlo = ? AND {active}
+        GROUP BY ma.source_db
+        """,
         (unified_mlo,),
     )
     by_source = {r["source_db"]: r["cnt"] for r in source_rows}
 
     role_rows = await fetchall(
-        """
+        f"""
         SELECT
-            CASE WHEN LOWER(unified_role) = 'driver' THEN 'driver' ELSE 'component' END AS role,
-            COUNT(DISTINCT uniprot_id) AS cnt
-        FROM mlo_annotations
-        WHERE unified_mlo = ?
+            CASE WHEN LOWER(ma.unified_role) = 'driver' THEN 'driver' ELSE 'component' END AS role,
+            COUNT(DISTINCT ma.uniprot_id) AS cnt
+        FROM mlo_annotations ma
+        WHERE ma.unified_mlo = ? AND {active}
         GROUP BY role
         """,
         (unified_mlo,),
@@ -41,11 +49,11 @@ async def get_mlo_stats(unified_mlo: str) -> dict:
     by_role = {r["role"]: r["cnt"] for r in role_rows}
 
     org_rows = await fetchall(
-        """
+        f"""
         SELECT DISTINCT p.organism
         FROM mlo_annotations ma
         JOIN proteins p ON ma.uniprot_id = p.uniprot_id
-        WHERE ma.unified_mlo = ?
+        WHERE ma.unified_mlo = ? AND {active}
         ORDER BY p.organism
         """,
         (unified_mlo,),
@@ -68,7 +76,8 @@ async def get_mlo_proteins_page(
     page: int,
     per_page: int,
 ) -> tuple[int, list[dict]]:
-    conditions = ["ma.unified_mlo = ?"]
+    active = policy.active_annotation_clause("ma")
+    conditions = ["ma.unified_mlo = ?", active]
     params: list = [unified_mlo]
 
     if organism:
@@ -110,7 +119,7 @@ async def get_mlo_proteins_page(
         FROM filtered f
         JOIN proteins p          ON p.uniprot_id  = f.uniprot_id
         JOIN protein_summary ps  ON ps.uniprot_id = f.uniprot_id
-        JOIN mlo_annotations ma  ON ma.uniprot_id = f.uniprot_id AND ma.unified_mlo = ?
+        JOIN mlo_annotations ma  ON ma.uniprot_id = f.uniprot_id AND ma.unified_mlo = ? AND {active}
         GROUP BY f.uniprot_id
         ORDER BY f.uniprot_id
         """,
@@ -125,9 +134,16 @@ async def get_all_mlos(
     organism: str | None = None,
     q: str | None = None,
 ) -> list[dict]:
+    active_ma = policy.active_annotation_clause("ma")
+    active_x = policy.active_annotation_clause("x")
+    excluded_clause, excluded_params = policy.excluded_mlo_category_clause("mv")
+
     conditions: list[str] = []
     params: list = []
 
+    if excluded_clause:
+        conditions.append(excluded_clause)
+        params.extend(excluded_params)
     if category:
         conditions.append("mv.category = ?")
         params.append(category)
@@ -136,7 +152,7 @@ async def get_all_mlos(
         params.append(f"%{q}%")
     if source_db:
         conditions.append(
-            "EXISTS (SELECT 1 FROM mlo_annotations x WHERE x.unified_mlo = mv.unified_mlo AND x.source_db = ?)"
+            f"EXISTS (SELECT 1 FROM mlo_annotations x WHERE x.unified_mlo = mv.unified_mlo AND x.source_db = ? AND {active_x})"
         )
         params.append(source_db)
     if organism:
@@ -144,7 +160,7 @@ async def get_all_mlos(
             "EXISTS ("
             "SELECT 1 FROM mlo_annotations x "
             "JOIN proteins p ON x.uniprot_id = p.uniprot_id "
-            "WHERE x.unified_mlo = mv.unified_mlo AND LOWER(p.organism) = LOWER(?)"
+            f"WHERE x.unified_mlo = mv.unified_mlo AND LOWER(p.organism) = LOWER(?) AND {active_x}"
             ")"
         )
         params.append(organism)
@@ -158,7 +174,7 @@ async def get_all_mlos(
                COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count,
                GROUP_CONCAT(DISTINCT ma.source_db) AS sources_concat
         FROM mlo_vocabulary mv
-        LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo
+        LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo AND {active_ma}
         {where}
         GROUP BY mv.unified_mlo, mv.category
         ORDER BY mv.unified_mlo
