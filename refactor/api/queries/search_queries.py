@@ -1,3 +1,4 @@
+import policy
 from database import fetchall, fts5_available
 
 
@@ -104,7 +105,9 @@ def _build_advanced_clauses(
     need_feat = any(x is not None for x in [feature_type, feature_label, feature_accession])
 
     if need_mlo:
-        joins.append("JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id")
+        joins.append(
+            f"JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id AND {policy.active_annotation_clause('ma')}"
+        )
     if need_feat:
         joins.append("JOIN sequence_features sf ON p.uniprot_id = sf.uniprot_id")
 
@@ -191,7 +194,7 @@ async def get_advanced_search_facets(
         f"""
         SELECT ma2.unified_mlo, COUNT(DISTINCT ma2.uniprot_id) AS cnt
         FROM ({base_cte}) f
-        JOIN mlo_annotations ma2 ON ma2.uniprot_id = f.uniprot_id
+        JOIN mlo_annotations ma2 ON ma2.uniprot_id = f.uniprot_id AND {policy.active_annotation_clause("ma2")}
         GROUP BY ma2.unified_mlo
         ORDER BY cnt DESC
         """,
