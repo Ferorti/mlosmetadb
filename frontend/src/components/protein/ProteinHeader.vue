@@ -37,7 +37,7 @@ function sourceHref(source) {
 </script>
 
 <template>
-  <div class="bg-white py-6 border-b border-slate-200 mb-0">
+  <div class="pt-5 pb-3 mb-0">
     <!-- Title row -->
     <h1 class="text-xl text-gray-800 mb-1">
       <span class="font-semibold">{{ titleLeft }}</span>
@@ -50,11 +50,10 @@ function sourceHref(source) {
     <!-- Metadata line -->
     <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-[#484E59]">
       <span class="font-mono text-gray-800">{{ protein.uniprot_id }}</span>
-      <span v-if="protein.gene_name">{{ protein.gene_name }}</span>
       <span v-if="protein.organism" class="italic">{{ protein.organism }}</span>
       <span v-if="protein.sequence_length">{{ protein.sequence_length }} aa</span>
       <span v-if="protein.disorder_mobidb_lite_dc != null">
-        MobiDB-lite disorder: {{ (protein.disorder_mobidb_lite_dc * 100).toFixed(1) }}%
+        Disorder: {{ (protein.disorder_mobidb_lite_dc * 100).toFixed(1) }}%
       </span>
     </div>
 

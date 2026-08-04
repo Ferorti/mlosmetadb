@@ -16,6 +16,7 @@ from models.schemas import (
 )
 from queries.mlo_queries import (
     get_all_mlos,
+    get_definitions_for_mlos,
     get_mlo_definitions,
     get_mlo_meta,
     get_mlo_proteins_page,
@@ -97,18 +98,33 @@ async def get_mlo(
 
 
 @router.get("/mlos", response_model=MlosResponse)
-async def list_mlos(category: str | None = None):
+async def list_mlos(
+    category: str | None = None,
+    source_db: str | None = None,
+    organism: str | None = None,
+    q: str | None = None,
+):
     try:
-        rows = await get_all_mlos(category)
+        rows = await get_all_mlos(category, source_db, organism, q)
+        defs_by_mlo = await get_definitions_for_mlos([r["unified_mlo"] for r in rows])
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
-    return MlosResponse(
-        total=len(rows),
-        mlos=[MloListItem(
+    items = []
+    for r in rows:
+        sources_raw = r.get("sources_concat") or ""
+        mlo_defs = defs_by_mlo.get(r["unified_mlo"], [])
+        items.append(MloListItem(
             unified_mlo=r["unified_mlo"],
             category=r.get("category"),
             protein_count=r.get("protein_count", 0),
             driver_count=r.get("driver_count", 0),
-        ) for r in rows],
-    )
+            sources=[s for s in sources_raw.split(",") if s],
+            definitions=[MloDefinition(
+                source_db=d["source_db"],
+                source_name=d.get("source_name"),
+                definition=d.get("definition"),
+            ) for d in mlo_defs],
+        ))
+
+    return MlosResponse(total=len(items), mlos=items)

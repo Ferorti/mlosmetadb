@@ -798,7 +798,7 @@ Dvl2 condensate,wnt_signaling_condensate,Citoplasma,Condensado Dishevelled; vía
 Euchromatin,chromatin_compartment,Nuclear,Fase eucromatínica de la cromatina (decisions §3.7)
 Germ plasm/Polar granule,germ_plasm,Germinal,Combinación DrLLPS; polar granule = germ plasm en Drosophila (decisions §3.4)
 IMP1 RNP granule,neuronal_granule,Neuronal,Gránulo IMP1; similar a neuronal granule por composición (decisions §5)
-NotInformed,NotInformed,NULL,Valor especial: proteína sin MLO asignado en la fuente (PhaseDB); no se descarta
+NotInformed,NotInformed,Unspecified,Valor especial: proteína sin MLO asignado en la fuente; incluida en DB como phase-separating sin contexto de condensado específico
 Pericentriolar material,centrosome,Citoesqueleto,PCM es el componente condensado del centrosoma (decisions §3.1)
 Photobody,plant_photobody,Vegetal,Cuerpo nuclear de fotorreceptores en plantas (PhyB/CRY); equivalente a plant_photobody
 Proteasome Storage Granule,proteasome_foci,Nuclear,PSG de levaduras; gránulo de almacenamiento del proteasoma bajo ayuno; agrupado con proteasome_foci
@@ -836,3 +836,7 @@ PML/RARα microspeckle,pml_nuclear_body,Nuclear,Microspeckle de PML con fusión 
 Pab2 nuclear condensate,pab2_condensate,Nuclear,Condensado nuclear de Pab2 en S. pombe; condensado de poliadenilación nuclear en levaduras
 Cytoplasmic protein granule,cytoplasmic_rnp_granule,Citoplasma,Término CDCODE para gránulos citoplasmáticos; agrupado con cytoplasmic ribonucleoprotein granule
 Galectin complex,galectin_condensate,Membrana,Complejo de galectinas en membrana; forma condensados en respuesta a daño de membrana [PMID:30257216]
+FIP200 puncta,fip200_puncta,Autofagia,Puncta formadas por FIP200 (RB1CC1) durante iniciación de autofagia; condensados de pre-autofagosoma [PMID:35165166]
+Cortical condensate,cortical_condensate,Membrana,Condensado cortical en membrana plasmática; estructuras asociadas al córtex de actina
+ICP22 condensate,icp22_condensate,Viral,Condensado viral formado por la proteína ICP22 del virus herpes simplex; fábrica viral nuclear [PMID:33060132]
+RNA-helicase condensates,rna_helicase_condensate,Citoplasma,Condensados formados por RNA helicasas; estructuras relacionadas con procesamiento de RNA

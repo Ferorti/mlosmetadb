@@ -16,3 +16,7 @@ export function searchOrganisms(q, limit = 10) {
 export function getProteinPpi(uniprotId, params = {}) {
   return client.get(`/protein/${uniprotId}/ppi`, { params })
 }
+
+export function getProteinOrthologs(uniprotId) {
+  return client.get(`/protein/${uniprotId}/orthologs`)
+}

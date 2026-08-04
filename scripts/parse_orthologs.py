@@ -1,18 +1,6 @@
 #!/usr/bin/env python3
 """
-parse_orthologs.py — parsea archivos OrthoDB → tabla orthologs en mlosmetadb.db
-
-Archivos requeridos en database/crossref/:
-  odb12v2_genes.tab.gz        gene_id | taxon_id | protein_id | uniprot | ...
-  odb12v2_OGs.tab.gz          og_id | level_taxid | og_name | ...
-  odb12v2_OG2genes.tab.gz     og_id | gene_id
-  odb12v2_gene_xrefs.tab.gz   gene_id | xref_id | xref_type   (auxiliar, ya disponible)
-  odb12v2_species.tab.gz      taxon_id | taxon_code | name | assembly
-
-Descargar desde: https://v12.orthodb.org/download/
-  odb12v2_genes.tab.gz
-  odb12v2_OGs.tab.gz
-  odb12v2_OG2genes.tab.gz
+parse_orthologs.py — OrthoDB v12 → ortholog_groups + ortholog_members
 """
 
 import gzip
@@ -21,63 +9,33 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-DB = ROOT / "database" / "mlosmetadb.db"
+ROOT     = Path(__file__).resolve().parent.parent
+DB       = ROOT / "database" / "mlosmetadb.db"
 CROSSREF = ROOT / "database" / "crossref"
 
-GENES_FILE    = CROSSREF / "odb12v2_genes.tab.gz"
+LEVELS_FILE   = CROSSREF / "odb12v2_levels.tab.gz"
 OGS_FILE      = CROSSREF / "odb12v2_OGs.tab.gz"
-OG2GENES_FILE = CROSSREF / "odb12v2_OG2genes.tab.gz"
-SPECIES_FILE  = CROSSREF / "odb12v2_species.tab.gz"
+GENES_FILE    = CROSSREF / "odb12v2_genes.tab.gz"
 XREFS_FILE    = CROSSREF / "odb12v2_gene_xrefs.tab.gz"
+OG2GENES_FILE = CROSSREF / "odb12v2_OG2genes.tab.gz"
 
-TARGET_TAXONS = {
-    9606:  "Homo sapiens",
-    10090: "Mus musculus",
-    7955:  "Danio rerio",
-    7227:  "Drosophila melanogaster",
-    6239:  "Caenorhabditis elegans",
-    4932:  "Saccharomyces cerevisiae",
-    3702:  "Arabidopsis thaliana",
-    44689: "Dictyostelium discoideum",
-    83333: "Escherichia coli K-12",
-}
-
-TEST_PROTEINS = {"P35637", "Q92520", "P09651", "P38919", "Q9NQC3"}
+TEST_PROTEINS = ["P35637", "Q92520", "P09651", "P38919", "Q9NQC3"]
 
 
-def check_required_files() -> bool:
-    missing = []
-    for f in [GENES_FILE, OGS_FILE, OG2GENES_FILE]:
-        if not f.exists():
-            missing.append(f.name)
-    if missing:
-        print("ERROR: faltan archivos requeridos de OrthoDB v12:")
-        for m in missing:
-            print(f"  ✗ database/crossref/{m}")
-        print()
-        print("Descargar desde https://v12.orthodb.org/download/")
-        print("Archivos necesarios:")
-        print("  odb12v2_genes.tab.gz      — gene_id, taxon_id, protein_id, UniProt accession")
-        print("  odb12v2_OGs.tab.gz        — ortholog group definitions")
-        print("  odb12v2_OG2genes.tab.gz   — OG → gene_id mappings")
-        return False
-    return True
-
+# ── Inspección de archivos ────────────────────────────────────────────────────
 
 def inspect_files() -> None:
-    """Imprime las primeras 3 líneas de cada archivo para verificar estructura."""
-    files = {
-        "genes":    GENES_FILE,
-        "OGs":      OGS_FILE,
-        "OG2genes": OG2GENES_FILE,
-        "species":  SPECIES_FILE,
-        "xrefs":    XREFS_FILE,
-    }
-    for name, path in files.items():
+    files = [
+        ("levels",   LEVELS_FILE),
+        ("OGs",      OGS_FILE),
+        ("genes",    GENES_FILE),
+        ("xrefs",    XREFS_FILE),
+        ("OG2genes", OG2GENES_FILE),
+    ]
+    for name, path in files:
         print(f"\n=== {path.name} ===")
         if not path.exists():
-            print("  (archivo no disponible)")
+            print("  (archivo no encontrado)")
             continue
         with gzip.open(path, "rt") as f:
             for i, line in enumerate(f):
@@ -86,271 +44,496 @@ def inspect_files() -> None:
                     break
 
 
+# ── Creación de tablas ────────────────────────────────────────────────────────
+
 def create_tables(con: sqlite3.Connection) -> None:
+    # Paso 0: backup de tabla orthologs OMA
+    existing = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    if "orthologs" in existing and "orthologs_oma_backup" not in existing:
+        print("Renombrando orthologs → orthologs_oma_backup ...")
+        con.execute("ALTER TABLE orthologs RENAME TO orthologs_oma_backup")
+        con.commit()
+
     con.executescript("""
-        CREATE TABLE IF NOT EXISTS orthologs (
-            id              INTEGER PRIMARY KEY AUTOINCREMENT,
-            uniprot_id      TEXT NOT NULL REFERENCES proteins(uniprot_id),
-            ortholog_id     TEXT NOT NULL,
-            organism        TEXT NOT NULL,
-            taxon_id        INTEGER NOT NULL,
-            og_id           TEXT,
-            in_db           INTEGER NOT NULL DEFAULT 0,
-            source          TEXT DEFAULT 'OrthoDB',
-            source_version  TEXT DEFAULT 'odb12v2'
+        CREATE TABLE IF NOT EXISTS ortholog_groups (
+            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+            uniprot_id     TEXT NOT NULL REFERENCES proteins(uniprot_id),
+            og_id          TEXT NOT NULL,
+            og_name        TEXT,
+            level_taxon_id INTEGER NOT NULL,
+            level_name     TEXT,
+            gene_count     INTEGER,
+            is_default     INTEGER DEFAULT 0,
+            UNIQUE(uniprot_id, og_id)
         );
-        CREATE INDEX IF NOT EXISTS idx_orth_uniprot ON orthologs(uniprot_id);
-        CREATE INDEX IF NOT EXISTS idx_orth_indb    ON orthologs(in_db);
-        CREATE INDEX IF NOT EXISTS idx_orth_taxon   ON orthologs(taxon_id);
+        CREATE INDEX IF NOT EXISTS idx_og_uniprot ON ortholog_groups(uniprot_id);
+        CREATE INDEX IF NOT EXISTS idx_og_ogid    ON ortholog_groups(og_id);
+
+        CREATE TABLE IF NOT EXISTS ortholog_members (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            og_id      TEXT NOT NULL,
+            uniprot_id TEXT NOT NULL,
+            organism   TEXT,
+            taxon_id   INTEGER,
+            in_db      INTEGER DEFAULT 0,
+            UNIQUE(og_id, uniprot_id)
+        );
+        CREATE INDEX IF NOT EXISTS idx_om_ogid ON ortholog_members(og_id);
+        CREATE INDEX IF NOT EXISTS idx_om_indb ON ortholog_members(in_db);
     """)
     con.commit()
 
 
-def load_species(species_file: Path) -> tuple[dict, dict]:
-    """Devuelve (taxon_code → taxon_id, taxon_code → species_name)."""
-    code_to_taxid: dict[str, int] = {}
-    code_to_name: dict[str, str] = {}
-    with gzip.open(species_file, "rt") as f:
+# ── Loaders ───────────────────────────────────────────────────────────────────
+
+def load_levels(path: Path) -> dict:
+    """taxon_id (int) → level_name (str)"""
+    levels: dict[int, str] = {}
+    with gzip.open(path, "rt") as f:
+        for line in f:
+            cols = line.rstrip().split("\t")
+            if len(cols) < 2:
+                continue
+            try:
+                levels[int(cols[0])] = cols[1]
+            except ValueError:
+                continue
+    return levels
+
+
+def load_ogs(path: Path) -> dict:
+    """og_id → {"taxon_id": int, "name": str}"""
+    ogs: dict[str, dict] = {}
+    with gzip.open(path, "rt") as f:
         for line in f:
             cols = line.rstrip().split("\t")
             if len(cols) < 3:
                 continue
             try:
-                taxid = int(cols[0])
+                taxon_id = int(cols[1])
             except ValueError:
                 continue
-            code = cols[1]
-            name = cols[2]
-            code_to_taxid[code] = taxid
-            code_to_name[code] = name
-    return code_to_taxid, code_to_name
+            ogs[cols[0]] = {"taxon_id": taxon_id, "name": cols[2]}
+    return ogs
 
 
-def load_genes(
-    genes_file: Path,
-    db_proteins: set[str],
-    code_to_taxid: dict[str, int],
-) -> tuple[dict, dict, dict]:
+def load_genes(path: Path) -> tuple[dict, dict]:
     """
-    Parsea genes.tab — sin header, 11 columnas:
-      0: gene_id   1: taxon_code   2: ncbi_protein_acc   3: gene_symbol
-      4: uniprot_accession   5-10: otros campos
+    Parsea genes.tab: gene_id(col0), organism_id(col1), ..., uniprot(col4)
+    Solo filas donde col4 no está vacía.
 
-    Devuelve:
-      uniprot_to_gene  — uniprot → gene_id  (solo genes relevantes)
-      gene_to_taxon    — gene_id → taxon_id
-      gene_to_uniprot  — gene_id → uniprot
+    Returns:
+      gene_to_uniprot: gene_id → uniprot_id
+      gene_to_taxon:   gene_id → taxon_id  (int del prefijo organism_id)
     """
-    uniprot_to_gene: dict[str, str] = {}
-    gene_to_taxon: dict[str, int] = {}
     gene_to_uniprot: dict[str, str] = {}
-
-    target_codes = {
-        code for code, tid in code_to_taxid.items() if tid in TARGET_TAXONS
-    }
-
-    with gzip.open(genes_file, "rt") as f:
+    gene_to_taxon:   dict[str, int] = {}
+    with gzip.open(path, "rt") as f:
         for line in f:
             cols = line.rstrip().split("\t")
             if len(cols) < 5:
                 continue
-            gene_id   = cols[0]
-            tax_code  = cols[1]
-            uniprot   = cols[4].strip()
-
+            uniprot = cols[4].strip()
             if not uniprot:
                 continue
-
-            taxid = code_to_taxid.get(tax_code)
-            if taxid is None:
+            gene_id = cols[0]
+            try:
+                taxon_id = int(cols[1].split("_")[0])
+            except (ValueError, IndexError):
                 continue
-
-            gene_to_taxon[gene_id]   = taxid
             gene_to_uniprot[gene_id] = uniprot
-
-            if taxid in TARGET_TAXONS or uniprot in db_proteins:
-                uniprot_to_gene[uniprot] = gene_id
-
-    return uniprot_to_gene, gene_to_taxon, gene_to_uniprot
+            gene_to_taxon[gene_id]   = taxon_id
+    return gene_to_uniprot, gene_to_taxon
 
 
-def load_og2genes(og2genes_file: Path) -> tuple[dict, dict]:
+def load_xrefs(path: Path) -> dict:
     """
-    Devuelve (gene_to_og, og_to_genes).
+    Parsea gene_xrefs.tab filtrando source == 'UniProt'.
+    Returns uniprot_id → gene_id
     """
-    gene_to_og: dict[str, str] = {}
+    uniprot_to_gene: dict[str, str] = {}
+    with gzip.open(path, "rt") as f:
+        for line in f:
+            cols = line.rstrip().split("\t")
+            if len(cols) < 3 or cols[2].strip() != "UniProt":
+                continue
+            xref = cols[1].strip()
+            if xref:
+                uniprot_to_gene[xref] = cols[0]
+    return uniprot_to_gene
+
+
+def load_og2genes(path: Path) -> tuple[dict, dict]:
+    """
+    Parsea OG2genes.tab: og_id(col0), gene_id(col1)
+    Returns:
+      og_to_genes:  og_id → [gene_ids]
+      gene_to_ogs:  gene_id → [og_ids]
+    """
     og_to_genes: dict[str, list] = defaultdict(list)
-
-    with gzip.open(og2genes_file, "rt") as f:
+    gene_to_ogs: dict[str, list] = defaultdict(list)
+    with gzip.open(path, "rt") as f:
         for line in f:
             cols = line.rstrip().split("\t")
             if len(cols) < 2:
                 continue
             og_id, gene_id = cols[0], cols[1]
-            gene_to_og[gene_id] = og_id
             og_to_genes[og_id].append(gene_id)
+            gene_to_ogs[gene_id].append(og_id)
+    return dict(og_to_genes), dict(gene_to_ogs)
 
-    return gene_to_og, og_to_genes
 
+# ── Lógica is_default ────────────────────────────────────────────────────────
 
-def build_orthologs(
-    db_proteins: set[str],
-    uniprot_to_gene: dict,
-    gene_to_og: dict,
+def select_default_og(
+    uid: str,
+    og_ids: list,
     og_to_genes: dict,
-    gene_to_taxon: dict,
     gene_to_uniprot: dict,
-    filter_to: set[str] | None = None,
-) -> list[tuple]:
-    rows = []
-    proteins_to_process = filter_to if filter_to else db_proteins
+    db_proteins: set,
+) -> str | None:
+    """
+    El OG default es el más específico (menor gene_count) con >=2
+    miembros in_db distintos del propio uid.
+    Si ninguno cumple, el más específico disponible.
+    """
+    if not og_ids:
+        return None
+    candidates = []
+    for og_id in og_ids:
+        members    = og_to_genes.get(og_id, [])
+        gene_count = len(members)
+        in_db_count = sum(
+            1 for mg in members
+            if gene_to_uniprot.get(mg, "") in db_proteins
+            and gene_to_uniprot.get(mg) != uid
+        )
+        candidates.append((og_id, gene_count, in_db_count))
+    candidates.sort(key=lambda x: x[1])  # más específico primero
+    for og_id, _, in_db_count in candidates:
+        if in_db_count >= 2:
+            return og_id
+    return candidates[0][0]  # fallback: más específico
 
-    for uniprot_id in proteins_to_process:
-        gene_id = uniprot_to_gene.get(uniprot_id)
+
+# ── Test ──────────────────────────────────────────────────────────────────────
+
+def run_test(
+    db_proteins: set,
+    uniprot_to_gene: dict,
+    gene_to_ogs: dict,
+    og_to_genes: dict,
+    ogs: dict,
+    levels: dict,
+    gene_to_uniprot: dict,
+    gene_to_taxon: dict,
+) -> bool:
+    print("\n" + "="*60)
+    print("=== TEST con TEST_PROTEINS ===")
+    print("="*60)
+
+    for uid in TEST_PROTEINS:
+        gene_id = uniprot_to_gene.get(uid)
+        print(f"\n  {uid}:")
+        print(f"    gene_id: {gene_id or '(no encontrado en OrthoDB)'}")
         if not gene_id:
             continue
 
-        og_id = gene_to_og.get(gene_id)
-        if not og_id:
+        og_ids = gene_to_ogs.get(gene_id, [])
+        if not og_ids:
+            print("    OGs: (ninguno)")
             continue
 
-        for member_gene_id in og_to_genes.get(og_id, []):
-            member_taxon  = gene_to_taxon.get(member_gene_id)
-            member_uniprot = gene_to_uniprot.get(member_gene_id)
+        og_rows = []
+        for og_id in og_ids:
+            og_meta    = ogs.get(og_id, {})
+            taxon_id   = og_meta.get("taxon_id", 0)
+            level_name = levels.get(taxon_id, "Unknown")
+            gene_count = len(og_to_genes.get(og_id, []))
+            og_rows.append((og_id, level_name, gene_count))
+        og_rows.sort(key=lambda x: x[2])
 
-            if not member_taxon or member_taxon not in TARGET_TAXONS:
+        default_og = select_default_og(uid, og_ids, og_to_genes, gene_to_uniprot, db_proteins)
+
+        print(f"    OGs ({len(og_rows)}):")
+        for og_id, level_name, gene_count in og_rows:
+            flag = " ← DEFAULT" if og_id == default_og else ""
+            print(f"      {og_id:28s}  {level_name:35s}  genes={gene_count:>6}{flag}")
+
+        if default_og:
+            members_indb = [
+                (gene_to_uniprot[mg], gene_to_taxon.get(mg, 0))
+                for mg in og_to_genes.get(default_og, [])
+                if gene_to_uniprot.get(mg, "") in db_proteins
+                and gene_to_uniprot.get(mg) != uid
+            ]
+            print(f"    Miembros in_db=1 del OG default (primeros 5):")
+            for mu, mt in members_indb[:5]:
+                org = levels.get(mt, str(mt))
+                print(f"      {mu}  taxon={mt}  level={org}")
+
+    # Sanity check: FUS debe tener ortólogo en ratón (taxon 10090) con in_db=1
+    fus_gene = uniprot_to_gene.get("P35637")
+    if not fus_gene:
+        print("\n  FAIL: P35637 no encontrado en OrthoDB xrefs")
+        return False
+
+    fus_og_ids = gene_to_ogs.get(fus_gene, [])
+    default_og = select_default_og("P35637", fus_og_ids, og_to_genes, gene_to_uniprot, db_proteins)
+
+    has_mouse_default = any(
+        gene_to_taxon.get(mg) == 10090
+        and gene_to_uniprot.get(mg, "") in db_proteins
+        for mg in og_to_genes.get(default_og or "", [])
+    )
+    has_mouse_any = any(
+        gene_to_taxon.get(mg) == 10090
+        and gene_to_uniprot.get(mg, "") in db_proteins
+        for og in fus_og_ids
+        for mg in og_to_genes.get(og, [])
+    )
+
+    print()
+    if has_mouse_default:
+        print("  PASS ✓ — P35637 tiene ortólogo en ratón (in_db=1) en OG default")
+        return True
+    elif has_mouse_any:
+        print("  PASS ✓ — P35637 tiene ortólogo en ratón (in_db=1) en algún OG")
+        return True
+    else:
+        print("  WARN — P35637 sin ortólogo en ratón con in_db=1 en ningún OG")
+        return False
+
+
+# ── Pipeline completo ─────────────────────────────────────────────────────────
+
+def run_pipeline(
+    con: sqlite3.Connection,
+    db_proteins: set,
+    uniprot_to_gene: dict,
+    gene_to_ogs: dict,
+    og_to_genes: dict,
+    ogs: dict,
+    levels: dict,
+    gene_to_uniprot: dict,
+    gene_to_taxon: dict,
+) -> None:
+    print("\n--- Pipeline completo ---")
+
+    # Paso 7: ortholog_groups
+    group_batch: list[tuple] = []
+    ogs_to_process: set[str] = set()
+    n_done = n_no_gene = n_no_og = 0
+
+    for uniprot_id in db_proteins:
+        gene_id = uniprot_to_gene.get(uniprot_id)
+        if not gene_id:
+            n_no_gene += 1
+            continue
+
+        og_ids = gene_to_ogs.get(gene_id, [])
+        if not og_ids:
+            n_no_og += 1
+            continue
+
+        for og_id in og_ids:
+            og_meta    = ogs.get(og_id, {})
+            taxon_id   = og_meta.get("taxon_id", 0)
+            level_name = levels.get(taxon_id, "Unknown")
+            gene_count = len(og_to_genes.get(og_id, []))
+            group_batch.append((uniprot_id, og_id, og_meta.get("name"), taxon_id, level_name, gene_count))
+            ogs_to_process.add(og_id)
+
+        n_done += 1
+        if n_done % 1000 == 0:
+            print(f"  [{n_done}] proteínas procesadas ...")
+
+    con.executemany(
+        "INSERT OR IGNORE INTO ortholog_groups "
+        "(uniprot_id, og_id, og_name, level_taxon_id, level_name, gene_count) "
+        "VALUES (?,?,?,?,?,?)",
+        group_batch,
+    )
+    con.commit()
+    print(f"  ortholog_groups: {len(group_batch):,} filas insertadas")
+    print(f"  Sin gene_id en OrthoDB: {n_no_gene:,}")
+    print(f"  Con gene_id pero sin OG: {n_no_og:,}")
+
+    # Paso 8: ortholog_members
+    print(f"\nInsertando miembros para {len(ogs_to_process):,} OGs únicos ...")
+    member_batch: list[tuple] = []
+    n_members = 0
+
+    for i, og_id in enumerate(ogs_to_process):
+        for mg in og_to_genes.get(og_id, []):
+            mu = gene_to_uniprot.get(mg)
+            if not mu:
                 continue
-            if not member_uniprot or member_uniprot == uniprot_id:
-                continue
+            taxon_id = gene_to_taxon.get(mg, 0)
+            organism = levels.get(taxon_id, "Unknown")
+            in_db    = 1 if mu in db_proteins else 0
+            member_batch.append((og_id, mu, organism, taxon_id, in_db))
 
-            in_db = 1 if member_uniprot in db_proteins else 0
-            rows.append((
-                uniprot_id,
-                member_uniprot,
-                TARGET_TAXONS[member_taxon],
-                member_taxon,
-                og_id,
-                in_db,
-            ))
+        if len(member_batch) >= 50000:
+            con.executemany(
+                "INSERT OR IGNORE INTO ortholog_members "
+                "(og_id, uniprot_id, organism, taxon_id, in_db) VALUES (?,?,?,?,?)",
+                member_batch,
+            )
+            con.commit()
+            n_members += len(member_batch)
+            member_batch.clear()
 
-    return rows
+        if (i + 1) % 10000 == 0:
+            print(f"  [{i+1:,}/{len(ogs_to_process):,}] OGs, {n_members:,} miembros ...")
+
+    if member_batch:
+        con.executemany(
+            "INSERT OR IGNORE INTO ortholog_members "
+            "(og_id, uniprot_id, organism, taxon_id, in_db) VALUES (?,?,?,?,?)",
+            member_batch,
+        )
+        con.commit()
+        n_members += len(member_batch)
+
+    print(f"  ortholog_members: {n_members:,} filas insertadas")
+
+    # Paso 9: is_default
+    print("\nMarcando is_default ...")
+    updates = []
+    for uniprot_id in db_proteins:
+        gene_id = uniprot_to_gene.get(uniprot_id)
+        if not gene_id:
+            continue
+        og_ids = gene_to_ogs.get(gene_id, [])
+        default_og = select_default_og(uniprot_id, og_ids, og_to_genes, gene_to_uniprot, db_proteins)
+        if default_og:
+            updates.append((uniprot_id, default_og))
+
+    con.executemany(
+        "UPDATE ortholog_groups SET is_default = 1 WHERE uniprot_id = ? AND og_id = ?",
+        updates,
+    )
+    con.commit()
+    print(f"  {len(updates):,} proteínas con OG default marcado")
 
 
-def print_test_results(rows: list[tuple]) -> None:
-    from collections import defaultdict
-    by_uid: dict = defaultdict(list)
-    for r in rows:
-        by_uid[r[0]].append(r)
+# ── Verificación final ────────────────────────────────────────────────────────
 
-    print("\n=== TEST RESULTS ===")
-    for uid in sorted(TEST_PROTEINS):
-        results = by_uid.get(uid, [])
-        by_org: dict = defaultdict(list)
-        for r in results:
-            by_org[r[2]].append(r[1])
-        print(f"\n  {uid}: {len(results)} ortólogos")
-        for org, ids in sorted(by_org.items()):
-            in_db_flag = " (in_db=1)" if any(
-                r[5] == 1 for r in results if r[2] == org
-            ) else ""
-            print(f"    {org}: {', '.join(ids[:3])}{in_db_flag}")
+def print_verification(con: sqlite3.Connection) -> None:
+    print("\n" + "="*60)
+    print("=== Verificación final ===")
+    print("="*60)
 
+    n = con.execute("SELECT COUNT(DISTINCT uniprot_id) FROM ortholog_groups").fetchone()[0]
+    print(f"\nCobertura: {n:,} proteínas con al menos un OG")
+
+    print("\nDistribución de niveles taxonómicos (top 20):")
+    for row in con.execute("""
+        SELECT level_name, COUNT(DISTINCT uniprot_id) AS proteinas
+        FROM ortholog_groups
+        GROUP BY level_name
+        ORDER BY proteinas DESC
+        LIMIT 20
+    """):
+        print(f"  {row[0]:45s}  {row[1]:>6,}")
+
+    print("\nOGs de FUS (P35637):")
+    for row in con.execute("""
+        SELECT og.og_id, og.level_name, COUNT(*) AS total_members,
+               SUM(om.in_db) AS in_db_members
+        FROM ortholog_groups og
+        JOIN ortholog_members om ON og.og_id = om.og_id
+        WHERE og.uniprot_id = 'P35637'
+        GROUP BY og.og_id, og.level_name
+        ORDER BY in_db_members DESC
+    """):
+        print(f"  {row[0]:28s}  {row[1]:35s}  total={row[2]:>5}  in_db={row[3]}")
+
+    print("\nSanity check — FUS ortólogo en ratón (taxon 10090) desde OG default:")
+    rows = con.execute("""
+        SELECT om.uniprot_id, om.organism, om.in_db
+        FROM ortholog_groups og
+        JOIN ortholog_members om ON og.og_id = om.og_id
+        WHERE og.uniprot_id = 'P35637'
+          AND og.is_default = 1
+          AND om.taxon_id = 10090
+    """).fetchall()
+    if rows:
+        for row in rows:
+            print(f"  {row[0]}  organism_level={row[1]}  in_db={row[2]}")
+    else:
+        print("  (ninguno en OG default — revisar is_default)")
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
     print("=== Verificando estructura de archivos ===")
     inspect_files()
 
-    if not check_required_files():
-        sys.exit(1)
+    for f in [LEVELS_FILE, OGS_FILE, GENES_FILE, XREFS_FILE, OG2GENES_FILE]:
+        if not f.exists():
+            print(f"\nERROR: falta {f}")
+            sys.exit(1)
 
     con = sqlite3.connect(DB)
     con.execute("PRAGMA journal_mode=WAL")
     create_tables(con)
 
+    # Paso 6
     db_proteins = {r[0] for r in con.execute("SELECT uniprot_id FROM proteins")}
-    print(f"\nProteínas en DB: {len(db_proteins)}")
+    print(f"\nProteínas en DB: {len(db_proteins):,}")
 
-    already_done = {r[0] for r in con.execute("SELECT DISTINCT uniprot_id FROM orthologs")}
-    if already_done:
-        print(f"Ya procesadas: {len(already_done)} — modo append")
+    # Paso 1
+    print("Cargando levels ...")
+    levels = load_levels(LEVELS_FILE)
+    print(f"  {len(levels):,} niveles")
 
-    print("\nCargando species ...")
-    code_to_taxid, code_to_name = load_species(SPECIES_FILE)
+    # Paso 2
+    print("Cargando OGs ...")
+    ogs = load_ogs(OGS_FILE)
+    print(f"  {len(ogs):,} grupos OG")
 
+    # Paso 3
     print("Cargando genes ...")
-    uniprot_to_gene, gene_to_taxon, gene_to_uniprot = load_genes(
-        GENES_FILE, db_proteins, code_to_taxid
-    )
-    print(f"  genes con UniProt: {len(gene_to_uniprot):,}")
-    print(f"  genes relevantes (dataset + target taxons): {len(uniprot_to_gene):,}")
+    gene_to_uniprot, gene_to_taxon = load_genes(GENES_FILE)
+    print(f"  gene_to_uniprot: {len(gene_to_uniprot):,}")
+    print(f"  gene_to_taxon:   {len(gene_to_taxon):,}")
 
+    # Paso 4
+    print("Cargando xrefs (UniProt) ...")
+    uniprot_to_gene = load_xrefs(XREFS_FILE)
+    # Complementar con genes.tab col4 para db_proteins no encontradas en xrefs
+    for gene_id, upid in gene_to_uniprot.items():
+        if upid in db_proteins and upid not in uniprot_to_gene:
+            uniprot_to_gene[upid] = gene_id
+    print(f"  uniprot_to_gene: {len(uniprot_to_gene):,}")
+
+    # Paso 5
     print("Cargando OG2genes ...")
-    gene_to_og, og_to_genes = load_og2genes(OG2GENES_FILE)
-    print(f"  genes con OG: {len(gene_to_og):,}")
-    print(f"  grupos OG totales: {len(og_to_genes):,}")
+    og_to_genes, gene_to_ogs = load_og2genes(OG2GENES_FILE)
+    print(f"  OGs únicos: {len(og_to_genes):,}")
+    print(f"  genes con OG: {len(gene_to_ogs):,}")
 
-    # ── TEST ──────────────────────────────────────────────────────────────
-    print("\n--- Test con TEST_PROTEINS ---")
-    test_rows = build_orthologs(
-        db_proteins, uniprot_to_gene, gene_to_og, og_to_genes,
-        gene_to_taxon, gene_to_uniprot, filter_to=TEST_PROTEINS,
+    # ── TEST ──────────────────────────────────────────────────────────────────
+    test_ok = run_test(
+        db_proteins, uniprot_to_gene, gene_to_ogs, og_to_genes,
+        ogs, levels, gene_to_uniprot, gene_to_taxon,
     )
-    print_test_results(test_rows)
 
-    fus_mouse = any(r[0] == "P35637" and r[3] == 10090 for r in test_rows)
-    print(f"\n  Test FUS ortólogo en ratón: {'PASS ✓' if fus_mouse else 'WARN — Q60900 no encontrado'}")
-
-    if not test_rows:
-        print("No se encontraron ortólogos para proteínas de test. Revisar columnas de genes.tab.")
+    if not test_ok:
+        print("\nTest fallido. Abortando pipeline completo.")
         con.close()
         sys.exit(1)
 
-    # ── PIPELINE COMPLETO ─────────────────────────────────────────────────
-    print("\n--- Pipeline completo ---")
-    all_rows = build_orthologs(
-        db_proteins, uniprot_to_gene, gene_to_og, og_to_genes,
-        gene_to_taxon, gene_to_uniprot, filter_to=None,
+    # ── PIPELINE COMPLETO ─────────────────────────────────────────────────────
+    run_pipeline(
+        con, db_proteins, uniprot_to_gene, gene_to_ogs, og_to_genes,
+        ogs, levels, gene_to_uniprot, gene_to_taxon,
     )
 
-    # Idempotencia
-    existing = {
-        (r[0], r[1], r[3])
-        for r in con.execute("SELECT uniprot_id, ortholog_id, taxon_id FROM orthologs")
-    }
-    new_rows = [r for r in all_rows if (r[0], r[1], r[3]) not in existing]
-
-    if new_rows:
-        con.executemany(
-            "INSERT INTO orthologs (uniprot_id, ortholog_id, organism, taxon_id, og_id, in_db) "
-            "VALUES (?,?,?,?,?,?)",
-            new_rows,
-        )
-        con.commit()
-
-    total   = len(all_rows)
-    in_db_1 = sum(1 for r in all_rows if r[5] == 1)
-    n_with_gene = sum(1 for uid in db_proteins if uid in uniprot_to_gene)
-    n_with_og   = sum(1 for uid in db_proteins
-                      if uid in uniprot_to_gene
-                      and gene_to_og.get(uniprot_to_gene[uid]))
-    n_no_orth   = sum(1 for uid in db_proteins
-                      if uid in uniprot_to_gene
-                      and gene_to_og.get(uniprot_to_gene[uid])
-                      and not any(r[0] == uid for r in all_rows))
-
-    print()
-    print("=== Reporte final parse_orthologs ===")
-    print(f"Proteínas en dataset:          {len(db_proteins):>8,}")
-    print(f"Con gene_id en OrthoDB:        {n_with_gene:>8,}")
-    print(f"Con og_id asignado:            {n_with_og:>8,}")
-    print(f"Sin ortólogo en ningún taxon:  {n_no_orth:>8,}")
-    print(f"Filas insertadas:              {total:>8,}")
-    print(f"  - con in_db = 1:             {in_db_1:>8,}")
-    print("\nPor organismo:")
-    for taxon_id, name in sorted(TARGET_TAXONS.items(), key=lambda x: x[1]):
-        n = sum(1 for r in all_rows if r[3] == taxon_id)
-        print(f"  {name:35s} {n:>8,}")
-
+    print_verification(con)
     con.close()
 
 

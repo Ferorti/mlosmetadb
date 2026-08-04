@@ -22,6 +22,7 @@ NULL = "NULL"
 # Valid source_db values
 SOURCE_DBS = [
     "PhaseDB",
+    "PhasePDB",
     "DrLLPS",
     "LLPSDB",
     "PhasePro",

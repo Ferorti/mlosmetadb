@@ -27,9 +27,8 @@ const morfs = computed(() => props.sequenceFeatures?.morfs ?? [])
 const trackIdrs = computed(() => idrRegions.value.filter(r => r.source === 'MobiDB-lite'))
 const trackLcds = computed(() => lcdRegions.value.filter(r => r.source === 'MobiDB-lite-sub'))
 
-// ─── Table-visible subsets (broader, but still curated) ──────────────────────
-const IDR_TABLE_SOURCES = new Set(['MobiDB-lite', 'AlphaFold-disorder'])
-const tableIdrs = computed(() => idrRegions.value.filter(r => IDR_TABLE_SOURCES.has(r.source)))
+// ─── Table-visible subsets ────────────────────────────────────────────────────
+const tableIdrs = computed(() => idrRegions.value.filter(r => r.source === 'MobiDB-lite'))
 const tableLcds = computed(() => lcdRegions.value.filter(r => r.source === 'MobiDB-lite-sub'))
 
 // Table: deduplicate domains by accession (show each domain type once)
@@ -254,10 +253,11 @@ const TYPE_COLORS = {
   MoRF:   '#C4B5FD',
 }
 
+const GROUP_ORDER = { Domain: 0, IDR: 1, LCD: 2, MoRF: 3 }
+
 const featureGroups = computed(() => {
   const groups = []
 
-  // IDR — MobiDB-lite and AlphaFold-disorder; cols: label | start | end | predictor
   if (tableIdrs.value.length) {
     groups.push({
       type: 'IDR',
@@ -270,7 +270,6 @@ const featureGroups = computed(() => {
     })
   }
 
-  // LCD — MobiDB-lite-sub; cols: label | start | end (no predictor)
   if (tableLcds.value.length) {
     groups.push({
       type: 'LCD',
@@ -282,7 +281,6 @@ const featureGroups = computed(() => {
     })
   }
 
-  // Domains — Pfam; cols: accession | start | end | name
   if (tableDomainsDeduped.value.length) {
     groups.push({
       type: 'Domain',
@@ -296,7 +294,6 @@ const featureGroups = computed(() => {
     })
   }
 
-  // MoRFs
   if (morfs.value.length) {
     groups.push({
       type: 'MoRF',
@@ -310,17 +307,15 @@ const featureGroups = computed(() => {
     })
   }
 
-  return groups
+  return groups.sort((a, b) => GROUP_ORDER[a.type] - GROUP_ORDER[b.type])
 })
 </script>
 
 <template>
   <div>
-    <!-- Stats line -->
-    <div v-if="featureStats" class="text-xs text-[#484E59] mb-3">{{ featureStats }}</div>
 
     <!-- D3 track -->
-    <div ref="containerRef" class="w-full relative mb-4">
+    <div ref="containerRef" class="w-full relative mb-1">
       <svg style="display:block; overflow:visible"></svg>
     </div>
 
@@ -344,6 +339,8 @@ const featureGroups = computed(() => {
         "
       ></div>
     </teleport>
+    <!-- Stats line -->
+    <div v-if="featureStats" class="text-xs text-center text-[#484E59] mb-3">{{ featureStats }}</div>
 
     <!-- Feature table -->
     <div v-if="!hasFeatures" class="text-sm text-[#484E59]">No sequence features available.</div>

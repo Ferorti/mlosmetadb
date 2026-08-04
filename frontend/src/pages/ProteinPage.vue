@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProtein } from '@/composables/useProtein.js'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
@@ -7,6 +7,7 @@ import ProteinHeader from '@/components/protein/ProteinHeader.vue'
 import ProteinMLOs from '@/components/protein/ProteinMLOs.vue'
 import ProteinFeatureTrack from '@/components/protein/ProteinFeatureTrack.vue'
 import ProteinPPI from '@/components/protein/ProteinPPI.vue'
+import ProteinOrthologs from '@/components/protein/ProteinOrthologs.vue'
 import MolStarViewer from '@/components/viewers/MolStarViewer.vue'
 
 const route = useRoute()
@@ -27,16 +28,22 @@ const TABS = [
   { id: 'orthologs',     label: 'Orthologs' },
 ]
 
-onMounted(() => {
-  fetchProtein(route.params.id)
-})
+watch(() => route.params.id, (id) => {
+  if (!id) return
+  activeTab.value = 'overview'
+  mountedTabs.clear()
+  mountedTabs.add('overview')
+  fetchProtein(id)
+}, { immediate: true })
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto px-6 py-6">
+  <div>
 
     <!-- Loading -->
-    <LoadingSpinner v-if="loading" />
+    <div v-if="loading" class="max-w-6xl mx-auto px-6 py-6">
+      <LoadingSpinner />
+    </div>
 
     <!-- Not found -->
     <div v-else-if="error === 'not_found'" class="py-24 text-center text-sm text-[#484E59]">
@@ -52,7 +59,15 @@ onMounted(() => {
     <!-- Protein data -->
     <template v-else-if="protein">
 
-      <ProteinHeader :protein="protein" />
+      <!-- Header with blue background -->
+      <div class="bg-[#EBF3FB] border-b border-[#C8DFF2]">
+        <div class="max-w-6xl mx-auto px-6">
+          <ProteinHeader :protein="protein" />
+        </div>
+      </div>
+
+      <!-- Tab nav + content -->
+      <div class="max-w-6xl mx-auto px-6 pb-6">
 
       <!-- Tab nav -->
       <div class="sticky top-14 z-10 bg-white border-b border-slate-200 mb-6">
@@ -148,11 +163,10 @@ onMounted(() => {
 
       <!-- Orthologs -->
       <div v-if="mountedTabs.has('orthologs')" v-show="activeTab === 'orthologs'">
-        <div class="text-sm text-[#484E59]">
-          Ortholog data is not yet available in this version of MLOsMetaDB.
-        </div>
+        <ProteinOrthologs :protein="protein" />
       </div>
 
+      </div><!-- end tab+content -->
     </template>
   </div>
 </template>

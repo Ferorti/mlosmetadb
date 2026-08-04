@@ -8,11 +8,13 @@ import sqlite3
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-FINAL = ROOT / "database" / "final"
-DB = ROOT / "database" / "mlosmetadb.db"
-CACHE_DIR = ROOT / "database" / "cache"
+DB_DIR   = ROOT / "database"
+MAP_DIR  = DB_DIR / "mappings"
+FINAL    = DB_DIR / "final"
+DB       = DB_DIR / "mlosmetadb.db"
+CACHE_DIR = DB_DIR / "cache"
 
-SKIP_MLO = {"DISCARD", "NULL", "NotInformed", "synthetic_condensate", ""}
+SKIP_MLO = {"DISCARD", "NULL", "synthetic_condensate", ""}
 
 SCHEMA_MAIN = """
 CREATE TABLE IF NOT EXISTS mlo_vocabulary (
@@ -67,6 +69,66 @@ CREATE TABLE IF NOT EXISTS sequence_features (
     metadata         TEXT,
     fetch_date       TEXT
 );
+
+CREATE TABLE IF NOT EXISTS ortholog_meta (
+    ortholog_id              TEXT PRIMARY KEY,
+    gene_name                TEXT,
+    protein_name             TEXT,
+    organism                 TEXT,
+    taxon_id                 INTEGER,
+    length                   INTEGER,
+    disorder_mobidb_lite_dc  REAL,
+    disorder_alphafold_dc    REAL,
+    sequence                 TEXT,
+    fetch_date               TEXT
+);
+
+CREATE TABLE IF NOT EXISTS ortholog_features (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    ortholog_id  TEXT NOT NULL,
+    feature_type TEXT NOT NULL,
+    source       TEXT NOT NULL,
+    label        TEXT,
+    accession    TEXT,
+    start        INTEGER,
+    end          INTEGER,
+    score        REAL,
+    metadata     TEXT,
+    fetch_date   TEXT
+);
+
+CREATE TABLE IF NOT EXISTS orthologs (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    uniprot_id      TEXT NOT NULL REFERENCES proteins(uniprot_id),
+    ortholog_id     TEXT NOT NULL,
+    organism        TEXT NOT NULL DEFAULT '',
+    taxon_id        INTEGER NOT NULL DEFAULT 0,
+    og_id           TEXT,
+    in_db           INTEGER NOT NULL DEFAULT 0,
+    source          TEXT DEFAULT 'OMA',
+    source_version  TEXT DEFAULT 'OMA-2024'
+);
+
+CREATE TABLE IF NOT EXISTS ppi (
+    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+    uniprot_id_a        TEXT NOT NULL REFERENCES proteins(uniprot_id),
+    uniprot_id_b        TEXT NOT NULL,
+    in_db               INTEGER NOT NULL DEFAULT 0,
+    experimental_system TEXT NOT NULL,
+    throughput          TEXT,
+    organism_id_a       INTEGER,
+    organism_id_b       INTEGER,
+    pubmed_id           TEXT,
+    source_version      TEXT DEFAULT 'BIOGRID-5.0.257'
+);
+
+CREATE INDEX IF NOT EXISTS idx_ortholog_features_id ON ortholog_features(ortholog_id);
+CREATE INDEX IF NOT EXISTS idx_orth_uniprot         ON orthologs(uniprot_id);
+CREATE INDEX IF NOT EXISTS idx_orth_indb            ON orthologs(in_db);
+CREATE INDEX IF NOT EXISTS idx_orth_taxon           ON orthologs(taxon_id);
+CREATE INDEX IF NOT EXISTS idx_ppi_a                ON ppi(uniprot_id_a);
+CREATE INDEX IF NOT EXISTS idx_ppi_b                ON ppi(uniprot_id_b);
+CREATE INDEX IF NOT EXISTS idx_ppi_indb             ON ppi(in_db);
 """
 
 SCHEMA_CACHE = """
@@ -94,7 +156,7 @@ def create_schema(con: sqlite3.Connection, schema: str) -> None:
 
 
 def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
-    path = FINAL / "mlo_mapping.csv"
+    path = MAP_DIR / "mlo_mapping.csv"
     seen: set[str] = set()
     rows = []
     with open(path, newline="", encoding="utf-8") as f:
@@ -138,7 +200,7 @@ def load_mlo_definitions(con: sqlite3.Connection) -> int:
 
 
 def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
-    path = FINAL / "mlosmetadb.tsv"
+    path = DB_DIR / "mlosmetadb.tsv"
     vocab = {r[0] for r in con.execute("SELECT unified_mlo FROM mlo_vocabulary")}
     protein_stubs: set[str] = set()
     annotation_rows = []

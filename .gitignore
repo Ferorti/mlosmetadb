@@ -243,3 +243,5 @@ database/interim/*.tsv
 
 frontend/DEVLOG.md
 frontend/DEVLOG.md
+*.db-wal
+*.db-shm

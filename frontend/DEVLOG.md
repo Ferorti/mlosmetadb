@@ -23,6 +23,7 @@
 | 2026-05-11 | fixed ProteinPage round 2 — LCD vertical centering (centerY formula), IDR/LCD source filtering (table shows MobiDB-lite + AlphaFold-disorder IDRs, MobiDB-lite-sub LCDs only), Pfam capitalization, pLDDT source → AlphaFold2, expanded type names, column order swap (feature left, AlphaFold right w-80), InterPro link added | CLAUDE |
 | 2026-05-11 | implement MolStarViewer — CDN load (molstar.css + molstar.js in index.html), window.molstar.Viewer.create(), loadAlphaFoldDb(), dispose on unmount, watch uniprotId, loading/error states; ProteinPage AlphaFold wrapper h-72→h-80 | CLAUDE |
 | 2026-05-11 | ProteinPage feature table: start/end en columnas separadas, IDR(IDR+start+end+predictor), LCD(header=Composition Bias, rows=Low complexity region+start+end), Domain(Pfam ID+start+end+name), pLDDT removido; AlphaFold movido a izquierda (w-520px h-420px), tabla a derecha; ProteinMLOs: badge en columna propia, prioridad driver>client en rol | CLAUDE |
+| 2026-05-16 | implement MlosPage — horizontal filter bar (text search, category dropdown, source DB toggle chips, organism placeholder), client-side filtering, row layout (name+category badge, counts, sources, truncated definition, expand toggle with per-source definitions), navigate to /results?mlo= on row click | CLAUDE |
 
 ---
 

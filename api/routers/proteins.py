@@ -11,8 +11,13 @@ from models.schemas import (
     LcdRegion,
     MloAnnotation,
     MorfRegion,
+    OrthoFeatureRegion,
+    OrthoFeatures,
+    OrthologDetail,
+    OrthologsResponse,
     PlddtRegion,
     PpiAllResponse,
+    PpiEdge,
     PpiPartner,
     ProteinDetail,
     ProteinsResponse,
@@ -24,12 +29,15 @@ from models.schemas import (
     SequenceFeatures,
 )
 from queries.protein_queries import (
+    get_ortholog_features,
+    get_orthologs,
     get_protein_features,
     get_protein_meta,
     get_protein_mlo_annotations,
     get_proteins_facets,
     get_proteins_page,
     get_ppi_all,
+    get_ppi_inter_edges,
     get_ppi_page,
     get_ppi_summary,
 )
@@ -187,10 +195,9 @@ async def get_protein(
 @router.get("/protein/{uniprot_id}/ppi", response_model=PpiAllResponse)
 async def get_protein_ppi(
     uniprot_id: str,
-    in_db_only: bool = Query(default=False),
     role: str | None = Query(default=None),
     mlo: str | None = Query(default=None),
-    limit: int = Query(default=2000, ge=1, le=5000),
+    limit: int = Query(default=500, ge=1, le=2000),
 ):
     try:
         meta = await get_protein_meta(uniprot_id)
@@ -201,7 +208,9 @@ async def get_protein_ppi(
         raise HTTPException(404, {"error": "protein_not_found", "message": f"No protein with UniProt ID '{uniprot_id}'"})
 
     try:
-        total, rows = await get_ppi_all(uniprot_id, in_db_only, role, mlo, limit)
+        total, rows = await get_ppi_all(uniprot_id, role, mlo, limit)
+        partner_ids = [r["partner_uniprot_id"] for r in rows]
+        inter_edge_rows = await get_ppi_inter_edges(partner_ids)
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
@@ -213,7 +222,6 @@ async def get_protein_ppi(
         items.append(PpiPartner(
             partner_uniprot_id=r["partner_uniprot_id"],
             partner_gene=r.get("partner_gene"),
-            in_db=bool(r.get("in_db")),
             has_driver=bool(r.get("has_driver")),
             mlos=mlos,
             experimental_systems=exp_systems,
@@ -221,11 +229,107 @@ async def get_protein_ppi(
             pubmed_ids=pmids,
         ))
 
+    inter_edges = [PpiEdge(source=e["source"], target=e["target"]) for e in inter_edge_rows]
+
     return PpiAllResponse(
         uniprot_id=uniprot_id,
         total=total,
         total_returned=len(items),
         items=items,
+        inter_edges=inter_edges,
+    )
+
+
+_TAXON_ORDER = {
+    9606:  0,   # Homo sapiens
+    10090: 1,   # Mus musculus
+    7955:  2,   # Danio rerio
+    7227:  3,   # Drosophila melanogaster
+    6239:  4,   # Caenorhabditis elegans
+    4932:  5,   # Saccharomyces cerevisiae
+    3702:  6,   # Arabidopsis thaliana
+    44689: 7,   # Dictyostelium discoideum
+    83333: 8,   # Escherichia coli K-12
+}
+
+
+def _build_ortho_features(feat_rows: list[dict]) -> OrthoFeatures:
+    idrs, lcds, morfs, plddt_regions, domains = [], [], [], [], []
+    for r in feat_rows:
+        ft = r["feature_type"]
+        meta = _parse_json(r.get("metadata"))
+        region = OrthoFeatureRegion(
+            start=r["start"],
+            end=r["end"],
+            score=r.get("score"),
+            label=r.get("label"),
+            accession=r.get("accession"),
+            source=r.get("source"),
+            metadata=meta,
+        )
+        if ft == "idr":
+            idrs.append(region)
+        elif ft == "lcd":
+            lcds.append(region)
+        elif ft == "morf":
+            morfs.append(region)
+        elif ft == "plddt_region":
+            plddt_regions.append(region)
+        elif ft == "domain":
+            domains.append(region)
+    return OrthoFeatures(idrs=idrs, lcds=lcds, morfs=morfs, plddt_regions=plddt_regions, domains=domains)
+
+
+@router.get("/protein/{uniprot_id}/orthologs", response_model=OrthologsResponse)
+async def get_protein_orthologs(uniprot_id: str):
+    try:
+        meta = await get_protein_meta(uniprot_id)
+    except aiosqlite.Error:
+        raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
+
+    if meta is None:
+        raise HTTPException(404, {"error": "protein_not_found", "message": f"No protein with UniProt ID '{uniprot_id}'"})
+
+    try:
+        orth_rows = await get_orthologs(uniprot_id)
+        orth_ids = [r["ortholog_id"] for r in orth_rows]
+        features_by_id = await get_ortholog_features(orth_ids)
+    except aiosqlite.Error:
+        raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
+
+    organisms = sorted({r["organism"] for r in orth_rows if r["organism"]})
+
+    orthologs = []
+    for r in orth_rows:
+        oid = r["ortholog_id"]
+        feat_rows = features_by_id.get(oid, [])
+        orthologs.append(OrthologDetail(
+            ortholog_id=oid,
+            organism=r["organism"],
+            taxon_id=r.get("taxon_id"),
+            og_id=r.get("og_ids"),
+            sources=r.get("sources"),
+            in_db=bool(r.get("in_db")),
+            gene_name=r.get("gene_name"),
+            protein_name=r.get("protein_name"),
+            length=r.get("length"),
+            disorder_mobidb_lite_dc=r.get("disorder_mobidb_lite_dc"),
+            disorder_alphafold_dc=r.get("disorder_alphafold_dc"),
+            sequence=r.get("sequence"),
+            features=_build_ortho_features(feat_rows) if feat_rows else None,
+        ))
+
+    orthologs.sort(key=lambda o: (
+        _TAXON_ORDER.get(o.taxon_id, 999),
+        o.organism or "",
+        o.ortholog_id,
+    ))
+
+    return OrthologsResponse(
+        uniprot_id=uniprot_id,
+        total=len(orthologs),
+        organisms=organisms,
+        orthologs=orthologs,
     )
 
 

@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { formatMlo } from '@/utils/format.js'
 import RoleBadge from '@/components/ui/RoleBadge.vue'
-import SourceDbBadge from '@/components/ui/SourceDbBadge.vue'
 
 const props = defineProps({
   mloAnnotations: { type: Array, required: true },
@@ -11,16 +10,16 @@ const props = defineProps({
 
 const SOURCE_ORDER = ['PhaseDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
 
-const SOURCE_URLS = {
-  PhaseDB:  (id) => `https://db.phasep.pro/uniprot/${id}`,
-  PhasePro: (id) => `https://phasepro.elte.hu/entry/${id}`,
-  CDCODE:   (id) => `https://cd-code.org/search?q=${id}&p=proteins`,
-  LLPSDB:   (id) => `http://bio-comp.org.cn/llpsdbv2/search.php?keyword=UniprotID&words=${id}&pmid=&species=ALL&pro_struc_type=ALL&pro_type=ALL&pro_seq_len=ALL&main_comp_type=ALL&post_trans_mod=ALL&main_comp_num=ALL&mut_type=ALL&mutst=&mutend=&phase=None`,
-  DrLLPS:   () => `https://llps.biocuckoo.cn/`,
+const SOURCE_COLORS = {
+  PhaseDB:  '#1B4F8A',
+  CDCODE:   '#854F0B',
+  LLPSDB:   '#0F6E56',
+  PhasePro: '#6B21A8',
+  DrLLPS:   '#484E59',
 }
 
-function sourceHref(source) {
-  return SOURCE_URLS[source]?.(props.uniprotId) ?? null
+function sourceColor(source) {
+  return SOURCE_COLORS[source] ?? SOURCE_COLORS.DrLLPS
 }
 
 // Deduplicate by (unified_mlo, source_db, source_mlo)
@@ -109,7 +108,7 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
           ]"
         >
           <!-- Organelle name -->
-          <td class="w-44 align-top py-2 pr-3">
+          <td class="w-44 align-top py-0.5 pr-3">
             <template v-if="row.isFirstInGroup">
               <RouterLink
                 :to="`/mlo/${row.unified_mlo}`"
@@ -121,17 +120,17 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
           </td>
 
           <!-- Role badge column -->
-          <td class="w-20 align-top py-2 pr-3">
+          <td class="w-20 align-top py-0.5 pr-3">
             <RoleBadge v-if="row.isFirstInGroup && row.displayRole" :role="row.displayRole" />
           </td>
 
-          <!-- Source badge as link -->
-          <td class="w-36 align-top py-2 pr-4">
-            <SourceDbBadge :source="row.source_db" :href="sourceHref(row.source_db)" />
+          <!-- Source db text -->
+          <td class="w-36 align-top py-0.5 pr-4">
+            <span class="text-xs font-medium" :style="{ color: sourceColor(row.source_db) }">{{ row.source_db }}</span>
           </td>
 
           <!-- Source name -->
-          <td class="align-top py-2 text-[#484E59] italic">
+          <td class="align-top py-0.5 text-[#484E59] italic">
             {{ row.source_mlo }}
           </td>
         </tr>

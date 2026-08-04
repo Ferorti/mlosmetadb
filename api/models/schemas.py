@@ -146,7 +146,6 @@ class ProteinDetail(BaseModel):
 class PpiPartner(BaseModel):
     partner_uniprot_id: str
     partner_gene: str | None
-    in_db: bool
     has_driver: bool
     mlos: list[str]
     experimental_systems: list[str]
@@ -154,11 +153,17 @@ class PpiPartner(BaseModel):
     pubmed_ids: list[str]
 
 
+class PpiEdge(BaseModel):
+    source: str
+    target: str
+
+
 class PpiAllResponse(BaseModel):
     uniprot_id: str
-    total: int
-    total_returned: int
+    total: int           # in-DB partners matching filters
+    total_returned: int  # actually returned (may be capped by limit)
     items: list[PpiPartner]
+    inter_edges: list[PpiEdge]
 
 
 # ── /mlo/{id} ────────────────────────────────────────────────────────────────
@@ -211,6 +216,8 @@ class MloListItem(BaseModel):
     category: str | None
     protein_count: int
     driver_count: int = 0
+    sources: list[str] = []
+    definitions: list[MloDefinition] = []
 
 
 class MlosResponse(BaseModel):
@@ -280,3 +287,46 @@ class OrganismResult(BaseModel):
 class OrganismsSearchResponse(BaseModel):
     query: str
     results: list[OrganismResult]
+
+
+# ── /protein/{id}/orthologs ───────────────────────────────────────────────────
+
+class OrthoFeatureRegion(BaseModel):
+    start: int
+    end: int
+    score: float | None = None
+    label: str | None = None
+    accession: str | None = None
+    source: str | None = None
+    metadata: dict | None = None
+
+
+class OrthoFeatures(BaseModel):
+    idrs: list[OrthoFeatureRegion] = []
+    lcds: list[OrthoFeatureRegion] = []
+    morfs: list[OrthoFeatureRegion] = []
+    plddt_regions: list[OrthoFeatureRegion] = []
+    domains: list[OrthoFeatureRegion] = []
+
+
+class OrthologDetail(BaseModel):
+    ortholog_id: str
+    organism: str
+    taxon_id: int | None = None
+    og_id: str | None = None
+    sources: str | None = None
+    in_db: bool
+    gene_name: str | None = None
+    protein_name: str | None = None
+    length: int | None = None
+    disorder_mobidb_lite_dc: float | None = None
+    disorder_alphafold_dc: float | None = None
+    sequence: str | None = None
+    features: OrthoFeatures | None = None
+
+
+class OrthologsResponse(BaseModel):
+    uniprot_id: str
+    total: int
+    organisms: list[str]
+    orthologs: list[OrthologDetail]

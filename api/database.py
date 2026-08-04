@@ -26,7 +26,7 @@ async def open_db() -> None:
 
     def _backup() -> sqlite3.Connection:
         src = sqlite3.connect(str(DB_PATH))
-        dst = sqlite3.connect(_MEM_URI, uri=True)
+        dst = sqlite3.connect(_MEM_URI, uri=True, check_same_thread=False)
         src.backup(dst)
         src.close()
         return dst

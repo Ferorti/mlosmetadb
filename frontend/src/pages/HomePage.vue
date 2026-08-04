@@ -33,7 +33,7 @@ function searchExample(term) {
   <div class="bg-white">
 
     <!-- Hero + Search -->
-    <section class="bg-gradient-to-b from-slate-100 to-white pt-8 pb-10 text-center">
+    <section class="bg-[#EBF3FB] border-b border-[#C8DFF2] pt-8 pb-5 text-center">
       <div class="max-w-4xl mx-auto px-6">
 
         <div class="flex justify-center items-end gap-1.5 mb-4">
@@ -71,42 +71,39 @@ function searchExample(term) {
       </div>
     </section>
 
-    <!-- StatBar — flush below hero -->
+    <!-- StatBar — flush below hero 
     <section class="max-w-4xl mx-auto px-6 py-4">
       <StatBar :stats="stats" />
     </section>
-
-    <div class="border-t border-gray-100 mx-6 my-8"></div>
+-->
+    <div class=" mx-6 my-4"></div>
 
     <!-- Browse by role -->
-    <section class="max-w-4xl mx-auto px-6 pb-10">
+    <section class="max-w-4xl mx-auto px-6 pb-5">
       <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
         Browse by component role
       </h2>
       <RoleCards :stats="stats" />
     </section>
 
-    <div class="border-t border-gray-100 mx-6 my-8"></div>
-
     <!-- Browse by MLO -->
     <section class="max-w-4xl mx-auto px-6 pb-10">
       <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
-        Browse by membraneless organelle
+        Membraneless organelles (MLOs)
       </h2>
       <MloBadges />
     </section>
 
-    <div class="border-t border-gray-100 mx-6 my-8"></div>
 
     <!-- Browse by organism -->
     <section class="max-w-4xl mx-auto px-6 pb-10">
       <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
-        Browse by organism
+        Model organisms
       </h2>
       <OrganismGrid :stats="stats" />
     </section>
 
-    <!-- Advanced search link -->
+    <!-- Advanced search link 
     <section class="max-w-4xl mx-auto px-6 pb-12 text-center">
       <RouterLink
         to="/results"
@@ -114,7 +111,7 @@ function searchExample(term) {
       >
         Need complex queries? Try the Advanced Search →
       </RouterLink>
-    </section>
+    </section>-->
 
   </div>
 </template>

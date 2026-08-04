@@ -119,29 +119,65 @@ async def get_mlo_proteins_page(
     return total, rows
 
 
-async def get_all_mlos(category: str | None) -> list[dict]:
+async def get_all_mlos(
+    category: str | None,
+    source_db: str | None = None,
+    organism: str | None = None,
+    q: str | None = None,
+) -> list[dict]:
+    conditions: list[str] = []
+    params: list = []
+
     if category:
-        return await fetchall(
-            """
-            SELECT mv.unified_mlo, mv.category,
-                   COUNT(DISTINCT ma.uniprot_id) AS protein_count,
-                   COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count
-            FROM mlo_vocabulary mv
-            LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo
-            WHERE mv.category = ?
-            GROUP BY mv.unified_mlo, mv.category
-            ORDER BY mv.unified_mlo
-            """,
-            (category,),
+        conditions.append("mv.category = ?")
+        params.append(category)
+    if q:
+        conditions.append("LOWER(mv.unified_mlo) LIKE LOWER(?)")
+        params.append(f"%{q}%")
+    if source_db:
+        conditions.append(
+            "EXISTS (SELECT 1 FROM mlo_annotations x WHERE x.unified_mlo = mv.unified_mlo AND x.source_db = ?)"
         )
+        params.append(source_db)
+    if organism:
+        conditions.append(
+            "EXISTS ("
+            "SELECT 1 FROM mlo_annotations x "
+            "JOIN proteins p ON x.uniprot_id = p.uniprot_id "
+            "WHERE x.unified_mlo = mv.unified_mlo AND LOWER(p.organism) = LOWER(?)"
+            ")"
+        )
+        params.append(organism)
+
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
     return await fetchall(
-        """
+        f"""
         SELECT mv.unified_mlo, mv.category,
                COUNT(DISTINCT ma.uniprot_id) AS protein_count,
-               COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count
+               COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count,
+               GROUP_CONCAT(DISTINCT ma.source_db) AS sources_concat
         FROM mlo_vocabulary mv
         LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo
+        {where}
         GROUP BY mv.unified_mlo, mv.category
         ORDER BY mv.unified_mlo
         """,
+        tuple(params),
     )
+
+
+async def get_definitions_for_mlos(unified_mlos: list[str]) -> dict[str, list[dict]]:
+    if not unified_mlos:
+        return {}
+    placeholders = ",".join("?" * len(unified_mlos))
+    rows = await fetchall(
+        f"SELECT unified_mlo, source_db, source_name, definition FROM mlo_definitions "
+        f"WHERE unified_mlo IN ({placeholders}) ORDER BY unified_mlo, source_db",
+        tuple(unified_mlos),
+    )
+    result: dict[str, list[dict]] = {}
+    for r in rows:
+        mlo = r["unified_mlo"]
+        result.setdefault(mlo, []).append(r)
+    return result

@@ -282,16 +282,14 @@ async def get_ppi_summary(uniprot_id: str) -> dict:
 
 async def get_ppi_all(
     uniprot_id: str,
-    in_db_only: bool,
     role: str | None,
     mlo: str | None,
-    limit: int = 2000,
+    limit: int = 500,
 ) -> tuple[int, list[dict]]:
-    extra_where: list[str] = []
+    """Return in-DB partners only, with optional role/mlo filters."""
+    extra_where: list[str] = ["pt.in_db = 1"]
     extra_params: list = []
 
-    if in_db_only:
-        extra_where.append("pt.in_db = 1")
     if role == "driver":
         extra_where.append("COALESCE(ps.has_driver, 0) = 1")
     elif role == "component":
@@ -303,7 +301,7 @@ async def get_ppi_all(
         )
         extra_params.append(mlo)
 
-    where_clause = ("AND " + " AND ".join(extra_where)) if extra_where else ""
+    where_clause = "AND " + " AND ".join(extra_where)
 
     cte = """
     WITH partners AS (
@@ -335,7 +333,6 @@ async def get_ppi_all(
         SELECT
             pt.partner_uniprot_id,
             pr.gene_name AS partner_gene,
-            pt.in_db,
             COALESCE(ps.has_driver, 0) AS has_driver,
             ps.mlos,
             pt.experimental_systems,
@@ -345,12 +342,78 @@ async def get_ppi_all(
         LEFT JOIN proteins pr ON pr.uniprot_id = pt.partner_uniprot_id
         LEFT JOIN protein_summary ps ON ps.uniprot_id = pt.partner_uniprot_id
         WHERE 1=1 {where_clause}
-        ORDER BY pt.in_db DESC, COALESCE(ps.has_driver, 0) DESC, pr.gene_name ASC
+        ORDER BY COALESCE(ps.has_driver, 0) DESC, pr.gene_name ASC
         LIMIT ?
         """,
         base_params + (limit,),
     )
     return total, rows
+
+
+async def get_orthologs(uniprot_id: str) -> list[dict]:
+    return await fetchall(
+        """
+        SELECT
+            o.ortholog_id,
+            o.organism,
+            o.taxon_id,
+            GROUP_CONCAT(DISTINCT o.og_id)  AS og_ids,
+            MAX(o.in_db)                    AS in_db,
+            GROUP_CONCAT(DISTINCT o.source) AS sources,
+            m.gene_name,
+            m.protein_name,
+            m.length,
+            m.disorder_mobidb_lite_dc,
+            m.disorder_alphafold_dc,
+            m.sequence
+        FROM orthologs o
+        LEFT JOIN ortholog_meta m ON m.ortholog_id = o.ortholog_id
+        WHERE o.uniprot_id = ?
+        GROUP BY o.ortholog_id
+        ORDER BY o.organism, o.ortholog_id
+        """,
+        (uniprot_id,),
+    )
+
+
+async def get_ortholog_features(ortholog_ids: list[str]) -> dict[str, list[dict]]:
+    if not ortholog_ids:
+        return {}
+    ph = ",".join("?" * len(ortholog_ids))
+    rows = await fetchall(
+        f"""
+        SELECT ortholog_id, feature_type, source, label, accession, start, end, score, metadata
+        FROM ortholog_features
+        WHERE ortholog_id IN ({ph})
+        ORDER BY ortholog_id, feature_type, start
+        """,
+        tuple(ortholog_ids),
+    )
+    result: dict[str, list[dict]] = {}
+    for r in rows:
+        result.setdefault(r["ortholog_id"], []).append(r)
+    return result
+
+
+async def get_ppi_inter_edges(partner_ids: list[str], max_edges: int = 5000) -> list[dict]:
+    """Return deduplicated edges between partners (excludes hub)."""
+    if len(partner_ids) < 2:
+        return []
+    ph = ",".join("?" * len(partner_ids))
+    ids = tuple(partner_ids)
+    return await fetchall(
+        f"""
+        SELECT DISTINCT
+            MIN(uniprot_id_a, uniprot_id_b) AS source,
+            MAX(uniprot_id_a, uniprot_id_b) AS target
+        FROM ppi
+        WHERE uniprot_id_a IN ({ph})
+          AND uniprot_id_b IN ({ph})
+          AND uniprot_id_a != uniprot_id_b
+        LIMIT ?
+        """,
+        ids + ids + (max_edges,),
+    )
 
 
 async def get_ppi_page(uniprot_id: str, page: int, per_page: int) -> tuple[int, list[dict]]:
