@@ -1,3 +1,4 @@
+import policy
 from database import fetchone, fetchall, fetchval
 
 # ── protein list ─────────────────────────────────────────────────────────────
@@ -76,7 +77,8 @@ async def get_proteins_page(
 
     from_clause = "FROM proteins p"
     if needs_mlo:
-        from_clause += " JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id"
+        active = policy.active_annotation_clause("ma")
+        from_clause += f" JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id AND {active}"
     if needs_ps_sort:
         from_clause += " LEFT JOIN protein_summary ps_s ON p.uniprot_id = ps_s.uniprot_id"
 
@@ -151,7 +153,8 @@ async def get_proteins_facets(
 
     from_clause = "FROM proteins p"
     if needs_mlo:
-        from_clause += " JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id"
+        active = policy.active_annotation_clause("ma")
+        from_clause += f" JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id AND {active}"
 
     if uniprot_id is not None:
         conditions.append("p.uniprot_id = ?")
@@ -204,7 +207,7 @@ async def get_proteins_facets(
         f"""
         SELECT ma2.unified_mlo, COUNT(DISTINCT ma2.uniprot_id) AS cnt
         FROM ({base_cte}) f
-        JOIN mlo_annotations ma2 ON ma2.uniprot_id = f.uniprot_id
+        JOIN mlo_annotations ma2 ON ma2.uniprot_id = f.uniprot_id AND {policy.active_annotation_clause("ma2")}
         GROUP BY ma2.unified_mlo
         ORDER BY cnt DESC
         """,
@@ -238,8 +241,9 @@ async def get_protein_meta(uniprot_id: str) -> dict | None:
 
 
 async def get_protein_mlo_annotations(uniprot_id: str) -> list[dict]:
+    active = policy.active_annotation_clause("ma")
     return await fetchall(
-        """
+        f"""
         SELECT
             ma.unified_mlo,
             mv.category,
@@ -249,7 +253,7 @@ async def get_protein_mlo_annotations(uniprot_id: str) -> list[dict]:
             ma.evidence
         FROM mlo_annotations ma
         LEFT JOIN mlo_vocabulary mv ON ma.unified_mlo = mv.unified_mlo
-        WHERE ma.uniprot_id = ?
+        WHERE ma.uniprot_id = ? AND {active}
         ORDER BY ma.unified_mlo, ma.source_db
         """,
         (uniprot_id,),
