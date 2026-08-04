@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse
 
 import database
 from config import CORS_ORIGINS
+import policy
 from routers import mlos, organisms, proteins, search, stats
 
 logging.basicConfig(
@@ -26,14 +27,18 @@ async def _compute_stats() -> dict:
         "GROUP BY organism ORDER BY cnt DESC LIMIT 10"
     )
 
-    ann_total = await database.fetchval("SELECT COUNT(*) FROM mlo_annotations") or 0
-    unique_mlos = await database.fetchval("SELECT COUNT(DISTINCT unified_mlo) FROM mlo_annotations") or 0
+    active = policy.active_annotation_clause("mlo_annotations")
+
+    ann_total = await database.fetchval(f"SELECT COUNT(*) FROM mlo_annotations WHERE {active}") or 0
+    unique_mlos = await database.fetchval(
+        f"SELECT COUNT(DISTINCT unified_mlo) FROM mlo_annotations WHERE {active}"
+    ) or 0
     src_rows = await database.fetchall(
-        "SELECT source_db, COUNT(*) AS cnt FROM mlo_annotations GROUP BY source_db"
+        f"SELECT source_db, COUNT(*) AS cnt FROM mlo_annotations WHERE {active} GROUP BY source_db"
     )
     role_rows = await database.fetchall(
-        "SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(DISTINCT uniprot_id) AS cnt "
-        "FROM mlo_annotations GROUP BY role"
+        f"SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(DISTINCT uniprot_id) AS cnt "
+        f"FROM mlo_annotations WHERE {active} GROUP BY role"
     )
 
     feat_total = await database.fetchval("SELECT COUNT(*) FROM sequence_features") or 0
