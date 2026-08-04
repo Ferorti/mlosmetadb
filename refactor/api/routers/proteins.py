@@ -107,15 +107,6 @@ def _build_features(rows: list[dict]) -> SequenceFeatures:
     return SequenceFeatures(idrs=idrs, domains=domains, lcds=lcds, morfs=morfs, plddt_regions=plddt_regions)
 
 
-_COMPONENT_ROLES = {"client", "unknown", "unmapped"}
-
-
-def _normalize_role(role: str | None) -> str | None:
-    if role and role.lower() in _COMPONENT_ROLES:
-        return "component"
-    return role
-
-
 def _build_mlo_annotation(row: dict) -> MloAnnotation:
     raw = row.get("evidence") or ""
     pmids = [p.strip() for p in raw.split(";") if p.strip() and p.strip().upper() != "NULL"]
@@ -124,7 +115,7 @@ def _build_mlo_annotation(row: dict) -> MloAnnotation:
         category=row.get("category"),
         source_db=row["source_db"],
         source_mlo=row.get("source_mlo"),
-        unified_role=_normalize_role(row.get("unified_role")),
+        unified_role=row.get("unified_role"),
         evidence_pmids=pmids,
     )
 

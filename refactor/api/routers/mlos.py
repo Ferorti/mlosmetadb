@@ -26,15 +26,6 @@ from queries.mlo_queries import (
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-_COMPONENT_ROLES = {"client", "unknown", "unmapped"}
-
-
-def _normalize_role(role: str | None) -> str | None:
-    if role and role.lower() in _COMPONENT_ROLES:
-        return "component"
-    return role
-
-
 @router.get("/mlo/{unified_mlo}", response_model=MloDetail)
 async def get_mlo(
     unified_mlo: str,
@@ -70,7 +61,7 @@ async def get_mlo(
             uniprot_id=r["uniprot_id"],
             gene_name=r.get("gene_name"),
             organism=r.get("organism"),
-            unified_role=_normalize_role(r.get("unified_role")),
+            unified_role=r.get("unified_role"),
             sources=[s for s in sources_raw.split(",") if s],
             disorder_mobidb_lite_dc=r.get("disorder_mobidb_lite_dc"),
             disorder_alphafold_dc=r.get("disorder_alphafold_dc"),

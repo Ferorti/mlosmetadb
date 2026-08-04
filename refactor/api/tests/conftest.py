@@ -70,17 +70,29 @@ INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, d
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('P35637', 1, 0, 1, 1, '["stress_granule"]', 'PhaseDB'),
     ('QREG01', 0, 0, 0, 0, NULL, NULL);
+
+INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
+    ('p_granule', 'Cytoplasmic');
+
+INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
+    ('PCLIENT', 'CLIENTTEST', 'Homo sapiens', 200);
+INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
+    ('PCLIENT', 'PhaseDB', 'p_granule', 'client', 1);
+INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
+    ('PCLIENT', 0, 1, 1, 1, '["p_granule"]', 'PhaseDB');
 """
 
 
 @pytest.fixture
-def test_db(tmp_path):
+def test_db(tmp_path, monkeypatch):
     db_path = str(tmp_path / "test.db")
     conn = sqlite3.connect(db_path)
     conn.executescript(SCHEMA)
     conn.executescript(FIXTURE)
     conn.commit()
     conn.close()
+
+    monkeypatch.setattr(db_module, "DB_PATH", db_path)
 
     async def _open():
         db_module._db = await aiosqlite.connect(db_path)
