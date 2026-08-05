@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { searchBasic, searchAdvanced } from '@/api/search'
 import { getProteins } from '@/api/proteins'
 import { toMloSlug } from '@/utils/format'
+import { sortProteins } from '@/utils/sortProteins'
 import { parseIdrRegions, parseLcdRegions, parseDomains, calcCoverage } from '@/utils/parseFeatures'
 import SearchBox from '@/components/search/SearchBox.vue'
 import FilterSidebar from '@/components/search/FilterSidebar.vue'
@@ -75,6 +76,19 @@ async function runSearch(f, overrides = {}) {
         // there, so escalate to /search/advanced (single-field gene_name match) whenever any
         // of them is set.
         return searchAdvanced({ gene_name: q, ...extraFilters })
+      }
+      // /search (FTS5) has no sort_by concept -- it returns results in FTS5
+      // relevance order. But the sort dropdown always shows a value (there's
+      // no "Relevance" option, and its default, "Most MLOs", is deliberately
+      // stripped from the URL by ResultsPanel.vue's onSortSelect() "to keep
+      // the URL clean"), so re-sort client-side to match whatever sort is
+      // currently active, resolved the same way buildExtraFilters() resolves
+      // it. /search's ProteinSummary shape already has every field the six
+      // dropdown options need.
+      const sortBy    = f.sort_by?.trim()    || 'mlo_count'
+      const sortOrder = f.sort_order?.trim() || 'desc'
+      if (searchRes?.data?.proteins) {
+        searchRes.data.proteins = sortProteins(searchRes.data.proteins, sortBy, sortOrder)
       }
       return searchRes
     } else if (field === 'uniprot_id') {
