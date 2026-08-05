@@ -1,0 +1,36 @@
+{
+  "database_version": "2.0",
+  "last_updated": "2026-05-08",
+  "proteins": {
+    "total": 15409,
+    "by_organism": {
+      "Homo sapiens": 6536,
+      "Mus musculus": 2470,
+      "Arabidopsis thaliana": 2049,
+      "Caenorhabditis elegans": 928,
+      "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)": 769,
+      "Xenopus laevis": 700,
+      "Bos taurus": 251,
+      "Danio rerio": 236,
+      "Drosophila melanogaster": 216,
+      "Rattus norvegicus": 93
+    },
+    "total_organisms": 156
+  },
+  "mlo_annotations": {
+    "total": 37990,
+    "unique_mlos": 161,
+    "by_source": {
+      "CDCODE": 13850,
+      "DrLLPS": 10873,
+      "LLPSDB": 380,
+      "PhaseDB": 12688,
+      "PhasePro": 199
+    },
+    "by_role": {
+      "driver": 1168,
+      "client": 6412,
+      "unknown": 11709
+    }
+  }
+}
