@@ -7,7 +7,6 @@ import ProteinHeader from '@/components/protein/ProteinHeader.vue'
 import ProteinMLOs from '@/components/protein/ProteinMLOs.vue'
 import ProteinFeatureTrack from '@/components/protein/ProteinFeatureTrack.vue'
 import ProteinPPI from '@/components/protein/ProteinPPI.vue'
-import ProteinOrthologs from '@/components/protein/ProteinOrthologs.vue'
 import MolStarViewer from '@/components/viewers/MolStarViewer.vue'
 
 const route = useRoute()
@@ -25,7 +24,6 @@ const TABS = [
   { id: 'overview',      label: 'Overview' },
   { id: 'mlos',          label: 'MLO Annotations' },
   { id: 'interactions',  label: 'Interactions' },
-  { id: 'orthologs',     label: 'Orthologs' },
 ]
 
 watch(() => route.params.id, (id) => {
@@ -159,11 +157,6 @@ watch(() => route.params.id, (id) => {
       <div v-if="mountedTabs.has('interactions')" v-show="activeTab === 'interactions'">
         <div class="text-lg font-semibold text-gray-800 mb-4">Protein–Protein Interactions</div>
         <ProteinPPI :protein="protein" />
-      </div>
-
-      <!-- Orthologs -->
-      <div v-if="mountedTabs.has('orthologs')" v-show="activeTab === 'orthologs'">
-        <ProteinOrthologs :protein="protein" />
       </div>
 
       </div><!-- end tab+content -->
