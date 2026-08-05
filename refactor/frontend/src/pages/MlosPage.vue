@@ -60,6 +60,18 @@
         <option>Organism — coming soon</option>
       </select>
 
+      <div class="w-px h-5 bg-gray-200 hidden sm:block"></div>
+
+      <!-- Sort control -->
+      <select
+        v-model="sortBy"
+        class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1 bg-white focus:outline-none focus:border-[#185FA5]"
+      >
+        <option value="drivers">Most drivers</option>
+        <option value="alphabetical">Alphabetical</option>
+        <option value="protein_count">Most proteins</option>
+      </select>
+
       <!-- Count display -->
       <div class="ml-auto text-xs text-gray-500 whitespace-nowrap">
         Showing
@@ -191,6 +203,7 @@ const error = ref(false)
 const textFilter = ref('')
 const categoryFilter = ref('')
 const selectedSources = ref([])
+const sortBy = ref('drivers')
 const expandedRows = ref(new Set())
 
 function toggleSourceDb(db) {
@@ -244,7 +257,16 @@ const filtered = computed(() => {
     )
   }
 
-  return result
+  if (sortBy.value === 'alphabetical') {
+    return [...result].sort((a, b) => formatMlo(a.unified_mlo).localeCompare(formatMlo(b.unified_mlo)))
+  }
+
+  const countKey = sortBy.value === 'protein_count' ? 'protein_count' : 'driver_count'
+  return [...result].sort((a, b) => {
+    const diff = (b[countKey] ?? 0) - (a[countKey] ?? 0)
+    if (diff !== 0) return diff
+    return formatMlo(a.unified_mlo).localeCompare(formatMlo(b.unified_mlo))
+  })
 })
 
 onMounted(async () => {
