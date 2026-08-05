@@ -375,6 +375,9 @@ function shortSystems(systems) {
     <div v-else-if="!protein.ppi?.total_partners" class="text-sm text-[#484E59] py-4">
       No PPI data available for this protein.
     </div>
+    <div v-else-if="!allPartners.length" class="text-sm text-[#484E59] py-4">
+      This protein has {{ formatCount(protein.ppi.total_partners) }} known interaction partner(s), but none are currently in MLOsMetaDB.
+    </div>
 
     <!-- Two-column: table + graph -->
     <div v-else-if="allPartners.length" class="flex gap-4" style="min-height:500px">
