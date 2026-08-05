@@ -600,3 +600,236 @@ sized/audited as part of this phase's scope. This entry documents the gap
 in one place; it doesn't close it.
 
 ---
+
+## Entry 11 — `api/` phase: port + schema-drift fixes
+
+The data-layer phase (Entries 0-10) built a corrected `refactor/database/mlosmetadb.db`
+— clean `unified_role` (`'driver'`/`'client'`/`NULL`, never `'unmapped'`,
+never capitalized) and a new `dataset_active` column. But the existing
+FastAPI backend at repo-root `api/` had never seen either change: it still
+pointed at the old, uncorrected `database/mlosmetadb.db`, and a `grep -rn
+"dataset_active" api/` returned zero hits. This entry covers porting `api/`
+into `refactor/api/` and fixing that drift, per
+`docs/superpowers/specs/2026-08-04-refactor-api-phase-design.md`.
+
+**The port itself.** `api/` was rsync'd into `refactor/api/` verbatim
+(excluding `__pycache__`, the old `mlosmetadb.db`, and the old
+`CLAUDE_api.md`/`API_EXAMPLES.md`, which get regenerated fresh later in
+this entry) — `diff -rq api/ refactor/api/` came back empty, confirming a
+byte-identical tree. The one thing checked and confirmed to need **no**
+code change: `config.py`'s `DB_PATH` auto-resolution. It computes
+`Path(__file__).parent.parent / "database" / "mlosmetadb.db"`, which — purely
+by virtue of `refactor/api/`'s position relative to `refactor/database/` —
+already resolved to the correct new DB path with zero edits:
+```
+$ cd refactor/api && python3 -c "from config import DB_PATH; print(DB_PATH)"
+/biodata/forti/proyectos/mlos/mlosmetadb/.worktrees/refactor-api-phase/refactor/database/mlosmetadb.db
+```
+
+**The FTS5 boot bug (caught by the port's own boot-smoke-test, not a porting
+error).** Before any schema-drift fix was applied, just booting the freshly
+copied `refactor/api/` against an empty DB crashed inside `setup_fts5()`:
+```
+sqlite3.OperationalError: table fts_proteins has 3 columns but 4 values were supplied
+```
+`database.py`'s `setup_fts5()` contained manual `INSERT INTO fts_proteins
+SELECT rowid, ...` / `INSERT INTO fts_mlos SELECT rowid, ...` statements
+that explicitly insert `rowid` into an **external-content** FTS5 table —
+which manages `rowid` automatically and rejects an explicit value in the
+column list. The fix removed those two manual INSERTs (and their `COUNT(*)`
+guard conditions), leaving only the `CREATE VIRTUAL TABLE IF NOT EXISTS`
+block and the `INSERT INTO fts_*(fts_*) VALUES('rebuild')` calls that
+already fully repopulate the index from the source tables — the correct,
+canonical way to (re)build an external-content FTS5 index. This bug
+reproduces **identically in the original, untouched `api/database.py`** —
+it is not something the port introduced, it was already latent in the
+pre-existing code and would crash any fresh boot there too. Only
+`refactor/api/database.py` was touched; the original was left alone per the
+hard rule governing this whole log.
+
+**`policy.py`: the shared fix for findings #1-#3.** The design spec's audit
+of the existing code turned up three independent places that needed the
+same fix (`dataset_active` never filtered) plus one that needed a deletion
+(`_normalize_role()` actively wrong against the new schema, not just
+stale). Rather than patch each site with its own copy of `"AND
+dataset_active = 1"`, `refactor/policy.py` was introduced as a single
+shared module, importable by both `refactor/api/` and
+`refactor/scripts/build_summary.py`:
+```python
+def active_annotation_clause(alias: str = "ma") -> str:
+    return f"{alias}.dataset_active = 1"
+
+EXCLUDED_MLO_CATEGORIES: list[str] = []
+
+def excluded_mlo_category_clause(alias: str = "mv") -> tuple[str | None, list[str]]:
+    if not EXCLUDED_MLO_CATEGORIES:
+        return None, []
+    placeholders = ",".join("?" * len(EXCLUDED_MLO_CATEGORIES))
+    return f"{alias}.category NOT IN ({placeholders})", list(EXCLUDED_MLO_CATEGORIES)
+```
+Its docstring restates the domain rule that governs every fix below:
+`dataset_active=0` is reserved for deliberate scope exclusions (today:
+DrLLPS Regulator rows only); a `NULL` `unified_role` or indeterminate MLO
+name is an annotation gap, never a reason to exclude, and stays
+`dataset_active=1`/fully visible (CD-CODE rows are the concrete example).
+5 unit tests covered the module directly before any consumer wired it in.
+
+**Wiring `policy.active_annotation_clause` into the query/router layer.**
+Each of `mlo_queries.py`, `protein_queries.py`, `search_queries.py`, and
+`main.py` got the same shape of fix — join or filter `mlo_annotations` with
+`policy.active_annotation_clause(alias)` — each proven with a RED test that
+failed against the *unfixed* code first. Concretely, in
+`mlo_queries.py::get_mlo_stats` / `get_mlo_proteins_page` /
+`get_all_mlos`, before the fix a synthetic inactive-only protein
+(`QREG01`, only a DrLLPS/nucleolus row with `dataset_active=0`) leaked
+into `nucleolus`'s counts (`assert 1 == 0` failing); after, all three
+functions correctly show `0`. `protein_queries.py`'s
+`get_protein_mlo_annotations`/`get_proteins_page`/`get_proteins_facets` got
+the identical treatment — before the fix, `GET`-style queries for the
+inactive-only protein still returned its `nucleolus` annotation; after, it's
+excluded from lookups, role filters, and MLO facets alike.
+`search_queries.py`'s `_build_advanced_clauses` (the `mlo` join) and
+`get_advanced_search_facets` (the `mlo_rows` facet query) got the same join
+condition added. `main.py`'s `_compute_stats()` had **four** separate
+`mlo_annotations` queries (`ann_total`, `unique_mlos`, `src_rows`,
+`role_rows`) all missing the filter — before the fix `stats["mlo_annotations"]["total"]`
+counted the inactive row too (`assert 2 == 1` failing); after, the policy
+clause is computed once and reused across all four.
+
+**Deleting `_normalize_role()` — a three-round discovery process.**
+`_normalize_role()` was duplicated in `routers/mlos.py` and
+`routers/proteins.py`, collapsing `'client'` (and `'unknown'`/`'unmapped'`)
+to a fabricated `'component'` string in the API response — a mapping that
+made sense against the old schema's messy roles but is actively wrong
+against the new one, since `frontend/CLAUDE.md`'s live contract expects a
+real `'client'` value to render its green badge. The function was deleted
+outright (not patched) in both routers, with `unified_role` now passed
+through raw. Getting there took three rounds of test-infrastructure
+discovery, because this was the *first* task to drive the API through
+`TestClient(app)` — every prior task called query functions directly:
+
+1. **`test_db`/`DB_PATH` clobbering.** `TestClient(app)` triggers FastAPI's
+   real `lifespan()`, which calls `database.open_db()` — and `open_db()`
+   unconditionally backs up `database.DB_PATH` (the real production DB,
+   since `MLOSMETADB_PATH` was unset) into a fresh in-memory copy,
+   silently discarding the `test_db` fixture's own connection. The
+   giveaway: `GET /protein/P35637` returned 1036 real annotations instead
+   of the fixture's 1, and `GET /protein/PCLIENT` 404'd. Fixed with
+   `monkeypatch.setattr(db_module, "DB_PATH", db_path)` in the fixture, so
+   `open_db()`'s backup step reads the fixture's temp file instead.
+2. **`PCLIENT`/`stress_granule` collision.** The new `PCLIENT` fixture
+   protein was first placed in `stress_granule` — the same MLO already
+   used by four already-reviewed tasks' tests (Tasks 3-5). That broke 5
+   pre-existing assertions scoped to `stress_granule`/`nucleolus` counts
+   (`1 -> 2` in each). Rather than touch four already-reviewed test files,
+   `PCLIENT` was moved to its own new MLO, `p_granule`, leaving Tasks 3-5's
+   test files byte-for-byte untouched.
+3. **One unavoidable touch remained**: `test_stats.py`'s
+   `test_compute_stats_mlo_annotations_excludes_inactive_row` aggregates
+   over the *entire* `mlo_annotations` table regardless of which MLO a row
+   belongs to, so any second active row anywhere shifts its totals — its
+   three assertions were bumped `1`→`2`, unavoidable regardless of where
+   `PCLIENT` lived.
+
+Full suite after all three fixes: 15 passed, 0 failed.
+
+**`build_summary.py`'s matching aggregation fix, with a real impact
+number.** `_build_mlo_aggregates()` had the identical missing-filter bug,
+independently of the API — it computes `protein_summary.mlo_count`/
+`source_db_count`/`mlos`/`source_dbs` with no `dataset_active` filter, so a
+protein whose only annotation was a DrLLPS Regulator row would incorrectly
+surface that row's MLO/source_db in the served summary (`has_driver`/
+`has_client` were unaffected, since a `NULL` role never matches
+`'driver'`/`'client'` regardless of `dataset_active`). Fixed by aliasing
+`mlo_annotations AS ma` and adding `WHERE {policy.active_annotation_clause("ma")}`.
+Measured directly against the real `refactor/database/mlosmetadb.db`:
+**502** proteins have *only* `dataset_active=0` annotations
+(`proteins_with_only_inactive_annotations`); before re-running
+`build_summary.py`, `protein_summary.mlo_count = 0` had **0** rows (the bug
+was live — these 502 proteins carried stale non-zero counts). After
+re-running the fixed script, `protein_summary.mlo_count = 0` has exactly
+**502** rows, and `protein_summary`'s total row count is unchanged
+(15,879 → 15,879). Spot check on `A0A023PZG4` (a DrLLPS-Regulator-only
+protein): before, `mlo_count=1`/`source_db_count=1`/`mlos=["stress_granule"]`;
+after, `mlo_count=0`/`source_db_count=0`/`mlos=NULL`/`source_dbs=NULL`.
+
+**End-to-end verification, including a bug the verification itself found.**
+Running the app for real — `cd refactor/api && python3 -m uvicorn
+main:app` — crashed immediately with `ModuleNotFoundError: No module named
+'policy'`. `refactor/policy.py` lives one directory above `refactor/api/`,
+and nothing in the production code path put `refactor/` on `sys.path` —
+only `refactor/api/tests/conftest.py` did, for pytest. Every prior task's
+verification ran through pytest, so this gap silently never surfaced until
+this task actually booted `main.py` outside a test. Fixed by adding the
+same `sys.path.insert(0, str(ROOT))` idiom `build_summary.py` already used,
+placed in `config.py` (imported earliest in `main.py`, before `policy` or
+any router):
+```python
+_REFACTOR_ROOT = Path(__file__).resolve().parent.parent
+if str(_REFACTOR_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REFACTOR_ROOT))
+```
+All verification checks were then re-run a second time with the real fix
+in place (no `PYTHONPATH` workaround), and produced identical results to
+the first pass. The evidence: `O23702` — a DrLLPS "Regulator" protein whose
+only `mlo_annotations` row is `dataset_active=0` — correctly returns
+`"mlo_annotations": []` from `GET /protein/O23702`; across all six proteins
+checked (the five standard `TEST_PROTEINS` plus `O23702`), `unified_role`
+is never `"component"` anywhere in any response; and `/stats`'
+`mlo_annotations.total` matches a direct SQL count exactly:
+```
+Direct SQL:  SELECT COUNT(*) FROM mlo_annotations WHERE dataset_active = 1;  ->  53396
+/stats:      mlo_annotations.total                                          ->  53396
+```
+
+**Docs (Task 10).** `refactor/api/CLAUDE.md` and `refactor/api/API_EXAMPLES.md`
+were written after the code was corrected and verified, so every example in
+`API_EXAMPLES.md` is a real response captured during Task 9's verification
+— no synthetic/hand-written JSON, and no more stale `"unified_role":
+"unmapped"` examples. `CLAUDE.md` documents `policy.py`'s domain rule in
+full and the endpoint/error-envelope conventions. Consistent with
+`database/CLAUDE.md`/`scripts/CLAUDE.md` (see Entry 9), `refactor/api/CLAUDE.md`
+is caught by this repo's pre-existing bare `CLAUDE.md` gitignore rule — it
+was written to disk and is fully readable, but `git add` refuses it. This
+is expected, not a gap in this phase's work.
+
+**`EXCLUDED_MLO_CATEGORIES`'s actual final scope.** The design spec asked
+for this extension point to be referenced in both `mlo_queries.py` and
+`protein_queries.py` "as a no-op extension point." In practice it is wired
+into exactly one place: `mlo_queries.py::get_all_mlos`, via
+`policy.excluded_mlo_category_clause("mv")`. `protein_queries.py` was
+deliberately left without it — none of its queries join `mlo_vocabulary`
+(the table `category` lives on), so there is no natural place to apply a
+category-based clause there without adding a join that doesn't otherwise
+exist. This is a deliberate narrowing of the spec's slightly broader
+wording, disclosed here rather than silently expanded to fit the letter of
+the spec.
+
+**Out-of-scope data gaps observed, not fixed.** Two pre-existing data gaps
+were found while verifying Tasks 8-9's work, unrelated to the
+`dataset_active`/`unified_role` fixes and explicitly not this phase's job to
+fix: (1) `sequence_features`, `ppi`, and `orthologs` are all **0 rows** in
+the current `refactor/database/mlosmetadb.db` — this phase's pipeline only
+runs `integrate.py` → `build_db.py` → `build_summary.py` over already-parsed
+`interim/` data; populating those three tables requires re-running the
+fetch/parse scripts against live APIs, out of scope here. (2) `Q92520`
+(FMR1), one of the five standard `TEST_PROTEINS`, has **zero** rows in both
+`proteins` and `mlo_annotations` in this DB snapshot — the API correctly
+404s rather than crashing, confirming this is a data-population gap, not a
+filtering bug.
+
+**Minor findings, parked, not reopened:**
+- Task 1's report frames the FTS5 fix as "project convention" — reads
+  slightly post-hoc versus the mid-task authorization that actually
+  happened; harmless.
+- Task 3's `conftest.py` relaxes `mlo_annotations.source_mlo` to nullable,
+  vs. the real schema's `NOT NULL` — harmless since no query reads it, but
+  worth a comment if a future task's brief assumes it's populated.
+- Task 9's `config.py` bootstrap uses `.resolve()` while `build_summary.py`'s
+  equivalent doesn't — a harmless, slightly more robust stylistic
+  divergence, not literally identical to the "same exact pattern" wording.
+- Task 10's `A0A024RB53` example traces to task-9-report.md's slightly
+  hedged "e.g.:" framing rather than an unambiguous verbatim curl paste —
+  not fabrication, just one step removed in provenance.
+
+---
