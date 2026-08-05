@@ -22,9 +22,15 @@ logger = logging.getLogger(__name__)
 
 async def _compute_stats() -> dict:
     prot_total = await database.fetchval("SELECT COUNT(*) FROM proteins") or 0
+    # has_driver here is the protein's GLOBAL driver flag (driver of ANY MLO) -- correct for
+    # a per-organism breakdown, unlike the MLO-scoped bug fixed in protein_queries.py's
+    # _scoped_role_counts (there, "driver" needed to mean "driver of THIS specific MLO").
     org_rows = await database.fetchall(
-        "SELECT organism, COUNT(*) AS cnt FROM proteins WHERE organism IS NOT NULL "
-        "GROUP BY organism ORDER BY cnt DESC LIMIT 10"
+        "SELECT p.organism, COUNT(DISTINCT p.uniprot_id) AS cnt, "
+        "SUM(CASE WHEN ps.has_driver = 1 THEN 1 ELSE 0 END) AS driver_cnt "
+        "FROM proteins p LEFT JOIN protein_summary ps ON ps.uniprot_id = p.uniprot_id "
+        "WHERE p.organism IS NOT NULL "
+        "GROUP BY p.organism ORDER BY cnt DESC LIMIT 10"
     )
 
     active = policy.active_annotation_clause("mlo_annotations")
@@ -52,14 +58,25 @@ async def _compute_stats() -> dict:
 
     total_organisms = await database.fetchval("SELECT COUNT(DISTINCT organism) FROM proteins") or 0
 
+    # Mutually-exclusive protein-level driver/component split (has_driver=1 -> driver,
+    # else -> component) — distinct from mlo_annotations.by_role below, which buckets by
+    # annotation ROW and lets one protein count in more than one bucket (e.g. a driver with
+    # some client-role rows too), so it can't be used as a "the rest of the dataset" figure.
+    component_role_rows = await database.fetchall(
+        "SELECT CASE WHEN has_driver = 1 THEN 'driver' ELSE 'component' END AS role, "
+        "COUNT(*) AS cnt FROM protein_summary GROUP BY role"
+    )
+
     return {
         "database_version": "2.0",
         "last_updated": "2026-05-04",
         "proteins": {
             "total": prot_total,
             "by_organism": {r["organism"]: r["cnt"] for r in org_rows},
+            "by_organism_drivers": {r["organism"]: r["driver_cnt"] or 0 for r in org_rows},
             "top_organisms": 10,
             "total_organisms": total_organisms,
+            "by_component_role": {r["role"]: r["cnt"] for r in component_role_rows},
         },
         "mlo_annotations": {
             "total": ann_total,

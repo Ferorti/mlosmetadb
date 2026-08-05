@@ -1,5 +1,6 @@
 import policy
 from database import fetchall, fts5_available
+from queries.protein_queries import _SORT_NEEDS_PS, _build_sort, _scoped_role_counts
 
 
 async def search_proteins_fts(q: str) -> list[dict]:
@@ -179,15 +180,19 @@ async def get_advanced_search_facets(
         p,
     )
 
-    role_rows = await fetchall(
-        f"""
-        SELECT
-            SUM(ps.has_driver) AS driver,
-            SUM(CASE WHEN ps.has_driver = 0 THEN 1 ELSE 0 END) AS component
-        FROM ({base_cte}) f
-        LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
-        """,
-        p,
+    # Role facet pivots on role, so it's computed from a role-free scope (same mlo/
+    # source_db/etc. filters, without whatever role may already be applied) -- and from
+    # each protein's role WITHIN that scope, not protein_summary.has_driver (a global flag
+    # true if the protein drives ANY MLO/source anywhere, which over-counts here the same
+    # way it did in protein_queries.get_proteins_facets -- see that function's docstring).
+    _, conditions_no_role, params_no_role = _build_advanced_clauses(
+        gene_name, uniprot_id, organism, taxon_id, mlo, None, source_db,
+        feature_type, feature_label, feature_accession,
+    )
+    where_no_role = ("WHERE " + " AND ".join(conditions_no_role)) if conditions_no_role else ""
+    base_cte_no_role = f"SELECT DISTINCT p.uniprot_id {from_clause} {where_no_role}"
+    driver_cnt, component_cnt = await _scoped_role_counts(
+        base_cte_no_role, tuple(params_no_role), mlo, source_db
     )
 
     mlo_rows = await fetchall(
@@ -204,12 +209,9 @@ async def get_advanced_search_facets(
     by_organism = {r["organism"]: r["cnt"] for r in org_rows if r["organism"]}
     by_mlo = {r["unified_mlo"]: r["cnt"] for r in mlo_rows if r["unified_mlo"]}
     by_role: dict[str, int] = {}
-    if role_rows:
-        r = role_rows[0]
-        for k in ("driver", "component"):
-            v = r.get(k)
-            if v:
-                by_role[k] = int(v)
+    for k, v in (("driver", driver_cnt), ("component", component_cnt)):
+        if v:
+            by_role[k] = int(v)
 
     return {"by_organism": by_organism, "by_role": by_role, "by_mlo": by_mlo}
 
@@ -227,6 +229,8 @@ async def advanced_search(
     feature_accession: str | None,
     page: int,
     per_page: int,
+    sort_by: str | None = None,
+    sort_order: str = "desc",
 ) -> tuple[int, list[dict]]:
     from database import fetchval
 
@@ -234,6 +238,8 @@ async def advanced_search(
         gene_name, uniprot_id, organism, taxon_id, mlo, role, source_db,
         feature_type, feature_label, feature_accession,
     )
+    if sort_by in _SORT_NEEDS_PS:
+        joins.append("LEFT JOIN protein_summary ps_s ON p.uniprot_id = ps_s.uniprot_id")
     from_clause = " ".join(joins)
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
@@ -242,13 +248,15 @@ async def advanced_search(
         tuple(params),
     ) or 0
 
+    cte_extra, cte_order, outer_order = _build_sort(sort_by, sort_order)
+
     offset = (page - 1) * per_page
     rows = await fetchall(
         f"""
         WITH filtered AS (
-            SELECT DISTINCT p.uniprot_id
+            SELECT DISTINCT p.uniprot_id{cte_extra}
             {from_clause} {where}
-            ORDER BY p.uniprot_id
+            ORDER BY {cte_order}
             LIMIT ? OFFSET ?
         )
         SELECT
@@ -262,7 +270,7 @@ async def advanced_search(
         FROM filtered f
         JOIN proteins p ON p.uniprot_id = f.uniprot_id
         LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
-        ORDER BY f.uniprot_id
+        ORDER BY {outer_order}
         """,
         tuple(params) + (per_page, offset),
     )

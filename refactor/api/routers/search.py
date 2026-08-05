@@ -51,6 +51,8 @@ def _parse_source_dbs(val: str | None) -> list[str]:
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
+_VALID_SORT_BY = {"gene_name", "mlo_count", "source_db_count", "disorder_mobidb_lite_dc", "role"}
+
 
 @router.get("/search", response_model=SearchResponse)
 async def search(
@@ -121,9 +123,17 @@ async def search_advanced(
     feature_type: str | None = None,
     feature_label: str | None = None,
     feature_accession: str | None = None,
+    sort_by: str | None = None,
+    sort_order: str = Query(default="desc"),
     page: int = Query(default=DEFAULT_PAGE, ge=1),
     per_page: int = Query(default=DEFAULT_PER_PAGE, ge=1, le=MAX_PER_PAGE),
 ):
+    if sort_by is not None and sort_by not in _VALID_SORT_BY:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": f"sort_by must be one of: {', '.join(sorted(_VALID_SORT_BY))}"})
+    if sort_order.lower() not in {"asc", "desc"}:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": "sort_order must be 'asc' or 'desc'"})
+    sort_order = sort_order.lower()
+
     filters = {k: v for k, v in {
         "gene_name": gene_name,
         "uniprot_id": uniprot_id,
@@ -155,6 +165,8 @@ async def search_advanced(
             feature_accession=feature_accession,
             page=page,
             per_page=per_page,
+            sort_by=sort_by,
+            sort_order=sort_order,
         )
         facets_data = await get_advanced_search_facets(
             gene_name=gene_name,

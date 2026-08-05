@@ -33,14 +33,21 @@ def component_role_clause(alias: str = "ma") -> str:
     return f"({alias}.unified_role IS NULL OR LOWER({alias}.unified_role) != 'driver')"
 
 
-EXCLUDED_MLO_CATEGORIES: list[str] = []
+EXCLUDED_MLO_CATEGORIES: list[str] = ["Unspecified"]
 """mlo_vocabulary.category values excluded from /mlos listings by default.
 
-Empty today: the 'Unspecified' (NotInformed) bucket is intentionally left
-unfiltered per explicit user decision (2026-08-04, see the design spec).
-Change this list -- and refactor/api/CLAUDE.md's policy section -- if that
-decision changes; no query file should hardcode category-based filtering
-independently of this."""
+Reversed 2026-08-05 (frontend-phase audit, see REFACTOR_LOG.md): 'NotInformed'
+(category='Unspecified') showing up as a browsable organelle in Home/MlosPage's
+"Membraneless organelles" grid reads as if it were a real MLO, which it isn't --
+it's a placeholder several source DBs use when they don't specify a compartment.
+This clause is wired ONLY into mlo_queries.py::get_all_mlos (the /mlos listing),
+so scope is deliberately narrow: it doesn't touch protein_summary
+(build_summary.py never calls excluded_mlo_category_clause) or a protein's own
+mlo_annotations list (protein_queries.py doesn't call it either) -- a protein's
+"MLO Annotations" tab still shows its NotInformed rows for full provenance,
+only the top-level browse grids hide the category. Change this list --
+and refactor/api/CLAUDE.md's policy section -- if that scope should change; no
+query file should hardcode category-based filtering independently of this."""
 
 
 def excluded_mlo_category_clause(alias: str = "mv") -> tuple[str | None, list[str]]:

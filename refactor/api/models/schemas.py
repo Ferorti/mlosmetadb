@@ -246,8 +246,10 @@ class SearchResponse(BaseModel):
 class ProteinStats(BaseModel):
     total: int
     by_organism: dict[str, int]
+    by_organism_drivers: dict[str, int] = {}
     top_organisms: int
     total_organisms: int = 0
+    by_component_role: dict[str, int] = {}
 
 
 class MloAnnotationStats(BaseModel):

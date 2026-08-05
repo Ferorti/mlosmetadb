@@ -139,14 +139,49 @@ async def get_proteins_page(
     return total, rows
 
 
-async def get_proteins_facets(
+async def _scoped_role_counts(
+    base_cte: str, base_params: tuple, mlo: str | None, source_db: str | None,
+) -> tuple[int, int]:
+    """Driver/component counts for the proteins in base_cte, scoped to the SAME mlo/
+    source_db filter already narrowing base_cte -- deliberately NOT protein_summary.
+    has_driver, which is a per-protein flag true if the protein drives ANY MLO/source
+    anywhere in the dataset. A protein that drives one MLO while being a mere component
+    (or unannotated) in the MLO base_cte is actually filtered to would otherwise be
+    miscounted as a driver for the wrong MLO (confirmed against p_granule: has_driver
+    over-counts 46 vs. the real MLO-scoped 26)."""
+    active = policy.active_annotation_clause("ma_role")
+    conds = [active, "LOWER(ma_role.unified_role) = 'driver'"]
+    extra_params: list = []
+    if mlo:
+        conds.append("ma_role.unified_mlo = ?")
+        extra_params.append(mlo)
+    if source_db:
+        conds.append("ma_role.source_db = ?")
+        extra_params.append(source_db)
+    driver_where = " AND ".join(conds)
+    row = await fetchone(
+        f"""
+        SELECT
+            SUM(CASE WHEN dr.uniprot_id IS NOT NULL THEN 1 ELSE 0 END) AS driver,
+            SUM(CASE WHEN dr.uniprot_id IS NULL THEN 1 ELSE 0 END) AS component
+        FROM ({base_cte}) f
+        LEFT JOIN (
+            SELECT DISTINCT ma_role.uniprot_id FROM mlo_annotations ma_role WHERE {driver_where}
+        ) dr ON dr.uniprot_id = f.uniprot_id
+        """,
+        tuple(base_params) + tuple(extra_params),
+    )
+    return (row["driver"] or 0, row["component"] or 0)
+
+
+def _build_proteins_conditions(
     organism: str | None,
     taxon_id: int | None,
     mlo: str | None,
     role: str | None,
     source_db: str | None,
     uniprot_id: str | None,
-) -> dict:
+) -> tuple[str, list[str], list]:
     conditions: list[str] = []
     params: list = []
     needs_mlo = any(x is not None for x in [mlo, role, source_db])
@@ -178,6 +213,20 @@ async def get_proteins_facets(
         conditions.append("ma.source_db = ?")
         params.append(source_db)
 
+    return from_clause, conditions, params
+
+
+async def get_proteins_facets(
+    organism: str | None,
+    taxon_id: int | None,
+    mlo: str | None,
+    role: str | None,
+    source_db: str | None,
+    uniprot_id: str | None,
+) -> dict:
+    from_clause, conditions, params = _build_proteins_conditions(
+        organism, taxon_id, mlo, role, source_db, uniprot_id
+    )
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
     p = tuple(params)
     base_cte = f"SELECT DISTINCT p.uniprot_id {from_clause} {where}"
@@ -192,15 +241,15 @@ async def get_proteins_facets(
         p,
     )
 
-    role_rows = await fetchall(
-        f"""
-        SELECT
-            SUM(ps.has_driver) AS driver,
-            SUM(CASE WHEN ps.has_driver = 0 THEN 1 ELSE 0 END) AS component
-        FROM ({base_cte}) f
-        LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
-        """,
-        p,
+    # Role facet pivots on role, so it's computed from a role-free scope (same mlo/
+    # source_db/organism/uniprot_id filters, without whatever role may already be applied).
+    _, conditions_no_role, params_no_role = _build_proteins_conditions(
+        organism, taxon_id, mlo, None, source_db, uniprot_id
+    )
+    where_no_role = ("WHERE " + " AND ".join(conditions_no_role)) if conditions_no_role else ""
+    base_cte_no_role = f"SELECT DISTINCT p.uniprot_id {from_clause} {where_no_role}"
+    driver_cnt, component_cnt = await _scoped_role_counts(
+        base_cte_no_role, tuple(params_no_role), mlo, source_db
     )
 
     mlo_rows = await fetchall(
@@ -217,12 +266,9 @@ async def get_proteins_facets(
     by_organism = {r["organism"]: r["cnt"] for r in org_rows if r["organism"]}
     by_mlo = {r["unified_mlo"]: r["cnt"] for r in mlo_rows if r["unified_mlo"]}
     by_role: dict[str, int] = {}
-    if role_rows:
-        r = role_rows[0]
-        for k in ("driver", "component"):
-            v = r.get(k)
-            if v:
-                by_role[k] = int(v)
+    for k, v in (("driver", driver_cnt), ("component", component_cnt)):
+        if v:
+            by_role[k] = int(v)
 
     return {"by_organism": by_organism, "by_role": by_role, "by_mlo": by_mlo}
 
