@@ -843,3 +843,113 @@ this entry's original disclosure and should have been mentioned here at
 the time.
 
 ---
+
+## Entry 12 — Populating `sequence_features`/`ppi`/`orthologs` (closing the gap noted in Entry 11)
+
+Entry 11 disclosed that `sequence_features`, `ppi`, and `orthologs` were all
+empty (0 rows) in `refactor/database/mlosmetadb.db` — the parse scripts
+existed and were documented as working, but had never been run against this
+regenerated DB. This entry closes that gap, ahead of the `frontend/` phase
+(which would otherwise render empty PPI/features/ortholog sections for
+every protein).
+
+**Scope, confirmed with the user before running anything:** parse only
+against already-cached/local data — `parse_interpro.py`, `parse_mobidb.py`,
+`parse_biogrid.py`, `parse_oma.py` — no live fetching to close the small
+remaining cache gaps, and no `fetch_mobidb_orthologs.py`/
+`parse_mobidb_orthologs.py` run (richer per-ortholog `ortholog_meta`/
+`ortholog_features` detail, never run against production, deferred).
+
+**Pre-flight cache coverage check** (`refactor/database/cache/*.db`, 15,879
+proteins total): `interpro_cache` 15,409/15,879 responses with
+`status_code=200` (~97%), `mobidb_cache` 26,924 (covers ortholog accessions
+too, not just dataset proteins), `oma_cache` 14,130/15,349 with
+`status_code=200` (~89%). High enough coverage that no fetch was needed
+before parsing.
+
+**Results:**
+
+```
+python3 refactor/scripts/parse_interpro.py
+  Proteínas procesadas: 14,621 | Sin entries en cache: 788
+  Filas insertadas: 55,145 (domain/pfam 23,645, domain/smart 25,460, family/pfam 6,040)
+
+python3 refactor/scripts/parse_mobidb.py
+  Proteínas con features: 14,832 | Sin datos en cache: 575
+  Filas insertadas: 303,722 (idr/AlphaFold-disorder 32,705, idr/MobiDB-lite 21,386,
+  idr/MobiDB-th50 126,213, idr_curated/DisProt 1,390, lcd/MobiDB-lite-sub 7,205,
+  lcd/SEG 45,931, morf/MobiDB 3,256, plddt_region/AlphaFold 65,636)
+
+python3 refactor/scripts/parse_biogrid.py
+  Filas procesadas: 2,861,729 → insertadas: 917,468 (in_db=1: 424,482, in_db=0: 492,986)
+  Built-in TEST_PROTEINS check: "Test FUS↔TDP43/hnRNPA1: PASS ✓"
+
+python3 refactor/scripts/parse_oma.py
+  Fetcheadas de OMA (ya en cache): 12,899 | 404: 2,980
+  Filas insertadas en orthologs: 19,289 — matches the historical production
+  count exactly (see Entry 11's mention of this figure from live-DB audits
+  earlier in this refactor). Built-in TEST_PROTEINS check passed for all 5
+  standard test proteins before the full run proceeded.
+```
+
+`sequence_features` total: 358,867 (55,145 + 303,722). `ppi` total: 917,468.
+`orthologs` total: 19,289.
+
+Re-ran `refactor/scripts/build_summary.py` afterward so `protein_summary`
+picks up the newly-populated `sequence_features`. Result: 15,879 rows,
+12,892 with `idr_regions`, 13,858 with `domains` (previously 0/0 per Entry
+11). Verification: FUS (`P35637`) — `disorder_alphafold_dc = 0.785`,
+matching `scripts/CLAUDE.md`'s documented sanity-check value exactly; BioGRID
+partners include `Q13148` (TDP-43, `Affinity Capture-MS`/
+`Reconstituted Complex`) and orthologs include `Danio rerio`/
+`Caenorhabditis elegans` entries.
+
+**Incident during this step, disclosed in full:** the first `build_summary.py`
+invocation was run as `python3 scripts/build_summary.py` from the repo
+root instead of `refactor/`. The repo root has its own, separate, stale
+pre-refactor copy of this script at `scripts/build_summary.py` (predates
+the `dataset_active`/`policy.py` fix from the `api/` phase) — same
+filename, different file, and its own `ROOT = Path(__file__).parent.parent`
+correctly-for-itself resolves to the repo root. Because the relative
+invocation matched *that* file rather than erroring, it silently ran
+against `database/mlosmetadb.db` — the file this log's own hard rule (line
+9 above) says must never be touched — rebuilding its `protein_summary`
+(via `DELETE FROM protein_summary` + full rebuild) and rewriting
+`proteins.disorder_mobidb_lite_dc`/`disorder_alphafold_dc` for all 15,879
+rows.
+
+**Impact assessment**: no source table was affected — confirmed
+`database/mlosmetadb.db`'s `mlo_annotations` is unchanged at 54,786 rows
+(the exact old-production total: 29,356 driver + 10,189 client + 15,241
+unmapped, per Entry 8), and `sequence_features`/`ppi`/`orthologs` there
+were already populated from before this refactor began (unrelated to
+today's parser runs, which correctly targeted `refactor/database/` only —
+confirmed via `stat` mtimes: only `database/mlosmetadb.db` itself changed
+at the time of the mistaken run, `mlo_annotations`'s row count is
+untouched). Since the old script's aggregation logic operates only on
+already-unchanged source tables in that same file, the rebuilt
+`protein_summary`/disorder columns should be content-equivalent to what
+was there before, not a real data change — but this was a genuine,
+unauthorized write against a "never touched" file, not a no-op by design,
+and is recorded here rather than quietly absorbed. The corrected script
+(`python3 <absolute path to>/refactor/scripts/build_summary.py`, invoked
+with an absolute path specifically to rule out this ambiguity) was then
+run again and confirmed to target `refactor/database/mlosmetadb.db`
+correctly (verified via `stat` mtime and by re-checking the result counts
+above).
+
+**Lesson for future pipeline runs**: always invoke `refactor/scripts/*.py`
+with an absolute path, or `cd refactor/` first and verify with `pwd`
+before running — never a bare relative path from an ambiguous or
+unverified cwd. Checked after this incident: `build_summary.py`,
+`parse_interpro.py`, `parse_mobidb.py`, `parse_biogrid.py`, and
+`parse_oma.py` **all** have a same-named, differently-rooted twin still
+sitting at the repo-root `scripts/` (the pre-refactor originals `refactor/`
+was copied from) — this hazard isn't unique to `build_summary.py`, it
+applies to every script in this pipeline. This run's four parser
+invocations happened to be safe because `cd refactor/` was verified
+immediately before each one (confirmed correct via the resulting row
+counts landing in `refactor/database/mlosmetadb.db`, not the root file) —
+but the ambiguity exists for all of them equally.
+
+---
