@@ -80,6 +80,19 @@ INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, d
     ('PCLIENT', 'PhaseDB', 'p_granule', 'client', 1);
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('PCLIENT', 0, 1, 1, 1, '["p_granule"]', 'PhaseDB');
+
+-- PNULLROLE: active mlo_annotations row with unified_role IS NULL (CD-CODE-
+-- style annotation gap), in its own MLO ('condensate_x') to avoid colliding
+-- with any existing test's counts on p_granule/stress_granule/nucleolus.
+INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
+    ('condensate_x', 'Cytoplasmic');
+
+INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
+    ('PNULLROLE', 'NULLROLETEST', 'Homo sapiens', 150);
+INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
+    ('PNULLROLE', 'CDCODE', 'condensate_x', NULL, 1);
+INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
+    ('PNULLROLE', 0, 0, 1, 1, '["condensate_x"]', 'CDCODE');
 """
 
 

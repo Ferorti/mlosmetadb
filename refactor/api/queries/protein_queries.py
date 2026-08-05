@@ -96,7 +96,7 @@ async def get_proteins_page(
         params.append(mlo)
     if role:
         if role.lower() == "component":
-            conditions.append("LOWER(ma.unified_role) != 'driver'")
+            conditions.append(policy.component_role_clause("ma"))
         else:
             conditions.append("LOWER(ma.unified_role) = LOWER(?)")
             params.append(role)
@@ -170,7 +170,7 @@ async def get_proteins_facets(
         params.append(mlo)
     if role:
         if role.lower() == "component":
-            conditions.append("LOWER(ma.unified_role) != 'driver'")
+            conditions.append(policy.component_role_clause("ma"))
         else:
             conditions.append("LOWER(ma.unified_role) = LOWER(?)")
             params.append(role)
@@ -300,8 +300,8 @@ async def get_ppi_all(
         extra_where.append("COALESCE(ps.has_driver, 0) = 0")
     if mlo:
         extra_where.append(
-            "EXISTS (SELECT 1 FROM mlo_annotations ma "
-            "WHERE ma.uniprot_id = pt.partner_uniprot_id AND ma.unified_mlo = ?)"
+            f"EXISTS (SELECT 1 FROM mlo_annotations ma "
+            f"WHERE ma.uniprot_id = pt.partner_uniprot_id AND ma.unified_mlo = ? AND {policy.active_annotation_clause('ma')})"
         )
         extra_params.append(mlo)
 

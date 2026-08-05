@@ -832,4 +832,14 @@ filtering bug.
   hedged "e.g.:" framing rather than an unambiguous verbatim curl paste —
   not fabrication, just one step removed in provenance.
 
+**Also disclosed here, flagged by the final reviewer**: commit `1a4a491`
+("chore: gitignore symlinked refactor/database/{cache,crossref,raw}") was
+controller/worktree housekeeping outside `refactor/`'s own content —
+trailing-slash `.gitignore` patterns never match a symlink even when it
+points to a directory, so this worktree's `cache/`/`crossref/`/`raw/`
+symlinks back to the main checkout needed no-trailing-slash mirror
+patterns to keep `git add -A` from ever staging them; it was not part of
+this entry's original disclosure and should have been mentioned here at
+the time.
+
 ---

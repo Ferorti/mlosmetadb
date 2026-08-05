@@ -85,7 +85,7 @@ async def get_mlo_proteins_page(
         params.append(organism)
     if role:
         if role.lower() == "component":
-            conditions.append("LOWER(ma.unified_role) != 'driver'")
+            conditions.append(policy.component_role_clause("ma"))
         else:
             conditions.append("LOWER(ma.unified_role) = LOWER(?)")
             params.append(role)

@@ -22,6 +22,17 @@ def active_annotation_clause(alias: str = "ma") -> str:
     return f"{alias}.dataset_active = 1"
 
 
+def component_role_clause(alias: str = "ma") -> str:
+    """SQL boolean expression for the `role=component` filter: true for
+    every row that isn't a driver, INCLUDING NULL-role rows (CD-CODE and
+    any other annotation gap). `NULL != 'driver'` evaluates to NULL (not
+    true) in SQL, so a plain `!= 'driver'` silently drops NULL rows --
+    this is the fix for that. "Component" means "not a driver," matching
+    the frontend's existing description of this bucket (see
+    frontend/src/components/browse/RoleCards.vue)."""
+    return f"({alias}.unified_role IS NULL OR LOWER({alias}.unified_role) != 'driver')"
+
+
 EXCLUDED_MLO_CATEGORIES: list[str] = []
 """mlo_vocabulary.category values excluded from /mlos listings by default.
 

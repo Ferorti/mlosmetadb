@@ -8,6 +8,7 @@ if str(REFACTOR_ROOT) not in sys.path:
 from policy import (
     EXCLUDED_MLO_CATEGORIES,
     active_annotation_clause,
+    component_role_clause,
     excluded_mlo_category_clause,
 )
 
@@ -36,3 +37,17 @@ def test_excluded_mlo_category_clause_when_configured(monkeypatch):
     clause, params = excluded_mlo_category_clause("mv")
     assert clause == "mv.category NOT IN (?)"
     assert params == ["Unspecified"]
+
+
+def test_component_role_clause_default_alias():
+    assert (
+        component_role_clause()
+        == "(ma.unified_role IS NULL OR LOWER(ma.unified_role) != 'driver')"
+    )
+
+
+def test_component_role_clause_custom_alias():
+    assert (
+        component_role_clause("x")
+        == "(x.unified_role IS NULL OR LOWER(x.unified_role) != 'driver')"
+    )
