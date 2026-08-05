@@ -68,7 +68,12 @@ async function runSearch(f, overrides = {}) {
       const mloHits   = searchRes.data?.mlos ?? []
       if (mloHits.length > 0) {
         return getProteins({ mlo: mloHits[0].unified_mlo, ...extraFilters })
-      } else if (f.organism || f.role) {
+      } else if (f.organism || f.role || f.sort_by || f.mlo || f.feature_type || f.feature_accession) {
+        // f.sort_by (not extraFilters.sort_by, which is always defaulted) is only present
+        // once the user picks a non-default sort. /search (FTS5) accepts no filters beyond
+        // q/mode at all — role/organism/mlo/feature_*/sort_by would all be silently dropped
+        // there, so escalate to /search/advanced (single-field gene_name match) whenever any
+        // of them is set.
         return searchAdvanced({ gene_name: q, ...extraFilters })
       }
       return searchRes

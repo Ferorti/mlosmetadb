@@ -1,25 +1,44 @@
 <script setup>
-import { formatCount } from '@/utils/format'
+import { computed } from 'vue'
+import { formatCount, formatOrganism } from '@/utils/format'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// TODO: replace with real API data when GET /organisms endpoint is available
-// driver_count per organism also requires API support
-const PLACEHOLDER_ORGANISMS = [
-  { key: 'homo_sapiens',             name: 'Homo sapiens',             protein_count: 8432, driver_count: 412 },
-  { key: 'arabidopsis_thaliana',     name: 'Arabidopsis thaliana',     protein_count: 1203, driver_count: 89  },
-  { key: 'mus_musculus',             name: 'Mus musculus',             protein_count: 2341, driver_count: 198 },
-  { key: 'saccharomyces_cerevisiae', name: 'Saccharomyces cerevisiae', protein_count: 891,  driver_count: 74  },
-  { key: 'caenorhabditis_elegans',   name: 'Caenorhabditis elegans',   protein_count: 534,  driver_count: 41  },
-  { key: 'bos_taurus',               name: 'Bos taurus',               protein_count: 312,  driver_count: 22  },
-  { key: 'drosophila_melanogaster',  name: 'Drosophila melanogaster',  protein_count: 298,  driver_count: 28  },
-  { key: 'rattus_norvegicus',        name: 'Rattus norvegicus',        protein_count: 287,  driver_count: 19  },
-  { key: 'xenopus_laevis',           name: 'Xenopus laevis',           protein_count: 201,  driver_count: 14  },
+// key -> icon slug only. Counts come live from props.stats (GET /stats), never hardcoded --
+// by_organism keys can carry a "(strain ...)" suffix (e.g. S. cerevisiae), so lookups match
+// through formatOrganism() rather than an exact string.
+const ORGANISM_META = [
+  { key: 'homo_sapiens',             name: 'Homo sapiens' },
+  { key: 'mus_musculus',             name: 'Mus musculus' },
+  { key: 'arabidopsis_thaliana',     name: 'Arabidopsis thaliana' },
+  { key: 'caenorhabditis_elegans',   name: 'Caenorhabditis elegans' },
+  { key: 'saccharomyces_cerevisiae', name: 'Saccharomyces cerevisiae' },
+  { key: 'xenopus_laevis',           name: 'Xenopus laevis' },
+  { key: 'bos_taurus',               name: 'Bos taurus' },
+  { key: 'drosophila_melanogaster',  name: 'Drosophila melanogaster' },
+  { key: 'rattus_norvegicus',        name: 'Rattus norvegicus' },
 ]
 
-defineProps({
+const props = defineProps({
   stats: { type: Object, default: null }
+})
+
+function lookup(dict, name) {
+  if (!dict) return null
+  if (dict[name] != null) return dict[name]
+  const match = Object.keys(dict).find(k => formatOrganism(k) === name)
+  return match ? dict[match] : null
+}
+
+const organisms = computed(() => {
+  const byOrganism = props.stats?.proteins?.by_organism ?? null
+  const byDrivers  = props.stats?.proteins?.by_organism_drivers ?? null
+  return ORGANISM_META.map(org => ({
+    ...org,
+    protein_count: lookup(byOrganism, org.name),
+    driver_count:  lookup(byDrivers, org.name),
+  }))
 })
 </script>
 
@@ -27,7 +46,7 @@ defineProps({
   <div class="space-y-4">
     <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3">
       <button
-        v-for="org in PLACEHOLDER_ORGANISMS"
+        v-for="org in organisms"
         :key="org.key"
         class="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors text-center"
         @click="router.push({ path: '/results', query: { organism: org.name } })"

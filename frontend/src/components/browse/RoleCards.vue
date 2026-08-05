@@ -11,12 +11,16 @@ const router = useRouter()
 
 const cards = computed(() => {
   if (!props.stats) return []
-  const r = props.stats.mlo_annotations.by_role
-  const componentCount = r.component ?? ((r.client || 0) + (r.unknown || 0))
+  // Mutually-exclusive protein-level split (has_driver=1 -> driver, else -> component).
+  // mlo_annotations.by_role (annotation-row based) is NOT used here: a protein with both
+  // a driver-role row and a client-role row would count in both buckets there, so
+  // driver + component could exceed proteins.total.
+  const r = props.stats.proteins.by_component_role
+  const componentCount = r.component ?? 0
   return [
     {
       role: 'driver',
-      count: r.driver,
+      count: r.driver ?? 0,
       label: 'LLPS Drivers',
       description: 'Proteins with direct experimental evidence of driving liquid-liquid phase separation and/or MLO formation. Annotated as driver or scaffold in at least one source database.',
       countClass: 'text-brand-blue',

@@ -1,5 +1,6 @@
 export function formatMlo(str) {
   if (!str) return ''
+  if (str === 'NotInformed') return 'No MLO associated'
   return str.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())
 }
 
