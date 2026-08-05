@@ -953,3 +953,129 @@ counts landing in `refactor/database/mlosmetadb.db`, not the root file) —
 but the ambiguity exists for all of them equally.
 
 ---
+
+## Entry 13 — `proteins.gene_name`/`organism`/`length` backfill (found auditing the `frontend/` phase)
+
+Found while auditing the existing `frontend/` (not yet ported) against the
+real, populated `refactor/api/` from Entry 12: `GET /search?q=FUS` returned
+zero hits, and `GET /protein/P35637` returned `gene_name: null`,
+`organism: null`, `sequence_length: null` for FUS — a protein with 1036
+`mlo_annotations` rows. Checked directly against
+`refactor/database/mlosmetadb.db`:
+
+```sql
+SELECT COUNT(*), COUNT(gene_name), COUNT(organism), COUNT(length) FROM proteins;
+-- 15879, 0, 0, 0
+```
+
+Every one of `proteins.gene_name`/`protein_name`/`organism`/`taxon_id`/
+`length` was `NULL` for all 15,879 rows. Unlike `sequence_features`/`ppi`/
+`orthologs` (Entry 11's disclosed gap, closed in Entry 12), this gap was not
+previously identified — Entry 11/12 never checked these columns
+specifically.
+
+**Root cause**: `refactor/scripts/build_db.py` only ever inserts protein
+stubs (`INSERT OR IGNORE INTO proteins (uniprot_id) VALUES (?)`, line 235).
+`refactor/scripts/fetch_uniprot.py` is the script responsible for filling in
+the rest (documented in `scripts/CLAUDE.md`: "fetch_uniprot.py →
+uniprot_cache.db, updates proteins") — but it was never run against
+`refactor/database/mlosmetadb.db`. The cache itself
+(`refactor/database/cache/uniprot_cache.db`, copied forward in Entry 3) was
+NOT empty — confirmed by reading the raw cached JSON for `P35637` directly:
+gene name, organism, protein description, and sequence were all present
+with `status_code=200`. So this was a "cache has the data, DB was never
+updated from it" gap, the same shape as Entry 12's gap for
+sequence_features/ppi/orthologs — just not caught at the time.
+
+**A second, independent bug found while fixing the first**: even running
+`fetch_uniprot.py` as-is would not have closed this gap for the ~15,400
+already-cached accessions. Its `main()` only calls `update_protein()` inside
+the live-fetch loop, for entries just returned by a fresh UniProt API call —
+cache hits (`status_code=200` rows already in `uniprot_cache.db`) are
+skipped entirely (`pending = [uid for uid in all_ids if uid not in
+cached]`), so their cached response was never applied to `proteins`. Fixed
+by adding `backfill_from_cache()` to `fetch_uniprot.py`: for every
+`uniprot_id` with `gene_name IS NULL`, look up its cached `status_code=200`
+response and apply `update_protein()` from it — zero network calls, since
+the data already exists locally. Called once at the top of `main()`, before
+the existing pending/live-fetch logic (unchanged).
+
+**Test-before-batch**: before running against the real DB, copied
+`refactor/database/mlosmetadb.db` to a scratch path and ran
+`backfill_from_cache()` against the copy, checking the five standard
+`TEST_PROTEINS` before/after:
+
+```
+BEFORE: P35637 (None, None, None)   -- (gene_name, organism, length)
+AFTER:  P35637 ('FUS', 'Homo sapiens', 526)
+        P09651 ('HNRNPA1', 'Homo sapiens', 372)
+        P38919 ('EIF4A3', 'Homo sapiens', 411)
+        Q9NQC3 (... , 'Homo sapiens', 1192)
+        Q92520  -- no row (pre-existing gap, Entry 11)
+```
+All four values are biologically correct (FUS is 526 aa, HNRNP A1 is 372 aa,
+eIF4A3 is 411 aa — verified against known UniProt lengths), confirming
+`backfill_from_cache()` was correct before running it for real.
+
+**Real run**, `python3 <absolute path>/refactor/scripts/fetch_uniprot.py`
+(absolute path per Entry 12's lesson):
+
+```
+Backfill desde cache (updates nunca aplicados): 15727
+Total proteinas: 15879
+Ya en cache:     15727
+Por fetchear:    152
+Batch 1/2 (100 IDs) ... ok=99, not_found=1
+Batch 2/2 (52 IDs) ... ok=50, not_found=2
+
+Fetcheadas con exito: 149
+Errores/no encontradas: 3
+proteins con secuencia: 15405
+proteins sin secuencia: 474
+Errores por tipo:
+  not_found: 370
+```
+
+Only 152 accessions needed a live UniProt call (370 `not_found` errors are
+cumulative across this and prior runs, stored in `uniprot_cache.db`'s
+`fetch_errors` table, not all from today). Final state:
+
+```sql
+SELECT COUNT(*), COUNT(gene_name), COUNT(organism), COUNT(length) FROM proteins;
+-- 15879, 14583, 15405, 15405
+```
+
+`gene_name` is lower (14583) than `organism`/`length` (15405) because not
+every UniProt entry has an assigned gene name — expected, not a bug.
+`474` proteins remain without a sequence — real UniProt gaps (obsolete/
+merged/withdrawn accessions), consistent with `Q92520`'s pre-existing
+zero-row gap from Entry 11.
+
+**Verification against the running API** (`refactor/api` restarted — the
+in-memory DB copy is frozen at boot, per `api/CLAUDE.md`'s "Startup" section
+— a stale server would not see any of this):
+
+```bash
+curl "http://127.0.0.1:8765/search?q=FUS&mode=fuzzy"
+# -> total_hits: 12  (was 0 before this fix)
+
+curl "http://127.0.0.1:8765/protein/P35637"
+# -> gene_name: "FUS", organism: "Homo sapiens", taxon_id: 9606, sequence_length: 526
+# (all null before this fix)
+
+curl "http://127.0.0.1:8765/stats"
+# -> proteins.total_organisms: 207, top_organisms includes
+#    "Homo sapiens": 6802, "Mus musculus": 2543, "Arabidopsis thaliana": 2088, ...
+# (was total_organisms: 0, by_organism: {} before this fix)
+```
+
+**Why this matters for the upcoming `frontend/` phase**: `sequence_length`
+being null was also silently breaking both D3 sequence-feature track
+components (`ProteinFeatureTrack.vue`'s `render()` returns early with `if
+(!props.sequenceLength) return`) across every page that renders one — not a
+frontend bug, a downstream symptom of this same data gap. Found and fixed
+before starting the `frontend/` port so the upcoming design audit reflects
+real, fully-populated data rather than an artifact of an incomplete
+pipeline run.
+
+---

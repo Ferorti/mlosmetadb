@@ -105,10 +105,34 @@ def update_protein(con_main: sqlite3.Connection, data: dict) -> None:
     )
 
 
+def backfill_from_cache(con_main: sqlite3.Connection, con_cache: sqlite3.Connection) -> int:
+    """Aplica respuestas ya cacheadas (status_code=200) a proteins.* para accessions
+    que nunca recibieron el UPDATE — el loop de fetch en main() solo llama a
+    update_protein() sobre entries recien fetcheadas, nunca sobre cache hits
+    preexistentes."""
+    stale_ids = [
+        r[0] for r in con_main.execute("SELECT uniprot_id FROM proteins WHERE gene_name IS NULL")
+    ]
+    n = 0
+    for uid in stale_ids:
+        row = con_cache.execute(
+            "SELECT response FROM responses WHERE uniprot_id=? AND status_code=200", (uid,)
+        ).fetchone()
+        if row is None:
+            continue
+        update_protein(con_main, parse_protein(json.loads(row[0])))
+        n += 1
+    con_main.commit()
+    return n
+
+
 def main() -> None:
     con_main = sqlite3.connect(DB)
     con_main.execute("PRAGMA foreign_keys = ON")
     con_cache = sqlite3.connect(CACHE_DB)
+
+    n_backfilled = backfill_from_cache(con_main, con_cache)
+    print(f"Backfill desde cache (updates nunca aplicados): {n_backfilled}")
 
     all_ids = [r[0] for r in con_main.execute("SELECT uniprot_id FROM proteins")]
     cached = {
