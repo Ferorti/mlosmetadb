@@ -28,8 +28,10 @@ const TABLE_PER    = 20
 // ── graph state ──────────────────────────────────────────────────────────────
 const graphRef     = ref(null)
 const hoveredId    = ref(null)
+const selectedId   = ref(null)   // persistent selection (survives mouseout), set by graph node click
 const simulation   = ref(null)
 const tooltip      = ref({ visible: false, x: 0, y: 0, partner: null })
+const rowRefs      = {}          // plain (non-reactive) DOM-node lookup, keyed by partner_uniprot_id
 
 const GRAPH_CAP = 300
 
@@ -246,7 +248,13 @@ function renderGraph() {
       tooltip.value = { ...tooltip.value, visible: false }
     })
     .on('click', (e, d) => {
-      if (!d.isCenter) router.push(`/protein/${d.id}`)
+      if (d.isCenter) return
+      selectedId.value = d.id
+      highlightNode(d.id)
+      const index = filteredPartners.value.findIndex(p => p.partner_uniprot_id === d.id)
+      if (index === -1) return
+      tablePage.value = Math.floor(index / TABLE_PER) + 1
+      nextTick(() => rowRefs[d.id]?.scrollIntoView({ block: 'nearest' }))
     })
 
   const partnerCount = nodes.length - 1
@@ -408,8 +416,9 @@ function shortSystems(systems) {
               <tr
                 v-for="p in tableRows"
                 :key="p.partner_uniprot_id"
+                :ref="el => { if (el) rowRefs[p.partner_uniprot_id] = el }"
                 class="border-t border-gray-100 hover:bg-slate-50/60 transition-colors"
-                :class="hoveredId === p.partner_uniprot_id ? 'bg-blue-50/50' : ''"
+                :class="(hoveredId === p.partner_uniprot_id || selectedId === p.partner_uniprot_id) ? 'bg-blue-50/50' : ''"
                 @mouseenter="hoveredId = p.partner_uniprot_id; highlightNode(p.partner_uniprot_id)"
                 @mouseleave="hoveredId = null; highlightNode(null)"
               >
@@ -525,7 +534,7 @@ function shortSystems(systems) {
         </div>
 
         <p class="text-[10px] text-gray-400 mt-1">
-          Scroll to zoom · drag canvas to pan · drag nodes to reposition · click to open protein
+          Scroll to zoom · drag canvas to pan · drag nodes to reposition · click to select in table
         </p>
       </div>
 
