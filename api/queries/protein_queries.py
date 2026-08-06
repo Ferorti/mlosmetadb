@@ -279,6 +279,71 @@ async def get_proteins_facets(
     return {"by_organism": by_organism, "by_role": by_role, "by_mlo": by_mlo}
 
 
+async def get_proteins_export(
+    organism: str | None,
+    taxon_id: int | None,
+    mlo: str | None,
+    role: str | None,
+    source_dbs: list[str] | None,
+) -> list[dict]:
+    """Unpaginated protein list for bulk export. Deliberately NOT reusing
+    _build_proteins_conditions: source_dbs here is a list matched via
+    IN (...), while every caller of that helper takes a single source_db
+    matched via '='. Sharing it would require source_dbs to participate in
+    its needs_mlo/join decision too, which isn't worth threading through a
+    function three other call sites already depend on."""
+    conditions: list[str] = []
+    params: list = []
+    needs_mlo = any([mlo, role, source_dbs])
+
+    from_clause = "FROM proteins p"
+    if needs_mlo:
+        active = policy.active_annotation_clause("ma")
+        from_clause += f" JOIN mlo_annotations ma ON p.uniprot_id = ma.uniprot_id AND {active}"
+
+    if organism:
+        conditions.append("LOWER(p.organism) = LOWER(?)")
+        params.append(organism)
+    if taxon_id is not None:
+        conditions.append("p.taxon_id = ?")
+        params.append(taxon_id)
+    if mlo:
+        conditions.append("ma.unified_mlo = ?")
+        params.append(mlo)
+    if role:
+        if role.lower() == "component":
+            conditions.append(policy.component_role_clause("ma"))
+        else:
+            conditions.append("LOWER(ma.unified_role) = LOWER(?)")
+            params.append(role)
+    if source_dbs:
+        placeholders = ",".join("?" * len(source_dbs))
+        conditions.append(f"ma.source_db IN ({placeholders})")
+        params.extend(source_dbs)
+
+    where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
+
+    return await fetchall(
+        f"""
+        WITH filtered AS (
+            SELECT DISTINCT p.uniprot_id
+            {from_clause} {where}
+            ORDER BY p.uniprot_id
+            LIMIT 50000
+        )
+        SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
+               p.length AS sequence_length, p.reviewed,
+               ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
+               ps.source_dbs
+        FROM filtered f
+        JOIN proteins p          ON p.uniprot_id  = f.uniprot_id
+        JOIN protein_summary ps  ON ps.uniprot_id = f.uniprot_id
+        ORDER BY p.uniprot_id
+        """,
+        tuple(params),
+    )
+
+
 # ── single protein ───────────────────────────────────────────────────────────
 
 async def get_protein_meta(uniprot_id: str) -> dict | None:
