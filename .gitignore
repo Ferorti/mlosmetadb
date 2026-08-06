@@ -255,6 +255,18 @@ refactor/database/cache
 refactor/database/crossref
 refactor/database/raw
 
+# --- OLD/ retired database/: same heavy/generated files, mirrored ---
+# (root-anchored patterns above don't match OLD/database/... either --
+#  same reasoning as the refactor/ block above)
+OLD/database/mlosmetadb.db
+OLD/database/*.db
+OLD/database/cache/
+OLD/database/crossref/
+OLD/database/raw/
+OLD/database/interim/*.tsv
+OLD/api/static/
+OLD/frontend/.vscode/
+
 # --- Local dev config ---
 # MCP server local configuration (local paths, not for repo)
 .mcp.json
