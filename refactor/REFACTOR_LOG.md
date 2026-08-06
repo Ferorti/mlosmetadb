@@ -1079,3 +1079,259 @@ real, fully-populated data rather than an artifact of an incomplete
 pipeline run.
 
 ---
+
+## Entry 14 — Porting `frontend/` into `refactor/frontend/`, verifying it against the real API, and six follow-on fixes/features
+
+With Entry 13's `gene_name`/`organism`/`length` backfill closing the last
+known data gap, this entry covers the actual `frontend/` phase: copying the
+Vue 3 SPA into `refactor/`, verifying every previously-unverified
+endpoint/page pairing against the real, populated `refactor/api/`, and
+fixing everything the verification (plus explicit user requests) turned up.
+Seven commits total, `13d8e42..da0406f` (oldest to newest): the port itself
+(1), two verification passes that found nothing to fix (0 commits — see
+below), and six fixes/features (6) — 1 + 6 = 7.
+
+### The port (commit `c27957e`)
+
+```bash
+rsync -a \
+  --exclude='node_modules' --exclude='dist' \
+  --exclude='src/components/HelloWorld.vue' \
+  --exclude='src/components/TheWelcome.vue' \
+  --exclude='src/components/WelcomeItem.vue' \
+  --exclude='src/components/icons' \
+  --exclude='src/views' \
+  --exclude='src/stores/counter.js' \
+  --exclude='CLAUDE.md' --exclude='DEVLOG.md' \
+  frontend/ refactor/frontend/
+```
+
+64 files, 9,495 insertions. The excluded paths are dead `create-vue` scaffold
+that nothing in the app imports (confirmed via grep before excluding) —
+`HelloWorld.vue`/`TheWelcome.vue`/`WelcomeItem.vue`/`components/icons/`/
+`views/`/`stores/counter.js` — plus the stale `frontend/CLAUDE.md`/
+`DEVLOG.md`, replaced by this task's own new versions (below). `diff -rq`
+between `frontend/` and `refactor/frontend/` with the same exclusion list
+came back with zero output — the copy is complete and correct modulo the
+intentional exclusions.
+
+`vite.config.js`'s `build.outDir: '../api/static'` and dev-proxy
+`target: 'http://localhost:8765'` both resolve correctly by construction one
+directory deeper than the original — zero edits needed. Per this project's
+own "don't run npm" convention, the user ran `npm install && npm run dev`
+themselves and confirmed no errors before the commit landed.
+
+### Verification: PPI + Orthologs tabs (no mismatch, no commit)
+
+Compared `refactor/api/`'s real `/protein/{id}/ppi` and
+`/protein/{id}/orthologs` responses field-by-field, name and type, against
+`ProteinPPI.vue`, `ProteinOrthologs.vue`, and `OrthologTrackViewer.vue`, and
+against `refactor/api/models/schemas.py`'s `PpiPartner`/`PpiEdge`/
+`PpiAllResponse`/`PpiSummary`/`OrthoFeatureRegion`. Every field name and type
+the components read was present in the real payload — no wiring bug found.
+
+One incidental finding, not a wiring bug: `ortholog_meta` and
+`ortholog_features` are both 0-row tables in the current DB, so
+`/protein/{id}/orthologs` correctly returns `in_db: true` with every detail
+field (`gene_name`, `length`, `disorder_*`, `sequence`, `features`) still
+`null` even for orthologs that exist in `orthologs` proper. This was already
+tracked in Entry 12 ("richer per-ortholog `ortholog_meta`/`ortholog_features`
+detail, never run against production, deferred") — not new, and both
+components already degrade gracefully via `??` fallbacks.
+
+### Verification: `/mlos`, `/organisms/search`, `/search`, `/search/advanced` (no mismatch, no commit)
+
+```bash
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/mlos" | python3 -c "
+import json,sys
+names = [m['unified_mlo'] for m in json.load(sys.stdin)['mlos']]
+assert 'NotInformed' not in names
+print('OK,', len(names), 'MLOs listed')"
+OK, 169 MLOs listed
+```
+
+`NotInformed` is correctly excluded from the `/mlos` catalog (the
+`policy.EXCLUDED_MLO_CATEGORIES` fix from an earlier phase holds); it still
+legitimately appears inside individual proteins' own `mlos: [...]` arrays
+from `/search`/`/search/advanced`, which is a different, correctly-rendered
+concern (`formatMlo()` → "No MLO associated" in `ResultsPanel.vue`).
+
+`/organisms/search?q=hom` returned `{"organism": "Homo sapiens",
+"protein_count": 6802}` as the top hit; `?q=ab` correctly 422'd
+(`min_length: 3`) — and `FilterSidebar.vue`'s own `onOrganismSearch()` never
+sends a sub-3-char query to begin with, so the 422 path is unreachable from
+the UI. `/search?q=FUS&mode=fuzzy` and `/search/advanced?gene_name=FUS&...`
+both returned exactly the field set `ResultsPage.vue`/`ResultsPanel.vue`
+expect (`proteins[]` with `uniprot_id, gene_name, ..., has_driver,
+source_dbs, mlo_count, mlos, match_field`), and the escalation logic
+(plain text → `/search` → escalate to `/search/advanced` or
+`getProteins({mlo:...})` when applicable) called every endpoint with the
+params it actually accepts. No mismatch in either task; no code touched.
+
+### Fix 1 (`638b047`) — plain-text `/search` results ignored the active sort dropdown
+
+`ResultsPanel.vue`'s sort `<select>` has no "Relevance" option — it always
+shows a concrete value, most commonly its default, "Most MLOs"
+(`mlo_count:desc`). But `onSortSelect()` deliberately strips `sort_by`/
+`sort_order` from the URL when that default is selected ("to keep the URL
+clean"), and `ResultsPage.vue`'s `runSearch()` only escalates a plain-text
+search to `/search/advanced` (which understands `sort_by`) when `f.sort_by`
+(among other filters) is truthy. Net effect: a default-sorted plain-text
+search never escalates, always resolves through the bare `/search` (FTS5)
+branch, and FTS5's own relevance order was left standing while the UI
+implied `mlo_count`-descending.
+
+```
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/search?q=FUS&mode=fuzzy"
+# raw FTS5 order: A0A2H4FYY8(1) K7DPS7(1) P11710(1) P16892(3) P35637(19) ...
+# P35637 has 19 MLOs -- highest of all 12 hits -- yet sits 5th, not 1st.
+```
+
+Fixed by adding `refactor/frontend/src/utils/sortProteins.js`, a client-side
+re-implementation of `refactor/api/queries/protein_queries.py::_build_sort()`
+(NULL-last regardless of direction, uniprot_id ascending tie-break on every
+key, `role` sort baked into a rank rather than ASC/DESC), applied to
+`searchRes.data.proteins` in `runSearch()`'s plain-`/search` branch right
+before it returns — resolving `sortBy`/`sortOrder` the same way
+`buildExtraFilters()` already resolves them elsewhere. No other branch
+(`getProteins`, `searchAdvanced`, the `field !== 'all'` paths) was touched;
+those already sort server-side.
+
+Verification: hand-computed the expected `mlo_count:desc` order for the same
+12 FUS hits (`P35637(19), P16892(3), P56959(2), Q9BJZ5(2), ...` alphabetical
+among ties) and ran the extracted comparator logic against the live
+payload — matched exactly, `P35637` now first. Also traced `role:asc` and
+`gene_name:asc` against the same 12-item payload as a sanity check on the
+role-rank and BINARY-collation-matching ordinal comparator; both matched the
+backend's documented rules. No test framework exists in this project, so
+correctness rests on this direct trace against real data rather than a unit
+suite.
+
+### Fix 2 (`3b3a549`) — `ProteinPPI.vue` rendered nothing for `total_partners>0`/zero-in-DB
+
+```
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/protein/O23702"
+"ppi": {"total_partners": 2, "partners_in_mlosmetadb": 0, "interactions": null}
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/protein/O23702/ppi"
+{"uniprot_id":"O23702","total":0,"total_returned":0,"items":[],"inter_edges":[]}
+```
+
+The content-area `v-if`/`v-else-if` chain had exactly four branches
+(loading / error / `!total_partners` / `allPartners.length`). For `O23702`
+— `total_partners=2` (truthy, so branch 3 is skipped) and `allPartners=[]`
+after `load()` resolves (falsy, so branch 4 is skipped too) — none matched,
+so the tab rendered its stats header and filter bar and then nothing below
+them. Fixed by inserting a fifth branch between the two:
+`v-else-if="!allPartners.length"` → "This protein has {{
+formatCount(protein.ppi.total_partners) }} known interaction partner(s), but
+none are currently in MLOsMetaDB." Traced all five branch conditions by hand
+to confirm they are mutually exclusive and jointly exhaustive given the
+component's own invariants; the pre-existing branches and `load()` itself
+were not touched.
+
+### Fix 3 (`058c121`) — hid the Orthologs tab pending redesign
+
+Per explicit user request ("quiero armarlo mejor" — they plan to redesign it
+later), removed the `orthologs` entry from `ProteinPage.vue`'s `TABS` array,
+its tab-content template block, and the now-unused `ProteinOrthologs`
+import. `ProteinOrthologs.vue` and `OrthologTrackViewer.vue` are left
+completely untouched on disk at
+`refactor/frontend/src/components/protein/` — this was a 7-line deletion in
+one file, mechanical enough that the controller verified the diff directly
+rather than dispatching a separate reviewer.
+
+### Fix 4 (`da5a65c`) — added a sort control to `MlosPage.vue` (previously had none)
+
+Added a `<select>` to the filter bar with three options: "Most drivers"
+(`driver_count` desc, the new default), "Alphabetical", and "Most proteins"
+(`protein_count` desc) — applied as the last step of the existing `filtered`
+computed, after the text/category/source filters, always via
+`[...result].sort(...)` (never mutating `result` in place). Both count-based
+options use `(b[countKey] ?? 0) - (a[countKey] ?? 0)` with an alphabetical
+(`formatMlo(...).localeCompare(...)`) tie-break, so `null`/`0` sort together
+rather than `null` producing `NaN` and silently corrupting the order.
+
+```
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/mlos" # total: 169
+```
+
+Confirmed real ties exist in the live data at `driver_count = 0`, `1`, and
+`2` (e.g. `adhesin_nanodomain`, `aggresome`, `amyloid_aggregate`, ... all at
+0) and that they come out alphabetically ordered among themselves under the
+new sort, exactly as the tie-break predicts.
+
+### Fix 5 (`44bb9da`) — PPI graph node click now selects the table row instead of navigating away
+
+Previously, clicking a partner node in `ProteinPPI.vue`'s force-directed
+graph called `router.push('/protein/${d.id}')` — navigating off the current
+protein's page entirely. Per explicit user request, changed to: set a new
+persistent `selectedId` ref, call the existing `highlightNode(d.id)`, look
+up that partner's index in `filteredPartners.value`, jump
+`tablePage.value` to `Math.floor(index / TABLE_PER) + 1` (`TABLE_PER = 20`),
+and `nextTick(() => rowRefs[d.id]?.scrollIntoView({ block: 'nearest' }))`
+using a new plain (non-reactive) `rowRefs` object populated via a function
+`:ref` on each `<tr>`. The table row's highlight class now lights up on
+`selectedId` match in addition to the existing `hoveredId` match, so the
+selection persists after the mouse leaves the node — the requirement, since
+hover-driven highlighting alone disappears on mouseout. Hover/tooltip/drag
+behavior on the graph itself is completely unchanged; the on-canvas hint
+string was updated from "click to open protein" to "click to select in
+table" since the old text described the removed behavior.
+
+Traced the page-jump arithmetic by hand for boundary cases (index 39 → page
+2, index 40 → page 3, no off-by-one) and confirmed the `index === -1` guard
+prevents an invalid `tablePage = 0` in the (currently unreachable, since
+graph nodes are always drawn from `filteredPartners.value`) case where a
+clicked node isn't found in the partner list.
+
+### Fix 6 (`da0406f`) — swapped which of (card click) vs. (button) does what on `MlosPage.vue`
+
+Per explicit user request, the MLO card's root-`div` click handler changed
+from `navigateToMlo(...)` to `toggleExpand(...)` — clicking the card body
+now expands/collapses the inline per-source definitions instead of
+navigating straight to `/results?mlo=X`. The button that used to gate on
+`mlo.definitions && mlo.definitions.length` and toggle expand/collapse
+("expand"/"collapse" with a chevron) was relabeled "Explore {mlo} proteins"
+with a forward-arrow icon, now calls `navigateToMlo(...)` via `@click.stop`
+(so it never also re-triggers the card's own toggle), and its `v-if` gate on
+having definitions was removed entirely — it renders unconditionally now.
+
+```
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/mlos"
+# abscission_checkpoint_body: category "Nuclear", 3 proteins, 3 drivers,
+# "definitions": []
+```
+
+Confirmed live that `abscission_checkpoint_body` has an empty `definitions`
+array — under the old `v-if`, its "Explore" button would never have
+rendered at all; after this fix it renders unconditionally like every other
+card's button.
+
+### Review disposition
+
+All eight commits were individually task-reviewed, except the port
+(`c27957e`) and the Orthologs-tab hide (`058c121`), which the controller
+verified directly by reading the diff since both were small and mechanical
+enough not to warrant a separate reviewer dispatch. Every reviewed commit
+came back Approved with zero Critical/Important findings — a handful of
+Minor, non-blocking notes exist per-commit (recorded in this phase's ledger,
+`.superpowers/sdd/2026-08-05-refactor-frontend-phase/progress.md`, if the
+exact wording is ever needed) but none changed any of the above behavior or
+required follow-up code changes.
+
+### What's left, disclosed rather than silently dropped
+
+Four items remain open, all now tracked in `refactor/frontend/CLAUDE.md`'s
+"Known deferred issues" section rather than only living in this log:
+`RoleBadge.vue` has no style for `'client'` (falls through to a generic gray
+badge); `MlosPage.vue`'s `SOURCE_DBS` is still a hardcoded list of five and
+its organism filter is still a disabled "coming soon" `<select>`; the
+Orthologs tab is intentionally hidden pending the user's planned redesign,
+with `ProteinOrthologs.vue`/`OrthologTrackViewer.vue` left in place for that
+future work; and Fix 6 above left the MLO card's `hover:bg-slate-50
+cursor-pointer` styling unchanged even though its click no longer navigates
+— the whole row still visually reads as a navigation target, a minor
+follow-up noted during that fix's own review but not itself fixed this
+session.
+
+---
