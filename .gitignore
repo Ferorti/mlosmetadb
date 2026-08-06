@@ -238,8 +238,11 @@ database/raw/
 database/interim/*.tsv
 
 # --- OLD/ retired database/: same heavy/generated files, mirrored ---
-# (root-anchored patterns above don't match OLD/database/... either --
-#  same reasoning as the refactor/ block above)
+# (a mid-pattern slash anchors a gitignore rule to the repo root, not to
+#  the directory name recursively -- so the patterns above, anchored to
+#  the root-level database/, don't follow it when it moves to OLD/database/.
+#  Needs its own mirrored block, same as api/static/ and frontend/.vscode/
+#  just below.)
 OLD/database/mlosmetadb.db
 OLD/database/*.db
 OLD/database/cache/

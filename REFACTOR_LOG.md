@@ -1600,3 +1600,168 @@ unchanged.
   endpoint's pagination, which this wave deliberately did not touch.
 
 ---
+
+## Entry 16 — The repo-root swap: `refactor/` becomes the actual root
+
+Entry 15 closed out the last content phase with `refactor/` fully populated
+and verified against the real API. This entry is the swap itself:
+`refactor/` stops being a staging area and becomes the repo root, and
+everything that predates it — the original `api/`, `frontend/`, `database/`,
+`scripts/`, `parsers/`, and loose root docs — is retired into `OLD/`. Two
+passes, in order, per the design spec
+(`docs/superpowers/specs/2026-08-06-repo-root-swap-design.md`) and its plan.
+
+**Entries above this one predate the swap and correctly use `refactor/`-prefixed
+paths for what was true when they were written — they are not rewritten.
+Entries from here on describe the promoted, unprefixed layout.**
+
+### Pass 1 (`bfd77f7`) — retire the pre-refactor root into `OLD/`
+
+Everything at the repo root that predates `refactor/` moved into `OLD/`
+uncurated via `git mv`, one group per top-level directory, no individual
+curation, no deletions — including files already known to be dead
+(`integrate.py`, `fetch_interpro.log`):
+
+- Loose root docs → `OLD/`: `BIOLOGY.md`, `SCHEMA.md`, `README.md`,
+  `CLAUDE_db.md`, `CLAUDE_features.md`, `CLAUDE_orthologs.md`,
+  `CLAUDE_ppi_orthologs.md`, plus `integrate.py` and `stats.json`.
+- `api/` → `OLD/api/` (routers, queries, models, `mlosmetadb.db`, etc.)
+- `database/` → `OLD/database/` (`databases_input_data/`, `mappings/`,
+  `final/`, `interim/`, `schemas/`, the `generate_*`/`compare_v1_v2.py`
+  scripts, and `mlosmetadb.tsv`)
+- `scripts/` → `OLD/scripts/` (`build_db.py`, every `fetch_*.py`/`parse_*.py`,
+  `CLAUDE_MERGE_DRAFT.md`)
+- `parsers/` → `OLD/parsers/` (`CLAUDE.md`, every `parse_*.py`)
+- `frontend/` → `OLD/frontend/` (the full Vue 3 tree — `src/`, `public/`,
+  config files, `.gitignore`, `DEVLOG.md`, `README.md`)
+
+`.gitignore` gained a mirrored `OLD/database/...` block (same reasoning as
+the `refactor/database/...` block from Entry 9: root-anchored patterns don't
+follow a directory when it's renamed/moved, so the ~20GB of `cache/`,
+`crossref/`, `raw/` would otherwise sit untracked-and-unignored the moment
+`database/` became `OLD/database/`) plus an `OLD/api/static/` line.
+
+One item beyond the plan's literal list turned up during this pass and got
+the same treatment: `OLD/frontend/.vscode/` — the pre-existing
+`frontend/.vscode/` ignore rule is root-anchored exactly like the database
+ones, so it silently stopped matching the moment the directory became
+`OLD/frontend/.vscode/`. (Its one tracked file,
+`.vscode/extensions.json`, isn't affected by this — a tracked file that
+happens to sit under a gitignored directory name stays tracked; only the
+would-be-untracked contents of that directory are at stake.) Added to the
+same mirrored block.
+
+**One thing that didn't fully resolve, worth a sentence so it isn't mistaken
+for a bug later**: `fetch_interpro.log` physically moved to `OLD/` along
+with the rest of `scripts/`'s dead weight, but it was never git-tracked
+before the move and still isn't after — it matches the unanchored `*.log`
+gitignore pattern (no leading slash → matches at any depth) both at its old
+path and its new one. Confirmed today:
+
+```
+$ git log --oneline --follow -- OLD/fetch_interpro.log
+(no output)
+$ git check-ignore -v OLD/fetch_interpro.log
+.gitignore:59:*.log	OLD/fetch_interpro.log
+```
+
+The physical relocation is correct — the file is exactly where the rest of
+`OLD/scripts/`'s dead files are. It just never shows up as "tracked at its
+new path" the way the other nine loose root files above do, because it was
+never tracked at its old path either.
+
+### Pass 2 (`0914c3b`) — promote `refactor/*` to the repo root
+
+With Pass 1 having vacated every path it needs, everything under
+`refactor/` (`api/`, `frontend/`, `database/`, `scripts/`, `parsers/`,
+`tests/`, `policy.py`, `BIOLOGY.md`, `SCHEMA.md`, `DEVLOG.md`,
+`REFACTOR_LOG.md`, `CLAUDE.md`) moved up one level via `git mv`, group by
+group, to become the actual root. `refactor/` no longer exists after this
+commit.
+
+`.gitignore` lost the `refactor/database/...` mirror block Entry 9 added —
+dead now that `refactor/` is gone — and two duplicate `frontend/DEVLOG.md`
+lines. The base (non-prefixed) `database/...`/`frontend/...`/`api/static/`
+patterns needed zero edits: they're root-anchored and now correctly apply
+to the promoted directories for free.
+
+Two deviations from the plan's literal text, both harmless:
+
+- The plan's brief for this pass claimed a **duplicate `.mcp.json` entry**
+  in `.gitignore` that needed removing. It didn't exist — confirmed today
+  with `grep -n "mcp.json" .gitignore`, which returns exactly one line
+  (line 254). No change was made there; only the genuinely-obsolete
+  `refactor/database/...` mirror and the duplicate `frontend/DEVLOG.md`
+  lines came out.
+- Removing the `refactor/database/...` block left a dangling comment: the
+  `OLD/database/...` block's comment said "same reasoning as the refactor/
+  block above," but that block is exactly what this pass just deleted, so
+  the pointer resolved to nothing. Fixed in this entry's own commit — the
+  comment now restates the reasoning inline (a mid-pattern slash anchors a
+  gitignore rule to the repo root, so it doesn't follow a directory that
+  moves) instead of pointing at a block that no longer exists.
+
+### Task 3 — path-resolution verification (no commit; pure verification)
+
+Every script/module that builds paths off a repo-root marker was checked
+against the promoted layout. Re-verified today rather than just taking the
+prior pass's word for it:
+
+```
+$ python3 -m pytest -q
+........................                                                 [100%]
+24 passed, 3 warnings in 7.54s
+
+$ python3 -c "from api.config import DB_PATH, _REFACTOR_ROOT; print(DB_PATH); print(_REFACTOR_ROOT)"
+/biodata/forti/proyectos/mlos/mlosmetadb/database/mlosmetadb.db
+/biodata/forti/proyectos/mlos/mlosmetadb
+
+$ cd api && python3 -m uvicorn main:app --host 127.0.0.1 --port 8767 &
+$ curl -s --noproxy '*' http://127.0.0.1:8767/stats
+{"...","proteins":{"total":15879, ...}}
+```
+
+24/24 tests pass, `DB_PATH` resolves to `<repo-root>/database/mlosmetadb.db`
+with no `refactor/` substring anywhere in it, and `/stats` returns 15879
+proteins — the exact pre-phase count, confirming the promoted `api/` is
+reading the promoted `database/` and nothing was lost in the move.
+
+One naming note, explicitly out of scope: `api/config.py`'s
+`_REFACTOR_ROOT` variable correctly evaluates to the repo root (there's no
+`refactor/` to walk up to or past anymore), but the name itself is now
+stale — it describes a directory that no longer exists. Renaming it is a
+code change, not a docs/log change, and this phase's scope is restructuring
+plus doc correction, not code cleanup. Left alone on purpose.
+
+### Task 4 (`4ffd244`) — living-docs corrections
+
+Every `CLAUDE.md` still referencing `refactor/`-prefixed paths got
+corrected against the actual current layout (not blindly search-and-replaced
+— directory maps flattened, "one level up from `api/`"-type relationships
+kept only where still true): the root `CLAUDE.md` and the four per-directory
+ones (`api/`, `database/`, `scripts/`, `parsers/`, `frontend/`) — six files,
+47 `refactor/`-prefixed references total across them. `BIOLOGY.md` and
+`SCHEMA.md` had zero to begin with, confirmed by grep, left untouched.
+Re-confirmed today: `grep -rln "refactor/" --include=CLAUDE.md .` (excluding
+`OLD/`) returns nothing.
+
+The root `README.md` — retired to `OLD/README.md` in Task 1, where it was a
+two-line `[Completar]` stub — got real content: project overview pulled from
+`CLAUDE.md`/`BIOLOGY.md`, plus the actual citation and contact information
+copied from `frontend/src/components/layout/AppFooter.vue` (Orti et al.,
+*Protein Science* 2024, and the two real contact addresses), rather than
+another placeholder.
+
+Per this repo's pre-existing bare `CLAUDE.md` gitignore rule (Entry 9), all
+six edited `CLAUDE.md` files are correct on disk but not part of any
+commit — exactly the situation every prior phase's own `CLAUDE.md` edits
+were already in. Only `README.md` is new/staged from this task.
+
+### Unrelated commit in this range, not part of this phase
+
+`44154e4`, sandwiched between the design docs and Task 1's retire pass, is a
+leftover fix from a different background task (an organism-SVG path fix for
+`OrganismGrid.vue`'s production build) that happened to land in this window.
+It is not part of this phase's narrative and isn't covered further here.
+
+---
