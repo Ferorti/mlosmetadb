@@ -52,7 +52,7 @@ const organisms = computed(() => {
         @click="router.push({ path: '/results', query: { organism: org.name } })"
       >
         <img
-          :src="`/src/assets/organisms/${org.key}.svg`"
+          :src="`/organisms/${org.key}.svg`"
           :alt="org.name"
           class="w-9 h-9 object-contain opacity-70"
           style="filter: invert(20%) sepia(80%) saturate(600%) hue-rotate(195deg) brightness(80%);"
