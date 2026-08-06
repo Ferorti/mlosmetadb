@@ -10,7 +10,7 @@ import {
 } from '@tanstack/vue-table'
 import RoleBadge from '@/components/ui/RoleBadge.vue'
 import SequenceFeatureViewer from '@/components/results/SequenceFeatureViewer.vue'
-import { formatMlo, formatCount } from '@/utils/format'
+import { formatMlo, formatCount, filterMlos } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
 
 const props = defineProps({
@@ -34,10 +34,16 @@ const viewMode = ref('cards') // 'cards' | 'table'
 // Tracks which rows have their MLO list fully expanded
 const expandedRows = reactive(new Set())
 
+// 'NotInformed' should only surface as "No MLO associated" when the protein has
+// no other MLO in this scope — see filterMlos() in utils/format.js.
+function displayMlos(protein) {
+  return filterMlos(protein.mlos)
+}
+
 function visibleMlos(protein) {
-  if (!protein.mlos?.length) return []
-  if (expandedRows.has(protein.uniprot_id)) return protein.mlos
-  return protein.mlos.slice(0, 10)
+  const mlos = displayMlos(protein)
+  if (expandedRows.has(protein.uniprot_id)) return mlos
+  return mlos.slice(0, 10)
 }
 
 function hasIdr(protein) {
@@ -199,7 +205,7 @@ const columns = [
       ? h(RoleBadge, { role: 'driver' })
       : h('span', { class: 'text-gray-400 text-xs' }, '—'),
   }),
-  col.accessor(row => row.mlos?.length ?? 0, {
+  col.accessor(row => filterMlos(row.mlos).length, {
     id: 'mlos', header: 'MLOs', enableSorting: true,
   }),
   col.accessor('sequence_length', { header: 'Length (aa)', enableSorting: true,
@@ -389,7 +395,7 @@ const table = useVueTable({
             <!-- Column 2: Annotations (flex-1) -->
             <div class="flex-1 min-w-0 flex flex-col gap-1.5 justify-center">
               <!-- MLOs row -->
-              <div v-if="protein.mlos?.length" class="flex items-baseline gap-2">
+              <div v-if="displayMlos(protein).length" class="flex items-baseline gap-2">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">MLOs</span>
                 <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 leading-snug">
                   <template v-for="mlo in visibleMlos(protein)" :key="mlo">
@@ -399,10 +405,10 @@ const table = useVueTable({
                     >{{ formatMlo(mlo) }}</span>
                   </template>
                   <button
-                    v-if="protein.mlos.length > 10 && !expandedRows.has(protein.uniprot_id)"
+                    v-if="displayMlos(protein).length > 10 && !expandedRows.has(protein.uniprot_id)"
                     class="text-[12px] text-gray-500 hover:underline"
                     @click.stop="expandedRows.add(protein.uniprot_id)"
-                  >+{{ protein.mlos.length - 10 }} more</button>
+                  >+{{ displayMlos(protein).length - 10 }} more</button>
                 </div>
               </div>
               <!-- Sources row -->

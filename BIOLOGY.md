@@ -145,6 +145,17 @@ If a view needs to exclude `NotInformed` from what it displays as a "real" MLO,
 filter on `category != 'Unspecified'` at query time — do not drop the rows from
 `mlo_annotations` or `mlo_vocabulary` to achieve that.
 
+**Frontend display rule (2026-08-06):** a protein's MLO list/table should show
+`NotInformed` ("No MLO associated") only when it is the *only* entry for that
+protein in the scope being displayed — drop it the moment a real MLO is also
+present in that scope, since "has MLO X" already implies "not uninformed" and
+repeating both adds nothing. Today "scope" is always the whole protein; if a
+future view splits a protein's MLOs per source database, apply the same rule
+per source db instead (show `NotInformed` for a source db only if *that* source
+db reported no real MLO for the protein). See
+[frontend/CLAUDE.md](frontend/CLAUDE.md)'s "NotInformed display rule" section
+for the implementation (`filterMlos()` in `frontend/src/utils/format.js`).
+
 ## Known gaps and imprecision (documented, not hidden)
 
 - "MLO Component" (client) is a chosen simplification of underlying complexity in

@@ -3,7 +3,7 @@ import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import * as d3 from 'd3'
 import { getProteinPpi } from '@/api/proteins.js'
-import { formatMlo, formatCount } from '@/utils/format.js'
+import { formatMlo, formatCount, filterMlos } from '@/utils/format.js'
 
 const props = defineProps({
   protein: { type: Object, required: true },
@@ -456,9 +456,9 @@ function shortSystems(systems) {
                   <span v-else class="text-gray-400 text-[10px]">Component</span>
                 </td>
                 <td class="px-3 py-1.5 text-gray-600">
-                  <template v-if="p.mlos.length">
-                    <span>{{ p.mlos.slice(0, 2).map(formatMlo).join(', ') }}</span>
-                    <span v-if="p.mlos.length > 2" class="text-gray-400"> +{{ p.mlos.length - 2 }}</span>
+                  <template v-if="filterMlos(p.mlos).length">
+                    <span>{{ filterMlos(p.mlos).slice(0, 2).map(formatMlo).join(', ') }}</span>
+                    <span v-if="filterMlos(p.mlos).length > 2" class="text-gray-400"> +{{ filterMlos(p.mlos).length - 2 }}</span>
                   </template>
                   <span v-else class="text-gray-300">—</span>
                 </td>
@@ -540,9 +540,9 @@ function shortSystems(systems) {
               >Driver</span>
               <span v-else class="text-gray-500 text-[10px]">Component</span>
             </div>
-            <div v-if="tooltip.partner.mlos?.length" class="mt-1 text-gray-500">
-              {{ tooltip.partner.mlos.slice(0, 3).map(formatMlo).join(', ') }}
-              <span v-if="tooltip.partner.mlos.length > 3"> +{{ tooltip.partner.mlos.length - 3 }}</span>
+            <div v-if="filterMlos(tooltip.partner.mlos).length" class="mt-1 text-gray-500">
+              {{ filterMlos(tooltip.partner.mlos).slice(0, 3).map(formatMlo).join(', ') }}
+              <span v-if="filterMlos(tooltip.partner.mlos).length > 3"> +{{ filterMlos(tooltip.partner.mlos).length - 3 }}</span>
             </div>
             <div v-if="tooltip.partner.experimental_systems?.length" class="mt-1 text-gray-400">
               {{ shortSystems(tooltip.partner.experimental_systems) }}

@@ -25,12 +25,17 @@ function sourceColor(source) {
 // Deduplicate by (unified_mlo, source_db, source_mlo)
 const dedupedAnnotations = computed(() => {
   const seen = new Set()
-  return (props.mloAnnotations ?? []).filter(a => {
+  const deduped = (props.mloAnnotations ?? []).filter(a => {
     const key = `${a.unified_mlo}||${a.source_db}||${a.source_mlo}`
     if (seen.has(key)) return false
     seen.add(key)
     return true
   })
+  // 'NotInformed' ("No MLO associated") only adds information when it's the
+  // only MLO this protein has — drop it once a real MLO is present. See
+  // filterMlos() in utils/format.js and BIOLOGY.md's "NotInformed" section.
+  const hasRealMlo = deduped.some(a => a.unified_mlo !== 'NotInformed')
+  return hasRealMlo ? deduped.filter(a => a.unified_mlo !== 'NotInformed') : deduped
 })
 
 const groupedRows = computed(() => {

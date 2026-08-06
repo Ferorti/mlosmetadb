@@ -4,6 +4,18 @@ export function formatMlo(str) {
   return str.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())
 }
 
+// 'NotInformed' is a real, kept vocabulary entry (see BIOLOGY.md's "NotInformed"
+// section), not something to drop from the data. But displaying it alongside a
+// protein's real MLOs adds no information ("has MLO X" already implies "not
+// uninformed"), so any view listing a protein's MLOs for some scope (whole
+// protein, or in the future per source-db) should show it only when it is the
+// only entry in that scope.
+export function filterMlos(mlos) {
+  if (!mlos?.length) return []
+  const real = mlos.filter(m => m !== 'NotInformed')
+  return real.length ? real : ['NotInformed']
+}
+
 export function formatCount(n) {
   if (n == null) return '—'
   return n.toLocaleString()
