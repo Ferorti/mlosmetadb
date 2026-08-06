@@ -7,6 +7,7 @@ const routes = [
   { path: '/protein/:id', component: () => import('@/pages/ProteinPage.vue') },
   { path: '/mlo/:mlo',    component: () => import('@/pages/MlosPage.vue') },
   { path: '/mlos',        component: () => import('@/pages/MlosPage.vue') },
+  { path: '/api',         component: () => import('@/pages/ApiPage.vue') },
   { path: '/download',    component: () => import('@/pages/DownloadPage.vue') },
   { path: '/about',       component: () => import('@/pages/AboutPage.vue') },
 ]
