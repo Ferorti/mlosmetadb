@@ -237,24 +237,6 @@ database/raw/
 # Intermediate parser outputs — regenerate with: python parsers/parse_*.py
 database/interim/*.tsv
 
-# --- refactor/ data layer: same heavy/generated files, mirrored ---
-# (patterns above are anchored to the repo-root database/, NOT recursive —
-#  a mid-pattern slash makes a gitignore rule root-relative — so refactor/'s
-#  copies need their own entries)
-refactor/database/mlosmetadb.db
-refactor/database/*.db
-refactor/database/cache/
-refactor/database/crossref/
-refactor/database/raw/
-refactor/database/interim/*.tsv
-# Trailing-slash patterns above never match a symlink (even one pointing
-# to a directory) — worktrees set up for this refactor symlink cache/,
-# crossref/, raw/ back to the main checkout's copy, so mirror each as a
-# no-trailing-slash pattern too, or `git add -A` would stage the symlinks.
-refactor/database/cache
-refactor/database/crossref
-refactor/database/raw
-
 # --- OLD/ retired database/: same heavy/generated files, mirrored ---
 # (root-anchored patterns above don't match OLD/database/... either --
 #  same reasoning as the refactor/ block above)
@@ -271,8 +253,6 @@ OLD/frontend/.vscode/
 # MCP server local configuration (local paths, not for repo)
 .mcp.json
 
-frontend/DEVLOG.md
-frontend/DEVLOG.md
 *.db-wal
 *.db-shm
 
