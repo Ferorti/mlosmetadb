@@ -23,11 +23,17 @@ Serves `mlos.leloir.org.ar`'s public REST API and SPA frontend.
 - `DEVLOG.md` — session-by-session narrative history.
 - `REFACTOR_LOG.md` — narrative history of how this repo reached its current structure.
 - `docs/` — spec/plan history for this restructuring.
-- `OLD/` — the pre-restructuring codebase, retired. Nothing here is depended on by anything current.
+- `OLD/` — the pre-restructuring codebase, retired. No *code* here is
+  depended on by anything current, but `OLD/database/databases_input_data/`
+  is still the only copy of the PhasePDB and V1 source inputs
+  `parsers/parse_phasepdb.py`, `database/compare_v1_v2.py`, and
+  `database/get_phasepdb_mlo_entries.py` need — see `REFACTOR_LOG.md`
+  Entry 10 before deleting anything under `OLD/`.
 
 ## Running it
 
 ```bash
+pip install -r api/requirements.txt
 cd api && python3 -m uvicorn main:app --host 127.0.0.1 --port 8010
 cd frontend && npm install && npm run dev
 ```

@@ -236,6 +236,13 @@ database/crossref/
 database/raw/
 # Intermediate parser outputs — regenerate with: python parsers/parse_*.py
 database/interim/*.tsv
+# Trailing-slash patterns never match a symlink, even one pointing to a
+# directory. Plan-execution worktrees symlink cache/, crossref/, raw/ back
+# to the main checkout, so mirror each without the trailing slash too, or
+# `git add -A` in a worktree would stage the symlinks.
+database/cache
+database/crossref
+database/raw
 
 # --- OLD/ retired database/: same heavy/generated files, mirrored ---
 # (a mid-pattern slash anchors a gitignore rule to the repo root, not to
@@ -249,6 +256,12 @@ OLD/database/cache/
 OLD/database/crossref/
 OLD/database/raw/
 OLD/database/interim/*.tsv
+# Trailing-slash patterns never match a symlink, even one pointing to a
+# directory (same reasoning as the base database/... block above); mirror
+# each without the trailing slash too, for consistency.
+OLD/database/cache
+OLD/database/crossref
+OLD/database/raw
 OLD/api/static/
 OLD/frontend/.vscode/
 
