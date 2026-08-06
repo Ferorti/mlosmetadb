@@ -101,7 +101,7 @@
         v-for="mlo in filtered"
         :key="mlo.unified_mlo"
         class="px-5 py-4 border-b border-gray-100 last:border-b-0 hover:bg-slate-50 cursor-pointer transition-colors"
-        @click="navigateToMlo(mlo.unified_mlo)"
+        @click="toggleExpand(mlo.unified_mlo)"
       >
         <!-- Line 1: name + category badge -->
         <div class="flex items-start justify-between gap-4">
@@ -136,12 +136,11 @@
           <div v-else-if="!expandedRows.has(mlo.unified_mlo)" class="flex-1"></div>
 
           <button
-            v-if="mlo.definitions && mlo.definitions.length"
-            @click.stop="toggleExpand(mlo.unified_mlo)"
+            @click.stop="navigateToMlo(mlo.unified_mlo)"
             class="shrink-0 flex items-center gap-0.5 text-xs text-[#185FA5] hover:text-blue-700 mt-0.5"
           >
-            <i :class="expandedRows.has(mlo.unified_mlo) ? 'ti ti-chevron-up' : 'ti ti-chevron-down'"></i>
-            {{ expandedRows.has(mlo.unified_mlo) ? 'collapse' : 'expand' }}
+            <i class="ti ti-arrow-right"></i>
+            Explore {{ formatMlo(mlo.unified_mlo) }} proteins
           </button>
         </div>
 
