@@ -1,7 +1,15 @@
 // Client-side re-implementation of the backend's protein list sort
 // (refactor/api/queries/protein_queries.py::_build_sort), used only for
-// the plain-text /search (FTS5) fallback path, which has no sort_by
-// concept of its own and returns results in FTS5-relevance order.
+// the plain-text /search fallback path, which has no sort_by concept of its
+// own. That path returns results in uniprot_id-ascending order: the UI always
+// sends mode=fuzzy (src/api/search.js's default), which routers/search.py
+// routes to search_proteins_like() -- a plain LIKE query with
+// `ORDER BY p.uniprot_id`. The FTS5 branch (search_proteins_fts,
+// `ORDER BY rank`) is only reachable with mode=exact, which the UI never sends.
+//
+// KEEP IN SYNC: this file and _build_sort() must agree. Changing the sort
+// semantics in either one without the other silently makes the free-text
+// search path order results differently from every other search path.
 //
 // Mirrors the backend rules exactly:
 //   - NULL/missing values always sort last, regardless of direction.
@@ -54,9 +62,9 @@ function roleRank(p, sortOrder) {
 }
 
 /**
- * Sort a ProteinSummary[] array the same way the dropdown's six sort
- * options would sort it server-side. Returns a new array (does not
- * mutate the input).
+ * Sort a ProteinSummary[] array the same way the sort dropdown's seven
+ * options (five distinct sort_by keys x direction) would sort it
+ * server-side. Returns a new array (does not mutate the input).
  */
 export function sortProteins(proteins, sortBy, sortOrder) {
   if (!Array.isArray(proteins)) return proteins

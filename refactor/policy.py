@@ -52,8 +52,9 @@ query file should hardcode category-based filtering independently of this."""
 
 def excluded_mlo_category_clause(alias: str = "mv") -> tuple[str | None, list[str]]:
     """Returns (sql_clause, params) for excluding EXCLUDED_MLO_CATEGORIES,
-    or (None, []) when there's nothing to exclude (today's default) --
-    callers must skip adding the clause entirely when it's None, rather
+    or (None, []) when there's nothing to exclude (not the case today --
+    the list holds 'Unspecified' since 2026-08-05) -- callers must skip
+    adding the clause entirely when it's None, rather
     than appending a dead 'AND 1=1'-style no-op to every query."""
     if not EXCLUDED_MLO_CATEGORIES:
         return None, []

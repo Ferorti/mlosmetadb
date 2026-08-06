@@ -60,7 +60,14 @@ const tableRows  = computed(() => {
   const start = (tablePage.value - 1) * TABLE_PER
   return filteredPartners.value.slice(start, start + TABLE_PER)
 })
-watch(filteredPartners, () => { tablePage.value = 1 })
+// Reset paging AND the persistent selection whenever the visible partner set
+// changes: the selected row may no longer be in `filteredPartners` at all, and
+// a stale `selectedId` would either highlight nothing or (worse) light up a
+// different partner that happens to reappear later.
+watch(filteredPartners, () => {
+  tablePage.value  = 1
+  selectedId.value = null
+})
 
 // ── driver count (all in-db partners, no filter) ──────────────────────────────
 const inDbDriverCount = computed(() => allPartners.value.filter(p => p.has_driver).length)
@@ -130,6 +137,16 @@ async function load() {
 }
 
 onMounted(load)
+
+// Defensive: today ProteinPage.vue unmounts this component on every route change
+// (its `mountedTabs.clear()` flips the wrapping `v-if` to false), so the protein
+// prop never changes in place. If that ever stops being true, a selection made
+// on the previous protein must not survive into the next one.
+watch(() => props.protein?.uniprot_id, () => {
+  selectedId.value = null
+  hoveredId.value  = null
+  tablePage.value  = 1
+})
 
 // ── graph rendering ───────────────────────────────────────────────────────────
 function nodeColor(d) {
@@ -384,7 +401,7 @@ function shortSystems(systems) {
       No PPI data available for this protein.
     </div>
     <div v-else-if="!allPartners.length" class="text-sm text-[#484E59] py-4">
-      This protein has {{ formatCount(protein.ppi.total_partners) }} known interaction partner(s), but none are currently in MLOsMetaDB.
+      This protein has {{ formatCount(protein.ppi?.total_partners) }} known interaction partner(s), but none are currently in MLOsMetaDB.
     </div>
 
     <!-- Two-column: table + graph -->
@@ -416,7 +433,7 @@ function shortSystems(systems) {
               <tr
                 v-for="p in tableRows"
                 :key="p.partner_uniprot_id"
-                :ref="el => { if (el) rowRefs[p.partner_uniprot_id] = el }"
+                :ref="el => { if (el) rowRefs[p.partner_uniprot_id] = el; else delete rowRefs[p.partner_uniprot_id] }"
                 class="border-t border-gray-100 hover:bg-slate-50/60 transition-colors"
                 :class="(hoveredId === p.partner_uniprot_id || selectedId === p.partner_uniprot_id) ? 'bg-blue-50/50' : ''"
                 @mouseenter="hoveredId = p.partner_uniprot_id; highlightNode(p.partner_uniprot_id)"

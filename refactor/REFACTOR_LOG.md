@@ -8,7 +8,10 @@ repo layout.
 
 **Hard rule that governed every step below:** nothing outside `refactor/` was
 ever modified, deleted, or overwritten. Everything outside `refactor/` is
-read-only source material, copied from.
+read-only source material, copied from. **One deliberate, plan-disclosed
+exception exists** — four files under the root `frontend/src/` were modified in
+commit `7188677`, before `refactor/frontend/` existed; disclosed in full in
+Entry 14 ("The one exception to the hard rule").
 
 Started from branch `audit/full-repo-review`, commit `c1ac07a`, on 2026-08-04.
 
@@ -1080,16 +1083,124 @@ pipeline run.
 
 ---
 
-## Entry 14 — Porting `frontend/` into `refactor/frontend/`, verifying it against the real API, and six follow-on fixes/features
+## Entry 14 — Porting `frontend/` into `refactor/frontend/`, verifying it against the real API, and the fixes it turned up
 
 With Entry 13's `gene_name`/`organism`/`length` backfill closing the last
 known data gap, this entry covers the actual `frontend/` phase: copying the
 Vue 3 SPA into `refactor/`, verifying every previously-unverified
 endpoint/page pairing against the real, populated `refactor/api/`, and
 fixing everything the verification (plus explicit user requests) turned up.
-Seven commits total, `13d8e42..da0406f` (oldest to newest): the port itself
-(1), two verification passes that found nothing to fix (0 commits — see
-below), and six fixes/features (6) — 1 + 6 = 7.
+
+**Commit accounting** (two different ranges are referred to below, so both are
+spelled out once here):
+
+- **Pre-port audit fixes**, `e799f6a` and `7188677` — 2 commits, landed
+  *before* the design spec/plan and the port, while auditing the still-in-place
+  root `frontend/` against the newly-populated `refactor/api/`. `7188677` is
+  the one and only exception to this log's "nothing outside `refactor/` is
+  touched" hard rule; both are covered immediately below.
+- **Design spec and plan**: `d21f978`, `13d8e42` — 2 docs commits, no code.
+- **The port and its follow-ons**, `13d8e42..da0406f` — 7 commits: the port
+  itself (1), two verification passes that found nothing to fix (0 commits —
+  see below), and six fixes/features (6); 1 + 6 = 7. This is the range the
+  "Review disposition" section below counts.
+- This entry itself, plus `refactor/frontend/CLAUDE.md`/`DEVLOG.md`, landed in
+  the docs commit that follows `da0406f`.
+
+### Pre-port audit fixes (`e799f6a` backend, `7188677` frontend)
+
+Auditing the existing `frontend/` against the real `refactor/api/` — before
+anything had been copied into `refactor/frontend/` — turned up a set of
+backend defects and their frontend counterparts. They landed as one pair of
+commits, backend first.
+
+**`e799f6a` (all inside `refactor/`):**
+
+1. *MLO-scoped role facets.* `protein_queries.get_proteins_facets` and
+   `search_queries.get_advanced_search_facets` computed `by_role` from
+   `protein_summary.has_driver` — a GLOBAL per-protein flag meaning "driver of
+   ANY MLO". Combined with an `mlo`/`source_db` filter, that over-counted
+   drivers *for that MLO*. Added `_scoped_role_counts()`, which reads the role
+   off the same `mlo_annotations` row the filter already matched. Still
+   reproducible against the live DB today:
+
+   ```
+   $ curl -s --noproxy '*' "http://127.0.0.1:8765/proteins?mlo=p_granule&per_page=1"
+   total 594, facets.by_role {'driver': 26, 'component': 568}     # after
+   # before (has_driver-based, same 594 proteins): driver 46, i.e. +20 phantom
+   # drivers — 46 of them are drivers of *something*, only 26 of p_granule.
+   ```
+
+2. *Mutually-exclusive home stats.* `_compute_stats()`'s
+   `mlo_annotations.by_role` buckets by annotation ROW, so one protein can land
+   in several buckets at once and the buckets can exceed `proteins.total`.
+   Added `proteins.by_component_role`, derived from `has_driver` and therefore
+   exactly partitioning the dataset:
+
+   ```
+   $ curl -s --noproxy '*' "http://127.0.0.1:8765/stats"
+   proteins.total            15879
+   proteins.by_component_role {'driver': 2029, 'component': 13850}  # sums to 15879
+   mlo_annotations.by_role    {'driver': 2029, 'client': 12347, 'unknown': 10883}
+                                                    # sums to 25259 >> 15879
+   ```
+
+3. *`proteins.by_organism_drivers`* added, so per-organism driver counts (until
+   then only available as one global total) can be shown next to `by_organism`.
+4. *`/search/advanced` sort support*, reusing `protein_queries._build_sort`.
+   `/search` itself has no sort concept at all, which is what Fix 1 below then
+   had to work around client-side.
+   ```
+   $ curl -s --noproxy '*' "http://127.0.0.1:8765/search/advanced?gene_name=FUS&sort_by=mlo_count&sort_order=desc"
+   [('P35637', 19), ('P16892', 3), ('P56959', 2)]   # correctly mlo_count-descending
+   ```
+5. *`policy.EXCLUDED_MLO_CATEGORIES` flipped from `[]` to `["Unspecified"]`*,
+   so `NotInformed` stops appearing as a browsable organelle in the `/mlos`
+   catalog (169 MLOs listed, `NotInformed` absent — the check quoted further
+   down under "Verification: `/mlos` ..."). Entry 11 had introduced this list
+   deliberately empty, as a pure extension point; this commit is where it was
+   populated. Scope is deliberately narrow: the clause is wired only into
+   `mlo_queries.get_all_mlos`, so a protein's own MLO Annotations tab still
+   shows its `NotInformed` rows for provenance.
+
+**`7188677` — the one exception to the hard rule.** This commit modified four
+files *outside* `refactor/`:
+
+```
+frontend/src/components/browse/RoleCards.vue
+frontend/src/components/browse/OrganismGrid.vue
+frontend/src/pages/ResultsPage.vue
+frontend/src/utils/format.js
+```
+
+This was deliberate and disclosed in the phase plan up front (see
+`docs/superpowers/plans/2026-08-05-refactor-frontend-phase.md`, lines 13 and
+429), not an accident: at the time these bugs were found, `refactor/frontend/`
+did not yet exist, and each fix needed to be verified live in a running dev
+server against the real `refactor/api/`. Fixing them in place and then porting
+the corrected tree was judged better than porting code already known to be
+broken and re-fixing it afterwards from behind a build. The changes:
+
+- `RoleCards.vue`: "MLO Components" read `mlo_annotations.by_role`
+  (annotation-row buckets), showing 23,230 — more than `proteins.total`
+  (15,879). Now reads the new mutually-exclusive `by_component_role`.
+- `OrganismGrid.vue`: replaced hardcoded `PLACEHOLDER_ORGANISMS` counts with
+  live `stats.proteins.by_organism` / `by_organism_drivers` (name lookup
+  tolerates the `(strain ...)` suffix some DB entries carry).
+- `ResultsPage.vue`: made a free-text search escalate from `/search` to
+  `/search/advanced` once a filter `/search` cannot honor is engaged. **This
+  change was itself buggy** — it included `sort_by` in the escalation trigger,
+  which silently swapped the multi-field `/search` corpus for a
+  `gene_name`-only `LIKE` match the moment any non-default sort was picked.
+  Fixed later (see Entry 15).
+- `format.js`: `formatMlo('NotInformed')` → `'No MLO associated'`, which reads
+  better than the raw source-DB placeholder wherever it's still shown (a
+  protein's own MLO Annotations tab; hidden entirely from the browse grids by
+  the paired `policy.py` change instead).
+
+Everything in `7188677` was carried into `refactor/frontend/` unmodified by the
+port (`c27957e`) two commits later, so `refactor/` is self-consistent; the root
+`frontend/` tree has not been touched since.
 
 ### The port (commit `c27957e`)
 
@@ -1151,7 +1262,9 @@ OK, 169 MLOs listed
 ```
 
 `NotInformed` is correctly excluded from the `/mlos` catalog (the
-`policy.EXCLUDED_MLO_CATEGORIES` fix from an earlier phase holds); it still
+`policy.EXCLUDED_MLO_CATEGORIES` fix from `e799f6a`, above in this same entry,
+holds — Entry 11 introduced that list empty as a deliberate no-op extension
+point, `e799f6a` is where `'Unspecified'` was put in it); it still
 legitimately appears inside individual proteins' own `mlos: [...]` arrays
 from `/search`/`/search/advanced`, which is a different, correctly-rendered
 concern (`formatMlo()` → "No MLO associated" in `ResultsPanel.vue`).
@@ -1168,23 +1281,40 @@ source_dbs, mlo_count, mlos, match_field`), and the escalation logic
 `getProteins({mlo:...})` when applicable) called every endpoint with the
 params it actually accepts. No mismatch in either task; no code touched.
 
+(This verification checked that each endpoint was *called* correctly, not that
+escalating to `/search/advanced` returns the *same corpus* as `/search`. It
+doesn't: `gene_name=<q>` is a single-column `LIKE`, while `/search` matches
+`uniprot_id`/`gene_name`/`protein_name`. The final full-branch review caught
+what that gap hid — see Entry 15.)
+
 ### Fix 1 (`638b047`) — plain-text `/search` results ignored the active sort dropdown
 
 `ResultsPanel.vue`'s sort `<select>` has no "Relevance" option — it always
 shows a concrete value, most commonly its default, "Most MLOs"
 (`mlo_count:desc`). But `onSortSelect()` deliberately strips `sort_by`/
 `sort_order` from the URL when that default is selected ("to keep the URL
-clean"), and `ResultsPage.vue`'s `runSearch()` only escalates a plain-text
+clean"), and `ResultsPage.vue`'s `runSearch()` only escalated a plain-text
 search to `/search/advanced` (which understands `sort_by`) when `f.sort_by`
-(among other filters) is truthy. Net effect: a default-sorted plain-text
-search never escalates, always resolves through the bare `/search` (FTS5)
-branch, and FTS5's own relevance order was left standing while the UI
-implied `mlo_count`-descending.
+(among other filters) was truthy. Net effect: a default-sorted plain-text
+search never escalates, always resolves through the bare `/search` branch,
+and that branch's own order was left standing while the UI implied
+`mlo_count`-descending.
+
+That order is **uniprot_id ascending, not relevance** — a detail this entry
+originally got wrong, corrected here (see Entry 15). `src/api/search.js`'s
+`searchBasic()` defaults to `mode='fuzzy'` and the UI never sends anything
+else; `routers/search.py` routes `fuzzy` to
+`search_queries.search_proteins_like()`, a plain multi-field `LIKE` query with
+`ORDER BY p.uniprot_id`. The FTS5 branch (`search_proteins_fts`,
+`ORDER BY rank`) is only reachable via `mode=exact`. The fix below is correct
+and necessary either way — the response simply arrives in an order unrelated to
+the sort dropdown — but "FTS5 relevance order" was the wrong diagnosis.
 
 ```
 $ curl -s --noproxy '*' "http://127.0.0.1:8765/search?q=FUS&mode=fuzzy"
-# raw FTS5 order: A0A2H4FYY8(1) K7DPS7(1) P11710(1) P16892(3) P35637(19) ...
-# P35637 has 19 MLOs -- highest of all 12 hits -- yet sits 5th, not 1st.
+# raw order: A0A2H4FYY8(1) K7DPS7(1) P11710(1) P16892(3) P35637(19) ...
+# (uniprot_id ascending) -- P35637 has 19 MLOs, highest of all 12 hits,
+# yet sits 5th, not 1st.
 ```
 
 Fixed by adding `refactor/frontend/src/utils/sortProteins.js`, a client-side
@@ -1309,15 +1439,22 @@ card's button.
 
 ### Review disposition
 
-All eight commits were individually task-reviewed, except the port
-(`c27957e`) and the Orthologs-tab hide (`058c121`), which the controller
-verified directly by reading the diff since both were small and mechanical
-enough not to warrant a separate reviewer dispatch. Every reviewed commit
-came back Approved with zero Critical/Important findings — a handful of
+Of the seven commits in `13d8e42..da0406f`, six were reviewed by a dispatched
+task-reviewer subagent, the port (`c27957e`) included — its review diff is
+still on disk at
+`.superpowers/sdd/2026-08-05-refactor-frontend-phase/review-13d8e42..c27957e.diff`,
+alongside one per reviewed commit. The single exception is the Orthologs-tab
+hide (`058c121`), a 7-line deletion in one file, which the controller verified
+directly by reading the diff rather than dispatching a reviewer. Every reviewed
+commit came back Approved with zero Critical/Important findings — a handful of
 Minor, non-blocking notes exist per-commit (recorded in this phase's ledger,
 `.superpowers/sdd/2026-08-05-refactor-frontend-phase/progress.md`, if the
 exact wording is ever needed) but none changed any of the above behavior or
 required follow-up code changes.
+
+Per-commit reviews are not the same as a whole-branch review, though: the final
+full-branch review run after all of the above still found a Critical regression
+that every individual review had passed. See Entry 15.
 
 ### What's left, disclosed rather than silently dropped
 
@@ -1333,5 +1470,133 @@ cursor-pointer` styling unchanged even though its click no longer navigates
 — the whole row still visually reads as a navigation target, a minor
 follow-up noted during that fix's own review but not itself fixed this
 session.
+
+---
+
+## Entry 15 — Final whole-branch review of the `frontend/` phase, and its one fix wave
+
+Entry 14's work was reviewed commit-by-commit as it landed. A final review of
+the *whole* branch afterwards found one Critical regression that every
+per-commit review had passed, plus a set of documentation defects. This entry
+covers that review's single fix wave.
+
+### Critical: sort escalation silently swapped the search corpus
+
+`ResultsPage.vue`'s `runSearch()` escalated a plain-text search to
+`searchAdvanced({ gene_name: q, ... })` whenever
+`f.organism || f.role || f.sort_by || f.mlo || f.feature_type || f.feature_accession`
+was truthy (introduced in `7188677`, ported unchanged in `c27957e`). `f.sort_by`
+is truthy as soon as the user picks any non-default sort — the default,
+`mlo_count:desc`, is stripped from the URL by `ResultsPanel.vue`'s
+`onSortSelect()`. And `/search/advanced`'s `gene_name` filter is a `LIKE` on the
+`gene_name` column *only*, whereas `/search` matches `uniprot_id`, `gene_name`
+and `protein_name`:
+
+```
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/search?q=kinase&mode=fuzzy"
+50 hits
+$ curl -s --noproxy '*' "http://127.0.0.1:8765/search/advanced?gene_name=kinase"
+0 hits
+```
+
+So: search "kinase", get 50 results, click any sort option, get "No proteins
+found." The primary search flow.
+
+`sort_by` never needed to be in that trigger. `sortProteins.js` (added in
+`638b047`, the very next commit) already re-sorts `/search`'s own returned array
+for every option the dropdown offers, so sorting the fallback path does not
+require changing the query. Escalation is genuinely needed only for
+`organism`/`role`/`mlo`/`feature_type`/`feature_accession`, which `/search`
+cannot apply at all. Fix: drop `f.sort_by` from the condition, leaving
+`f.organism || f.role || f.mlo || f.feature_type || f.feature_accession`.
+Nothing else in `runSearch()` changed — when escalation does fire for one of the
+remaining reasons, `sort_by`/`sort_order` still flow through `extraFilters` into
+`/search/advanced` exactly as before.
+
+Traced by hand against the updated condition:
+`{q:'kinase', sort_by:'gene_name'}` → all five triggers falsy → falls through to
+the `/search` branch, `sortProteins()` applied, 50 hits returned in gene-name
+order. `{q:'FUS', mlo:'stress_granule'}` → `f.mlo` truthy → still escalates,
+unchanged.
+
+### Documentation corrections
+
+- The header's hard rule now names its one exception (`7188677`), and Entry 14
+  covers both pre-port audit commits (`e799f6a`, `7188677`), which it had
+  previously omitted entirely.
+- The `NotInformed`/`EXCLUDED_MLO_CATEGORIES` fix was attributed to "an earlier
+  phase"; it is `e799f6a`, inside this phase. Corrected.
+- `refactor/api/CLAUDE.md`'s policy section still documented
+  `EXCLUDED_MLO_CATEGORIES = []` / "empty today, deliberately", contradicting
+  `policy.py`, which has held `["Unspecified"]` since `e799f6a`. Updated, per
+  `policy.py`'s own instruction to keep the two in sync. The same stale
+  "(today's default)" parenthetical in `excluded_mlo_category_clause`'s
+  docstring was corrected too.
+- **"FTS5 relevance order" was the wrong root cause** for the sort bug `638b047`
+  fixed. The UI always sends `mode=fuzzy`, which routes to
+  `search_proteins_like()` — a plain `LIKE` query ordered by `p.uniprot_id`. The
+  FTS5 path (`ORDER BY rank`) needs `mode=exact`, which the UI never sends. The
+  fix was and is correct; only the diagnosis was wrong. Corrected in Entry 14,
+  in `sortProteins.js`'s header comment, and in `refactor/frontend/CLAUDE.md`.
+- Entry 14 said "seven commits" in one place and "all eight commits were
+  individually task-reviewed" in another, and credited the port `c27957e` as
+  controller-verified. Both fixed: the ranges are now spelled out explicitly,
+  and `c27957e` *was* reviewed by a dispatched reviewer (its diff is still on
+  disk); only `058c121` was controller-verified.
+- `refactor/frontend/CLAUDE.md` carried a cluster of claims inherited from the
+  pre-port `frontend/CLAUDE.md` that were never true of this tree: `ProteinPPI.vue`
+  described as using TanStack Table (its table is hand-rolled with `.slice()`
+  pagination; `@tanstack/vue-table` is imported by `ResultsPanel.vue` and nothing
+  else), a `★ if reviewed` result-row element (`grep -rn reviewed
+  refactor/frontend/src` → zero hits), `var(--color-border-tertiary)` as the
+  result-row border (defined nowhere; the real class is `border-b
+  border-gray-200`), a result-row structure that predates the current two-column
+  markup, `source_db`/`taxon_id`/`feature_label` listed among the working URL
+  filters (none of the three is forwarded by `buildExtraFilters()`, so they
+  render a filter chip that never reaches the API — and `feature_label` isn't
+  even an API parameter), `max-w-6xl` for the navbar (it is
+  `max-w-5xl`), `main.css` described as more than the three `@tailwind`
+  directives it contains, a feature-badge hex palette that appears nowhere in the
+  source, and a directory tree missing `App.vue`, `assets/` (including the
+  organism SVGs `OrganismGrid.vue` imports), `postcss.config.js` and `README.md`.
+  All corrected against the real files.
+
+### Code cleanups made in the same wave
+
+- `_build_sort()` in `protein_queries.py` now carries a KEEP-IN-SYNC comment
+  pointing at `sortProteins.js` (the pointer previously existed only in the JS
+  direction), and `refactor/frontend/CLAUDE.md`'s "What NOT to do" warns against
+  changing either alone. There is no test suite that would catch that drift.
+- `fetch_uniprot.py::backfill_from_cache()` selected stale rows with
+  `WHERE gene_name IS NULL` — 1,296 rows today, of which ~1,293 are proteins that
+  simply have no gene name in UniProt and get re-parsed and re-`UPDATE`d on every
+  run for nothing. Changed to `WHERE fetch_date IS NULL` (3 rows), which is exact
+  rather than merely better: `build_db.py` inserts `proteins` rows with only
+  `uniprot_id`, and `proteins.fetch_date` is written by nothing except this
+  script's own `update_protein()`, so NULL there means precisely "the backfill
+  UPDATE never ran on this row".
+- `ProteinPPI.vue`: the `:ref` callback now deletes `rowRefs[key]` on unmount
+  (Vue passes `null`, which the `if (el)` guard silently skipped, leaking
+  detached nodes); `selectedId` is reset when `filteredPartners` changes and when
+  the protein prop changes; and one `protein.ppi.total_partners` read gained the
+  `?.` its neighbours already had.
+- `computeFacetsFromProteins()` in `ResultsPage.vue` gained a comment recording
+  that its `has_driver`-derived role facet is only correct because escalation
+  guarantees no `mlo`-filtered result reaches it — the same coupling
+  `_scoped_role_counts()` fixed server-side, one escalation-condition edit away
+  from reappearing client-side.
+- The sort dropdown has seven options over five `sort_by` keys, not six;
+  comments saying otherwise were corrected. `refactor/frontend/DEVLOG.md` gained
+  the six follow-on fix entries it was missing.
+
+### Deliberately not fixed
+
+- `/search`'s pagination/count incoherence (it returns up to `LIMIT 50` with no
+  page concept while the UI paginates as if it had one) — pre-existing, not
+  introduced by this phase, out of this wave's scope.
+- The `/search` fallback sorts *within* the truncated 50 rows the endpoint
+  returns, so a "best" result outside that window can't be surfaced by sorting.
+  Noted in a comment at the call site; fixing it means restructuring the
+  endpoint's pagination, which this wave deliberately did not touch.
 
 ---

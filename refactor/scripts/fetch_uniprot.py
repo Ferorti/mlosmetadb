@@ -109,9 +109,19 @@ def backfill_from_cache(con_main: sqlite3.Connection, con_cache: sqlite3.Connect
     """Aplica respuestas ya cacheadas (status_code=200) a proteins.* para accessions
     que nunca recibieron el UPDATE — el loop de fetch en main() solo llama a
     update_protein() sobre entries recien fetcheadas, nunca sobre cache hits
-    preexistentes."""
+    preexistentes.
+
+    El predicado de staleness es `fetch_date IS NULL`, no `gene_name IS NULL`:
+    build_db.py inserta las filas de `proteins` con solo `uniprot_id`, y
+    `proteins.fetch_date` lo escribe EXCLUSIVAMENTE update_protein() de este
+    script, asi que NULL ahi significa exactamente "el UPDATE nunca se aplico".
+    `gene_name IS NULL` no distingue eso de "se aplico y la proteina no tiene
+    gene name en UniProt": hoy hay 1.296 filas con gene_name NULL contra 3 con
+    fetch_date NULL, o sea que ~1.293 se re-parseaban y re-UPDATEaban en cada
+    corrida sin cambiar nada. Lo mismo vale, en menor medida, para organism/
+    length (474 NULL, de los cuales 471 ya tienen fetch_date)."""
     stale_ids = [
-        r[0] for r in con_main.execute("SELECT uniprot_id FROM proteins WHERE gene_name IS NULL")
+        r[0] for r in con_main.execute("SELECT uniprot_id FROM proteins WHERE fetch_date IS NULL")
     ]
     n = 0
     for uid in stale_ids:

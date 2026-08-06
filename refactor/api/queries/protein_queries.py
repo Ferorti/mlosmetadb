@@ -13,6 +13,12 @@ def _build_sort(sort_by: str | None, sort_order: str) -> tuple[str, str, str]:
     sort_by and sort_order must already be validated by the caller.
     NULL values are always sorted last regardless of direction.
     For role: asc=drivers first, desc=components first (encoded in rank, always ORDER BY ASC).
+
+    KEEP IN SYNC: refactor/frontend/src/utils/sortProteins.js is a client-side
+    mirror of these exact semantics (NULL-last, uniprot_id tie-break, role-rank),
+    used to re-sort the plain-text /search fallback path, which has no sort_by of
+    its own. If the sort semantics here change, that file must change with them --
+    there is no test suite that would catch the drift.
     """
     if sort_by is None:
         return "", "p.uniprot_id", "f.uniprot_id"

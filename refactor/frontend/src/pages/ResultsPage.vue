@@ -20,6 +20,14 @@ const loading         = ref(false)
 const error           = ref(null)
 const downloadLoading = ref(false)
 
+// Fallback facets, used only when the endpoint that answered didn't return a
+// `facets` object of its own (today: the plain-text /search path).
+// COUPLING: by_role is derived from `has_driver`, a GLOBAL per-protein flag
+// ("driver of ANY MLO"). That is only correct because runSearch() escalates to
+// /search/advanced whenever `mlo` is set, so an MLO-filtered result set never
+// reaches this fallback. If that escalation condition ever changes, this would
+// re-introduce client-side the exact over-counting that _scoped_role_counts()
+// fixed server-side (see REFACTOR_LOG.md Entry 14, commit e799f6a).
 function computeFacetsFromProteins(proteins) {
   if (!proteins?.length) return null
   const by_organism = {}
@@ -69,22 +77,28 @@ async function runSearch(f, overrides = {}) {
       const mloHits   = searchRes.data?.mlos ?? []
       if (mloHits.length > 0) {
         return getProteins({ mlo: mloHits[0].unified_mlo, ...extraFilters })
-      } else if (f.organism || f.role || f.sort_by || f.mlo || f.feature_type || f.feature_accession) {
-        // f.sort_by (not extraFilters.sort_by, which is always defaulted) is only present
-        // once the user picks a non-default sort. /search (FTS5) accepts no filters beyond
-        // q/mode at all — role/organism/mlo/feature_*/sort_by would all be silently dropped
-        // there, so escalate to /search/advanced (single-field gene_name match) whenever any
-        // of them is set.
+      } else if (f.organism || f.role || f.mlo || f.feature_type || f.feature_accession) {
+        // /search accepts no filters beyond q/mode at all — role/organism/mlo/feature_*
+        // would all be silently dropped there, so escalate to /search/advanced (a
+        // single-field gene_name LIKE match) whenever any of them is set. sort_by is
+        // deliberately NOT a trigger: /search's own results are re-sorted client-side
+        // below, so a sort alone never needs to narrow the query. (It used to be a
+        // trigger, which silently swapped the multi-field /search corpus for a
+        // gene_name-only match the moment any non-default sort was picked — e.g.
+        // "kinase" went from 50 hits to 0.)
         return searchAdvanced({ gene_name: q, ...extraFilters })
       }
-      // /search (FTS5) has no sort_by concept -- it returns results in FTS5
-      // relevance order. But the sort dropdown always shows a value (there's
-      // no "Relevance" option, and its default, "Most MLOs", is deliberately
-      // stripped from the URL by ResultsPanel.vue's onSortSelect() "to keep
-      // the URL clean"), so re-sort client-side to match whatever sort is
-      // currently active, resolved the same way buildExtraFilters() resolves
-      // it. /search's ProteinSummary shape already has every field the six
-      // dropdown options need.
+      // /search has no sort_by concept -- it returns results in uniprot_id-ascending
+      // order (the LIKE-fallback path's own ORDER BY; the UI's default mode=fuzzy
+      // never reaches the FTS5 `ORDER BY rank` branch, which only mode=exact hits).
+      // But the sort dropdown always shows a value (there's no "Relevance" option,
+      // and its default, "Most MLOs", is deliberately stripped from the URL by
+      // ResultsPanel.vue's onSortSelect() "to keep the URL clean"), so re-sort
+      // client-side to match whatever sort is currently active, resolved the same
+      // way buildExtraFilters() resolves it. /search's ProteinSummary shape already
+      // has every field the sort dropdown's options need.
+      // NOTE: /search applies its own LIMIT before we sort, so this re-orders the
+      // returned page only -- it is not a global ranking over all matches.
       const sortBy    = f.sort_by?.trim()    || 'mlo_count'
       const sortOrder = f.sort_order?.trim() || 'desc'
       if (searchRes?.data?.proteins) {
