@@ -244,26 +244,17 @@ database/cache
 database/crossref
 database/raw
 
-# --- OLD/ retired database/: same heavy/generated files, mirrored ---
-# (a mid-pattern slash anchors a gitignore rule to the repo root, not to
-#  the directory name recursively -- so the patterns above, anchored to
-#  the root-level database/, don't follow it when it moves to OLD/database/.
-#  Needs its own mirrored block, same as api/static/ and frontend/.vscode/
-#  just below.)
-OLD/database/mlosmetadb.db
-OLD/database/*.db
-OLD/database/cache/
-OLD/database/crossref/
-OLD/database/raw/
-OLD/database/interim/*.tsv
-# Trailing-slash patterns never match a symlink, even one pointing to a
-# directory (same reasoning as the base database/... block above); mirror
-# each without the trailing slash too, for consistency.
-OLD/database/cache
-OLD/database/crossref
-OLD/database/raw
-OLD/api/static/
-OLD/frontend/.vscode/
+# --- OLD/: retired pre-swap codebase ---
+# Untracked as of the repo-root swap's finishing step (git rm -r --cached
+# OLD/) -- kept on disk as a local rollback reference, not pushed. This is
+# NOT a history rewrite: OLD/'s content is still present in past commits
+# and will still transfer on `git push` until/unless that history is
+# deliberately rewritten later (a separate, more invasive decision -- not
+# done here). This single blanket rule replaces the several OLD/-prefixed
+# mirror patterns the swap's own commits had added for heavy/generated
+# content (database/cache, crossref, raw, api/static, frontend/.vscode) --
+# all now redundant since the whole directory is ignored.
+OLD/
 
 # --- Local dev config ---
 # MCP server local configuration (local paths, not for repo)
