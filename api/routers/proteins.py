@@ -3,6 +3,7 @@ import logging
 
 import aiosqlite
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import JSONResponse, Response
 
 from config import DEFAULT_PAGE, DEFAULT_PER_PAGE, DEFAULT_PPI_PER_PAGE, MAX_PER_PAGE
 from models.schemas import (
@@ -34,6 +35,7 @@ from queries.protein_queries import (
     get_protein_features,
     get_protein_meta,
     get_protein_mlo_annotations,
+    get_proteins_export,
     get_proteins_facets,
     get_proteins_page,
     get_ppi_all,
@@ -69,6 +71,47 @@ def _parse_source_dbs(val: str | None) -> list[str]:
     if not val:
         return []
     return [s for s in val.split(",") if s]
+
+
+_EXPORT_BASIC_FIELDS = ["uniprot_id", "gene_name", "protein_name", "organism", "sequence_length", "reviewed"]
+_EXPORT_FULL_FIELDS = _EXPORT_BASIC_FIELDS + ["has_driver", "has_client", "source_dbs", "mlo_count", "mlos"]
+
+
+def _build_export_record(row: dict, fields: str) -> dict:
+    record = {
+        "uniprot_id": row["uniprot_id"],
+        "gene_name": row.get("gene_name"),
+        "protein_name": row.get("protein_name"),
+        "organism": row.get("organism"),
+        "sequence_length": row.get("sequence_length"),
+        "reviewed": row.get("reviewed"),
+    }
+    if fields == "full":
+        record["has_driver"] = bool(row.get("has_driver", 0))
+        record["has_client"] = bool(row.get("has_client", 0))
+        record["source_dbs"] = _parse_source_dbs(row.get("source_dbs"))
+        record["mlo_count"] = row.get("mlo_count", 0)
+        record["mlos"] = _parse_mlos(row.get("mlos"))
+    return record
+
+
+def _records_to_tsv(records: list[dict], columns: list[str]) -> str:
+    lines = ["\t".join(columns)]
+    for record in records:
+        values = []
+        for col in columns:
+            v = record.get(col)
+            if isinstance(v, list):
+                values.append(";".join(v))
+            elif v is None:
+                values.append("")
+            else:
+                values.append(str(v))
+        # Build the row, preserving trailing tabs for empty values
+        row = "\t".join(values)
+        lines.append(row)
+    # Add a trailing newline to the whole TSV, but preserve internal structure
+    return "\n".join(lines) + "\n"
 
 
 def _plddt_category(score: float) -> str:
@@ -388,4 +431,38 @@ async def list_proteins(
         filters_applied=filters,
         facets=SearchFacets(**facets_data),
         proteins=proteins,
+    )
+
+
+@router.get("/proteins/export")
+async def export_proteins(
+    organism: str | None = None,
+    taxon_id: int | None = None,
+    mlo: str | None = None,
+    role: str | None = None,
+    source_db: list[str] | None = Query(default=None),
+    fields: str = Query(default="full"),
+    format: str = Query(default="tsv"),
+):
+    if fields not in {"basic", "full"}:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": "fields must be 'basic' or 'full'"})
+    if format not in {"tsv", "json"}:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": "format must be 'tsv' or 'json'"})
+
+    try:
+        rows = await get_proteins_export(organism, taxon_id, mlo, role, source_db)
+    except aiosqlite.Error:
+        raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
+
+    records = [_build_export_record(r, fields) for r in rows]
+    columns = _EXPORT_BASIC_FIELDS if fields == "basic" else _EXPORT_FULL_FIELDS
+
+    if format == "json":
+        return JSONResponse(content=records)
+
+    tsv_body = _records_to_tsv(records, columns)
+    return Response(
+        content=tsv_body,
+        media_type="text/tab-separated-values",
+        headers={"Content-Disposition": 'attachment; filename="mlosmetadb_export.tsv"'},
     )
