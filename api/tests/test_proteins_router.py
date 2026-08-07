@@ -1,3 +1,5 @@
+import sqlite3
+
 from fastapi.testclient import TestClient
 
 from main import app
@@ -99,5 +101,51 @@ def test_export_endpoint_invalid_format_returns_422(test_db):
 def test_export_endpoint_invalid_fields_returns_422(test_db):
     with TestClient(app) as client:
         r = client.get("/proteins/export", params={"fields": "everything"})
+    assert r.status_code == 422
+    assert r.json()["error"] == "invalid_parameter"
+
+
+def test_citation_check_combines_phasedb_and_phasepdb_into_one_entry(test_db):
+    conn = sqlite3.connect(test_db)
+    conn.execute(
+        "INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES ('condensate_y', 'Cytoplasmic')"
+    )
+    conn.execute(
+        "INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES "
+        "('PPDB01', 'PPDBTEST', 'Homo sapiens', 120)"
+    )
+    conn.execute(
+        "INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) "
+        "VALUES ('PPDB01', 'PhasePDB', 'condensate_y', 'driver', 1)"
+    )
+    conn.commit()
+    conn.close()
+
+    with TestClient(app) as client:
+        r = client.post("/proteins/citations", json={"uniprot_ids": ["P35637", "PPDB01", "PCLIENT"]})
+    assert r.status_code == 200
+    # P35637 and PCLIENT are tagged 'PhaseDB', PPDB01 is tagged 'PhasePDB' --
+    # both must fold into the single 'PhaSePDB' display name.
+    assert r.json()["by_source"] == {"PhaSePDB": 3}
+
+
+def test_citation_check_ignores_unmatched_uniprot_ids(test_db):
+    with TestClient(app) as client:
+        r = client.post("/proteins/citations", json={"uniprot_ids": ["P35637", "NOTAREALID"]})
+    assert r.status_code == 200
+    assert r.json()["by_source"] == {"PhaSePDB": 1}
+
+
+def test_citation_check_empty_list_returns_422(test_db):
+    with TestClient(app) as client:
+        r = client.post("/proteins/citations", json={"uniprot_ids": []})
+    assert r.status_code == 422
+    assert r.json()["error"] == "invalid_parameter"
+
+
+def test_citation_check_too_many_ids_returns_422(test_db):
+    ids = [f"P{i:05d}" for i in range(501)]
+    with TestClient(app) as client:
+        r = client.post("/proteins/citations", json={"uniprot_ids": ids})
     assert r.status_code == 422
     assert r.json()["error"] == "invalid_parameter"

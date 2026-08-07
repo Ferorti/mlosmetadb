@@ -562,3 +562,18 @@ async def get_ppi_page(uniprot_id: str, page: int, per_page: int) -> tuple[int, 
         (uniprot_id, per_page, offset),
     )
     return total, rows
+
+
+async def get_source_dbs_for_uniprot_ids(uniprot_ids: list[str]) -> list[dict]:
+    if not uniprot_ids:
+        return []
+    ph = ",".join("?" * len(uniprot_ids))
+    active = policy.active_annotation_clause("mlo_annotations")
+    return await fetchall(
+        f"""
+        SELECT DISTINCT uniprot_id, source_db
+        FROM mlo_annotations
+        WHERE uniprot_id IN ({ph}) AND {active}
+        """,
+        tuple(uniprot_ids),
+    )

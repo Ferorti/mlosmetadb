@@ -7,6 +7,8 @@ from fastapi.responses import JSONResponse, Response
 
 from config import DEFAULT_PAGE, DEFAULT_PER_PAGE, DEFAULT_PPI_PER_PAGE, MAX_PER_PAGE
 from models.schemas import (
+    CitationCheckRequest,
+    CitationCheckResponse,
     DomainRegion,
     IdrRegion,
     LcdRegion,
@@ -42,6 +44,7 @@ from queries.protein_queries import (
     get_ppi_inter_edges,
     get_ppi_page,
     get_ppi_summary,
+    get_source_dbs_for_uniprot_ids,
 )
 
 router = APIRouter()
@@ -466,3 +469,31 @@ async def export_proteins(
         media_type="text/tab-separated-values",
         headers={"Content-Disposition": 'attachment; filename="mlosmetadb_export.tsv"'},
     )
+
+
+_CITATION_SOURCE_NAMES = {
+    "PhaseDB": "PhaSePDB",
+    "PhasePDB": "PhaSePDB",
+    "DrLLPS": "DrLLPS",
+    "LLPSDB": "LLPSDB",
+    "PhasePro": "PhaSePro",
+    "CDCODE": "CD-CODE",
+}
+
+
+def _aggregate_citation_sources(rows: list[dict]) -> dict[str, int]:
+    by_source: dict[str, set] = {}
+    for r in rows:
+        display = _CITATION_SOURCE_NAMES.get(r["source_db"], r["source_db"])
+        by_source.setdefault(display, set()).add(r["uniprot_id"])
+    return {name: len(ids) for name, ids in by_source.items()}
+
+
+@router.post("/proteins/citations", response_model=CitationCheckResponse)
+async def check_citations(body: CitationCheckRequest):
+    try:
+        rows = await get_source_dbs_for_uniprot_ids(body.uniprot_ids)
+    except aiosqlite.Error:
+        raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
+
+    return CitationCheckResponse(by_source=_aggregate_citation_sources(rows))

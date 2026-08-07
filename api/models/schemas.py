@@ -333,3 +333,29 @@ class OrthologsResponse(BaseModel):
     total: int
     organisms: list[str]
     orthologs: list[OrthologDetail]
+
+
+# ── /proteins/citations ──────────────────────────────────────────────────────
+
+class CitationCheckRequest(BaseModel):
+    uniprot_ids: list[str]
+
+    @field_validator("uniprot_ids")
+    @classmethod
+    def _clean_ids(cls, v: list[str]) -> list[str]:
+        cleaned = []
+        seen = set()
+        for raw in v:
+            uid = raw.strip().upper()
+            if uid and uid not in seen:
+                seen.add(uid)
+                cleaned.append(uid)
+        if not cleaned:
+            raise ValueError("at least one non-empty uniprot_id is required")
+        if len(cleaned) > 500:
+            raise ValueError("at most 500 uniprot_ids allowed per request")
+        return cleaned
+
+
+class CitationCheckResponse(BaseModel):
+    by_source: dict[str, int]
