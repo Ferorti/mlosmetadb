@@ -197,3 +197,49 @@ async def get_definitions_for_mlos(unified_mlos: list[str]) -> dict[str, list[di
         mlo = r["unified_mlo"]
         result.setdefault(mlo, []).append(r)
     return result
+
+
+async def get_source_names_for_mlos(unified_mlos: list[str]) -> dict[str, list[str]]:
+    """Every name the source databases use for each organelle.
+
+    Two tables carry them and neither is complete on its own: 91 aliases exist
+    only in mlo_annotations.source_mlo, 36 only in mlo_definitions.source_name,
+    and 36 organelles have no definitions at all. Hence the UNION.
+
+    Names equal to the unified name are dropped (115 of 416 are just the same
+    string) and casing variants are collapsed — the nucleolus alone carries
+    "Dense Fibrillar Component", "Dense fibrillar component" and "dense
+    fibrillar component". MIN() picks one deterministically.
+
+    What is left is not a clean synonym list: some sources label a condensate
+    by its driver protein, so 'NONO' maps to paraspeckle and
+    transcriptional_condensate collects 22 named instances. That is what those
+    databases recorded; the display layer decides how much of it to show.
+    """
+    if not unified_mlos:
+        return {}
+    placeholders = ",".join("?" * len(unified_mlos))
+    active = policy.active_annotation_clause("ma")
+    rows = await fetchall(
+        f"""
+        WITH alias AS (
+            SELECT ma.unified_mlo AS unified_mlo, ma.source_mlo AS name
+            FROM mlo_annotations ma
+            WHERE ma.unified_mlo IN ({placeholders}) AND ma.source_mlo IS NOT NULL AND {active}
+            UNION
+            SELECT d.unified_mlo, d.source_name
+            FROM mlo_definitions d
+            WHERE d.unified_mlo IN ({placeholders}) AND d.source_name IS NOT NULL
+        )
+        SELECT unified_mlo, MIN(name) AS name
+        FROM alias
+        WHERE LOWER(name) != LOWER(REPLACE(unified_mlo, '_', ' '))
+        GROUP BY unified_mlo, LOWER(name)
+        ORDER BY unified_mlo, LOWER(name)
+        """,
+        tuple(unified_mlos) * 2,
+    )
+    result: dict[str, list[str]] = {}
+    for r in rows:
+        result.setdefault(r["unified_mlo"], []).append(r["name"])
+    return result

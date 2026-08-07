@@ -218,6 +218,11 @@ class MloListItem(BaseModel):
     protein_count: int
     driver_count: int = 0
     sources: list[str] = []
+    # Names the source databases use for this organelle, excluding the unified
+    # name itself. Lets a client match "GW-body" to p_body, or "Dense Fibrillar
+    # Component" to nucleolus — 241 such aliases exist across 102 organelles
+    # and none of them are findable from the unified name alone.
+    source_names: list[str] = []
     definitions: list[MloDefinition] = []
 
 

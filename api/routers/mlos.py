@@ -17,6 +17,7 @@ from models.schemas import (
 from queries.mlo_queries import (
     get_all_mlos,
     get_definitions_for_mlos,
+    get_source_names_for_mlos,
     get_mlo_definitions,
     get_mlo_meta,
     get_mlo_proteins_page,
@@ -97,7 +98,9 @@ async def list_mlos(
 ):
     try:
         rows = await get_all_mlos(category, source_db, organism, q)
-        defs_by_mlo = await get_definitions_for_mlos([r["unified_mlo"] for r in rows])
+        mlo_ids = [r["unified_mlo"] for r in rows]
+        defs_by_mlo = await get_definitions_for_mlos(mlo_ids)
+        names_by_mlo = await get_source_names_for_mlos(mlo_ids)
     except aiosqlite.Error:
         raise HTTPException(500, {"error": "database_error", "message": "Internal database error"})
 
@@ -111,6 +114,7 @@ async def list_mlos(
             protein_count=r.get("protein_count", 0),
             driver_count=r.get("driver_count", 0),
             sources=[s for s in sources_raw.split(",") if s],
+            source_names=names_by_mlo.get(r["unified_mlo"], []),
             definitions=[MloDefinition(
                 source_db=d["source_db"],
                 source_name=d.get("source_name"),
