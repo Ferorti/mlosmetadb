@@ -134,6 +134,7 @@ class ProteinDetail(BaseModel):
     organism: str | None
     taxon_id: int | None
     sequence_length: int | None
+    sequence: str | None
     disorder_mobidb_lite_dc: float | None
     disorder_alphafold_dc: float | None
     mlo_annotations: list[MloAnnotation]

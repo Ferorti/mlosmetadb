@@ -239,6 +239,7 @@ async def get_protein(
         organism=meta.get("organism"),
         taxon_id=meta.get("taxon_id"),
         sequence_length=meta.get("length"),
+        sequence=meta.get("sequence"),
         disorder_mobidb_lite_dc=meta.get("disorder_mobidb_lite_dc"),
         disorder_alphafold_dc=meta.get("disorder_alphafold_dc"),
         mlo_annotations=[_build_mlo_annotation(r) for r in ann_rows],

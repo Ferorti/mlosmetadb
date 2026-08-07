@@ -350,7 +350,7 @@ async def get_protein_meta(uniprot_id: str) -> dict | None:
     return await fetchone(
         """
         SELECT uniprot_id, gene_name, protein_name, organism, taxon_id, length,
-               disorder_mobidb_lite_dc, disorder_alphafold_dc
+               disorder_mobidb_lite_dc, disorder_alphafold_dc, sequence
         FROM proteins WHERE uniprot_id = ?
         """,
         (uniprot_id,),

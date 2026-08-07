@@ -5,9 +5,8 @@ import { useProtein } from '@/composables/useProtein.js'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import ProteinHeader from '@/components/protein/ProteinHeader.vue'
 import ProteinMLOs from '@/components/protein/ProteinMLOs.vue'
-import ProteinFeatureTrack from '@/components/protein/ProteinFeatureTrack.vue'
+import ProteinOverview from '@/components/protein/ProteinOverview.vue'
 import ProteinPPI from '@/components/protein/ProteinPPI.vue'
-import MolStarViewer from '@/components/viewers/MolStarViewer.vue'
 
 const route = useRoute()
 const { protein, loading, error, fetchProtein } = useProtein()
@@ -104,33 +103,7 @@ watch(() => route.params.id, async (id) => {
 
       <!-- Overview -->
       <div id="overview" class="scroll-mt-28">
-        <div class="flex gap-6 items-start">
-
-          <!-- Left: AlphaFold structure (larger) -->
-          <div class="w-[520px] flex-shrink-0">
-            <div class="text-sm font-medium text-gray-700 mb-2">AlphaFold Structure</div>
-            <div class="h-[420px] rounded border border-slate-200 overflow-hidden">
-              <MolStarViewer :uniprot-id="protein.uniprot_id" />
-            </div>
-            <a
-              :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
-              target="_blank" rel="noopener"
-              class="text-xs text-[#185FA5] mt-1 inline-block hover:underline"
-            >View in AlphaFold DB →</a>
-          </div>
-
-          <!-- Right: Sequence & features -->
-          <div class="flex-1 min-w-0">
-            <div class="text-sm font-medium text-gray-700 mb-2">Sequence & Features</div>
-            <ProteinFeatureTrack
-              v-if="protein.sequence_features"
-              :sequence-features="protein.sequence_features"
-              :sequence-length="protein.sequence_length ?? 0"
-            />
-            <div v-else class="text-sm text-[#484E59]">No sequence features available.</div>
-          </div>
-
-        </div>
+        <ProteinOverview :protein="protein" />
 
         <!-- External resources -->
         <div class="mt-6">

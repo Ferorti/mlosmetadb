@@ -8,6 +8,7 @@ const props = defineProps({
 const containerRef = ref(null)
 const loading = ref(true)
 const error   = ref(null)
+const ready   = ref(false)   // a structure is loaded and interactive
 
 let viewerInstance = null
 
@@ -19,6 +20,7 @@ async function initViewer(uniprotId) {
   }
   loading.value = true
   error.value   = null
+  ready.value   = false
   try {
     if (viewerInstance) {
       viewerInstance.plugin.dispose()
@@ -36,6 +38,7 @@ async function initViewer(uniprotId) {
       viewportShowAnimation:     false,
     })
     await viewerInstance.loadAlphaFoldDb(uniprotId)
+    ready.value = true
   } catch {
     error.value = 'No AlphaFold structure available for this protein.'
   } finally {
@@ -46,6 +49,48 @@ async function initViewer(uniprotId) {
 onMounted(() => initViewer(props.uniprotId))
 onUnmounted(() => { if (viewerInstance) viewerInstance.plugin.dispose() })
 watch(() => props.uniprotId, (id) => initViewer(id))
+
+// ─── Exposed API for linked views ────────────────────────────────────────────
+// Thin wrappers over Viewer.structureInteractivity(), which resolves an MVS
+// component schema to a Loci and dispatches to the interactivity managers.
+// AlphaFold models number residues 1..N in UniProt coordinates (label_seq_id ==
+// auth_seq_id == UniProt position, single chain), so feature coordinates map
+// across with no conversion.
+//
+// Every method is a no-op when the structure never loaded (no WebGL, no
+// AlphaFold entry, older Mol* bundle), so callers never have to check.
+
+function canInteract() {
+  return ready.value
+    && viewerInstance
+    && typeof viewerInstance.structureInteractivity === 'function'
+}
+
+function toElements(ranges) {
+  return ranges.map(r => ({ beg_label_seq_id: r.start, end_label_seq_id: r.end }))
+}
+
+function apply(action, ranges) {
+  if (!canInteract()) return
+  try {
+    viewerInstance.structureInteractivity({
+      // Omitting `elements` is how structureInteractivity clears the given action.
+      elements: ranges?.length ? toElements(ranges) : undefined,
+      action,
+    })
+  } catch {
+    // Structure not in the state tree yet, or disposed mid-flight.
+  }
+}
+
+defineExpose({
+  /** Transient highlight over one or more residue ranges. Empty array clears. */
+  highlightRanges: (ranges = []) => apply('highlight', ranges),
+  /** Persistent selection, rendered in Mol*'s selection color. Empty array clears. */
+  selectRanges:    (ranges = []) => apply('select', ranges),
+  /** Drops both the highlight and the selection. */
+  clearAll:        () => apply(['highlight', 'select'], []),
+})
 </script>
 
 <template>
