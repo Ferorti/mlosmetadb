@@ -220,8 +220,11 @@ frontend/node_modules/
 frontend/.vite/
 # VS Code workspace settings
 frontend/.vscode/
-# Build output served by FastAPI — regenerate with: cd frontend && npm run build
-api/static/
+# api/static/ is deliberately NOT ignored: the built SPA is committed so the
+# server picks it up on `git pull`, matching how the other sites on that host
+# deploy. Rebuild before committing — `cd frontend && npm run build`. Note that
+# vite.config.js sets emptyOutDir, so a build deletes tracked files and writes
+# new hashed ones; "deleted" entries in git status after building are expected.
 
 # --- Database: heavy and generated files ---
 # Main SQLite database — regenerate with: python scripts/build_db.py

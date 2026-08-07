@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Worm body as a thick sinusoidal path -->
+  <path d="M15 80 C20 65 35 65 40 50 C45 35 60 35 65 50 C70 65 82 65 85 50"
+        stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <!-- Head (slightly wider) -->
+  <circle cx="85" cy="50" r="8" fill="#000"/>
+  <!-- Tail (slightly narrower) -->
+  <circle cx="15" cy="80" r="5" fill="#000"/>
+</svg>

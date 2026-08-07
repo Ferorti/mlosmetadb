@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="17.198351mm"
+   height="7.0144324mm"
+   viewBox="0 0 17.198351 7.0144324"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   sodipodi:docname="loguito_horizontal.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="10.184358"
+     inkscape:cx="28.769608"
+     inkscape:cy="11.43911"
+     inkscape:window-width="1854"
+     inkscape:window-height="1011"
+     inkscape:window-x="66"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-97.746552,-72.039978)">
+    <circle
+       style="fill:#6681b2;fill-opacity:1;stroke-width:1.03822"
+       id="path2"
+       cx="106.3199"
+       cy="75.313957"
+       r="3.118104" />
+    <circle
+       style="fill:#5b9bca;fill-opacity:1;stroke-width:0.79469"
+       id="path2-9"
+       cx="100.18521"
+       cy="76.583961"
+       r="2.3866968" />
+    <circle
+       style="fill:#7eb57b;fill-opacity:1;stroke-width:0.79469"
+       id="path2-9-3"
+       cx="112.45461"
+       cy="76.583961"
+       r="2.3866968" />
+  </g>
+</svg>

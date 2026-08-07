@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Body (longer than mouse) -->
+  <ellipse cx="40" cy="62" rx="30" ry="17" fill="#000"/>
+  <!-- Head -->
+  <circle cx="70" cy="52" r="13" fill="#000"/>
+  <!-- Ears (smaller, more rounded than mouse) -->
+  <circle cx="67" cy="37" r="7" fill="#000"/>
+  <circle cx="80" cy="42" r="6" fill="#000"/>
+  <!-- Snout (more elongated than mouse) -->
+  <ellipse cx="83" cy="54" rx="6" ry="4" fill="#000"/>
+  <!-- Long tail -->
+  <path d="M10 65 C0 60 -1 45 8 40 C13 37 17 40 14 44" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Legs -->
+  <rect x="22" y="76" width="8" height="13" rx="4" fill="#000"/>
+  <rect x="39" y="77" width="8" height="13" rx="4" fill="#000"/>
+  <rect x="56" y="67" width="7" height="10" rx="3.5" fill="#000"/>
+  <rect x="70" y="63" width="7" height="10" rx="3.5" fill="#000"/>
+</svg>

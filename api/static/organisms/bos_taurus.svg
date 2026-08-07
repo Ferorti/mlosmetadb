@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Body -->
+  <ellipse cx="50" cy="60" rx="32" ry="22" fill="#000"/>
+  <!-- Head -->
+  <ellipse cx="78" cy="45" rx="14" ry="12" fill="#000"/>
+  <!-- Snout -->
+  <ellipse cx="90" cy="47" rx="6" ry="5" fill="#000"/>
+  <!-- Horns -->
+  <path d="M72 33 Q65 20 58 22" stroke="#000" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M82 31 Q85 18 92 20" stroke="#000" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Ear -->
+  <ellipse cx="75" cy="35" rx="5" ry="7" transform="rotate(-20 75 35)" fill="#000"/>
+  <!-- Legs -->
+  <rect x="24" y="78" width="9" height="16" rx="4" fill="#000"/>
+  <rect x="38" y="79" width="9" height="16" rx="4" fill="#000"/>
+  <rect x="52" y="79" width="9" height="16" rx="4" fill="#000"/>
+  <rect x="65" y="77" width="9" height="14" rx="4" fill="#000"/>
+  <!-- Tail -->
+  <path d="M18 58 Q8 52 10 62 Q12 68 18 65" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Udder -->
+  <ellipse cx="45" cy="82" rx="12" ry="6" fill="#000"/>
+</svg>

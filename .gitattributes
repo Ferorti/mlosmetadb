@@ -1,0 +1,6 @@
+# The built SPA is committed (see .gitignore). Its assets are minified bundles
+# with content-hashed names, so every build replaces them wholesale. Marking
+# them binary keeps `git diff`/`git show` from printing 170 KB of one-line
+# JavaScript for a routine deploy.
+api/static/assets/** binary
+api/static/index.html -diff
