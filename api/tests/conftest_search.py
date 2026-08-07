@@ -35,7 +35,10 @@ INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, l
     -- NULL gene_name and protein_name: must not crash, must not match
     ('P00008', NULL,      NULL,                                 'Homo sapiens', 9606, 800, 1),
     -- "kinase" as a substring of a larger word, never as a standalone word
-    ('P00009', 'ZZZ9',    'Phosphokinaselike domain protein',   'Homo sapiens', 9606, 900, 1);
+    ('P00009', 'ZZZ9',    'Phosphokinaselike domain protein',   'Homo sapiens', 9606, 900, 1),
+    -- a DRIVER reachable only through protein_name: the exact shape that
+    -- "kinase" + role=driver returned nothing for, since gene_name is 'ZZZ10'
+    ('P00010', 'ZZZ10',   'Casein kinase II subunit alpha',     'Homo sapiens', 9606, 950, 1);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('P00001', 1, 0, 2, 2, '["stress_granule","nucleolus"]', 'PhaseDB,DrLLPS'),
@@ -46,7 +49,8 @@ INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count
     ('P00006', 0, 0, 1, 0, NULL,                             'PhaseDB'),
     ('P00007', 0, 0, 1, 0, NULL,                             'PhaseDB'),
     ('P00008', 0, 0, 1, 0, NULL,                             'PhaseDB'),
-    ('P00009', 0, 0, 1, 0, NULL,                             'PhaseDB');
+    ('P00009', 0, 0, 1, 0, NULL,                             'PhaseDB'),
+    ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaseDB');
 
 INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
     ('stress_granule', 'Cytoplasmic'),
@@ -58,6 +62,7 @@ INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, d
     ('P00001', 'DrLLPS',  'nucleolus',      'driver', 1),
     ('P00002', 'PhaseDB', 'stress_granule', 'client', 1),
     ('P00004', 'PhaseDB', 'nucleolus',      'driver', 1),
+    ('P00010', 'PhaseDB', 'stress_granule', 'driver', 1),
     -- inactive dataset: must be invisible through every endpoint
     ('P00006', 'PhaseDB', 'p_granule',      'driver', 0);
 """

@@ -1,10 +1,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { searchBasic, searchAdvanced } from '@/api/search'
+import { searchAdvanced } from '@/api/search'
 import { getProteins } from '@/api/proteins'
 import { toMloSlug } from '@/utils/format'
-import { sortProteins } from '@/utils/sortProteins'
 import { parseIdrRegions, parseLcdRegions, parseDomains, calcCoverage } from '@/utils/parseFeatures'
 import SearchBox from '@/components/search/SearchBox.vue'
 import FilterSidebar from '@/components/search/FilterSidebar.vue'
@@ -20,14 +19,13 @@ const loading         = ref(false)
 const error           = ref(null)
 const downloadLoading = ref(false)
 
-// Fallback facets, used only when the endpoint that answered didn't return a
-// `facets` object of its own (today: the plain-text /search path).
-// COUPLING: by_role is derived from `has_driver`, a GLOBAL per-protein flag
-// ("driver of ANY MLO"). That is only correct because runSearch() escalates to
-// /search/advanced whenever `mlo` is set, so an MLO-filtered result set never
-// reaches this fallback. If that escalation condition ever changes, this would
-// re-introduce client-side the exact over-counting that _scoped_role_counts()
-// fixed server-side (see REFACTOR_LOG.md Entry 14, commit e799f6a).
+// Fallback facets. Every endpoint runSearch() can reach now returns a `facets`
+// object, so in practice this no longer runs — it is kept only so a response
+// missing the field degrades instead of blanking the sidebar.
+// If it ever does run, note that by_role is derived from `has_driver`, a GLOBAL
+// per-protein flag ("driver of ANY MLO"), which over-counts inside an
+// MLO-filtered result set — the exact thing _scoped_role_counts() fixes
+// server-side (see REFACTOR_LOG.md Entry 14, commit e799f6a).
 function computeFacetsFromProteins(proteins) {
   if (!proteins?.length) return null
   const by_organism = {}
@@ -74,42 +72,23 @@ async function runSearch(f, overrides = {}) {
       if (uniprotPattern.test(q)) {
         return getProteins({ uniprot_id: q.toUpperCase(), ...extraFilters })
       }
-      // No MLO pivot here any more. Typing an organelle's name used to switch
-      // the whole result set to that organelle's proteins, which is a different
-      // search from the one that was asked for. Organelles are browsed now —
-      // the filterable card grids on the home page and /mlos, which link
-      // straight to ?mlo=<slug>. A text search is a text search.
-      if (f.organism || f.role || f.mlo || f.feature_type || f.feature_accession) {
-        // /search accepts no filters beyond q/mode at all — role/organism/mlo/feature_*
-        // would all be silently dropped there, so escalate to /search/advanced (a
-        // single-field gene_name LIKE match) whenever any of them is set. sort_by is
-        // deliberately NOT a trigger: /search's own results are re-sorted client-side
-        // below, so a sort alone never needs to narrow the query. (It used to be a
-        // trigger, which silently swapped the multi-field /search corpus for a
-        // gene_name-only match the moment any non-default sort was picked — e.g.
-        // "kinase" went from 50 hits to 0.)
-        return searchAdvanced({ gene_name: q, ...extraFilters })
-      }
-      // /search has no sort_by concept -- it returns results in uniprot_id-ascending
-      // order (the LIKE-fallback path's own ORDER BY; the UI's default mode=fuzzy
-      // never reaches the FTS5 `ORDER BY rank` branch, which only mode=exact hits).
-      // But the sort dropdown always shows a value (there's no "Relevance" option,
-      // and its default, "Most MLOs", is deliberately stripped from the URL by
-      // ResultsPanel.vue's onSortSelect() "to keep the URL clean"), so re-sort
-      // client-side to match whatever sort is currently active, resolved the same
-      // way buildExtraFilters() resolves it. /search's ProteinSummary shape already
-      // has every field the sort dropdown's options need.
-      // NOTE: /search applies its own LIMIT before we sort, so this re-orders the
-      // returned page only -- it is not a global ranking over all matches.
-      // (Called here rather than above the escalation check: with a filter set
-      // the response is discarded, so there is no reason to have asked for it.)
-      const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
-      const sortBy    = f.sort_by?.trim()    || 'mlo_count'
-      const sortOrder = f.sort_order?.trim() || 'desc'
-      if (searchRes?.data?.proteins) {
-        searchRes.data.proteins = sortProteins(searchRes.data.proteins, sortBy, sortOrder)
-      }
-      return searchRes
+      // One endpoint for every free-text search, with or without filters.
+      //
+      // This used to fork: /search when there were no filters, /search/advanced
+      // the moment one was set. The two did not search the same thing —
+      // /search/advanced's only text parameter was `gene_name`, a single column
+      // — so applying a filter narrowed the corpus from three fields to one and
+      // "kinase" went from 50 hits to 0, nucleolin among drivers to 0. It now
+      // takes `q`, matching the same accession + gene name + protein name that
+      // /search does, which is asserted by tests/test_search_corpus_parity.py.
+      //
+      // /search stays alive as the search box's autocomplete endpoint.
+      //
+      // Consequences of routing here instead: pagination is real (the old path
+      // capped at 50 and ignored `page`), the sort runs server-side over the
+      // whole match set rather than client-side over one page, and the response
+      // carries facets.
+      return searchAdvanced({ q, ...extraFilters })
     } else if (field === 'uniprot_id') {
       return getProteins({ uniprot_id: q, ...extraFilters })
     } else if (field === 'gene_name') {
@@ -132,11 +111,10 @@ async function fetchResults() {
     if (!res) { results.value = []; total.value = 0; facets.value = null; return }
     const data    = res.data
     results.value = data.proteins ?? data.items ?? data.results ?? []
-    // NOT total_hits: /search defines it as proteins + MLO name matches, so a
-    // query like "A" reported 70 (50 proteins + 20 MLOs) under a label that
-    // reads "N proteins". /proteins and /search/advanced carry a real
-    // server-side `total`; /search does not paginate, so its count is simply
-    // what it returned.
+    // Every endpoint reachable from runSearch() carries a real server-side
+    // `total` now. The fallback stays because reading `total_hits` here is the
+    // trap that made the header say "70 proteins" for a query with 50: /search
+    // counts proteins plus MLO name matches, by definition.
     total.value   = data.total ?? results.value.length
     facets.value  = data.facets ?? computeFacetsFromProteins(results.value)
   } catch (e) {

@@ -121,6 +121,10 @@ async def search(
 
 @router.get("/search/advanced", response_model=ProteinsResponse)
 async def search_advanced(
+    # Free text over accession + gene name + protein name, the same corpus
+    # /search uses. `gene_name` stays for callers that really do want a
+    # single-column match; the UI sends `q`.
+    q: str | None = None,
     gene_name: str | None = None,
     uniprot_id: str | None = None,
     organism: str | None = None,
@@ -143,6 +147,7 @@ async def search_advanced(
     sort_order = sort_order.lower()
 
     filters = {k: v for k, v in {
+        "q": q,
         "gene_name": gene_name,
         "uniprot_id": uniprot_id,
         "organism": organism,
@@ -161,6 +166,7 @@ async def search_advanced(
     per_page = min(per_page, MAX_PER_PAGE)
     try:
         total, rows = await advanced_search(
+            q=q,
             gene_name=gene_name,
             uniprot_id=uniprot_id,
             organism=organism,
@@ -177,6 +183,7 @@ async def search_advanced(
             sort_order=sort_order,
         )
         facets_data = await get_advanced_search_facets(
+            q=q,
             gene_name=gene_name,
             uniprot_id=uniprot_id,
             organism=organism,
