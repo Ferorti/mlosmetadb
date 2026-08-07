@@ -75,8 +75,18 @@ async function runSearch(f, overrides = {}) {
       }
       const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
       const mloHits   = searchRes.data?.mlos ?? []
-      if (mloHits.length > 0) {
-        return getProteins({ mlo: mloHits[0].unified_mlo, ...extraFilters })
+
+      // Typing an MLO's name is a request for that MLO's proteins, so jump
+      // straight to them -- but only on an exact name match. This used to fire
+      // on ANY MLO hit and take mloHits[0], which is merely the alphabetically
+      // first (search_mlos_like sorts by unified_mlo, not by relevance). That
+      // silently replaced the whole result set: "granule" threw away 9 protein
+      // matches to show the 1 protein of axonal_tiar2_granule, and a one-letter
+      // query landed on abscission_checkpoint_body every time.
+      const qSlug    = toMloSlug(q)
+      const exactMlo = mloHits.find(m => m.unified_mlo.toLowerCase() === qSlug)
+      if (exactMlo) {
+        return getProteins({ mlo: exactMlo.unified_mlo, ...extraFilters })
       } else if (f.organism || f.role || f.mlo || f.feature_type || f.feature_accession) {
         // /search accepts no filters beyond q/mode at all — role/organism/mlo/feature_*
         // would all be silently dropped there, so escalate to /search/advanced (a

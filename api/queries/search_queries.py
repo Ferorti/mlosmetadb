@@ -73,16 +73,21 @@ async def search_mlos_fts(q: str) -> list[dict]:
 
 
 async def search_mlos_like(q: str) -> list[dict]:
+    # MLO names are stored slugged ('stress_granule') but people type them the
+    # way they read them ('stress granule'). Match against both spellings by
+    # unslugging the column rather than by rewriting the query — replacing the
+    # user's spaces with '_' would smuggle in a LIKE single-char wildcard.
     pattern = f"%{q}%"
     return await fetchall(
         """
         SELECT unified_mlo, category, 'unified_mlo' AS match_field
         FROM mlo_vocabulary
         WHERE LOWER(unified_mlo) LIKE LOWER(?)
+           OR LOWER(REPLACE(unified_mlo, '_', ' ')) LIKE LOWER(?)
         ORDER BY unified_mlo
         LIMIT 20
         """,
-        (pattern,),
+        (pattern, pattern),
     )
 
 
