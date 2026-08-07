@@ -62,7 +62,6 @@ function mloExample(slug) {
           <SearchBox
             :show-search-options="true"
             :initial-query="''"
-            :initial-target="'protein'"
             @search="handleSearch"
           />
         </div>

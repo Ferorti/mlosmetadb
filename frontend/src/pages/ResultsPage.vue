@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { searchBasic, searchAdvanced } from '@/api/search'
 import { getProteins } from '@/api/proteins'
-import { toMloSlug, formatMlo } from '@/utils/format'
+import { toMloSlug } from '@/utils/format'
 import { sortProteins } from '@/utils/sortProteins'
 import { parseIdrRegions, parseLcdRegions, parseDomains, calcCoverage } from '@/utils/parseFeatures'
 import SearchBox from '@/components/search/SearchBox.vue'
@@ -44,15 +44,6 @@ function computeFacetsFromProteins(proteins) {
 
 const activeFilters = computed(() => ({ ...route.query }))
 
-// Which tab the search box opens on, read back off the URL so a shared link
-// lands on the control that produced it. An `mlo` filter with no free-text
-// query is an organelle search; anything else is a protein search.
-const searchBoxTarget = computed(() =>
-  route.query.mlo && !route.query.q ? 'mlo' : 'protein'
-)
-const searchBoxQuery = computed(() =>
-  searchBoxTarget.value === 'mlo' ? formatMlo(route.query.mlo) : (route.query.q ?? '')
-)
 
 function hasAnyFilter(f) {
   return Object.keys(f).some(k => !['page', 'per_page', 'mode', 'sort_by', 'sort_order'].includes(k) && f[k])
@@ -83,21 +74,12 @@ async function runSearch(f, overrides = {}) {
       if (uniprotPattern.test(q)) {
         return getProteins({ uniprot_id: q.toUpperCase(), ...extraFilters })
       }
-      const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
-      const mloHits   = searchRes.data?.mlos ?? []
-
-      // Typing an MLO's name is a request for that MLO's proteins, so jump
-      // straight to them -- but only on an exact name match. This used to fire
-      // on ANY MLO hit and take mloHits[0], which is merely the alphabetically
-      // first (search_mlos_like sorts by unified_mlo, not by relevance). That
-      // silently replaced the whole result set: "granule" threw away 9 protein
-      // matches to show the 1 protein of axonal_tiar2_granule, and a one-letter
-      // query landed on abscission_checkpoint_body every time.
-      const qSlug    = toMloSlug(q)
-      const exactMlo = mloHits.find(m => m.unified_mlo.toLowerCase() === qSlug)
-      if (exactMlo) {
-        return getProteins({ mlo: exactMlo.unified_mlo, ...extraFilters })
-      } else if (f.organism || f.role || f.mlo || f.feature_type || f.feature_accession) {
+      // No MLO pivot here any more. Typing an organelle's name used to switch
+      // the whole result set to that organelle's proteins, which is a different
+      // search from the one that was asked for. Organelles are browsed now —
+      // the filterable card grids on the home page and /mlos, which link
+      // straight to ?mlo=<slug>. A text search is a text search.
+      if (f.organism || f.role || f.mlo || f.feature_type || f.feature_accession) {
         // /search accepts no filters beyond q/mode at all — role/organism/mlo/feature_*
         // would all be silently dropped there, so escalate to /search/advanced (a
         // single-field gene_name LIKE match) whenever any of them is set. sort_by is
@@ -119,6 +101,9 @@ async function runSearch(f, overrides = {}) {
       // has every field the sort dropdown's options need.
       // NOTE: /search applies its own LIMIT before we sort, so this re-orders the
       // returned page only -- it is not a global ranking over all matches.
+      // (Called here rather than above the escalation check: with a filter set
+      // the response is discarded, so there is no reason to have asked for it.)
+      const searchRes = await searchBasic(q, f.mode ?? 'fuzzy')
       const sortBy    = f.sort_by?.trim()    || 'mlo_count'
       const sortOrder = f.sort_order?.trim() || 'desc'
       if (searchRes?.data?.proteins) {
@@ -275,8 +260,7 @@ function onResetFilters() {
       <div class="max-w-6xl mx-auto px-6 py-3">
         <SearchBox
           compact
-          :initial-query="searchBoxQuery"
-          :initial-target="searchBoxTarget"
+          :initial-query="route.query.q ?? ''"
           @search="onSearch"
         />
       </div>
