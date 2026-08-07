@@ -32,11 +32,23 @@ const roleData = computed(() => {
   ]
 })
 
+const ORGANISM_COLORS = ['#185FA5', '#0F6E56', '#854F0B', '#B45309', '#6B21A8']
+const ORGANISM_TOP_N = 5
+
 const organismData = computed(() => {
   if (!props.stats) return []
-  return Object.entries(props.stats.proteins.by_organism ?? {})
-    .map(([key, value]) => ({ label: formatOrganism(key), key, value, color: '#0F6E56' }))
+  const sorted = Object.entries(props.stats.proteins.by_organism ?? {})
+    .map(([key, value]) => ({ label: formatOrganism(key), key, value }))
     .sort((a, b) => b.value - a.value)
+
+  const top = sorted.slice(0, ORGANISM_TOP_N).map((d, i) => ({ ...d, color: ORGANISM_COLORS[i] }))
+  const rest = sorted.slice(ORGANISM_TOP_N)
+  const othersValue = rest.reduce((sum, d) => sum + d.value, 0)
+
+  if (othersValue > 0) {
+    top.push({ label: 'Others', value: othersValue, color: '#9CA3AF', disabled: true })
+  }
+  return top
 })
 
 function goToRole(label) {
@@ -70,8 +82,8 @@ function goToOrganism(label) {
       </div>
 
       <div class="bg-white border border-gray-200 rounded-lg p-4">
-        <div class="text-sm font-semibold text-gray-700 mb-3">Top 10 organisms</div>
-        <StatBarChart :data="organismData" @select="goToOrganism" />
+        <div class="text-sm font-semibold text-gray-700 mb-3">Top organisms</div>
+        <StatDonutChart :data="organismData" @select="goToOrganism" />
       </div>
     </div>
   </section>

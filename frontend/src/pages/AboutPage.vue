@@ -27,11 +27,6 @@ const NAV = [
 
 <template>
   <div class="max-w-6xl mx-auto px-6 py-8">
-    <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">About MLOsMetaDB</h1>
-      <p class="text-sm text-gray-600 mt-1">Statistics, data sources, usage guide, and citations.</p>
-    </div>
-
     <nav class="sticky top-14 z-10 bg-white border-b border-gray-200 mb-8 flex gap-6 text-sm">
       <a
         v-for="item in NAV"

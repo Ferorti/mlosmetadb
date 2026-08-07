@@ -10,12 +10,13 @@ const metrics = computed(() => {
   if (!props.stats) return null
   return [
     { value: formatCount(props.stats.proteins.total), label: 'proteins' },
-    { value: formatCount(props.stats.mlo_annotations.total), label: 'annotations' },
+    // "Entries" = one protein-in-MLO-with-role-per-source-database record --
+    // exactly what mlo_annotations.total already counts (one active row per
+    // such combination), just relabeled for a clearer, less overloaded name
+    // than "annotations".
+    { value: formatCount(props.stats.mlo_annotations.total), label: 'entries' },
     { value: formatCount(props.stats.mlo_annotations.unique_mlos), label: 'MLOs' },
-    { value: formatCount(props.stats.proteins.total_organisms), label: 'organisms' },
-    { value: formatCount(Object.keys(props.stats.mlo_annotations.unique_proteins_by_source ?? {}).length), label: 'source databases' },
-    { value: formatCount(props.stats.ppi?.total_interactions ?? null), label: 'PPI interactions' },
-    { value: formatCount(props.stats.sequence_features?.total ?? null), label: 'sequence features' },
+    { value: formatCount(Object.keys(props.stats.mlo_annotations.unique_proteins_by_source ?? {}).length), label: 'source LLPS databases' },
   ]
 })
 </script>
@@ -23,7 +24,7 @@ const metrics = computed(() => {
 <template>
   <div class="bg-[#EBF3FB] border border-[#C8DFF2] rounded-lg">
     <template v-if="metrics">
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 divide-x divide-y sm:divide-y-0 divide-[#C8DFF2]">
+      <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-[#C8DFF2]">
         <div
           v-for="(m, i) in metrics"
           :key="i"
@@ -35,9 +36,9 @@ const metrics = computed(() => {
       </div>
     </template>
     <template v-else>
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 divide-x divide-y sm:divide-y-0 divide-[#C8DFF2]">
+      <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-[#C8DFF2]">
         <div
-          v-for="i in 7"
+          v-for="i in 4"
           :key="i"
           class="flex flex-col items-center justify-center py-4 px-2 gap-2"
         >

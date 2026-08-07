@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import * as d3 from 'd3'
 
 const props = defineProps({
-  data: { type: Array, required: true }, // [{ label, value, color }]
+  data: { type: Array, required: true }, // [{ label, value, color, key?, disabled? }]
   size: { type: Number, default: 160 },
 })
 const emit = defineEmits(['select'])
@@ -44,8 +44,11 @@ function render(width) {
     .append('path')
     .attr('d', arc)
     .attr('fill', d => d.data.color || '#185FA5')
-    .style('cursor', 'pointer')
-    .on('click', (event, d) => emit('select', d.data.label))
+    .style('cursor', d => d.data.disabled ? 'default' : 'pointer')
+    .on('click', (event, d) => {
+      if (d.data.disabled) return
+      emit('select', d.data.key ?? d.data.label)
+    })
 
   g.append('text')
     .attr('text-anchor', 'middle')
@@ -78,7 +81,7 @@ watch(() => props.data, () => render(currentWidth), { deep: true })
     <div ref="containerRef" class="w-full flex justify-center">
       <svg style="display:block; overflow:visible"></svg>
     </div>
-    <div class="flex gap-4 text-xs">
+    <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
       <div v-for="d in data" :key="d.label" class="flex items-center gap-1.5">
         <span class="w-2.5 h-2.5 rounded-full inline-block" :style="{ backgroundColor: d.color }"></span>
         <span class="text-gray-600">{{ d.label }} ({{ d.value.toLocaleString() }})</span>
