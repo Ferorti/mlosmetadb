@@ -137,7 +137,12 @@ async function fetchResults() {
     if (!res) { results.value = []; total.value = 0; facets.value = null; return }
     const data    = res.data
     results.value = data.proteins ?? data.items ?? data.results ?? []
-    total.value   = data.total    ?? data.total_hits ?? 0
+    // NOT total_hits: /search defines it as proteins + MLO name matches, so a
+    // query like "A" reported 70 (50 proteins + 20 MLOs) under a label that
+    // reads "N proteins". /proteins and /search/advanced carry a real
+    // server-side `total`; /search does not paginate, so its count is simply
+    // what it returned.
+    total.value   = data.total ?? results.value.length
     facets.value  = data.facets ?? computeFacetsFromProteins(results.value)
   } catch (e) {
     console.error('[fetchResults error]', e)
