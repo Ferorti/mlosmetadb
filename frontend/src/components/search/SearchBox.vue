@@ -114,8 +114,8 @@ const chipClass = (on) => on
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Search proteins by UniProt accession, gene name, or protein name"
-          class="flex-1 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none min-w-0"
+          placeholder="Search by UniProt accession, gene or protein name"
+          class="flex-1 px-4 py-3 text-sm text-gray-800 placeholder:text-xs placeholder-gray-400 focus:outline-none min-w-0"
           @keydown="handleKeydown"
           @blur="closeDropdown"
         />

@@ -15,9 +15,9 @@ onMounted(async () => {
   stats.value = res.data
 })
 
-// The MLO target navigates on its own (it picks a vocabulary entry), so only
-// the protein target reaches here. No `field` is emitted any more: a protein
-// search always covers accession + gene name + protein name.
+// No `field` is emitted any more: a protein search always covers accession,
+// gene name and protein name at once. Organelles are not searched here — the
+// MLO grid below links straight to ?mlo=<slug>.
 function handleSearch({ q, role, mode }) {
   if (!q) return
   const query = { q }
@@ -30,9 +30,6 @@ function searchExample(term) {
   router.push({ path: '/results', query: { q: term, mode: 'fuzzy' } })
 }
 
-function mloExample(slug) {
-  router.push({ path: '/results', query: { mlo: slug } })
-}
 </script>
 
 <template>
@@ -69,8 +66,7 @@ function mloExample(slug) {
         <div class="mt-2 text-xs text-gray-500">
           Examples:
           <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('FUS')">FUS</button>·
-          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('P35637')">P35637</button>·
-          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="mloExample('paraspeckle')">Paraspeckle</button>
+          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('P35637')">P35637</button>
         </div>
 
       </div>
@@ -85,17 +81,24 @@ function mloExample(slug) {
 
     <!-- Browse by role -->
     <section class="max-w-4xl mx-auto px-6 pb-5">
-      <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
+      <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-1">
         Browse by component role
       </h2>
+      <p class="text-sm text-gray-600 pl-3 mb-4">
+        You can also reach proteins without naming one: pick the role they play across their annotations.
+      </p>
       <RoleCards :stats="stats" />
     </section>
 
     <!-- Browse by MLO -->
     <section class="max-w-4xl mx-auto px-6 pb-10">
-      <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-4">
+      <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-1">
         Membraneless organelles (MLOs)
       </h2>
+      <p class="text-sm text-gray-600 pl-3 mb-4">
+        Or find proteins by the organelle they are associated with. The filter also reads the names
+        each source database uses, so “GW-body” finds P body.
+      </p>
       <MloBadges />
     </section>
 
