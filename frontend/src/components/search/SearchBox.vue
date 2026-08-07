@@ -177,6 +177,10 @@ const inputPlaceholder = computed(() =>
     : 'Search by UniProt accession, gene name, or protein name'
 )
 
+// The tabs name the target and the button names the action, so "search by"
+// never has to appear twice or sit outside the tab strip as a loose label.
+const searchButtonLabel = computed(() => (isMlo.value ? 'Search MLOs' : 'Search proteins'))
+
 function handleSearch() {
   if (isMlo.value) {
     // No free-text MLO search: commit to a real vocabulary entry or do nothing.
@@ -201,7 +205,7 @@ if (props.initialTarget === 'mlo') loadMlos()
     <!-- Target tabs -->
     <div class="flex items-end gap-1 pl-1">
       <button
-        v-for="tab in [{ id: 'protein', label: 'Protein' }, { id: 'mlo', label: 'MLO' }]"
+        v-for="tab in [{ id: 'protein', label: 'Proteins' }, { id: 'mlo', label: 'MLOs' }]"
         :key="tab.id"
         :class="[
           'px-4 py-1.5 text-xs font-medium rounded-t-md border border-b-0 transition-colors',
@@ -263,7 +267,7 @@ if (props.initialTarget === 'mlo') loadMlos()
           class="bg-[#1B3D6F] hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
           @click="handleSearch"
         >
-          Search
+          {{ searchButtonLabel }}
         </button>
       </div>
     </div>
