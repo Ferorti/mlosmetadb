@@ -21,6 +21,10 @@ export function getProteinOrthologs(uniprotId) {
   return client.get(`/protein/${uniprotId}/orthologs`)
 }
 
+export function checkCitations(uniprotIds) {
+  return client.post('/proteins/citations', { uniprot_ids: uniprotIds })
+}
+
 export function buildExportUrl(params = {}) {
   const search = new URLSearchParams()
   for (const [key, value] of Object.entries(params)) {
