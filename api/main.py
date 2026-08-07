@@ -43,7 +43,19 @@ async def _compute_stats() -> dict:
         f"SELECT source_db, COUNT(*) AS cnt FROM mlo_annotations WHERE {active} GROUP BY source_db"
     )
     unique_src_rows = await database.fetchall(
-        f"SELECT source_db, COUNT(DISTINCT uniprot_id) AS cnt FROM mlo_annotations WHERE {active} GROUP BY source_db"
+        f"""
+        SELECT
+            CASE source_db
+                WHEN 'PhaseDB' THEN 'PhaSePDB'
+                WHEN 'PhasePDB' THEN 'PhaSePDB'
+                WHEN 'PhasePro' THEN 'PhaSePro'
+                WHEN 'CDCODE' THEN 'CD-CODE'
+                ELSE source_db
+            END AS source_db,
+            COUNT(DISTINCT uniprot_id) AS cnt
+        FROM mlo_annotations WHERE {active}
+        GROUP BY 1
+        """
     )
     role_rows = await database.fetchall(
         f"SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(DISTINCT uniprot_id) AS cnt "
