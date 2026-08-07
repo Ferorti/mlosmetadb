@@ -249,6 +249,7 @@ class ProteinStats(BaseModel):
     by_organism_drivers: dict[str, int] = {}
     top_organisms: int
     total_organisms: int = 0
+    other_organisms_count: int = 0
     by_component_role: dict[str, int] = {}
 
 

@@ -39,7 +39,12 @@ const organismData = computed(() => {
     .sort((a, b) => b.value - a.value)
 
   const top = sorted.slice(0, ORGANISM_TOP_N).map((d, i) => ({ ...d, color: ORGANISM_COLORS[i] }))
-  const othersValue = sorted.slice(ORGANISM_TOP_N).reduce((sum, d) => sum + d.value, 0)
+  // by_organism itself is already capped at the top 10 server-side, so its own
+  // tail (ranks 6-10) is only part of "everything else" -- other_organisms_count
+  // covers the rest, so this total always reconciles to proteins.total instead
+  // of silently summing to whatever the top-10 cutoff happened to include.
+  const untracked = sorted.slice(ORGANISM_TOP_N).reduce((sum, d) => sum + d.value, 0)
+  const othersValue = untracked + (props.stats.proteins.other_organisms_count ?? 0)
 
   if (othersValue > 0) {
     top.push({ label: 'Others', value: othersValue, color: '#9CA3AF' })

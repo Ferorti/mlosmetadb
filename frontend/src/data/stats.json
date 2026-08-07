@@ -15,7 +15,8 @@
       "Drosophila melanogaster": 216,
       "Rattus norvegicus": 93
     },
-    "total_organisms": 156
+    "total_organisms": 156,
+    "other_organisms_count": 1161
   },
   "mlo_annotations": {
     "total": 37990,

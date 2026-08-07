@@ -65,6 +65,10 @@ async def _compute_stats() -> dict:
     prot_with_ppi = await database.fetchval("SELECT COUNT(DISTINCT uniprot_id_a) FROM ppi") or 0
 
     total_organisms = await database.fetchval("SELECT COUNT(DISTINCT organism) FROM proteins") or 0
+    # by_organism above is LIMIT-10'd -- this is what's left out of it, so any
+    # chart built from by_organism's top 10 + this "other" bucket reconciles
+    # exactly to prot_total, instead of silently summing to less than it.
+    other_organisms_count = prot_total - sum(r["cnt"] for r in org_rows)
 
     # Mutually-exclusive protein-level driver/component split (has_driver=1 -> driver,
     # else -> component) — distinct from mlo_annotations.by_role below, which buckets by
@@ -84,6 +88,7 @@ async def _compute_stats() -> dict:
             "by_organism_drivers": {r["organism"]: r["driver_cnt"] or 0 for r in org_rows},
             "top_organisms": 10,
             "total_organisms": total_organisms,
+            "other_organisms_count": other_organisms_count,
             "by_component_role": {r["role"]: r["cnt"] for r in component_role_rows},
         },
         "mlo_annotations": {
