@@ -18,11 +18,18 @@ const LABEL_WIDTH = 110
 const VALUE_PADDING = 44
 
 function render(width) {
-  if (!containerRef.value || width < 10 || !props.data.length) return
+  if (!containerRef.value || width < 10) return
   currentWidth = width
 
-  const height = props.data.length * (BAR_HEIGHT + BAR_GAP)
   const svg = d3.select(containerRef.value).select('svg')
+
+  if (!props.data.length) {
+    svg.attr('height', 0)
+    svg.selectAll('*').remove()
+    return
+  }
+
+  const height = props.data.length * (BAR_HEIGHT + BAR_GAP)
   svg.attr('width', width).attr('height', height)
   svg.selectAll('*').remove()
 

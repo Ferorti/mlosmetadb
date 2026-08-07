@@ -27,6 +27,13 @@
       "PhaseDB": 12688,
       "PhasePro": 199
     },
+    "unique_proteins_by_source": {
+      "CD-CODE": 13850,
+      "DrLLPS": 10873,
+      "LLPSDB": 380,
+      "PhaSepDB": 12688,
+      "PhaSePro": 199
+    },
     "by_role": {
       "driver": 1168,
       "client": 6412,

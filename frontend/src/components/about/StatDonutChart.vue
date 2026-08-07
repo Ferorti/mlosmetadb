@@ -13,14 +13,21 @@ let resizeObserver = null
 let currentWidth = 0
 
 function render(width) {
-  if (!containerRef.value || width < 10 || !props.data.length) return
+  if (!containerRef.value || width < 10) return
   currentWidth = width
+
+  const svg = d3.select(containerRef.value).select('svg')
+
+  if (!props.data.length) {
+    svg.attr('height', 0)
+    svg.selectAll('*').remove()
+    return
+  }
 
   const size = Math.min(props.size, width)
   const radius = size / 2
   const innerRadius = radius * 0.6
 
-  const svg = d3.select(containerRef.value).select('svg')
   svg.attr('width', width).attr('height', size)
   svg.selectAll('*').remove()
 

@@ -58,7 +58,7 @@ function goToOrganism(label) {
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="bg-white border border-gray-200 rounded-lg p-4">
         <div class="text-sm font-semibold text-gray-700 mb-3">Proteins by source database</div>
-        <!-- No click-to-navigate here: "PhaSePDB" combines two distinct raw
+        <!-- No click-to-navigate here: "PhaSepDB" combines two distinct raw
              source_db tags (PhaseDB + PhasePDB), so it can't map to a single
              /results?source_db=... value -- see about-page design spec §2. -->
         <StatBarChart :data="sourceData" :clickable="false" />

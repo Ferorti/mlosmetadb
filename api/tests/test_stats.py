@@ -29,5 +29,5 @@ def test_compute_stats_unique_proteins_by_source_dedupes_multiple_annotations(te
     # (row count) must reflect both, but unique_proteins_by_source (protein count)
     # must still count P35637 once -- that's the whole point of the new field.
     assert stats["mlo_annotations"]["by_source"]["PhaseDB"] == 3
-    assert stats["mlo_annotations"]["unique_proteins_by_source"]["PhaSePDB"] == 2
+    assert stats["mlo_annotations"]["unique_proteins_by_source"]["PhaSepDB"] == 2
     assert stats["mlo_annotations"]["unique_proteins_by_source"]["CD-CODE"] == 1

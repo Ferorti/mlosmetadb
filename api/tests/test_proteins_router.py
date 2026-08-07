@@ -125,15 +125,15 @@ def test_citation_check_combines_phasedb_and_phasepdb_into_one_entry(test_db):
         r = client.post("/proteins/citations", json={"uniprot_ids": ["P35637", "PPDB01", "PCLIENT"]})
     assert r.status_code == 200
     # P35637 and PCLIENT are tagged 'PhaseDB', PPDB01 is tagged 'PhasePDB' --
-    # both must fold into the single 'PhaSePDB' display name.
-    assert r.json()["by_source"] == {"PhaSePDB": 3}
+    # both must fold into the single 'PhaSepDB' display name.
+    assert r.json()["by_source"] == {"PhaSepDB": 3}
 
 
 def test_citation_check_ignores_unmatched_uniprot_ids(test_db):
     with TestClient(app) as client:
         r = client.post("/proteins/citations", json={"uniprot_ids": ["P35637", "NOTAREALID"]})
     assert r.status_code == 200
-    assert r.json()["by_source"] == {"PhaSePDB": 1}
+    assert r.json()["by_source"] == {"PhaSepDB": 1}
 
 
 def test_citation_check_empty_list_returns_422(test_db):

@@ -63,8 +63,8 @@ def excluded_mlo_category_clause(alias: str = "mv") -> tuple[str | None, list[st
 
 
 CANONICAL_SOURCE_NAMES: dict[str, str] = {
-    "PhaseDB": "PhaSePDB",
-    "PhasePDB": "PhaSePDB",
+    "PhaseDB": "PhaSepDB",
+    "PhasePDB": "PhaSepDB",
     "DrLLPS": "DrLLPS",
     "LLPSDB": "LLPSDB",
     "PhasePro": "PhaSePro",
@@ -72,9 +72,10 @@ CANONICAL_SOURCE_NAMES: dict[str, str] = {
 }
 """Maps raw mlo_annotations.source_db ingestion tags to the canonical
 display name used everywhere a source database is shown or cited (About
-page charts, Data Origin cards, and the /proteins/citations endpoint).
+page charts, Data Sources section, and the /proteins/citations endpoint).
 PhaseDB and PhasePDB are two ingestion tags for the same real-world
-database (PhaSePDB) -- see
+database, published as "PhaSepDB" (lowercase 'p' before DB -- verified
+against the database's own Nucleic Acids Research paper title) -- see
 docs/superpowers/specs/2026-08-06-about-page-design.md section 2."""
 
 

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { checkCitations } from '@/api/proteins'
-import { MLOSMETADB_CITATION, ORIGIN_PAPER_CITATION, LLPS_SOURCES, ANNOTATION_SOURCES } from '@/data/aboutSources'
+import { MLOSMETADB_CITATION, RELATED_PUBLICATION_CITATION, LLPS_SOURCES, ANNOTATION_SOURCES } from '@/data/aboutSources'
 
 const idsInput = ref('')
 const checking = ref(false)
@@ -39,15 +39,17 @@ async function runCheck() {
       <div class="bg-white border border-gray-200 rounded-lg p-4">
         <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Cite MLOsMetaDB</p>
         <p class="text-sm text-gray-800">
-          {{ MLOSMETADB_CITATION.authors }} <em>{{ MLOSMETADB_CITATION.journal }}</em> {{ MLOSMETADB_CITATION.year }}
+          {{ MLOSMETADB_CITATION.authors }} {{ MLOSMETADB_CITATION.title }}
+          <em>{{ MLOSMETADB_CITATION.journal }}</em> {{ MLOSMETADB_CITATION.year }}
           <a :href="MLOSMETADB_CITATION.url" target="_blank" rel="noopener" class="text-[#185FA5] hover:underline block mt-1">{{ MLOSMETADB_CITATION.url }}</a>
         </p>
       </div>
       <div class="bg-white border border-gray-200 rounded-lg p-4">
-        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Original paper</p>
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Related Publication</p>
         <p class="text-sm text-gray-800">
-          {{ ORIGIN_PAPER_CITATION.authors }} <em>{{ ORIGIN_PAPER_CITATION.journal }}</em> {{ ORIGIN_PAPER_CITATION.year }}
-          <a :href="ORIGIN_PAPER_CITATION.url" target="_blank" rel="noopener" class="text-[#185FA5] hover:underline block mt-1">{{ ORIGIN_PAPER_CITATION.url }}</a>
+          {{ RELATED_PUBLICATION_CITATION.authors }} {{ RELATED_PUBLICATION_CITATION.title }}
+          <em>{{ RELATED_PUBLICATION_CITATION.journal }}</em> {{ RELATED_PUBLICATION_CITATION.year }}
+          <a :href="RELATED_PUBLICATION_CITATION.url" target="_blank" rel="noopener" class="text-[#185FA5] hover:underline block mt-1">{{ RELATED_PUBLICATION_CITATION.url }}</a>
         </p>
       </div>
     </div>

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { getStats } from '@/api/stats'
 import AboutStatsSection from '@/components/about/AboutStatsSection.vue'
-import DataOriginSection from '@/components/about/DataOriginSection.vue'
+import DataSourcesSection from '@/components/about/DataSourcesSection.vue'
 import HowToUseCarousel from '@/components/about/HowToUseCarousel.vue'
 import CitationsSection from '@/components/about/CitationsSection.vue'
 
@@ -19,7 +19,7 @@ onMounted(async () => {
 
 const NAV = [
   { id: 'stats', label: 'Statistics' },
-  { id: 'data-origin', label: 'Data Origin' },
+  { id: 'data-sources', label: 'Data Sources' },
   { id: 'how-to-use', label: 'How to Use' },
   { id: 'citations', label: 'Citations' },
 ]
@@ -42,7 +42,7 @@ const NAV = [
     </nav>
 
     <AboutStatsSection :stats="stats" />
-    <DataOriginSection />
+    <DataSourcesSection />
     <HowToUseCarousel />
     <CitationsSection />
   </div>
