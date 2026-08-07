@@ -1,5 +1,14 @@
 <script setup>
 import { LLPS_SOURCES, ANNOTATION_SOURCES } from '@/data/aboutSources'
+
+// Every LLPS description opens with the database's own name ("PhaSepDB is a
+// manually curated database..."), so the name is bolded in place rather than
+// printed again as a separate label above it.
+function nameTail(src) {
+  return src.description.startsWith(src.name)
+    ? src.description.slice(src.name.length)
+    : ` ${src.description}`
+}
 </script>
 
 <template>
@@ -14,7 +23,7 @@ import { LLPS_SOURCES, ANNOTATION_SOURCES } from '@/data/aboutSources'
     <div class="space-y-5 mb-8">
       <div v-for="src in LLPS_SOURCES" :key="src.key">
         <p class="text-sm text-gray-800 leading-relaxed">
-          <span class="font-semibold">{{ src.name }}</span> — {{ src.description }}
+          <span class="font-semibold">{{ src.name }}</span>{{ nameTail(src) }}
         </p>
         <p class="text-xs text-gray-500 mt-1">
           {{ src.citationText }}

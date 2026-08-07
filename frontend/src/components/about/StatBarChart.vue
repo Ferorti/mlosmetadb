@@ -4,11 +4,11 @@ import * as d3 from 'd3'
 
 const props = defineProps({
   data: { type: Array, required: true }, // [{ label, value, color }]
-  clickable: { type: Boolean, default: true },
+  valueLabel: { type: String, default: 'proteins' },
 })
-const emit = defineEmits(['select'])
 
 const containerRef = ref(null)
+const tooltipRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
 
@@ -16,6 +16,19 @@ const BAR_HEIGHT = 22
 const BAR_GAP = 10
 const LABEL_WIDTH = 110
 const VALUE_PADDING = 44
+
+function showTooltip(event, d) {
+  const tip = tooltipRef.value
+  if (!tip) return
+  tip.style.display = 'block'
+  tip.style.left = (event.clientX + 14) + 'px'
+  tip.style.top = (event.clientY - 28) + 'px'
+  tip.textContent = `${d.label}: ${d.value.toLocaleString()} ${props.valueLabel}`
+}
+
+function hideTooltip() {
+  if (tooltipRef.value) tooltipRef.value.style.display = 'none'
+}
 
 function render(width) {
   if (!containerRef.value || width < 10) return
@@ -43,10 +56,15 @@ function render(width) {
     .append('g')
     .attr('class', 'row')
     .attr('transform', (d, i) => `translate(0, ${i * (BAR_HEIGHT + BAR_GAP)})`)
+    .on('mousemove', showTooltip)
+    .on('mouseleave', hideTooltip)
 
-  if (props.clickable) {
-    rows.style('cursor', 'pointer').on('click', (event, d) => emit('select', d.key ?? d.label))
-  }
+  // Full-width transparent hit area so the tooltip also triggers over the gap
+  // between the label and the bar, not only over the drawn marks themselves.
+  rows.append('rect')
+    .attr('x', 0).attr('y', 0)
+    .attr('width', width).attr('height', BAR_HEIGHT)
+    .attr('fill', 'transparent')
 
   rows.append('text')
     .attr('x', LABEL_WIDTH - 8)
@@ -87,6 +105,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   resizeObserver?.disconnect()
+  hideTooltip()
 })
 
 watch(() => props.data, () => render(currentWidth), { deep: true })
@@ -96,4 +115,25 @@ watch(() => props.data, () => render(currentWidth), { deep: true })
   <div ref="containerRef" class="w-full">
     <svg style="display:block; overflow:visible"></svg>
   </div>
+
+  <teleport to="body">
+    <div
+      ref="tooltipRef"
+      style="
+        display: none;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        background: #1e293b;
+        color: #f1f5f9;
+        font-size: 11px;
+        font-family: ui-monospace, monospace;
+        padding: 6px 10px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        white-space: nowrap;
+        line-height: 1.6;
+      "
+    ></div>
+  </teleport>
 </template>

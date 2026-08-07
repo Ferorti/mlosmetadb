@@ -3,14 +3,29 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import * as d3 from 'd3'
 
 const props = defineProps({
-  data: { type: Array, required: true }, // [{ label, value, color, key?, disabled? }]
+  data: { type: Array, required: true }, // [{ label, value, color }]
   size: { type: Number, default: 160 },
+  valueLabel: { type: String, default: 'proteins' },
+  showLegend: { type: Boolean, default: true },
 })
-const emit = defineEmits(['select'])
 
 const containerRef = ref(null)
+const tooltipRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
+
+function showTooltip(event, d) {
+  const tip = tooltipRef.value
+  if (!tip) return
+  tip.style.display = 'block'
+  tip.style.left = (event.clientX + 14) + 'px'
+  tip.style.top = (event.clientY - 28) + 'px'
+  tip.textContent = `${d.data.label}: ${d.data.value.toLocaleString()} ${props.valueLabel}`
+}
+
+function hideTooltip() {
+  if (tooltipRef.value) tooltipRef.value.style.display = 'none'
+}
 
 function render(width) {
   if (!containerRef.value || width < 10) return
@@ -44,11 +59,8 @@ function render(width) {
     .append('path')
     .attr('d', arc)
     .attr('fill', d => d.data.color || '#185FA5')
-    .style('cursor', d => d.data.disabled ? 'default' : 'pointer')
-    .on('click', (event, d) => {
-      if (d.data.disabled) return
-      emit('select', d.data.key ?? d.data.label)
-    })
+    .on('mousemove', showTooltip)
+    .on('mouseleave', hideTooltip)
 
   g.append('text')
     .attr('text-anchor', 'middle')
@@ -71,6 +83,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   resizeObserver?.disconnect()
+  hideTooltip()
 })
 
 watch(() => props.data, () => render(currentWidth), { deep: true })
@@ -81,11 +94,32 @@ watch(() => props.data, () => render(currentWidth), { deep: true })
     <div ref="containerRef" class="w-full flex justify-center">
       <svg style="display:block; overflow:visible"></svg>
     </div>
-    <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
+    <div v-if="showLegend" class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
       <div v-for="d in data" :key="d.label" class="flex items-center gap-1.5">
         <span class="w-2.5 h-2.5 rounded-full inline-block" :style="{ backgroundColor: d.color }"></span>
         <span class="text-gray-600">{{ d.label }} ({{ d.value.toLocaleString() }})</span>
       </div>
     </div>
   </div>
+
+  <teleport to="body">
+    <div
+      ref="tooltipRef"
+      style="
+        display: none;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        background: #1e293b;
+        color: #f1f5f9;
+        font-size: 11px;
+        font-family: ui-monospace, monospace;
+        padding: 6px 10px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        white-space: nowrap;
+        line-height: 1.6;
+      "
+    ></div>
+  </teleport>
 </template>
