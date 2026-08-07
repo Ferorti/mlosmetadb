@@ -42,6 +42,9 @@ async def _compute_stats() -> dict:
     src_rows = await database.fetchall(
         f"SELECT source_db, COUNT(*) AS cnt FROM mlo_annotations WHERE {active} GROUP BY source_db"
     )
+    unique_src_rows = await database.fetchall(
+        f"SELECT source_db, COUNT(DISTINCT uniprot_id) AS cnt FROM mlo_annotations WHERE {active} GROUP BY source_db"
+    )
     role_rows = await database.fetchall(
         f"SELECT COALESCE(LOWER(unified_role), 'unknown') AS role, COUNT(DISTINCT uniprot_id) AS cnt "
         f"FROM mlo_annotations WHERE {active} GROUP BY role"
@@ -82,6 +85,7 @@ async def _compute_stats() -> dict:
             "total": ann_total,
             "unique_mlos": unique_mlos,
             "by_source": {r["source_db"]: r["cnt"] for r in src_rows},
+            "unique_proteins_by_source": {r["source_db"]: r["cnt"] for r in unique_src_rows},
             "by_role": {r["role"]: r["cnt"] for r in role_rows},
         },
         "sequence_features": {

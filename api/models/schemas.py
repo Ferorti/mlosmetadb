@@ -256,6 +256,7 @@ class MloAnnotationStats(BaseModel):
     total: int
     unique_mlos: int
     by_source: dict[str, int]
+    unique_proteins_by_source: dict[str, int] = {}
     by_role: dict[str, int]
 
 
