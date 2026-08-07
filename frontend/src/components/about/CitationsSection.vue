@@ -32,7 +32,7 @@ async function runCheck() {
 </script>
 
 <template>
-  <section id="citations" class="scroll-mt-20 mt-10">
+  <section id="citations" class="scroll-mt-28 mt-10">
     <h2 class="text-lg font-semibold text-gray-800 mb-3">Citations</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

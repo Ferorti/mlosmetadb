@@ -57,7 +57,7 @@ function onImageError(event) {
 </script>
 
 <template>
-  <section id="how-to-use" class="scroll-mt-20 mt-10">
+  <section id="how-to-use" class="scroll-mt-28 mt-10">
     <h2 class="text-lg font-semibold text-gray-800 mb-3">How to Use</h2>
 
     <div class="bg-white border border-gray-200 rounded-lg p-4">

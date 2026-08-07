@@ -13,6 +13,7 @@ const ENDPOINTS = [
   { method: 'GET', path: '/search/advanced', purpose: 'Multi-filter search (gene, organism, taxon, mlo, role, source_db, sequence-feature filters)' },
   { method: 'GET', path: '/stats', purpose: 'Global counts — proteins, mlo_annotations, sequence_features, ppi' },
   { method: 'GET', path: '/organisms/search', purpose: 'Organism-name autocomplete (min 3 chars)' },
+  { method: 'POST', path: '/proteins/citations', purpose: 'Given a list of UniProt IDs, return which source databases contributed annotations for them' },
 ]
 
 const ERROR_CODES = [

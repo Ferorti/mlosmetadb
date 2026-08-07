@@ -39,6 +39,9 @@ interactions, sequence features. All fields already exist in `/stats`
 except source-database count, which is `Object.keys(by_source).length`
 (same computation `StatBar.vue` already does).
 
+Note: this count uses `unique_proteins_by_source` (canonical, merged
+names), not `by_source` (raw ingestion tags) — see §4.1.
+
 ### 1.2 Three D3 charts
 
 No bar/donut D3 code exists in the repo today — the four existing D3
@@ -77,7 +80,9 @@ Charts:
 Interactivity: hover shows a tooltip with the exact count; click on a
 bar/segment navigates to `/results?source_db=...` / `?role=...` /
 `?organism=...`, mirroring the existing click-to-navigate behavior in
-`RoleCards.vue`/`OrganismGrid.vue`.
+`RoleCards.vue`/`OrganismGrid.vue`. (Implemented as always-visible value
+labels next to each bar/segment instead of a hover tooltip — simpler,
+works on touch devices, and still shows the exact count.)
 
 ---
 

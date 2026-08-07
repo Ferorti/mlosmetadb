@@ -3,7 +3,7 @@ import { LLPS_SOURCES, ANNOTATION_SOURCES } from '@/data/aboutSources'
 </script>
 
 <template>
-  <section id="data-origin" class="scroll-mt-20 mt-10">
+  <section id="data-origin" class="scroll-mt-28 mt-10">
     <h2 class="text-lg font-semibold text-gray-800 mb-3">Data Origin</h2>
 
     <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-3">LLPS source databases</h3>
