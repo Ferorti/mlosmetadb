@@ -14,19 +14,25 @@ const props = defineProps({
 const emit = defineEmits(['hover', 'select'])
 
 // ─── SVG geometry — all layers share a single centerY ────────────────────────
-const TRACK_HEIGHT = 80
-const CENTER_Y = TRACK_HEIGHT / 2   // 40
-const BG_Y = CENTER_Y - 8          // 32
-const BG_H = 16
+// Sized for the full-width band. The layers are nested rather than stacked, so
+// their heights have to stay ordered Domain > IDR > LCD or an inner one hides:
+// LCD sits inside IDR, and both sit inside the domain bar.
+const TRACK_HEIGHT = 88
+const CENTER_Y = 40
+const BG_Y = CENTER_Y - 11         // 29
+const BG_H = 22
 
 const LAYERS = {
-  IDR:  { y: CENTER_Y - 7,  h: 14, textFill: '#7F1D1D' },
-  LCD:  { y: CENTER_Y - 4,  h: 8,  textFill: '#7C2D12' },
-  Domain: { y: CENTER_Y - 10, h: 20, textFill: '#ffffff' },
-  MoRF: { y: CENTER_Y - 14, h: 5,  textFill: '#6B21A8' },
+  IDR:    { y: CENTER_Y - 10, h: 20, textFill: '#7F1D1D' },
+  LCD:    { y: CENTER_Y - 6,  h: 12, textFill: '#7C2D12' },
+  Domain: { y: CENTER_Y - 14, h: 28, textFill: '#ffffff' },
+  MoRF:   { y: CENTER_Y - 21, h: 7,  textFill: '#6B21A8' },
 }
 
-const CHAR_W = 6.5
+const LABEL_SIZE = 12
+// Truncation budget for the in-track labels. Keep it proportional to
+// LABEL_SIZE — undersizing it lets labels overflow their rectangle.
+const CHAR_W = LABEL_SIZE * 0.65
 const MIN_CHARS = 3
 
 function fitLabel(label, avail) {
@@ -99,7 +105,7 @@ function render(width) {
         .attr('x', rx + rw / 2).attr('y', layer.y + layer.h / 2)
         .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
         .attr('fill', layer.textFill)
-        .attr('font-size', '10px').attr('font-weight', '600')
+        .attr('font-size', `${LABEL_SIZE}px`).attr('font-weight', '600')
         .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
         .attr('pointer-events', 'none')
         .text(fitted)
@@ -119,7 +125,7 @@ function render(width) {
     .attr('x', width - 2).attr('y', TRACK_HEIGHT - 6)
     .attr('text-anchor', 'end')
     .attr('fill', '#484E59')
-    .attr('font-size', '10px')
+    .attr('font-size', '11px')
     .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
     .text(`${props.sequenceLength} aa`)
 
