@@ -5,6 +5,8 @@ const props = defineProps({
   uniprotId: { type: String, required: true },
 })
 
+const emit = defineEmits(['hover-residue'])
+
 const containerRef = ref(null)
 const loading = ref(true)
 const error   = ref(null)
@@ -39,6 +41,7 @@ async function initViewer(uniprotId) {
     })
     await viewerInstance.loadAlphaFoldDb(uniprotId)
     ready.value = true
+    subscribeHover()
   } catch {
     error.value = 'No AlphaFold structure available for this protein.'
   } finally {
@@ -46,8 +49,53 @@ async function initViewer(uniprotId) {
   }
 }
 
+// ─── Structure hover → residue number ────────────────────────────────────────
+// The reverse of the exposed API below: pointing at the 3D model reports which
+// UniProt residue is under the cursor, so the track and the sequence can mark
+// it. Decoding goes through window.molstar.lib, the library namespace the
+// viewer bundle exports, not through plugin internals.
+let hoverSub = null
+let lastHovered = null
+
+function unsubscribeHover() {
+  hoverSub?.unsubscribe?.()
+  hoverSub = null
+  lastHovered = null
+}
+
+function subscribeHover() {
+  unsubscribeHover()
+  const structure = window.molstar?.lib?.structure
+  const hover = viewerInstance?.plugin?.behaviors?.interaction?.hover
+  if (!structure || !hover) return
+  const { StructureElement, StructureProperties } = structure
+
+  hoverSub = hover.subscribe((ev) => {
+    let pos = null
+    const loci = ev?.current?.loci
+    if (loci && loci.kind === 'element-loci' && !StructureElement.Loci.isEmpty(loci)) {
+      try {
+        const seqId = StructureProperties.residue.label_seq_id(
+          StructureElement.Loci.getFirstLocation(loci)
+        )
+        if (Number.isFinite(seqId) && seqId > 0) pos = seqId
+      } catch {
+        // Coarse-grained or non-atomic loci: nothing to report.
+      }
+    }
+    // The behavior fires on every pointer move; only changes are worth emitting.
+    if (pos !== lastHovered) {
+      lastHovered = pos
+      emit('hover-residue', pos)
+    }
+  })
+}
+
 onMounted(() => initViewer(props.uniprotId))
-onUnmounted(() => { if (viewerInstance) viewerInstance.plugin.dispose() })
+onUnmounted(() => {
+  unsubscribeHover()
+  if (viewerInstance) viewerInstance.plugin.dispose()
+})
 watch(() => props.uniprotId, (id) => initViewer(id))
 
 // ─── Exposed API for linked views ────────────────────────────────────────────
@@ -74,14 +122,25 @@ function toElements(ranges) {
   return { items: ranges.map(r => ({ beg_label_seq_id: r.start, end_label_seq_id: r.end })) }
 }
 
+function raw(action, ranges) {
+  viewerInstance.structureInteractivity({
+    // Omitting `elements` is how structureInteractivity clears the given action.
+    elements: ranges?.length ? toElements(ranges) : undefined,
+    action,
+  })
+}
+
 function apply(action, ranges) {
   if (!canInteract()) return
   try {
-    viewerInstance.structureInteractivity({
-      // Omitting `elements` is how structureInteractivity clears the given action.
-      elements: ranges?.length ? toElements(ranges) : undefined,
-      action,
-    })
+    // lociHighlights.highlight() ADDS to the current highlight set — Mol*'s own
+    // code always calls clearHighlights() first. Without this, dragging along
+    // the sequence stacks one highlight (and one label) per residue until the
+    // structure is buried under them. Selection does not need it:
+    // structureInteractivity already deselects before selecting.
+    const actions = Array.isArray(action) ? action : [action]
+    if (actions.includes('highlight') && ranges?.length) raw('highlight', [])
+    raw(action, ranges)
   } catch {
     // Structure not in the state tree yet, or disposed mid-flight.
   }

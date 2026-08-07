@@ -27,6 +27,9 @@ const { featureSpans, byId, groups, stats, hasFeatures, sequenceLength } = usePr
 const hoveredId  = ref(null)
 const pinnedId   = ref(null)
 const residuePos = ref(null)
+// Where the hovered residue came from. A residue reported by the 3D viewer is
+// already highlighted by Mol*'s own hover, so pushing it back would fight it.
+const residueSource = ref(null)   // 'sequence' | 'structure' | null
 
 const molstarRef = ref(null)
 
@@ -38,7 +41,10 @@ function rangesOf(id) {
 
 function onHover(id) {
   hoveredId.value = id
-  if (id) residuePos.value = null   // a feature under the cursor outranks a residue
+  if (id) {                          // a feature under the cursor outranks a residue
+    residuePos.value = null
+    residueSource.value = null
+  }
 }
 
 function onSelect(id) {
@@ -47,6 +53,14 @@ function onSelect(id) {
 
 function onHoverResidue(pos) {
   residuePos.value = pos
+  residueSource.value = pos == null ? null : 'sequence'
+}
+
+// Pointing at the 3D model marks the residue on the track and in the sequence.
+function onStructureHoverResidue(pos) {
+  if (hoveredId.value) return   // a hovered feature owns the marker
+  residuePos.value = pos
+  residueSource.value = pos == null ? null : 'structure'
 }
 
 // Clicking a residue outside the pinned feature releases the pin. Clicking one
@@ -63,9 +77,15 @@ function onClickResidue(pos) {
 watch([hoveredId, residuePos], ([id, pos]) => {
   const viewer = molstarRef.value
   if (!viewer) return
-  if (id)             viewer.highlightRanges(rangesOf(id))
-  else if (pos != null) viewer.highlightRanges([{ start: pos, end: pos }])
-  else                viewer.highlightRanges([])
+  if (id) {
+    viewer.highlightRanges(rangesOf(id))
+  } else if (pos == null) {
+    viewer.highlightRanges([])
+  } else if (residueSource.value !== 'structure') {
+    viewer.highlightRanges([{ start: pos, end: pos }])
+  }
+  // A residue reported by the viewer itself is left alone: Mol*'s hover already
+  // shows it, and re-highlighting it would just flicker against that.
 })
 
 // Structure selection channel, independent of the highlight above.
@@ -78,6 +98,7 @@ watch(() => props.protein.uniprot_id, () => {
   hoveredId.value = null
   pinnedId.value = null
   residuePos.value = null
+  residueSource.value = null
 })
 </script>
 
@@ -123,7 +144,11 @@ watch(() => props.protein.uniprot_id, () => {
       <div class="w-[520px] flex-shrink-0">
         <div class="text-sm font-medium text-gray-700 mb-2">AlphaFold structure</div>
         <div class="h-[420px] rounded border border-slate-200 overflow-hidden">
-          <MolStarViewer ref="molstarRef" :uniprot-id="protein.uniprot_id" />
+          <MolStarViewer
+            ref="molstarRef"
+            :uniprot-id="protein.uniprot_id"
+            @hover-residue="onStructureHoverResidue"
+          />
         </div>
         <a
           :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
