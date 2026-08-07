@@ -63,6 +63,13 @@ async def search(
     q: str = Query(min_length=1),
     mode: str = Query(default="fuzzy", pattern="^(exact|fuzzy)$"),
 ):
+    # min_length counts characters, so "   " passes it. A blank search is not a
+    # broad search: it used to reach LIKE '%   %' and return whatever happened
+    # to contain that run of spaces.
+    q = q.strip()
+    if not q:
+        raise HTTPException(422, {"error": "invalid_parameter", "message": "q: search term cannot be blank"})
+
     if mode == "exact" and not database.fts5_available:
         raise HTTPException(501, {"error": "fts5_unavailable", "message": "FTS5 not available; use mode=fuzzy"})
 

@@ -1,5 +1,5 @@
 import policy
-from database import fetchall, fts5_available
+from database import escape_like, fetchall, fts5_available, like_contains
 from queries.protein_queries import _SORT_NEEDS_PS, _build_sort, _scoped_role_counts
 
 
@@ -30,8 +30,8 @@ async def search_proteins_fts(q: str) -> list[dict]:
 
 
 async def search_proteins_like(q: str) -> list[dict]:
-    sub = f"%{q}%"
-    word = f"% {q} %"
+    sub = like_contains(q)
+    word = f"% {escape_like(q)} %"
     return await fetchall(
         """
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
@@ -42,15 +42,15 @@ async def search_proteins_like(q: str) -> list[dict]:
                ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
                ps.source_dbs,
                CASE
-                   WHEN LOWER(p.uniprot_id) LIKE LOWER(?) THEN 'uniprot_id'
-                   WHEN LOWER(p.gene_name) LIKE LOWER(?) THEN 'gene_name'
+                   WHEN LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\' THEN 'uniprot_id'
+                   WHEN LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\' THEN 'gene_name'
                    ELSE 'protein_name'
                END AS match_field
         FROM proteins p
         LEFT JOIN protein_summary ps ON ps.uniprot_id = p.uniprot_id
-        WHERE LOWER(p.uniprot_id) LIKE LOWER(?)
-           OR LOWER(p.gene_name) LIKE LOWER(?)
-           OR LOWER(' ' || p.protein_name || ' ') LIKE LOWER(?)
+        WHERE LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\'
+           OR LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\'
+           OR LOWER(' ' || p.protein_name || ' ') LIKE LOWER(?) ESCAPE '\\'
         ORDER BY p.uniprot_id
         LIMIT 50
         """,
@@ -77,13 +77,13 @@ async def search_mlos_like(q: str) -> list[dict]:
     # way they read them ('stress granule'). Match against both spellings by
     # unslugging the column rather than by rewriting the query — replacing the
     # user's spaces with '_' would smuggle in a LIKE single-char wildcard.
-    pattern = f"%{q}%"
+    pattern = like_contains(q)
     return await fetchall(
         """
         SELECT unified_mlo, category, 'unified_mlo' AS match_field
         FROM mlo_vocabulary
-        WHERE LOWER(unified_mlo) LIKE LOWER(?)
-           OR LOWER(REPLACE(unified_mlo, '_', ' ')) LIKE LOWER(?)
+        WHERE LOWER(unified_mlo) LIKE LOWER(?) ESCAPE '\\'
+           OR LOWER(REPLACE(unified_mlo, '_', ' ')) LIKE LOWER(?) ESCAPE '\\'
         ORDER BY unified_mlo
         LIMIT 20
         """,
@@ -118,8 +118,8 @@ def _build_advanced_clauses(
         joins.append("JOIN sequence_features sf ON p.uniprot_id = sf.uniprot_id")
 
     if gene_name:
-        conditions.append("LOWER(p.gene_name) LIKE LOWER(?)")
-        params.append(f"%{gene_name}%")
+        conditions.append("LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\'")
+        params.append(like_contains(gene_name))
     if uniprot_id:
         conditions.append("p.uniprot_id = ?")
         params.append(uniprot_id)
@@ -145,8 +145,8 @@ def _build_advanced_clauses(
         conditions.append("LOWER(sf.feature_type) = LOWER(?)")
         params.append(feature_type)
     if feature_label:
-        conditions.append("LOWER(sf.label) LIKE LOWER(?)")
-        params.append(f"%{feature_label}%")
+        conditions.append("LOWER(sf.label) LIKE LOWER(?) ESCAPE '\\'")
+        params.append(like_contains(feature_label))
     if feature_accession:
         conditions.append("sf.accession = ?")
         params.append(feature_accession)

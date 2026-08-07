@@ -1,7 +1,7 @@
 import aiosqlite
 from fastapi import APIRouter, HTTPException, Query
 
-from database import fetchall
+from database import fetchall, like_contains
 from models.schemas import OrganismResult, OrganismsSearchResponse
 
 router = APIRouter()
@@ -12,16 +12,17 @@ async def search_organisms(
     q: str = Query(min_length=3),
     limit: int = Query(default=10, ge=1, le=50),
 ):
+    q = q.strip()
     if len(q) < 3:
-        raise HTTPException(422, {"error": "invalid_parameter", "message": "Query 'q' must be at least 3 characters"})
+        raise HTTPException(422, {"error": "invalid_parameter", "message": "q: search term must be at least 3 characters"})
 
-    pattern = f"%{q.lower()}%"
+    pattern = like_contains(q.lower())
     try:
         rows = await fetchall(
             """
             SELECT organism, COUNT(*) AS protein_count
             FROM proteins
-            WHERE LOWER(organism) LIKE ?
+            WHERE LOWER(organism) LIKE ? ESCAPE '\\'
             GROUP BY organism
             ORDER BY protein_count DESC
             LIMIT ?

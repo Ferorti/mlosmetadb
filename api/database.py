@@ -15,6 +15,29 @@ fts5_available: bool = False
 
 _MEM_URI = "file:mlosmetadb_api?mode=memory&cache=shared"
 
+LIKE_ESCAPE = "\\"
+
+
+def escape_like(value: str) -> str:
+    """Disarm the LIKE metacharacters in a user string.
+
+    Without this, '%' and '_' arriving from a search box are SQL wildcards
+    rather than characters: a query of a single '%' matched every protein in
+    the database, and searching the real gene name 'A_B' also returned 'AXB'.
+
+    Every call site must pair the pattern with `ESCAPE '\\'` in the SQL.
+    """
+    return (
+        value.replace(LIKE_ESCAPE, LIKE_ESCAPE * 2)
+        .replace("%", LIKE_ESCAPE + "%")
+        .replace("_", LIKE_ESCAPE + "_")
+    )
+
+
+def like_contains(value: str) -> str:
+    """A LIKE "contains anywhere" pattern over an escaped user string."""
+    return f"%{escape_like(value)}%"
+
 
 async def get_db() -> aiosqlite.Connection:
     return _db

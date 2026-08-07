@@ -1,5 +1,5 @@
 import policy
-from database import fetchone, fetchall, fetchval
+from database import fetchone, fetchall, fetchval, like_contains
 
 
 async def get_mlo_meta(unified_mlo: str) -> dict | None:
@@ -148,8 +148,8 @@ async def get_all_mlos(
         conditions.append("mv.category = ?")
         params.append(category)
     if q:
-        conditions.append("LOWER(mv.unified_mlo) LIKE LOWER(?)")
-        params.append(f"%{q}%")
+        conditions.append("LOWER(mv.unified_mlo) LIKE LOWER(?) ESCAPE '\\'")
+        params.append(like_contains(q))
     if source_db:
         conditions.append(
             f"EXISTS (SELECT 1 FROM mlo_annotations x WHERE x.unified_mlo = mv.unified_mlo AND x.source_db = ? AND {active_x})"
