@@ -141,11 +141,32 @@ async def http_exception_handler(request: Request, exc: HTTPException):
     )
 
 
+_LOC_CONTAINERS = ("query", "body", "path", "header", "cookie")
+
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    # Never str() the exception into the response. Pydantic renders a
+    # ValidationError with the raising source file and line, so `str(exc)` would
+    # publish the server's filesystem layout to anyone who can type a bad query.
+    # The full error still goes to the log, where it belongs.
+    logger.warning("Validation error on %s %s: %s", request.method, request.url.path, exc.errors())
+
+    parts = []
+    for err in exc.errors():
+        loc = tuple(err.get("loc") or ())
+        if loc and loc[0] in _LOC_CONTAINERS:
+            loc = loc[1:]
+        name = ".".join(str(x) for x in loc)
+        msg = err.get("msg", "Invalid value")
+        parts.append(f"{name}: {msg}" if name else msg)
+
     return JSONResponse(
         status_code=422,
-        content={"error": "invalid_parameter", "message": str(exc)},
+        content={
+            "error": "invalid_parameter",
+            "message": "; ".join(parts) or "Invalid request parameters",
+        },
     )
 
 

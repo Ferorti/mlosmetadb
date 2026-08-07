@@ -56,12 +56,13 @@ _VALID_SORT_BY = {"gene_name", "mlo_count", "source_db_count", "disorder_mobidb_
 
 @router.get("/search", response_model=SearchResponse)
 async def search(
-    q: str = Query(min_length=2),
+    # One character is a legitimate broad search, not a malformed request: the
+    # LIKE and FTS5 paths below both cap themselves at 50 rows, so the old
+    # two-character floor only produced an error where results were expected.
+    # Empty is still rejected — '%%' would match the whole corpus.
+    q: str = Query(min_length=1),
     mode: str = Query(default="fuzzy", pattern="^(exact|fuzzy)$"),
 ):
-    if len(q) < 2:
-        raise HTTPException(422, {"error": "invalid_parameter", "message": "Query 'q' must be at least 2 characters"})
-
     if mode == "exact" and not database.fts5_available:
         raise HTTPException(501, {"error": "fts5_unavailable", "message": "FTS5 not available; use mode=fuzzy"})
 
