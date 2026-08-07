@@ -18,7 +18,8 @@ SCHEMA = """
 CREATE TABLE proteins (
     uniprot_id TEXT PRIMARY KEY, gene_name TEXT, protein_name TEXT,
     organism TEXT, taxon_id INTEGER, length INTEGER, reviewed INTEGER,
-    disorder_mobidb_lite_dc REAL, disorder_alphafold_dc REAL
+    disorder_mobidb_lite_dc REAL, disorder_alphafold_dc REAL,
+    sequence TEXT
 );
 CREATE TABLE mlo_vocabulary (unified_mlo TEXT PRIMARY KEY, category TEXT);
 CREATE TABLE mlo_annotations (
@@ -53,9 +54,11 @@ CREATE TABLE sequence_features (
 # - QREG01 (synthetic): ONLY an INACTIVE DrLLPS-Regulator annotation in
 #   nucleolus -- the case that must be invisible everywhere after the fix.
 FIXTURE = """
-INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
-    ('P35637', 'FUS', 'Homo sapiens', 526),
-    ('QREG01', 'REGTEST', 'Homo sapiens', 100);
+-- P35637 carries a sequence, QREG01 does not: the API must serve both, since
+-- 474 of the 15879 real proteins have a NULL sequence.
+INSERT INTO proteins (uniprot_id, gene_name, organism, length, sequence) VALUES
+    ('P35637', 'FUS', 'Homo sapiens', 8, 'MASNDYTQ'),
+    ('QREG01', 'REGTEST', 'Homo sapiens', 100, NULL);
 
 INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
     ('stress_granule', 'Cytoplasmic'),

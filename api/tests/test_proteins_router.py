@@ -171,3 +171,19 @@ def test_citation_check_too_many_ids_returns_422(test_db):
         r = client.post("/proteins/citations", json={"uniprot_ids": ids})
     assert r.status_code == 422
     assert r.json()["error"] == "invalid_parameter"
+
+
+def test_protein_detail_serves_the_sequence(test_db):
+    with TestClient(app) as client:
+        r = client.get("/protein/P35637")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["sequence"] == "MASNDYTQ"
+    assert body["sequence_length"] == len(body["sequence"])
+
+
+def test_protein_detail_tolerates_a_missing_sequence(test_db):
+    with TestClient(app) as client:
+        r = client.get("/protein/QREG01")
+    assert r.status_code == 200
+    assert r.json()["sequence"] is None
