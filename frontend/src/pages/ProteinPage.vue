@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { reactive, nextTick, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProtein } from '@/composables/useProtein.js'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
@@ -12,26 +12,47 @@ import MolStarViewer from '@/components/viewers/MolStarViewer.vue'
 const route = useRoute()
 const { protein, loading, error, fetchProtein } = useProtein()
 
-const activeTab   = ref('overview')
-const mountedTabs = reactive(new Set(['overview']))
-
-function activateTab(tab) {
-  activeTab.value = tab
-  mountedTabs.add(tab)
-}
-
 const TABS = [
   { id: 'overview',      label: 'Overview' },
   { id: 'mlos',          label: 'MLO Annotations' },
   { id: 'interactions',  label: 'Interactions' },
 ]
 
-watch(() => route.params.id, (id) => {
+// All three sections are always in the page now (nav links just scroll to
+// them), but Interactions' force-directed graph is expensive to spin up --
+// keep it unmounted until its section actually scrolls into view (or a nav
+// click jumps straight to it, which triggers the same intersection), instead
+// of paying that cost on every single protein page load like an eager mount
+// would.
+const mountedSections = reactive(new Set(['overview']))
+let sectionObserver = null
+
+function observeSections() {
+  sectionObserver?.disconnect()
+  sectionObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        mountedSections.add(entry.target.id)
+        sectionObserver.unobserve(entry.target)
+      }
+    }
+  }, { rootMargin: '200px 0px' })
+
+  for (const tab of TABS) {
+    const el = document.getElementById(tab.id)
+    if (el) sectionObserver.observe(el)
+  }
+}
+
+onUnmounted(() => sectionObserver?.disconnect())
+
+watch(() => route.params.id, async (id) => {
   if (!id) return
-  activeTab.value = 'overview'
-  mountedTabs.clear()
-  mountedTabs.add('overview')
-  fetchProtein(id)
+  mountedSections.clear()
+  mountedSections.add('overview')
+  await fetchProtein(id)
+  await nextTick()
+  observeSections()
 }, { immediate: true })
 </script>
 
@@ -64,28 +85,25 @@ watch(() => route.params.id, (id) => {
         </div>
       </div>
 
-      <!-- Tab nav + content -->
+      <!-- Section nav + content -->
       <div class="max-w-6xl mx-auto px-6 pb-6">
 
-      <!-- Tab nav -->
+      <!-- Nav: click jumps to a section like a tab, or just scroll past all of them -->
       <div class="sticky top-14 z-10 bg-white border-b border-slate-200 mb-6">
         <nav class="flex">
-          <button
+          <a
             v-for="tab in TABS"
             :key="tab.id"
-            class="px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors"
-            :class="activeTab === tab.id
-              ? 'border-[#185FA5] text-[#185FA5]'
-              : 'border-transparent text-[#484E59] hover:text-[#185FA5]'"
-            @click="activateTab(tab.id)"
+            :href="`#${tab.id}`"
+            class="px-4 py-3 text-sm font-medium text-[#484E59] border-b-2 border-transparent hover:text-[#185FA5] hover:border-[#185FA5] transition-colors"
           >
             {{ tab.label }}
-          </button>
+          </a>
         </nav>
       </div>
 
       <!-- Overview -->
-      <div v-if="mountedTabs.has('overview')" v-show="activeTab === 'overview'">
+      <div id="overview" class="scroll-mt-28">
         <div class="flex gap-6 items-start">
 
           <!-- Left: AlphaFold structure (larger) -->
@@ -146,20 +164,21 @@ watch(() => route.params.id, (id) => {
       </div>
 
       <!-- MLO Annotations -->
-      <div v-if="mountedTabs.has('mlos')" v-show="activeTab === 'mlos'">
+      <div id="mlos" class="scroll-mt-28 mt-10">
         <ProteinMLOs
+          v-if="mountedSections.has('mlos')"
           :mlo-annotations="protein.mlo_annotations ?? []"
           :uniprot-id="protein.uniprot_id"
         />
       </div>
 
       <!-- Interactions -->
-      <div v-if="mountedTabs.has('interactions')" v-show="activeTab === 'interactions'">
+      <div id="interactions" class="scroll-mt-28 mt-10">
         <div class="text-lg font-semibold text-gray-800 mb-4">Protein–Protein Interactions</div>
-        <ProteinPPI :protein="protein" />
+        <ProteinPPI v-if="mountedSections.has('interactions')" :protein="protein" />
       </div>
 
-      </div><!-- end tab+content -->
+      </div><!-- end nav+content -->
     </template>
   </div>
 </template>
