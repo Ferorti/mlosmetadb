@@ -8,9 +8,8 @@ import { RouterLink } from 'vue-router'
 
       <RouterLink to="/" class="flex items-center leading-none no-underline">
         <span class="flex items-center gap-1">
-          <span class="w-3 h-3 rounded-full bg-[#7EC8F0]"></span>
-          <span class="w-4 h-4 rounded-full bg-[#5BBF8E]"></span>
-          <span class="w-2.5 h-2.5 rounded-full bg-[#A8D4F5]"></span>
+
+          <img src="/loguito_horizontal.svg" alt="MLOsMetaDB" class="h-[18px] w-auto relative -top-[2px]">
         </span>
         <span class="text-white font-semibold text-lg ml-2">MLOsMetaDB</span>
         <span class="text-blue-200 text-xs ml-1">v2</span>

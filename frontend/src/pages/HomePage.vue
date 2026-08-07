@@ -36,10 +36,10 @@ function searchExample(term) {
     <section class="bg-[#EBF3FB] border-b border-[#C8DFF2] pt-8 pb-5 text-center">
       <div class="max-w-4xl mx-auto px-6">
 
-        <div class="flex justify-center mb-4">
-          <!-- Height matches the 22px hand-drawn dots this replaced, so the
-               hero's vertical rhythm is unchanged. -->
-          <img src="/loguito_horizontal.svg" alt="MLOsMetaDB" class="h-[22px] w-auto">
+        <div class="flex justify-center mb-1">
+          <!-- Sized larger than the 22px dots it replaced, with the gap to the
+               title tightened to match. -->
+          <img src="/loguito_horizontal.svg" alt="MLOsMetaDB" class="h-[28px] w-auto">
         </div>
 
         <h1 class="text-3xl font-bold text-[#1B3D6F] tracking-tight">
