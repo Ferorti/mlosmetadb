@@ -3,7 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { searchBasic, searchAdvanced } from '@/api/search'
 import { getProteins } from '@/api/proteins'
-import { toMloSlug } from '@/utils/format'
+import { toMloSlug, formatMlo } from '@/utils/format'
 import { sortProteins } from '@/utils/sortProteins'
 import { parseIdrRegions, parseLcdRegions, parseDomains, calcCoverage } from '@/utils/parseFeatures'
 import SearchBox from '@/components/search/SearchBox.vue'
@@ -43,6 +43,16 @@ function computeFacetsFromProteins(proteins) {
 }
 
 const activeFilters = computed(() => ({ ...route.query }))
+
+// Which tab the search box opens on, read back off the URL so a shared link
+// lands on the control that produced it. An `mlo` filter with no free-text
+// query is an organelle search; anything else is a protein search.
+const searchBoxTarget = computed(() =>
+  route.query.mlo && !route.query.q ? 'mlo' : 'protein'
+)
+const searchBoxQuery = computed(() =>
+  searchBoxTarget.value === 'mlo' ? formatMlo(route.query.mlo) : (route.query.q ?? '')
+)
 
 function hasAnyFilter(f) {
   return Object.keys(f).some(k => !['page', 'per_page', 'mode', 'sort_by', 'sort_order'].includes(k) && f[k])
@@ -224,10 +234,13 @@ async function downloadResults() {
 
 watch(() => route.query, fetchResults, { immediate: true, deep: true })
 
-function onSearch({ q, field }) {
+// Only the protein target emits; the MLO target navigates to ?mlo= itself.
+// Any `field` already in the URL is dropped here, since the new search covers
+// every protein field. Old links carrying ?field= still resolve — runSearch
+// keeps those branches — they just do not survive a new search.
+function onSearch({ q }) {
   const query = {}
-  if (q)                        query.q     = q
-  if (field && field !== 'all') query.field = field
+  if (q) query.q = q
   router.push({ query })
 }
 
@@ -262,8 +275,8 @@ function onResetFilters() {
       <div class="max-w-6xl mx-auto px-6 py-3">
         <SearchBox
           compact
-          :initial-query="route.query.q ?? ''"
-          :initial-field="route.query.field ?? 'all'"
+          :initial-query="searchBoxQuery"
+          :initial-target="searchBoxTarget"
           @search="onSearch"
         />
       </div>

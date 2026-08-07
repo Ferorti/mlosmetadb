@@ -15,10 +15,12 @@ onMounted(async () => {
   stats.value = res.data
 })
 
-function handleSearch({ q, field, role, mode }) {
+// The MLO target navigates on its own (it picks a vocabulary entry), so only
+// the protein target reaches here. No `field` is emitted any more: a protein
+// search always covers accession + gene name + protein name.
+function handleSearch({ q, role, mode }) {
   if (!q) return
   const query = { q }
-  if (field && field !== 'all') query.field = field
   if (role)  query.role = role
   if (mode)  query.mode = mode
   router.push({ path: '/results', query })
@@ -26,6 +28,10 @@ function handleSearch({ q, field, role, mode }) {
 
 function searchExample(term) {
   router.push({ path: '/results', query: { q: term, mode: 'fuzzy' } })
+}
+
+function mloExample(slug) {
+  router.push({ path: '/results', query: { mlo: slug } })
 }
 </script>
 
@@ -56,7 +62,7 @@ function searchExample(term) {
           <SearchBox
             :show-search-options="true"
             :initial-query="''"
-            :initial-field="'all'"
+            :initial-target="'protein'"
             @search="handleSearch"
           />
         </div>
@@ -65,7 +71,7 @@ function searchExample(term) {
           Examples:
           <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('FUS')">FUS</button>·
           <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('P35637')">P35637</button>·
-          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('Paraspeckle')">Paraspeckle</button>
+          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="mloExample('paraspeckle')">Paraspeckle</button>
         </div>
 
       </div>
