@@ -60,3 +60,27 @@ def excluded_mlo_category_clause(alias: str = "mv") -> tuple[str | None, list[st
         return None, []
     placeholders = ",".join("?" * len(EXCLUDED_MLO_CATEGORIES))
     return f"{alias}.category NOT IN ({placeholders})", list(EXCLUDED_MLO_CATEGORIES)
+
+
+CANONICAL_SOURCE_NAMES: dict[str, str] = {
+    "PhaseDB": "PhaSePDB",
+    "PhasePDB": "PhaSePDB",
+    "DrLLPS": "DrLLPS",
+    "LLPSDB": "LLPSDB",
+    "PhasePro": "PhaSePro",
+    "CDCODE": "CD-CODE",
+}
+"""Maps raw mlo_annotations.source_db ingestion tags to the canonical
+display name used everywhere a source database is shown or cited (About
+page charts, Data Origin cards, and the /proteins/citations endpoint).
+PhaseDB and PhasePDB are two ingestion tags for the same real-world
+database (PhaSePDB) -- see
+docs/superpowers/specs/2026-08-06-about-page-design.md section 2."""
+
+
+def canonical_source_case_sql(column: str = "source_db") -> str:
+    """SQL CASE expression mapping `column`'s raw value to its canonical
+    display name (see CANONICAL_SOURCE_NAMES), for use in a SELECT/GROUP BY.
+    Falls back to the raw value via ELSE for any tag not in the map."""
+    whens = " ".join(f"WHEN '{raw}' THEN '{canon}'" for raw, canon in CANONICAL_SOURCE_NAMES.items())
+    return f"CASE {column} {whens} ELSE {column} END"

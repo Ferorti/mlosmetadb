@@ -44,15 +44,8 @@ async def _compute_stats() -> dict:
     )
     unique_src_rows = await database.fetchall(
         f"""
-        SELECT
-            CASE source_db
-                WHEN 'PhaseDB' THEN 'PhaSePDB'
-                WHEN 'PhasePDB' THEN 'PhaSePDB'
-                WHEN 'PhasePro' THEN 'PhaSePro'
-                WHEN 'CDCODE' THEN 'CD-CODE'
-                ELSE source_db
-            END AS source_db,
-            COUNT(DISTINCT uniprot_id) AS cnt
+        SELECT {policy.canonical_source_case_sql('source_db')} AS source_db,
+               COUNT(DISTINCT uniprot_id) AS cnt
         FROM mlo_annotations WHERE {active}
         GROUP BY 1
         """

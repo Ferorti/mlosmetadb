@@ -5,6 +5,7 @@ import aiosqlite
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import JSONResponse, Response
 
+import policy
 from config import DEFAULT_PAGE, DEFAULT_PER_PAGE, DEFAULT_PPI_PER_PAGE, MAX_PER_PAGE
 from models.schemas import (
     CitationCheckRequest,
@@ -471,20 +472,10 @@ async def export_proteins(
     )
 
 
-_CITATION_SOURCE_NAMES = {
-    "PhaseDB": "PhaSePDB",
-    "PhasePDB": "PhaSePDB",
-    "DrLLPS": "DrLLPS",
-    "LLPSDB": "LLPSDB",
-    "PhasePro": "PhaSePro",
-    "CDCODE": "CD-CODE",
-}
-
-
 def _aggregate_citation_sources(rows: list[dict]) -> dict[str, int]:
     by_source: dict[str, set] = {}
     for r in rows:
-        display = _CITATION_SOURCE_NAMES.get(r["source_db"], r["source_db"])
+        display = policy.CANONICAL_SOURCE_NAMES.get(r["source_db"], r["source_db"])
         by_source.setdefault(display, set()).add(r["uniprot_id"])
     return {name: len(ids) for name, ids in by_source.items()}
 
