@@ -47,12 +47,34 @@ def test_build_export_record_full_parses_json_lists():
     assert record["has_driver"] is True
 
 
+def test_build_export_record_full_keeps_sequence_features_as_raw_json_text():
+    row = {
+        "uniprot_id": "P1", "gene_name": "G1", "protein_name": "N1", "organism": "Homo sapiens",
+        "sequence_length": 100, "reviewed": 1, "has_driver": 1, "has_client": 0,
+        "source_dbs": "PhaseDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
+        "idr_regions": '[{"start": 1, "end": 20}]', "lcr_regions": None,
+        "domains": '[{"label": "KH domain"}]',
+    }
+    record = _build_export_record(row, "full")
+    assert record["idr_regions"] == '[{"start": 1, "end": 20}]'
+    assert record["lcr_regions"] is None
+    assert record["domains"] == '[{"label": "KH domain"}]'
+    assert record["role"] == "driver"
+
+
 def test_records_to_tsv_joins_lists_with_semicolon():
     records = [{"uniprot_id": "P1", "mlos": ["a", "b"], "source_dbs": ["PhaseDB", "CDCODE"]}]
     tsv = _records_to_tsv(records, ["uniprot_id", "mlos", "source_dbs"])
     lines = tsv.strip().split("\n")
     assert lines[0] == "uniprot_id\tmlos\tsource_dbs"
     assert lines[1] == "P1\ta;b\tPhaseDB;CDCODE"
+
+
+def test_records_to_tsv_passes_through_raw_json_text_unmodified():
+    records = [{"uniprot_id": "P1", "idr_regions": '[{"start": 1, "end": 20}]'}]
+    tsv = _records_to_tsv(records, ["uniprot_id", "idr_regions"])
+    lines = tsv.strip().split("\n")
+    assert lines[1] == 'P1\t[{"start": 1, "end": 20}]'
 
 
 def test_records_to_tsv_none_becomes_empty_string():

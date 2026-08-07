@@ -101,6 +101,7 @@
         v-for="mlo in filtered"
         :key="mlo.unified_mlo"
         class="px-5 py-4 border-b border-gray-100 last:border-b-0 hover:bg-slate-50 cursor-pointer transition-colors"
+        :title="expandedRows.has(mlo.unified_mlo) ? 'Click to collapse' : 'Click to expand'"
         @click="toggleExpand(mlo.unified_mlo)"
       >
         <!-- Line 1: name + category badge -->

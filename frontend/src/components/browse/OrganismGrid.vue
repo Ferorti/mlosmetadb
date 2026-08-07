@@ -49,6 +49,7 @@ const organisms = computed(() => {
         v-for="org in organisms"
         :key="org.key"
         class="flex flex-col items-center gap-1 p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors text-center"
+        :title="`Click to browse ${org.name} proteins in database`"
         @click="router.push({ path: '/results', query: { organism: org.name } })"
       >
         <img

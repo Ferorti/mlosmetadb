@@ -11,7 +11,7 @@ const labels = { driver: 'LLPS Driver' }
 
 <template>
   <span
-    class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border"
+    class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border whitespace-nowrap shrink-0"
     :class="styles[role] ?? 'bg-gray-100 text-gray-500 border-gray-200'"
   >
     {{ labels[role] ?? role }}

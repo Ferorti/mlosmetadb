@@ -334,7 +334,7 @@ async def get_proteins_export(
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
                p.length AS sequence_length, p.reviewed,
                ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
-               ps.source_dbs
+               ps.source_dbs, ps.idr_regions, ps.lcr_regions, ps.domains
         FROM filtered f
         JOIN proteins p          ON p.uniprot_id  = f.uniprot_id
         JOIN protein_summary ps  ON ps.uniprot_id = f.uniprot_id

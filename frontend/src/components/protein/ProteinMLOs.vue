@@ -102,44 +102,50 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
       No MLO annotations found for this protein.
     </div>
 
-    <table v-else class="w-full text-sm">
-      <tbody>
-        <tr
-          v-for="(row, idx) in groupedRows"
-          :key="idx"
-          :class="[
-            row.groupIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50',
-            row.isFirstInGroup && row.groupIndex > 0 ? 'border-t border-slate-200' : '',
-          ]"
-        >
-          <!-- Organelle name -->
-          <td class="w-44 align-top py-0.5 pr-3">
-            <template v-if="row.isFirstInGroup">
-              <RouterLink
-                :to="`/mlo/${row.unified_mlo}`"
-                class="text-[#185FA5] font-medium hover:underline"
-              >
-                {{ formatMlo(row.unified_mlo) }}
-              </RouterLink>
-            </template>
-          </td>
+    <template v-else>
+      <p class="text-xs text-gray-500 mb-2">
+        Table of annotations in source databases (unified name, role, database name, source MLO name)
+      </p>
 
-          <!-- Role badge column -->
-          <td class="w-20 align-top py-0.5 pr-3">
-            <RoleBadge v-if="row.isFirstInGroup && row.displayRole" :role="row.displayRole" />
-          </td>
+      <table class="w-full text-sm">
+        <tbody>
+          <tr
+            v-for="(row, idx) in groupedRows"
+            :key="idx"
+            :class="[
+              row.groupIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50',
+              row.isFirstInGroup && row.groupIndex > 0 ? 'border-t border-slate-200' : '',
+            ]"
+          >
+            <!-- Organelle name -->
+            <td class="w-44 align-top py-0.5 pr-3">
+              <template v-if="row.isFirstInGroup">
+                <RouterLink
+                  :to="`/mlo/${row.unified_mlo}`"
+                  class="text-[#185FA5] font-medium hover:underline"
+                >
+                  {{ formatMlo(row.unified_mlo) }}
+                </RouterLink>
+              </template>
+            </td>
 
-          <!-- Source db text -->
-          <td class="w-36 align-top py-0.5 pr-4">
-            <span class="text-xs font-medium" :style="{ color: sourceColor(row.source_db) }">{{ row.source_db }}</span>
-          </td>
+            <!-- Role badge column -->
+            <td class="w-28 align-top py-0.5 pr-3">
+              <RoleBadge v-if="row.isFirstInGroup && row.displayRole" :role="row.displayRole" />
+            </td>
 
-          <!-- Source name -->
-          <td class="align-top py-0.5 text-[#484E59] italic">
-            {{ row.source_mlo }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <!-- Source db text -->
+            <td class="w-36 align-top py-0.5 pr-4">
+              <span class="text-xs font-medium" :style="{ color: sourceColor(row.source_db) }">{{ row.source_db }}</span>
+            </td>
+
+            <!-- Source name -->
+            <td class="align-top py-0.5 text-[#484E59] italic">
+              {{ row.source_mlo }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>

@@ -60,6 +60,7 @@ function browseMlo(unified_mlo) {
           v-for="mlo in mlos"
           :key="mlo.unified_mlo"
           @click="browseMlo(mlo.unified_mlo)"
+          :title="`Click to browse ${formatMlo(mlo.unified_mlo)} proteins in database`"
           class="flex flex-col justify-between px-3 py-2.5 rounded-lg border border-gray-200 bg-white hover:border-[#2B7CD8] hover:shadow-sm cursor-pointer transition-all min-h-[90px]"
         >
           <div>

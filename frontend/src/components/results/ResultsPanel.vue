@@ -374,9 +374,9 @@ const table = useVueTable({
             <!-- Column 1: Identity (~150px) -->
             <div class="w-[150px] flex-shrink-0 flex flex-col gap-0.5">
               <!-- Gene name + role badge inline -->
-              <div class="flex items-center gap-2 flex-wrap">
+              <div class="flex items-center gap-2 min-w-0">
                 <span
-                  class="text-[18px] font-semibold cursor-pointer hover:underline leading-snug"
+                  class="text-[18px] font-semibold cursor-pointer hover:underline leading-snug truncate min-w-0"
                   :class="titleColor(protein)"
                   @click.stop="goToProtein(protein.uniprot_id)"
                 >
@@ -395,7 +395,7 @@ const table = useVueTable({
             <!-- Column 2: Annotations (flex-1) -->
             <div class="flex-1 min-w-0 flex flex-col gap-1.5 justify-center">
               <!-- MLOs row -->
-              <div v-if="displayMlos(protein).length" class="flex items-baseline gap-2">
+              <div v-if="displayMlos(protein).length" class="flex items-baseline gap-2" title="List of MLOs present">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">MLOs</span>
                 <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 leading-snug">
                   <template v-for="mlo in visibleMlos(protein)" :key="mlo">
@@ -412,7 +412,7 @@ const table = useVueTable({
                 </div>
               </div>
               <!-- Sources row -->
-              <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2">
+              <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2" title="Databases with protein annotation source">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Sources</span>
                 <span class="text-[11px] text-gray-500">{{ protein.source_dbs.join(' · ') }}</span>
               </div>

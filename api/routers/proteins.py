@@ -77,8 +77,21 @@ def _parse_source_dbs(val: str | None) -> list[str]:
     return [s for s in val.split(",") if s]
 
 
-_EXPORT_BASIC_FIELDS = ["uniprot_id", "gene_name", "protein_name", "organism", "sequence_length", "reviewed"]
-_EXPORT_FULL_FIELDS = _EXPORT_BASIC_FIELDS + ["has_driver", "has_client", "source_dbs", "mlo_count", "mlos"]
+_EXPORT_BASIC_FIELDS = [
+    "uniprot_id", "gene_name", "protein_name", "organism", "sequence_length", "reviewed",
+    "mlos", "role", "source_dbs",
+]
+_EXPORT_FULL_FIELDS = _EXPORT_BASIC_FIELDS + [
+    "has_driver", "has_client", "mlo_count", "idr_regions", "lcr_regions", "domains",
+]
+
+
+def _export_role(row: dict) -> str:
+    if row.get("has_driver"):
+        return "driver"
+    if row.get("has_client"):
+        return "client"
+    return ""
 
 
 def _build_export_record(row: dict, fields: str) -> dict:
@@ -89,13 +102,21 @@ def _build_export_record(row: dict, fields: str) -> dict:
         "organism": row.get("organism"),
         "sequence_length": row.get("sequence_length"),
         "reviewed": row.get("reviewed"),
+        "mlos": _parse_mlos(row.get("mlos")),
+        "role": _export_role(row),
+        "source_dbs": _parse_source_dbs(row.get("source_dbs")),
     }
     if fields == "full":
         record["has_driver"] = bool(row.get("has_driver", 0))
         record["has_client"] = bool(row.get("has_client", 0))
-        record["source_dbs"] = _parse_source_dbs(row.get("source_dbs"))
         record["mlo_count"] = row.get("mlo_count", 0)
-        record["mlos"] = _parse_mlos(row.get("mlos"))
+        # Kept as the raw JSON text from protein_summary for the TSV path (see
+        # _records_to_tsv -- a raw string just passes through unchanged), and
+        # re-parsed into real nested structures for the JSON path (see the
+        # format == "json" branch in export_proteins).
+        record["idr_regions"] = row.get("idr_regions")
+        record["lcr_regions"] = row.get("lcr_regions")
+        record["domains"] = row.get("domains")
     return record
 
 
@@ -462,6 +483,11 @@ async def export_proteins(
     columns = _EXPORT_BASIC_FIELDS if fields == "basic" else _EXPORT_FULL_FIELDS
 
     if format == "json":
+        if fields == "full":
+            for record in records:
+                record["idr_regions"] = _parse_json(record["idr_regions"])
+                record["lcr_regions"] = _parse_json(record["lcr_regions"])
+                record["domains"] = _parse_json(record["domains"])
         return JSONResponse(content=records)
 
     tsv_body = _records_to_tsv(records, columns)
