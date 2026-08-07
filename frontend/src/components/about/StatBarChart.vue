@@ -4,6 +4,7 @@ import * as d3 from 'd3'
 
 const props = defineProps({
   data: { type: Array, required: true }, // [{ label, value, color }]
+  clickable: { type: Boolean, default: true },
 })
 const emit = defineEmits(['select'])
 
@@ -35,8 +36,10 @@ function render(width) {
     .append('g')
     .attr('class', 'row')
     .attr('transform', (d, i) => `translate(0, ${i * (BAR_HEIGHT + BAR_GAP)})`)
-    .style('cursor', 'pointer')
-    .on('click', (event, d) => emit('select', d.label))
+
+  if (props.clickable) {
+    rows.style('cursor', 'pointer').on('click', (event, d) => emit('select', d.key ?? d.label))
+  }
 
   rows.append('text')
     .attr('x', LABEL_WIDTH - 8)
