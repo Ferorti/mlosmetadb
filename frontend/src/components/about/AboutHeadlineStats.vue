@@ -13,9 +13,9 @@ const metrics = computed(() => {
     { value: formatCount(props.stats.mlo_annotations.total), label: 'annotations' },
     { value: formatCount(props.stats.mlo_annotations.unique_mlos), label: 'MLOs' },
     { value: formatCount(props.stats.proteins.total_organisms), label: 'organisms' },
-    { value: formatCount(Object.keys(props.stats.mlo_annotations.by_source).length), label: 'source databases' },
-    { value: formatCount(props.stats.ppi.total_interactions), label: 'PPI interactions' },
-    { value: formatCount(props.stats.sequence_features.total), label: 'sequence features' },
+    { value: formatCount(Object.keys(props.stats.mlo_annotations.unique_proteins_by_source ?? {}).length), label: 'source databases' },
+    { value: formatCount(props.stats.ppi?.total_interactions ?? null), label: 'PPI interactions' },
+    { value: formatCount(props.stats.sequence_features?.total ?? null), label: 'sequence features' },
   ]
 })
 </script>
