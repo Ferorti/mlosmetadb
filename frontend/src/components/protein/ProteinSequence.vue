@@ -21,7 +21,7 @@ const props = defineProps({
   residuePos: { type: Number, default: null },
 })
 
-const emit = defineEmits(['hover-residue'])
+const emit = defineEmits(['hover-residue', 'click-residue'])
 
 const BLOCK = 10                    // residues per visual block
 const LINE_H = 20                   // px, must match the leading-[20px] class below
@@ -144,23 +144,32 @@ function queue(pos) {
   if (rafId == null) rafId = requestAnimationFrame(flush)
 }
 
-function onMouseMove(event) {
+/** Residue under the pointer, or null when the pointer is off the letters. */
+function posFromEvent(event) {
   const el = linesRef.value
-  if (!el) return
+  if (!el) return null
   const rect = el.getBoundingClientRect()
   const row  = Math.floor((event.clientY - rect.top) / LINE_H)
   const line = lines.value[row]
-  if (!line) { queue(null); return }
+  if (!line) return null
 
   const cell = Math.floor((event.clientX - rect.left - gutterW.value) / charW.value)
-  if (cell < 0) { queue(null); return }
+  if (cell < 0) return null
 
   const pos = line.start + residueFromCell(cell)
-  queue(pos <= line.end ? pos : null)
+  return pos <= line.end ? pos : null
+}
+
+function onMouseMove(event) {
+  queue(posFromEvent(event))
 }
 
 function onMouseLeave() {
   queue(null)
+}
+
+function onClick(event) {
+  emit('click-residue', posFromEvent(event))
 }
 
 // ─── Measurement ─────────────────────────────────────────────────────────────
@@ -205,6 +214,7 @@ onUnmounted(() => {
       class="font-mono text-[12px] leading-[20px] cursor-crosshair"
       @mousemove="onMouseMove"
       @mouseleave="onMouseLeave"
+      @click="onClick"
     >
       <div
         v-for="line in lines"

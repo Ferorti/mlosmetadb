@@ -66,8 +66,12 @@ function canInteract() {
     && typeof viewerInstance.structureInteractivity === 'function'
 }
 
+// Must be `{ items: [...] }`, never a bare array. Mol* decides whether it got a
+// multi-item schema with `!!value.items`; a bare array fails that test and is
+// then read as ONE descriptor, whose `beg_label_seq_id` etc. are all undefined,
+// which builds an empty test set and selects every atom in the structure.
 function toElements(ranges) {
-  return ranges.map(r => ({ beg_label_seq_id: r.start, end_label_seq_id: r.end }))
+  return { items: ranges.map(r => ({ beg_label_seq_id: r.start, end_label_seq_id: r.end })) }
 }
 
 function apply(action, ranges) {

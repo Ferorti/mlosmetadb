@@ -49,6 +49,15 @@ function onHoverResidue(pos) {
   residuePos.value = pos
 }
 
+// Clicking a residue outside the pinned feature releases the pin. Clicking one
+// inside it keeps it, so a stray click while reading the region does not undo
+// the selection.
+function onClickResidue(pos) {
+  if (!pinnedId.value) return
+  const inside = pos != null && rangesOf(pinnedId.value).some(r => pos >= r.start && pos <= r.end)
+  if (!inside) pinnedId.value = null
+}
+
 // Structure highlight channel: a hovered feature wins over a hovered residue,
 // and clearing both clears the highlight.
 watch([hoveredId, residuePos], ([id, pos]) => {
@@ -104,6 +113,7 @@ watch(() => props.protein.uniprot_id, () => {
           :pinned-id="pinnedId"
           :residue-pos="residuePos"
           @hover-residue="onHoverResidue"
+          @click-residue="onClickResidue"
         />
       </div>
     </div>

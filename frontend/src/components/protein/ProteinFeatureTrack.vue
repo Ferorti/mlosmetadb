@@ -136,30 +136,45 @@ function render(width) {
   applyMarker()
 }
 
+/** Every span covering a residue, regardless of where it is drawn vertically. */
 function spansAt(aa) {
   return props.spans.filter(s => aa >= s.start && aa <= s.end)
 }
 
-function topmostAt(aa) {
-  const hits = spansAt(aa)
+/**
+ * The span actually under the cursor. Horizontal position alone is not enough:
+ * the MoRF strip and the domain bar routinely cover the same residues at
+ * different heights, and an x-only test would make the strip drawn on top
+ * unreachable for every residue it spans.
+ */
+function hitAt(aa, my) {
+  const hits = spansAt(aa).filter(s => {
+    const layer = LAYERS[s.type]
+    return layer && my >= layer.y && my <= layer.y + layer.h
+  })
   return hits.length ? hits[hits.length - 1] : null   // props.spans is in paint order
 }
 
-function posFromEvent(event) {
+function pointFromEvent(event) {
   if (!xScale) return null
-  const [mX] = d3.pointer(event)
-  return Math.max(1, Math.min(props.sequenceLength, Math.round(xScale.invert(mX))))
+  const [mX, mY] = d3.pointer(event)
+  return {
+    aa: Math.max(1, Math.min(props.sequenceLength, Math.round(xScale.invert(mX)))),
+    y: mY,
+  }
 }
 
 function onMouseMove(event) {
-  const aa = posFromEvent(event)
-  if (aa == null) return
-  const top = topmostAt(aa)
+  const p = pointFromEvent(event)
+  if (!p) return
+  const top = hitAt(p.aa, p.y)
   emit('hover', top ? top.featureId : null)
 
-  const hits = spansAt(aa)
+  // The tooltip still lists everything at that residue, including layers the
+  // cursor is not over — that is the informative part.
+  const hits = spansAt(p.aa)
   if (!hits.length) { hideTooltip(); return }
-  showTooltip(event, aa, hits)
+  showTooltip(event, p.aa, hits)
 }
 
 function onMouseLeave() {
@@ -168,9 +183,9 @@ function onMouseLeave() {
 }
 
 function onClick(event) {
-  const aa = posFromEvent(event)
-  if (aa == null) return
-  const top = topmostAt(aa)
+  const p = pointFromEvent(event)
+  if (!p) return
+  const top = hitAt(p.aa, p.y)
   emit('select', top ? top.featureId : null)
 }
 
