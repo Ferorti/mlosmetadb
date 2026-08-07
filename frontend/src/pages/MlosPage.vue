@@ -106,7 +106,16 @@
       >
         <!-- Line 1: name + category badge -->
         <div class="flex items-start justify-between gap-4">
-          <span class="text-[16px] font-medium text-gray-800">{{ formatMlo(mlo.unified_mlo) }}</span>
+          <span class="text-[16px] font-medium text-gray-800">
+            {{ formatMlo(mlo.unified_mlo) }}
+            <!-- Only when the hit came from a name the title does not show,
+                 otherwise the row looks like a mismatch. -->
+            <span
+              v-if="mlo.matchedNames?.length"
+              class="text-xs text-gray-500 font-normal ml-1"
+            >{{ mlo.matchedNames.slice(0, 3).join(' · ')
+              }}<template v-if="mlo.matchedNames.length > 3"> +{{ mlo.matchedNames.length - 3 }}</template></span>
+          </span>
           <span
             v-if="mlo.category"
             class="shrink-0 text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200"
@@ -169,6 +178,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getMlos } from '@/api/mlos.js'
 import { formatMlo, formatCount } from '@/utils/format.js'
+import { filterMlosByQuery } from '@/utils/mloMatch.js'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 
 const router = useRouter()
@@ -240,10 +250,11 @@ const totalCount = computed(() => mlos.value.length)
 const filtered = computed(() => {
   let result = mlos.value
 
-  const q = textFilter.value.trim().toLowerCase()
-  if (q) {
-    result = result.filter(m => m.unified_mlo.toLowerCase().includes(q))
-  }
+  // Same matcher as the home grid: reads the unified name and every name the
+  // source databases use, so "GW-body" finds P body here too. The old test
+  // compared against the raw slug, so even "stress granule" with a space
+  // missed stress_granule.
+  result = filterMlosByQuery(result, textFilter.value)
 
   if (categoryFilter.value) {
     result = result.filter(m => m.category === categoryFilter.value)
