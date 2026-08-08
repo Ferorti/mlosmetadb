@@ -16,6 +16,30 @@ CACHE_DIR = DB_DIR / "cache"
 
 SKIP_MLO = {"DISCARD", "NULL", "synthetic_condensate", ""}
 
+# Curation revision of database/mappings/mlo_mapping.csv, stamped onto every
+# mlo_vocabulary row. Bump it in the same commit that changes the mapping file,
+# and record what changed in database/mappings/_archive/mlo_mapping_decisions.md.
+# Until 2026-08-08 nothing stamped this at all, so all 170 rows carried the
+# column DEFAULT ('v3') while the shipped mapping was already v4 — the v4 splits
+# (spindle_pole_body, chromatoid_body, sex_body, simr_foci, mardo,
+# axonal_tiar2_granule, wnt_destruction_complex) were present in the data under
+# a version label that predated them.
+MAPPING_VERSION = "v4"
+
+
+def nullable(value: str | None) -> str | None:
+    """Read a TSV field, honouring 'NULL' as the absent-value sentinel.
+
+    integrate.py writes the literal string 'NULL' for a field it has no value
+    for (see _merge_evidence / _first_real), and every other column read here
+    already treats it that way. `evidence` did not, so 13,847 CD-CODE rows
+    reached the DB with the text 'NULL' instead of SQL NULL, and any query
+    filtering `evidence IS NOT NULL` counted a quarter of the dataset as
+    PMID-backed when none of it is.
+    """
+    value = (value or "").strip()
+    return value if value and value != "NULL" else None
+
 SCHEMA_MAIN = """
 CREATE TABLE IF NOT EXISTS mlo_vocabulary (
     unified_mlo      TEXT PRIMARY KEY,
@@ -157,35 +181,82 @@ def create_schema(con: sqlite3.Connection, schema: str) -> None:
 
 
 def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
+    """Load mlo_mapping.csv into mlo_vocabulary, one curated row per canonical.
+
+    Several source names collapse into one canonical, so the same canonical
+    appears in many rows of the mapping file. Until 2026-08-08 this function
+    kept whichever row it read first and inserted with OR IGNORE, which meant
+    that when those rows disagreed on `Categoria` the stored category was
+    decided by file order rather than by a curator — arbitrary for 24 of the
+    170 terms, including cases with real biological content
+    (`polarity_condensate`: Citoesqueleto / Neuronal / Procariota). A conflict
+    is now a hard failure: the mapping file has to say one thing.
+    """
     path = MAP_DIR / "mlo_mapping.csv"
-    seen: set[str] = set()
-    rows = []
+    categories: dict[str, dict[str, int]] = {}
     with open(path, newline="", encoding="utf-8") as f:
-        for row in csv.DictReader(f):
+        for line_no, row in enumerate(csv.DictReader(f), start=2):
             unified = row["Nombre Sugerido"].strip()
             if unified in SKIP_MLO:
                 continue
-            if unified in seen:
-                continue
-            seen.add(unified)
-            rows.append((unified, row["Categoria"].strip()))
+            category = row["Categoria"].strip()
+            categories.setdefault(unified, {}).setdefault(category, line_no)
 
+    conflicts = {u: c for u, c in categories.items() if len(c) > 1}
+    if conflicts:
+        detail = "\n".join(
+            f"    {unified}: " + ", ".join(f"{cat!r} (línea {ln})" for cat, ln in sorted(cats.items(), key=lambda kv: kv[1]))
+            for unified, cats in sorted(conflicts.items())
+        )
+        raise SystemExit(
+            f"[FATAL] {len(conflicts)} canónicos con Categoria en conflicto en {path.name}.\n"
+            f"  Cada canónico necesita una sola categoría curada — resolvelas en el archivo:\n{detail}"
+        )
+
+    rows = [(unified, next(iter(cats)), MAPPING_VERSION) for unified, cats in categories.items()]
+
+    # Terms the current mapping no longer produces have to leave the table, or
+    # the vocabulary keeps accumulating entries from older revisions. Safe here
+    # because reset_owned_tables() has already cleared mlo_annotations and
+    # mlo_definitions, the only tables holding a FK into it.
+    con.execute("DELETE FROM mlo_vocabulary")
+    # INSERT OR REPLACE, not OR IGNORE: a recurated category has to land on a
+    # term that already exists instead of being silently dropped.
     con.executemany(
-        "INSERT OR IGNORE INTO mlo_vocabulary (unified_mlo, category) VALUES (?, ?)",
+        "INSERT OR REPLACE INTO mlo_vocabulary (unified_mlo, category, mapping_version) VALUES (?, ?, ?)",
         rows,
     )
     con.commit()
+
+    stale = con.execute(
+        "SELECT COUNT(*) FROM mlo_vocabulary WHERE mapping_version IS NOT ?",
+        (MAPPING_VERSION,),
+    ).fetchone()[0]
+    if stale:
+        raise SystemExit(f"[FATAL] {stale} filas de mlo_vocabulary quedaron fuera de {MAPPING_VERSION}")
     return len(rows)
+
+
+def reset_owned_tables(con: sqlite3.Connection) -> None:
+    """Clear the three tables build_db.py owns, in foreign-key-safe order.
+
+    This script is documented as re-runnable over an existing mlosmetadb.db,
+    and without this a second run appends a full duplicate copy of every
+    definition and annotation. Only the tables build_db.py owns are cleared —
+    proteins, sequence_features, ppi and orthologs carry fetched data this
+    script never writes and must survive untouched.
+
+    Order matters: mlo_annotations and mlo_definitions both hold a FK into
+    mlo_vocabulary, so they go first, which is also what lets
+    load_mlo_vocabulary() drop terms the mapping no longer produces.
+    """
+    con.execute("DELETE FROM mlo_annotations")
+    con.execute("DELETE FROM mlo_definitions")
+    con.commit()
 
 
 def load_mlo_definitions(con: sqlite3.Connection) -> int:
     path = FINAL / "mlo_definitions.csv"
-    # Reload from scratch: this script is documented as re-runnable over an
-    # existing mlosmetadb.db, and without the DELETE a second run appends a
-    # full duplicate copy of every definition. Only the tables build_db.py
-    # owns are cleared — proteins, sequence_features, ppi and orthologs carry
-    # fetched data this script never writes and must survive untouched.
-    con.execute("DELETE FROM mlo_definitions")
     vocab = {r[0] for r in con.execute("SELECT unified_mlo FROM mlo_vocabulary")}
     rows = []
     with open(path, newline="", encoding="utf-8") as f:
@@ -208,9 +279,6 @@ def load_mlo_definitions(con: sqlite3.Connection) -> int:
 
 def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
     path = DB_DIR / "mlosmetadb.tsv"
-    # Same reason as load_mlo_definitions(): re-running must replace the
-    # annotations, not stack a second copy on top of them.
-    con.execute("DELETE FROM mlo_annotations")
     vocab = {r[0] for r in con.execute("SELECT unified_mlo FROM mlo_vocabulary")}
     protein_stubs: set[str] = set()
     annotation_rows = []
@@ -234,10 +302,10 @@ def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
                 row["source_db"].strip(),
                 row["source_mlo"].strip(),
                 unified,
-                row.get("source_role", "").strip() or None,
-                row.get("unified_role", "").strip() or None,
+                nullable(row.get("source_role")),
+                nullable(row.get("unified_role")),
                 int(row.get("dataset_active", "1").strip() or 1),
-                row.get("evidence", "").strip() or None,
+                nullable(row.get("evidence")),
             ))
 
     con.executemany(
@@ -252,6 +320,36 @@ def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
     )
     con.commit()
     return len(protein_stubs), len(annotation_rows)
+
+
+def prune_unsupported_vocabulary(con: sqlite3.Connection) -> list[str]:
+    """Drop vocabulary terms that no annotation reaches.
+
+    The project's own rule is that a canonical term is not created unless some
+    source annotates proteins at that resolution, but nothing enforced it: three
+    terms (adhesin_nanodomain, npr1_condensate, rosenthal_fiber) were curated
+    from source names that no interim file ever emits, so they shipped as
+    vocabulary entries with zero proteins behind them. Their mapping rows stay
+    in mlo_mapping.csv — the curation record is not the thing that was wrong —
+    but they do not become served terms.
+
+    Runs after load_annotations() so "supported" is measured against the
+    annotations actually loaded, and re-checks on every rebuild instead of
+    encoding a fixed list that would go stale.
+    """
+    orphans = [
+        r[0] for r in con.execute(
+            """SELECT unified_mlo FROM mlo_vocabulary v
+               WHERE NOT EXISTS (SELECT 1 FROM mlo_annotations a WHERE a.unified_mlo = v.unified_mlo)
+               ORDER BY unified_mlo"""
+        )
+    ]
+    if orphans:
+        marks = ",".join("?" * len(orphans))
+        con.execute(f"DELETE FROM mlo_definitions WHERE unified_mlo IN ({marks})", orphans)
+        con.execute(f"DELETE FROM mlo_vocabulary WHERE unified_mlo IN ({marks})", orphans)
+        con.commit()
+    return orphans
 
 
 def init_cache(name: str) -> None:
@@ -278,6 +376,7 @@ def main() -> None:
     con = sqlite3.connect(DB)
     con.execute("PRAGMA foreign_keys = ON")
     create_schema(con, SCHEMA_MAIN)
+    reset_owned_tables(con)
 
     print("Cargando mlo_vocabulary ...")
     n_vocab = load_mlo_vocabulary(con)
@@ -290,6 +389,12 @@ def main() -> None:
     print("Cargando mlosmetadb.tsv ...")
     n_proteins, n_annotations = load_annotations(con)
     print(f"  {n_proteins} proteinas stub, {n_annotations} anotaciones")
+
+    orphans = prune_unsupported_vocabulary(con)
+    if orphans:
+        print(f"Vocabulario sin soporte ({len(orphans)} términos, 0 anotaciones) — removidos:")
+        for term in orphans:
+            print(f"  - {term}")
 
     print("Inicializando caches ...")
     for name in ("uniprot_cache.db", "interpro_cache.db", "mobidb_cache.db"):

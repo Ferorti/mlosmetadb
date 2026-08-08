@@ -2,8 +2,8 @@
   "table_rows": {
     "proteins": 15879,
     "mlo_annotations": 35971,
-    "mlo_vocabulary": 170,
-    "mlo_definitions": 409,
+    "mlo_vocabulary": 167,
+    "mlo_definitions": 406,
     "protein_summary": 15879,
     "sequence_features": 358867,
     "ppi": 917468,
@@ -34,7 +34,7 @@
     "5": 54
   },
   "proteins_without_sequence": 474,
-  "annotations_with_literal_null_evidence": 13847,
+  "annotations_with_literal_null_evidence": 0,
   "distinct_unified_mlos_in_use": 167,
   "fus_p35637": {
     "source_dbs": "CDCODE,DrLLPS,LLPSDB,PhasePro,PhaSepDB",
