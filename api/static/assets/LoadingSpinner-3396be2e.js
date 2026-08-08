@@ -1,1 +1,0 @@
-import{_ as r,o as n,b as s,d as t}from"./index-2ac32659.js";const o={},a={class:"flex items-center justify-center py-24"};function c(d,e){return n(),s("div",a,[...e[0]||(e[0]=[t("div",{class:"w-8 h-8 border-2 border-[#185FA5] border-t-transparent rounded-full animate-spin"},null,-1)])])}const l=r(o,[["render",c]]);export{l as L};
