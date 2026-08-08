@@ -208,6 +208,8 @@ __marimo__/
 
 .idea
 CLAUDE.md
+# Deployment runbook for mistic — names internal hosts, paths and ports
+DEPLOY.md
 
 # =============================================================
 # MLOsMetaDB — project-specific
