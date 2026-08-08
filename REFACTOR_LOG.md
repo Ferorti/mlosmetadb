@@ -15,6 +15,20 @@ Entry 14 ("The one exception to the hard rule").
 
 Started from branch `audit/full-repo-review`, commit `c1ac07a`, on 2026-08-04.
 
+> **Correction (2026-08-08) — `PhaseDB` and `PhasePDB` were never two
+> databases.** Entries below treat them as two source databases with similar
+> names: Entry 10 describes `parse_phasepdb.py` reading "the PhasePDB source
+> files", the parser inventory lists six parsers, and the verification counts
+> report `PhaseDB 14608` and `PhasePDB 14875` as separate sources. Both tags
+> denoted **PhaSepDB**, and the two parsers read byte-identical copies of the
+> same two export files — so those counts double-count one resource. The
+> entries are left as written, because they record what was believed and done
+> at the time; the fix (one parser, `parse_phasesepdb.py`, one tag, and
+> deduplication in `integrate.py`) is documented in
+> [docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md](docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md)
+> and in `DEVLOG.md`. Do not use any per-source count below as a current
+> figure.
+
 ---
 
 ## Entry 0 — Scope and starting audit findings

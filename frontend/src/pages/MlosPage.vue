@@ -183,7 +183,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 
 const router = useRouter()
 
-const SOURCE_DBS = ['PhaseDB', 'DrLLPS', 'PhasePro', 'LLPSDB', 'CDCODE']
+const SOURCE_DBS = ['PhaSepDB', 'DrLLPS', 'PhasePro', 'LLPSDB', 'CDCODE']
 
 const CATEGORY_LABELS = {
   cytoplasmic_rnp: 'Cytoplasmic RNP',

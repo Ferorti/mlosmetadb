@@ -3,11 +3,13 @@ integrate.py — Genera el dataset unificado de MLOsMetaDB.
 
 Pasos:
   1. Concatena todos los archivos de database/interim/*.tsv
-  2. Calcula unified_role + dataset_active por fila, según la tabla fija
+  2. Deduplica a una fila por (uniprot_id, source_db, source_mlo, source_role),
+     uniendo los PMIDs — ver collapse_duplicates() más abajo
+  3. Calcula unified_role + dataset_active por fila, según la tabla fija
      source_db/source_role documentada en BIOLOGY.md (no via role_mapping.tsv
      — ver compute_role_and_active() más abajo)
-  3. Aplica mlo_mapping.tsv (source_mlo → unified_mlo) si está disponible
-  4. Escribe database/mlosmetadb.tsv
+  4. Aplica mlo_mapping.tsv (source_mlo → unified_mlo) si está disponible
+  5. Escribe database/mlosmetadb.tsv
 
 unified_role es siempre exactamente 'driver' | 'client' | NULL (nunca
 capitalizado, nunca el string 'unmapped'). unified_mlo, en cambio, sigue
@@ -47,6 +49,58 @@ def load_interim() -> pd.DataFrame:
     combined = pd.concat(frames, ignore_index=True)
     print(f"\n  Total concatenado: {len(combined)} filas")
     return combined
+
+
+NULL = "NULL"
+DEDUP_KEY = ["uniprot_id", "source_db", "source_mlo", "source_role"]
+
+
+def _merge_evidence(values) -> str:
+    """Union of PMIDs across duplicate rows, order preserved, NULL if none.
+
+    Several sources emit one row per supporting publication for the same
+    annotation (PhaSepDB's exports do it for every row), which is the same
+    annotation cited N times, not N annotations. The documented interim
+    contract is one row per annotation with the PMIDs semicolon-separated —
+    exactly what DrLLPS and LLPSDB already produce — so nothing is lost by
+    collapsing: every PMID survives in `evidence`.
+    """
+    seen: set[str] = set()
+    pmids: list[str] = []
+    for value in values:
+        for pmid in str(value).split(";"):
+            pmid = pmid.strip()
+            if not pmid or pmid == NULL or pmid in seen:
+                continue
+            seen.add(pmid)
+            pmids.append(pmid)
+    return ";".join(pmids) if pmids else NULL
+
+
+def _first_real(values) -> str:
+    for value in values:
+        value = str(value).strip()
+        if value and value != NULL:
+            return value
+    return NULL
+
+
+def collapse_duplicates(df: pd.DataFrame) -> pd.DataFrame:
+    """One row per (uniprot_id, source_db, source_mlo, source_role).
+
+    Applied uniformly to every source — no per-database special cases. The
+    role stays in the key on purpose: a protein that is a driver of an MLO
+    *and* a component of it carries two distinct pieces of evidence, and both
+    rows are kept (see BIOLOGY.md, "Driver vs. Component").
+    """
+    before = len(df)
+    df = (
+        df.groupby(DEDUP_KEY, dropna=False, sort=False)
+          .agg(evidence=("evidence", _merge_evidence), organism=("organism", _first_real))
+          .reset_index()[INTERIM_COLS]
+    )
+    print(f"  {before} → {len(df)} filas ({before - len(df)} duplicadas colapsadas)")
+    return df
 
 
 def apply_mapping(df: pd.DataFrame, map_file: Path, source_col: str, unified_col: str) -> pd.DataFrame:
@@ -114,6 +168,10 @@ def compute_role_and_active(source_db: str, source_role: str) -> tuple:
 def main() -> None:
     print("=== Cargando archivos interim ===")
     df = load_interim()
+
+    # ── Deduplicación ─────────────────────────────────────────────────────────
+    print("\n=== Colapsando filas duplicadas (uniprot_id, source_db, source_mlo, source_role) ===")
+    df = collapse_duplicates(df)
 
     # ── Role + dataset_active ────────────────────────────────────────────────
     print(f"\n=== Calculando unified_role / dataset_active (tabla fija BIOLOGY.md) ===")

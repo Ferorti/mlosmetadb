@@ -7,7 +7,7 @@ const props = defineProps({
 })
 
 const COLOR_MAP = {
-  PhaseDB:  { bg: '#EBF3FB', text: '#1B4F8A', border: '#BFDBFE' },
+  PhaSepDB: { bg: '#EBF3FB', text: '#1B4F8A', border: '#BFDBFE' },
   CDCODE:   { bg: '#FEF3C7', text: '#854F0B', border: '#FAC775' },
   LLPSDB:   { bg: '#D1FAE5', text: '#0F6E56', border: '#6EE7B7' },
   PhasePro: { bg: '#F3E8FF', text: '#6B21A8', border: '#D8B4FE' },

@@ -8,10 +8,10 @@ const props = defineProps({
   uniprotId:      { type: String, required: true },
 })
 
-const SOURCE_ORDER = ['PhaseDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
+const SOURCE_ORDER = ['PhaSepDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
 
 const SOURCE_COLORS = {
-  PhaseDB:  '#1B4F8A',
+  PhaSepDB: '#1B4F8A',
   CDCODE:   '#854F0B',
   LLPSDB:   '#0F6E56',
   PhasePro: '#6B21A8',

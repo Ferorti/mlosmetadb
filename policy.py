@@ -63,8 +63,7 @@ def excluded_mlo_category_clause(alias: str = "mv") -> tuple[str | None, list[st
 
 
 CANONICAL_SOURCE_NAMES: dict[str, str] = {
-    "PhaseDB": "PhaSepDB",
-    "PhasePDB": "PhaSepDB",
+    "PhaSepDB": "PhaSepDB",
     "DrLLPS": "DrLLPS",
     "LLPSDB": "LLPSDB",
     "PhasePro": "PhaSePro",
@@ -73,10 +72,17 @@ CANONICAL_SOURCE_NAMES: dict[str, str] = {
 """Maps raw mlo_annotations.source_db ingestion tags to the canonical
 display name used everywhere a source database is shown or cited (About
 page charts, Data Sources section, and the /proteins/citations endpoint).
-PhaseDB and PhasePDB are two ingestion tags for the same real-world
-database, published as "PhaSepDB" (lowercase 'p' before DB -- verified
-against the database's own Nucleic Acids Research paper title) -- see
-docs/superpowers/specs/2026-08-06-about-page-design.md section 2."""
+"PhaSepDB" carries a lowercase 'p' before DB -- verified against the
+database's own Nucleic Acids Research paper title -- see
+docs/superpowers/specs/2026-08-06-about-page-design.md section 2.
+
+This map used to carry two extra keys, "PhaseDB" and "PhasePDB", which were
+two ingestion tags for this single resource. They were a naming mistake, not
+two databases: both parsers read identical files, so every PhaSepDB
+annotation was loaded twice and every count that grouped by the raw tag was
+inflated. The tags are gone from the data (one parser, one tag "PhaSepDB")
+and must not be reintroduced here -- a display-name patch is not a substitute
+for ingesting a source once."""
 
 
 def canonical_source_case_sql(column: str = "source_db") -> str:

@@ -19,7 +19,7 @@ def _make_conn():
             dataset_active INTEGER NOT NULL DEFAULT 1
         );
         INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active)
-        VALUES ('ACTIVE1', 'PhaseDB', 'stress_granule', 'driver', 1);
+        VALUES ('ACTIVE1', 'PhaSepDB', 'stress_granule', 'driver', 1);
         INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active)
         VALUES ('REGONLY', 'DrLLPS', 'nucleolus', NULL, 0);
     """)

@@ -15,10 +15,10 @@ const displayRole = computed(() => {
   return annotations.some(a => a.unified_role === 'driver') ? 'driver' : null
 })
 
-const SOURCE_ORDER = ['PhaseDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
+const SOURCE_ORDER = ['PhaSepDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
 
 const SOURCE_URLS = {
-  PhaseDB:  (id) => `https://db.phasep.pro/uniprot/${id}`,
+  PhaSepDB: (id) => `https://db.phasep.pro/uniprot/${id}`,
   PhasePro: (id) => `https://phasepro.elte.hu/entry/${id}`,
   CDCODE:   (id) => `https://cd-code.org/search?q=${id}&p=proteins`,
   LLPSDB:   (id) => `http://bio-comp.org.cn/llpsdbv2/search.php?keyword=UniprotID&words=${id}&pmid=&species=ALL&pro_struc_type=ALL&pro_type=ALL&pro_seq_len=ALL&main_comp_type=ALL&post_trans_mod=ALL&main_comp_num=ALL&mut_type=ALL&mutst=&mutend=&phase=None`,

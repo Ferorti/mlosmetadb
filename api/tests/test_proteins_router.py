@@ -28,7 +28,7 @@ def test_build_export_record_basic_omits_annotation_fields():
     row = {
         "uniprot_id": "P1", "gene_name": "G1", "protein_name": "N1", "organism": "Homo sapiens",
         "sequence_length": 100, "reviewed": 1, "has_driver": 1, "has_client": 0,
-        "source_dbs": "PhaseDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
+        "source_dbs": "PhaSepDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
     }
     record = _build_export_record(row, "basic")
     assert set(record.keys()) == set(_EXPORT_BASIC_FIELDS)
@@ -38,12 +38,12 @@ def test_build_export_record_full_parses_json_lists():
     row = {
         "uniprot_id": "P1", "gene_name": "G1", "protein_name": "N1", "organism": "Homo sapiens",
         "sequence_length": 100, "reviewed": 1, "has_driver": 1, "has_client": 0,
-        "source_dbs": "PhaseDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
+        "source_dbs": "PhaSepDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
     }
     record = _build_export_record(row, "full")
     assert set(record.keys()) == set(_EXPORT_FULL_FIELDS)
     assert record["mlos"] == ["a", "b"]
-    assert record["source_dbs"] == ["PhaseDB", "CDCODE"]
+    assert record["source_dbs"] == ["PhaSepDB", "CDCODE"]
     assert record["has_driver"] is True
 
 
@@ -51,7 +51,7 @@ def test_build_export_record_full_keeps_sequence_features_as_raw_json_text():
     row = {
         "uniprot_id": "P1", "gene_name": "G1", "protein_name": "N1", "organism": "Homo sapiens",
         "sequence_length": 100, "reviewed": 1, "has_driver": 1, "has_client": 0,
-        "source_dbs": "PhaseDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
+        "source_dbs": "PhaSepDB,CDCODE", "mlo_count": 2, "mlos": '["a","b"]',
         "idr_regions": '[{"start": 1, "end": 20}]', "lcr_regions": None,
         "domains": '[{"label": "KH domain"}]',
     }
@@ -63,11 +63,11 @@ def test_build_export_record_full_keeps_sequence_features_as_raw_json_text():
 
 
 def test_records_to_tsv_joins_lists_with_semicolon():
-    records = [{"uniprot_id": "P1", "mlos": ["a", "b"], "source_dbs": ["PhaseDB", "CDCODE"]}]
+    records = [{"uniprot_id": "P1", "mlos": ["a", "b"], "source_dbs": ["PhaSepDB", "CDCODE"]}]
     tsv = _records_to_tsv(records, ["uniprot_id", "mlos", "source_dbs"])
     lines = tsv.strip().split("\n")
     assert lines[0] == "uniprot_id\tmlos\tsource_dbs"
-    assert lines[1] == "P1\ta;b\tPhaseDB;CDCODE"
+    assert lines[1] == "P1\ta;b\tPhaSepDB;CDCODE"
 
 
 def test_records_to_tsv_passes_through_raw_json_text_unmodified():
@@ -127,7 +127,16 @@ def test_export_endpoint_invalid_fields_returns_422(test_db):
     assert r.json()["error"] == "invalid_parameter"
 
 
-def test_citation_check_combines_phasedb_and_phasepdb_into_one_entry(test_db):
+def test_citation_check_reports_canonical_display_names(test_db):
+    """Raw ingestion tags are folded to their published names before counting.
+
+    This replaces a test that asserted 'PhaseDB' and 'PhasePDB' both folded
+    into 'PhaSepDB'. Those two tags were a naming mistake that double-ingested
+    a single source; they no longer exist in the data, so the case they
+    covered is gone. What still has to hold is the general rule: a raw tag
+    whose spelling differs from the database's published name ('CDCODE' ->
+    'CD-CODE') is reported under the published name.
+    """
     conn = sqlite3.connect(test_db)
     conn.execute(
         "INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES ('condensate_y', 'Cytoplasmic')"
@@ -138,7 +147,7 @@ def test_citation_check_combines_phasedb_and_phasepdb_into_one_entry(test_db):
     )
     conn.execute(
         "INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) "
-        "VALUES ('PPDB01', 'PhasePDB', 'condensate_y', 'driver', 1)"
+        "VALUES ('PPDB01', 'CDCODE', 'condensate_y', 'driver', 1)"
     )
     conn.commit()
     conn.close()
@@ -146,9 +155,7 @@ def test_citation_check_combines_phasedb_and_phasepdb_into_one_entry(test_db):
     with TestClient(app) as client:
         r = client.post("/proteins/citations", json={"uniprot_ids": ["P35637", "PPDB01", "PCLIENT"]})
     assert r.status_code == 200
-    # P35637 and PCLIENT are tagged 'PhaseDB', PPDB01 is tagged 'PhasePDB' --
-    # both must fold into the single 'PhaSepDB' display name.
-    assert r.json()["by_source"] == {"PhaSepDB": 3}
+    assert r.json()["by_source"] == {"PhaSepDB": 2, "CD-CODE": 1}
 
 
 def test_citation_check_ignores_unmatched_uniprot_ids(test_db):

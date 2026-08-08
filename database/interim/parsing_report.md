@@ -4,6 +4,17 @@
 **Dataset final:** `database/mlosmetadb.tsv`  
 **Dataset referencia V1:** `database/databases_input_data/mlosmetadb_v1/mlosmetadb_dataset.tsv`
 
+> **Corrección (2026-08-08) — informe histórico, conteos desactualizados.**
+> Todo lo que este informe llama `PhaseDB` es **PhaSepDB**, y lo que en otros
+> documentos aparecía como `PhasePDB` es esa misma base: eran dos tags de
+> ingesta para un solo recurso, con dos parsers leyendo copias idénticas de
+> los mismos archivos. `parse_phasedb.py` y `parse_phasepdb.py` se
+> reemplazaron por `parsers/parse_phasesepdb.py`, e `integrate.py` ahora
+> deduplica a una fila por `(uniprot_id, source_db, source_mlo, source_role)`.
+> Las cifras de abajo (14 608 filas de PhaseDB, `phasedb.tsv`, etc.) son las
+> de abril y ya no describen el dataset. Ver
+> [docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md](../../docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md).
+
 ---
 
 ## 1. Resultados del parseo por fuente

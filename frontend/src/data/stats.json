@@ -1,44 +1,78 @@
 {
   "database_version": "2.0",
-  "last_updated": "2026-05-08",
+  "last_updated": "2026-08-08",
   "proteins": {
-    "total": 15409,
+    "total": 15879,
     "by_organism": {
-      "Homo sapiens": 6536,
-      "Mus musculus": 2470,
-      "Arabidopsis thaliana": 2049,
-      "Caenorhabditis elegans": 928,
-      "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)": 769,
-      "Xenopus laevis": 700,
-      "Bos taurus": 251,
-      "Danio rerio": 236,
-      "Drosophila melanogaster": 216,
-      "Rattus norvegicus": 93
+      "Homo sapiens": 6802,
+      "Mus musculus": 2543,
+      "Arabidopsis thaliana": 2088,
+      "Caenorhabditis elegans": 950,
+      "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)": 801,
+      "Xenopus laevis": 706,
+      "Bos taurus": 253,
+      "Danio rerio": 243,
+      "Drosophila melanogaster": 233,
+      "Rattus norvegicus": 115
     },
-    "total_organisms": 156,
-    "other_organisms_count": 1161
+    "by_organism_drivers": {
+      "Homo sapiens": 898,
+      "Mus musculus": 248,
+      "Arabidopsis thaliana": 109,
+      "Caenorhabditis elegans": 82,
+      "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)": 165,
+      "Xenopus laevis": 33,
+      "Bos taurus": 11,
+      "Danio rerio": 20,
+      "Drosophila melanogaster": 81,
+      "Rattus norvegicus": 50
+    },
+    "top_organisms": 10,
+    "total_organisms": 207,
+    "other_organisms_count": 1145,
+    "by_component_role": {
+      "component": 13850,
+      "driver": 2029
+    }
   },
   "mlo_annotations": {
-    "total": 37990,
-    "unique_mlos": 161,
+    "total": 34582,
+    "unique_mlos": 167,
     "by_source": {
-      "CDCODE": 13850,
-      "DrLLPS": 10873,
+      "CDCODE": 13845,
+      "DrLLPS": 9483,
       "LLPSDB": 380,
-      "PhaseDB": 12688,
+      "PhaSepDB": 10675,
       "PhasePro": 199
     },
     "unique_proteins_by_source": {
-      "CD-CODE": 13850,
-      "DrLLPS": 10873,
+      "CD-CODE": 10883,
+      "DrLLPS": 8148,
       "LLPSDB": 380,
-      "PhaSepDB": 12688,
-      "PhaSePro": 199
+      "PhaSePro": 116,
+      "PhaSepDB": 7755
     },
     "by_role": {
-      "driver": 1168,
-      "client": 6412,
-      "unknown": 11709
+      "client": 12347,
+      "driver": 2029,
+      "unknown": 10883
     }
+  },
+  "sequence_features": {
+    "total": 358867,
+    "by_type": {
+      "domain": 49105,
+      "family": 6040,
+      "idr": 180304,
+      "idr_curated": 1390,
+      "lcd": 53136,
+      "morf": 3256,
+      "plddt_region": 65636
+    },
+    "proteins_with_features": 14841
+  },
+  "ppi": {
+    "total_interactions": 917468,
+    "proteins_with_ppi": 11025
   }
 }

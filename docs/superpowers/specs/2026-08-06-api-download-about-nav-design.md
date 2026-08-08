@@ -1,5 +1,14 @@
 # Design: API, Download, and About nav sections
 
+> **Correction (2026-08-08).** This document treats `PhaseDB` and `PhasePDB`
+> as two source databases (or counts six sources where there are five). They
+> were two ingestion tags for one resource, **PhaSepDB**, whose two parsers
+> read byte-identical copies of the same export files — so every PhaSepDB
+> annotation was loaded twice. The document is left as written because it
+> records a past design decision; the tags no longer exist in the data. See
+> `docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md`.
+
+
 **Date**: 2026-08-06
 **Status**: approved, pending implementation plan
 **Scope**: fixes the broken `API`/`About` navbar links, builds a real `/api`

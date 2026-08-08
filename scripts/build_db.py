@@ -180,6 +180,12 @@ def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
 
 def load_mlo_definitions(con: sqlite3.Connection) -> int:
     path = FINAL / "mlo_definitions.csv"
+    # Reload from scratch: this script is documented as re-runnable over an
+    # existing mlosmetadb.db, and without the DELETE a second run appends a
+    # full duplicate copy of every definition. Only the tables build_db.py
+    # owns are cleared — proteins, sequence_features, ppi and orthologs carry
+    # fetched data this script never writes and must survive untouched.
+    con.execute("DELETE FROM mlo_definitions")
     vocab = {r[0] for r in con.execute("SELECT unified_mlo FROM mlo_vocabulary")}
     rows = []
     with open(path, newline="", encoding="utf-8") as f:
@@ -202,6 +208,9 @@ def load_mlo_definitions(con: sqlite3.Connection) -> int:
 
 def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
     path = DB_DIR / "mlosmetadb.tsv"
+    # Same reason as load_mlo_definitions(): re-running must replace the
+    # annotations, not stack a second copy on top of them.
+    con.execute("DELETE FROM mlo_annotations")
     vocab = {r[0] for r in con.execute("SELECT unified_mlo FROM mlo_vocabulary")}
     protein_stubs: set[str] = set()
     annotation_rows = []

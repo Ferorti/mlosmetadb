@@ -16,7 +16,7 @@ export const RELATED_PUBLICATION_CITATION = {
 
 export const LLPS_SOURCES = [
   {
-    key: 'phasepdb',
+    key: 'phasesepdb',
     name: 'PhaSepDB',
     description: 'PhaSepDB is a manually curated database of proteins associated with liquid–liquid phase separation (LLPS), the process underlying the formation of membraneless organelles. It compiles thousands of non-redundant proteins from different organelles, drawn from the published literature and other databases, and reports for each a functional summary, supporting references and the sequence features linked to LLPS behaviour.',
     citationText: 'You K, Huang Q, Yu C, Shen B, Sevilla C, Shi M, Hermjakob H, Chen Y, Li T. PhaSepDB: a database of liquid–liquid phase separation related proteins. Nucleic Acids Research. 2020;48(D1):D354–D359.',

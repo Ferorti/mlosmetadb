@@ -50,7 +50,7 @@ CREATE TABLE sequence_features (
 """
 
 # Fixture data, mirroring the project's standard test-protein convention:
-# - P35637 (FUS): one ACTIVE driver annotation in stress_granule via PhaseDB.
+# - P35637 (FUS): one ACTIVE driver annotation in stress_granule via PhaSepDB.
 # - QREG01 (synthetic): ONLY an INACTIVE DrLLPS-Regulator annotation in
 #   nucleolus -- the case that must be invisible everywhere after the fix.
 FIXTURE = """
@@ -65,13 +65,13 @@ INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
     ('nucleolus', 'Nuclear');
 
 INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('P35637', 'PhaseDB', 'stress_granule', 'driver', 1);
+    ('P35637', 'PhaSepDB', 'stress_granule', 'driver', 1);
 
 INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
     ('QREG01', 'DrLLPS', 'nucleolus', NULL, 0);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
-    ('P35637', 1, 0, 1, 1, '["stress_granule"]', 'PhaseDB'),
+    ('P35637', 1, 0, 1, 1, '["stress_granule"]', 'PhaSepDB'),
     ('QREG01', 0, 0, 0, 0, NULL, NULL);
 
 INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
@@ -80,9 +80,9 @@ INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
 INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
     ('PCLIENT', 'CLIENTTEST', 'Homo sapiens', 200);
 INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('PCLIENT', 'PhaseDB', 'p_granule', 'client', 1);
+    ('PCLIENT', 'PhaSepDB', 'p_granule', 'client', 1);
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
-    ('PCLIENT', 0, 1, 1, 1, '["p_granule"]', 'PhaseDB');
+    ('PCLIENT', 0, 1, 1, 1, '["p_granule"]', 'PhaSepDB');
 
 -- PNULLROLE: active mlo_annotations row with unified_role IS NULL (CD-CODE-
 -- style annotation gap), in its own MLO ('condensate_x') to avoid colliding

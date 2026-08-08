@@ -44,13 +44,23 @@ The `source_role` → `unified_role` mapping is fixed per source, not inferred p
 
 | Source DB | Source field/section | → `unified_role` |
 |---|---|---|
-| PhaseDB | `mlo_entries` file | `client` |
-| PhaseDB | `detail_database` file | `driver` |
+| PhaSepDB | `mlo_entries` file | `client` |
+| PhaSepDB | `detail_database` file | `driver` |
 | DrLLPS | `Scaffold` | `driver` |
 | DrLLPS | `Regulator` | excluded (not inserted) |
 | LLPSDB | (all rows) | `driver` (default) |
 | PhasePro | (all rows) | `driver` (default) |
 | CD-CODE | (all rows) | `NULL` (no structured role data in source) |
+
+PhaSepDB publishes its two datasets separately — a curated set of LLPS drivers
+(`detail_database`) and a set of proteins detected as components of MLOs
+(`mlo_entries`) — and a protein can appear in both. That is not a conflict to
+resolve: driving phase separation and being detected inside a condensate are
+two different experimental observations, so both annotations are kept, each
+with its own PMIDs. A protein can therefore be a driver and a component of the
+same MLO, and the row grain that expresses this is
+`(uniprot_id, source_db, source_mlo, source_role)` — the same grain used for
+every other source.
 
 ## "Droplet" terminology
 
@@ -162,7 +172,17 @@ for the implementation (`filterMlos()` in `frontend/src/utils/format.js`).
   source annotation practices — see "Driver vs. Component" above.
 - CD-CODE contributes MLO associations with **no role data at all** — always `NULL`,
   not an oversight to be "fixed" by inferring a role.
-- The MLO count discrepancy between PhaseDB (124 organelles) and MLOsMetaDB (91) has
+- **There are five source databases, not six.** `PhaseDB` and `PhasePDB` were
+  two `source_db` tags for a single resource, **PhaSepDB**, ingested twice by
+  two parsers reading byte-identical copies of the same two export files. It
+  was a naming mistake, never a biological distinction. Fixed 2026-08-08: one
+  parser, one tag (`PhaSepDB`), and the rows deduplicated — annotation rows
+  went from 54,786 to 35,971 and `protein_summary.source_db_count` now maxes
+  out at 5 instead of a nonexistent 6. Any figure quoted from a dataset
+  snapshot older than that date is inflated. This was an ingestion defect, not
+  a curation one — no mapping decision above changed as a result. Full account
+  in [docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md](docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md).
+- The MLO count discrepancy between PhaSepDB (124 organelles) and MLOsMetaDB (91) has
   two causes, not one: intentional consolidation of synonymous names (see mapping
   decisions above) AND genuinely missing entries in `mlo_mapping.tsv` coverage
-  (~50-60 PhaseDB rows). Do not assume all discrepancy is intentional consolidation.
+  (~50-60 PhaSepDB rows). Do not assume all discrepancy is intentional consolidation.

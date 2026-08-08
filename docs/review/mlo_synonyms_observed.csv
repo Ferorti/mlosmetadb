@@ -1,0 +1,412 @@
+source_mlo,unified_mlo,source_dbs,annotations
+NotInformed,NotInformed,PhaSepDB,930
+Abscission checkpoint body,abscission_checkpoint_body,PhaSepDB,3
+actin cortical patch,actin_cortical_patch,PhasePro,3
+Actin nucleator,actin_cortical_patch,CDCODE,1
+Cobl condensate,actin_cortical_patch,CDCODE,1
+Aggresome,aggresome,CDCODE,6
+Als5p amyloid,amyloid_aggregate,CDCODE,1
+Amyloid body,amyloid_body,PhaSepDB,2
+Anisosome,anisosome,"CDCODE,PhaSepDB",12
+Ankle Link Complex (ALC) Condensate,ankle_link_condensate,CDCODE,4
+Row 1-specific tip complex condensates,ankle_link_condensate,CDCODE,4
+Antiviral condensate,antiviral_condensate,PhaSepDB,1
+Assemblysome,assemblysome,"CDCODE,PhaSepDB",4
+axonal TIAR-2 granules,axonal_tiar2_granule,PhasePro,1
+BR-body,bacterial_rnp_body,CDCODE,14
+ABC transporter condensate,bacterial_rnp_body,CDCODE,2
+BR-bodies,bacterial_rnp_body,PhaSepDB,2
+bacterial RNP-bodies (BR-bodies),bacterial_rnp_body,PhasePro,1
+BAG2 condensate,bag2_condensate,PhaSepDB,1
+Mitochondrial cloud,balbiani_body,CDCODE,598
+Balbiani body,balbiani_body,"CDCODE,DrLLPS,PhaSepDB,PhasePro",360
+mitochondrial cloud,balbiani_body,PhasePro,2
+BAZ2A bodies,baz2a_body,CDCODE,1
+Cajal body,cajal_body,"CDCODE,DrLLPS,PhaSepDB",368
+Carboxysome,carboxysome,"CDCODE,PhaSepDB",3
+Enzyme_shell proteins condensates,carboxysome,CDCODE,2
+Centrosome,centrosome,"CDCODE,PhaSepDB",987
+Pericentriolar matrix,centrosome,"CDCODE,DrLLPS,PhaSepDB",22
+Pericentriolar material,centrosome,CDCODE,3
+Pericentriolar compartment,centrosome,CDCODE,2
+pericentriolar material,centrosome,PhasePro,1
+cGAS foci,cgas_dna_complex,"CDCODE,PhasePro",5
+cGAS-DNA complex,cgas_dna_complex,PhaSepDB,3
+Chloroplast Stress granule,chloroplast_stress_granule,CDCODE,79
+Euchromatin,chromatin_compartment,CDCODE,2
+euchromatin,chromatin_compartment,PhasePro,2
+eukaryotic topoisomerase ii,chromatin_compartment,CDCODE,2
+Chromatin,chromatin_compartment,DrLLPS,1
+Chromatoid body,chromatoid_body,"CDCODE,DrLLPS",222
+Chromogranin condensates,chromogranin_condensate,CDCODE,3
+Large dense-core vesicles,chromogranin_condensate,CDCODE,1
+Cleavage body,cleavage_body,"CDCODE,DrLLPS",6
+Cojusome,cojusome,CDCODE,1
+Contractile ring condensate,contractile_ring,CDCODE,1
+contractile ring,contractile_ring,PhasePro,1
+Cortical condensate,cortical_condensate,PhaSepDB,1
+Cytoplasmic Nucleoporin Granule,cytoplasmic_nucleoporin_granule,PhaSepDB,3
+cytoplasmic protein granule,cytoplasmic_protein_granule,PhasePro,14
+Cytoplasmic bodies,cytoplasmic_protein_granule,CDCODE,3
+RNP granules,cytoplasmic_rnp_granule,PhaSepDB,43
+cytoplasmic ribonucleoprotein granule,cytoplasmic_rnp_granule,PhasePro,7
+Cytoplasmic protein granule,cytoplasmic_rnp_granule,CDCODE,5
+Translational Condensate,cytoplasmic_rnp_granule,CDCODE,4
+Cpeb1b-Pabpc1b-shh Condensate,cytoplasmic_rnp_granule,CDCODE,3
+RNP granule,cytoplasmic_rnp_granule,CDCODE,3
+CPEB4 granule,cytoplasmic_rnp_granule,CDCODE,1
+Ddx3xb condensates,cytoplasmic_rnp_granule,CDCODE,1
+FXR1 condensates,cytoplasmic_rnp_granule,CDCODE,1
+FXR1 network,cytoplasmic_rnp_granule,PhaSepDB,1
+MEX3B granule,cytoplasmic_rnp_granule,CDCODE,1
+WHI3 cluster,cytoplasmic_rnp_granule,CDCODE,1
+D-granule,d_granule,CDCODE,1
+DDX1 body,ddx1_body,"CDCODE,DrLLPS",4
+Degradosome,degradosome,CDCODE,12
+DNA damage foci,dna_damage_foci,"CDCODE,DrLLPS,PhaSepDB",73
+SOSS-INTAC Condensate,dna_damage_foci,CDCODE,5
+53BP1 Mitotic Stress Body (MSBs),dna_damage_foci,CDCODE,3
+PARP1-DNA condensate,dna_damage_foci,CDCODE,3
+TopBP1 condensate,dna_damage_foci,CDCODE,1
+Dps condensate,dps_condensate,CDCODE,1
+Elastin granule,elastin_granule,CDCODE,1
+ELKS condensate,elks_condensate,PhaSepDB,1
+ELVA,elva,CDCODE,13
+Ede1 condensate,endocytic_condensate,CDCODE,11
+Endocytic condensates,endocytic_condensate,CDCODE,3
+enhanceosome,enhanceosome,PhasePro,4
+enhancer condensate,enhancer_condensate,PhaSepDB,4
+MegaTrans enhancer complex,enhancer_condensate,CDCODE,2
+nuclear bodies that occur at super enhancers in mESCs,enhancer_condensate,PhasePro,2
+robustly E2-activated enhancers (MegaTrans) enhancers,enhancer_condensate,PhasePro,2
+Enhancer cluster,enhancer_condensate,CDCODE,1
+ERES,eres_condensate,CDCODE,8
+SCOTIN condensate,eres_condensate,CDCODE,3
+ESCRTs,escrt_condensate,CDCODE,1
+SDC4 exosomal condensate,exosomal_condensate,CDCODE,1
+YBX1 condensate,exosomal_condensate,CDCODE,1
+Ferritin-NCOA4 condensate,ferritin_condensate,CDCODE,3
+FIP200 puncta,fip200_puncta,PhaSepDB,2
+FRQ condensate,frq_condensate,CDCODE,1
+FtsZ/SlmA body,ftsz_droplet,CDCODE,2
+Ftsz-rich droplets at specific chromosomal DNA sites,ftsz_droplet,PhasePro,2
+FtsZ condensate,ftsz_droplet,CDCODE,1
+Galectin complex,galectin_condensate,CDCODE,1
+galectin complex,galectin_lattice,PhasePro,1
+galectin lattice,galectin_lattice,PhasePro,1
+GBPL defense-activated condensates,gbpl_condensate,PhaSepDB,1
+Gemini of cajal body,gem,DrLLPS,12
+Gems,gem,PhaSepDB,1
+SMN1 nuclear body,gem,CDCODE,1
+Germ plasm,germ_plasm,PhaSepDB,4
+Germ plasm/Polar granule,germ_plasm,DrLLPS,2
+germ plasm,germ_plasm,PhasePro,2
+Founder granule,germ_plasm,CDCODE,1
+Glycolytic body,glycolytic_body,PhaSepDB,9
+G-body,glycolytic_body,CDCODE,5
+PFK-1.1 condensates,glycolytic_body,CDCODE,1
+Golgin condensate,golgin_condensate,"CDCODE,PhaSepDB",14
+Golgi ribbon,golgin_condensate,CDCODE,1
+Haemoglobin body,haemoglobin_body,PhaSepDB,2
+Heterochromatin,heterochromatin,"CDCODE,PhaSepDB",51
+XY body,heterochromatin,PhaSepDB,10
+heterochromatin,heterochromatin,PhasePro,4
+TAZ Condensate,hippo_condensate,CDCODE,8
+Hippo signalosome,hippo_condensate,CDCODE,7
+NEDD4 condensates,hippo_condensate,CDCODE,3
+DDR1 condensate,hippo_condensate,CDCODE,2
+Histone locus body,histone_locus_body,"DrLLPS,PhaSepDB",34
+Histone Locus Body,histone_locus_body,CDCODE,15
+Hyperosmotic shock foci,hyperosmotic_shock_foci,PhaSepDB,18
+Hypersomatic shock foci,hyperosmotic_shock_foci,CDCODE,17
+ICP22 condensate,icp22_condensate,PhaSepDB,2
+in vitro droplet,in_vitro_droplet,"DrLLPS,LLPSDB",551
+IL-1b-induced INAVA condensates,inava_condensate,CDCODE,1
+INAVA condensates,inava_condensate,CDCODE,1
+Inclusion body,inclusion_body,"CDCODE,PhaSepDB",67
+inclusion body-associated granule (IBAG),inclusion_body,CDCODE,9
+P6 inclusion body,inclusion_body,CDCODE,6
+Htt inclusion,inclusion_body,"CDCODE,PhaSepDB",5
+Inclusion Body,inclusion_body,CDCODE,4
+inclusion body,inclusion_body,PhasePro,3
+TDP-25 inclusions,inclusion_body,CDCODE,1
+TIFA-TRAF6 Condensate,inflammasome,CDCODE,7
+Inflammasome,inflammasome,CDCODE,2
+Intranuclear quality control compartment,inq_compartment,PhaSepDB,1
+Insulator body,insulator_body,"CDCODE,DrLLPS",21
+Integrin adhesion complex,integrin_adhesion_complex,PhaSepDB,3
+focal adhesion (FA) condensate,integrin_adhesion_complex,CDCODE,3
+intracellular DNA/protein granule,intracellular_dna_protein_granule,PhasePro,1
+KAT6A droplet,kat6a_condensate,PhaSepDB,1
+L-body,l_body,PhaSepDB,76
+L-bodies,l_body,CDCODE,10
+DYRK3 speckle,liquid_dyrk3_speckle,CDCODE,1
+liquid-like DYRK3 speckles,liquid_dyrk3_speckle,PhasePro,1
+MARDO,mardo,CDCODE,7
+Mast cell extracellular granules (MCEGs),mast_cell_granule,CDCODE,533
+Nuclear poly(A) domains,maternal_mrna_condensate,CDCODE,1
+Rbm14-maternal mRNA condensate,maternal_mrna_condensate,PhaSepDB,1
+McdB condensate,mcd_condensate,CDCODE,2
+Mediator condensate,mediator_condensate,PhaSepDB,6
+Mesh-like condensate,mesh_condensate,PhaSepDB,3
+Midbody Granule,midbody_granule,CDCODE,7
+miRISC,mirisc,"PhaSepDB,PhasePro",4
+RISC complex,mirisc,PhasePro,2
+miRISC condensate,mirisc,CDCODE,2
+micro-ribonucleoprotein complex,mirisc,PhasePro,2
+Mitochondrial nucleoid,mitochondrial_nucleoid,PhaSepDB,6
+Mitochondrial RNA granule,mitochondrial_rna_granule,DrLLPS,42
+mtRNA granule,mitochondrial_rna_granule,CDCODE,42
+MORC3 nuclear body,morc3_nuclear_body,CDCODE,1
+MORC3-NBs,morc3_nuclear_body,PhasePro,1
+MUTator foci,mutator_foci,CDCODE,1
+Mutator foci,mutator_foci,PhaSepDB,1
+mutator focus,mutator_foci,PhasePro,1
+small RNA amplification complex,mutator_foci,PhasePro,1
+Arsenite-induced Necrosome,necrosome,CDCODE,7
+Necrosome,necrosome,PhaSepDB,2
+Negri body,negri_body,"CDCODE,PhaSepDB,PhasePro",9
+Neuronal granule,neuronal_granule,"CDCODE,DrLLPS,PhaSepDB",67
+Neuronal RNP granule,neuronal_granule,CDCODE,66
+IMP1 RNP granule,neuronal_granule,CDCODE,39
+neuronal ribonucleoprotein granule,neuronal_granule,PhasePro,5
+Mimi granules,neuronal_granule,CDCODE,3
+RBFOX1 RNP granule,neuronal_granule,CDCODE,2
+RNP transport granule,neuronal_granule,PhaSepDB,2
+TIAR2 neuronal granule,neuronal_granule,CDCODE,1
+NikR compartments,nikr_compartment,PhaSepDB,1
+Non-paraspeckle NONO condensate,nono_condensate,PhaSepDB,3
+NORAD-PUM body,norad_pum_body,PhaSepDB,2
+NP bodies,norad_pum_body,CDCODE,2
+Nuage,nuage,"CDCODE,DrLLPS,PhaSepDB",13
+IMC (intermitochondrial cement),nuage,CDCODE,1
+Nuclear body,nuclear_body,"CDCODE,PhaSepDB",226
+Leucocyte nuclear body,nuclear_body,CDCODE,21
+nuclear body,nuclear_body,PhasePro,16
+Ccer1 condensate,nuclear_body,CDCODE,2
+RBM15 condensate,nuclear_body,CDCODE,2
+SPRI2 Nuclear Condensate,nuclear_body,CDCODE,2
+NAB3 nuclear body,nuclear_body,CDCODE,1
+VRN1 nuclear body,nuclear_body,CDCODE,1
+Nuclear dicing body,nuclear_dicing_body,"CDCODE,PhaSepDB",6
+Nuclear pore complex,nuclear_pore_complex,"CDCODE,DrLLPS,PhaSepDB",114
+nuclear pore central transport channel,nuclear_pore_complex,PhasePro,3
+selective hydrogel-like meshwork formed by FG-nucleoporins in nuclear pore central channel,nuclear_pore_complex,PhasePro,3
+nuclear protein granule,nuclear_protein_granule,PhasePro,6
+Nuclear speckle,nuclear_speckle,"CDCODE,DrLLPS,PhaSepDB",1042
+nuclear speckle,nuclear_speckle,PhasePro,3
+AFAP1-AS1 condensates,nuclear_speckle,CDCODE,2
+ALYREF condensates,nuclear_speckle,CDCODE,1
+METTL14 condensate,nuclear_speckle,CDCODE,1
+Omega speckle,nuclear_speckle,CDCODE,1
+Nuclear stress body,nuclear_stress_body,"CDCODE,DrLLPS,PhaSepDB",594
+A-bodies,nuclear_stress_body,CDCODE,2
+Nucleolus,nucleolus,"CDCODE,DrLLPS,PhaSepDB",9385
+Dense Fibrillar Component,nucleolus,CDCODE,9
+nucleolus,nucleolus,PhasePro,5
+Dense fibrillar component,nucleolus,CDCODE,2
+Granular component,nucleolus,CDCODE,2
+dense fibrillar component,nucleolus,PhasePro,2
+rDNA locus,nucleolus,CDCODE,2
+granular component,nucleolus,PhasePro,1
+OPT domain,opt_domain,DrLLPS,7
+Oskar granule,oskar_granule,PhaSepDB,4
+p62 cluster,p62_body,PhaSepDB,784
+ORF8/p62 condensate,p62_body,CDCODE,4
+P62 cluster,p62_body,CDCODE,4
+P62 body,p62_body,CDCODE,3
+p62 body,p62_body,PhasePro,1
+P-body,p_body,"CDCODE,DrLLPS,PhaSepDB,PhasePro",2305
+p62-dependent P-bodies (pd-PBs),p_body,CDCODE,11
+GW-body,p_body,"CDCODE,PhasePro",5
+PB-like Assembly,p_body,CDCODE,3
+CCR4-NOT1 complex,p_body,CDCODE,1
+P granule,p_granule,"DrLLPS,PhaSepDB,PhasePro",764
+P-granule,p_granule,CDCODE,49
+Germ granule,p_granule,CDCODE,14
+PGL granules,p_granule,CDCODE,5
+Trbd,p_granule,CDCODE,1
+Pab2 nuclear condensate,pab2_condensate,PhaSepDB,1
+ParABS DNA,parabs_condensate,CDCODE,1
+Paraspeckle,paraspeckle,"CDCODE,DrLLPS,PhaSepDB",376
+NONO,paraspeckle,CDCODE,3
+paraspeckle,paraspeckle,PhasePro,3
+Peri-nucleolar condensate,perinucleolar_compartment,CDCODE,6
+Perinucleolar compartment,perinucleolar_compartment,DrLLPS,2
+pi-body,pi_body,PhasePro,1
+Photobody,plant_photobody,PhaSepDB,7
+Plant Photobody,plant_photobody,CDCODE,5
+CRY2/SPA1/FIO1 condensate,plant_photobody,CDCODE,3
+OsSRO1c-OsDREB2B condensate,plant_signaling_condensate,CDCODE,2
+RH20 condensate,plant_signaling_condensate,CDCODE,2
+OsJAZ2 condensate,plant_signaling_condensate,CDCODE,1
+PARCL condensate,plant_signaling_condensate,CDCODE,1
+Plant growth regulator,plant_signaling_condensate,CDCODE,1
+PML body,pml_nuclear_body,"CDCODE,PhasePro",562
+PML nuclear body,pml_nuclear_body,"DrLLPS,PhaSepDB",456
+PML/RARα microspeckle,pml_nuclear_body,PhaSepDB,1
+Polarisome,polarisome,CDCODE,1
+Par complex,polarity_condensate,"CDCODE,PhaSepDB",7
+PopZ condensate,polarity_condensate,CDCODE,6
+PodJ condensates,polarity_condensate,CDCODE,3
+Numb/Pon condensate,polarity_condensate,CDCODE,2
+basal Numb-Pon crescent in dividing neuroblasts,polarity_condensate,PhasePro,2
+Fus1 condensate,polarity_condensate,CDCODE,1
+PcG body,polycomb_body,"CDCODE,DrLLPS",70
+Polycomb body,polycomb_body,PhaSepDB,11
+PcG chromatin condensates,polycomb_body,PhasePro,1
+PolyP granule,polyp_granule,CDCODE,1
+Postsynaptic density,postsynaptic_density,"CDCODE,DrLLPS,PhaSepDB",4468
+Rapsn condensate,postsynaptic_density,CDCODE,7
+postsynaptic density,postsynaptic_density,PhasePro,2
+ArgBP2 dendritic spine condensate,postsynaptic_density,CDCODE,1
+FATZ-1 condensate,postsynaptic_density,CDCODE,1
+ATG condensate,pre_autophagosomal_structure,CDCODE,5
+Pre-autophagosomal structure,pre_autophagosomal_structure,PhaSepDB,5
+ATG4B condensate,pre_autophagosomal_structure,CDCODE,1
+Presynaptic clusters and postsynaptic densities,presynaptic_active_zone,CDCODE,1366
+Presynaptic clusters,presynaptic_active_zone,CDCODE,15
+Presynaptic active zone condensate,presynaptic_active_zone,PhaSepDB,11
+presynaptic cytosol,presynaptic_active_zone,PhasePro,2
+Proteasome condensate,proteasome_foci,CDCODE,8
+Proteasome containing foci,proteasome_foci,PhaSepDB,7
+Proteasome Storage Granule,proteasome_foci,PhaSepDB,5
+senescence-associated nuclear proteasome foci,proteasome_foci,CDCODE,5
+BAG2,proteasome_foci,CDCODE,1
+Purinosome,purinosome,"CDCODE,PhaSepDB",8
+Pyrenoid matrix,pyrenoid,DrLLPS,181
+Pyrenoid,pyrenoid,CDCODE,84
+pyrenoid,pyrenoid,PhasePro,2
+Refractile body,refractile_body,CDCODE,1
+viral replication compartment (VRC),replication_compartment,CDCODE,8
+ORC1 bodies,replication_compartment,CDCODE,5
+Replication compartment,replication_compartment,PhaSepDB,5
+Pre-replication compartment (PRC),replication_compartment,CDCODE,3
+VRO-associated condensate,replication_compartment,PhaSepDB,1
+Virus-induced replication (VIR) condensate,replication_compartment,CDCODE,1
+Rho body,rho_body,CDCODE,1
+RNA-helicase condensates,rna_helicase_condensate,PhaSepDB,1
+Sam68 nuclear body,sam68_nuclear_body,"CDCODE,DrLLPS,PhaSepDB",38
+Sam68 nuclear bodies (SNBs),sam68_nuclear_body,PhasePro,2
+FXR-driven SARS-CoV-2 condensate,sars_cov2_n_condensate,CDCODE,5
+SARS-CoV-2 N condensate,sars_cov2_n_condensate,PhaSepDB,4
+SARS-CoV-2 condensate,sars_cov2_n_condensate,CDCODE,4
+Sec body,sec_body,"PhaSepDB,PhasePro",11
+Sec-body,sec_body,CDCODE,8
+sex body,sex_body,CDCODE,2
+Signaling cluster,signaling_cluster,CDCODE,25
+Receptor cluster,signaling_cluster,"DrLLPS,PhaSepDB",24
+membrane cluster,signaling_cluster,PhasePro,3
+PCBP2 condensates,signaling_condensate,CDCODE,5
+SSB condensate,signaling_condensate,CDCODE,3
+PARP5A–RNF146 condensate,signaling_condensate,CDCODE,2
+PGAM5-MAVS Condensate,signaling_condensate,CDCODE,2
+Plectin condensates,signaling_condensate,CDCODE,2
+BMP2K condensate,signaling_condensate,CDCODE,1
+EML4-ALK condensates,signaling_condensate,CDCODE,1
+HSP condensate,signaling_condensate,CDCODE,1
+Insulin/IGF-1 signalosomes,signaling_condensate,CDCODE,1
+Nur77 condensate,signaling_condensate,CDCODE,1
+Signalosome,signaling_condensate,CDCODE,1
+TBC1D2B condensate,signaling_condensate,CDCODE,1
+SIMR foci,simr_foci,CDCODE,2
+SINT-speckle,sint_speckle,PhaSepDB,5
+Sint speckle,sint_speckle,CDCODE,4
+Sirna body,sirna_body,CDCODE,5
+siRNA body,sirna_body,DrLLPS,2
+Slit diaphragm condensate,slit_diaphragm_condensate,CDCODE,3
+SMN-Rpp20 complex,smn_complex,CDCODE,1
+Spider Silk Spidroin,spider_silk_condensate,CDCODE,1
+Spindle apparatus,spindle_apparatus,"DrLLPS,PhaSepDB",78
++TIP body,spindle_apparatus,CDCODE,6
++TIP,spindle_apparatus,CDCODE,3
+Birc5b assembly,spindle_apparatus,CDCODE,1
+EB1F condensate,spindle_apparatus,CDCODE,1
+GAS2L3 condensates,spindle_apparatus,CDCODE,1
+Spindle matrix,spindle_apparatus,CDCODE,1
+condensed compartments of microtubule bundling,spindle_apparatus,PhasePro,1
+spindle matrix,spindle_apparatus,PhasePro,1
+Centrosome/Spindle pole body,spindle_pole_body,DrLLPS,910
+Splicesome,spliceosome,PhaSepDB,1
+Sponge body,sponge_body,"CDCODE,DrLLPS",27
+SPOP/DAXX body,spop_daxx_body,"CDCODE,PhasePro",4
+STD1 body,std1_body,CDCODE,1
+Std1 bodies,std1_body,PhasePro,1
+STING phase-separator,sting_phase_separator,"CDCODE,PhaSepDB",3
+Stress granule,stress_granule,"CDCODE,DrLLPS,PhaSepDB",4932
+Stress Granule,stress_granule,CDCODE,56
+cytoplasmic stress granule,stress_granule,PhasePro,18
+DHX9 Stress Granules,stress_granule,CDCODE,12
+Osmotic stress granule,stress_granule,PhaSepDB,1
+eIF5B granules,stress_granule,CDCODE,1
+Sup35 condensate,sup35_condensate,"CDCODE,PhasePro",4
+α-synuclein condensates,synapsin_condensate,"CDCODE,PhaSepDB",7
+Synapsin condensate,synapsin_condensate,PhaSepDB,5
+a matrix holding together clusters of synaptic vesicles (SVs),synapsin_condensate,PhasePro,2
+α-synnuclein condensates,synapsin_condensate,CDCODE,1
+LAT signalosome,t_cell_signalosome,PhasePro,3
+T-cell signalosome,t_cell_signalosome,CDCODE,3
+TCR signalosome,t_cell_signalosome,PhasePro,3
+TAM body,tam_body,DrLLPS,11
+Tam body,tam_body,CDCODE,11
+Tau condensate,tau_condensate,PhaSepDB,270
+Tau Condensate,tau_condensate,CDCODE,5
+Tau inclusion,tau_condensate,CDCODE,1
+TDP-43 nuclear condensate,tdp43_nuclear_condensate,PhaSepDB,2
+TIS granule,tis_granule,"CDCODE,PhaSepDB,PhasePro",3
+TmaR condensate,tmar_condensate,PhaSepDB,1
+Transcriptional condensate,transcriptional_condensate,"CDCODE,PhaSepDB",163
+Transcription Elongation Condensate,transcriptional_condensate,CDCODE,8
+c‐Maf condensates,transcriptional_condensate,CDCODE,6
+Elongation complex,transcriptional_condensate,PhaSepDB,5
+SGF29 condensate,transcriptional_condensate,CDCODE,4
+Transcription condensate,transcriptional_condensate,CDCODE,4
+cBAF condensate,transcriptional_condensate,CDCODE,4
+BRD4 condensate,transcriptional_condensate,CDCODE,3
+CEBPZ condensates,transcriptional_condensate,CDCODE,3
+TFAP2β condensates,transcriptional_condensate,CDCODE,3
+Transcriptional condensates,transcriptional_condensate,CDCODE,3
+EWS-FLI1,transcriptional_condensate,CDCODE,2
+IFN-I transcriptional condensate,transcriptional_condensate,CDCODE,2
+KAT8-IRF1 condensate,transcriptional_condensate,CDCODE,2
+POLII clusters,transcriptional_condensate,PhasePro,2
+"RNA polymerase II, holoenzyme",transcriptional_condensate,PhasePro,2
+EWSR1 condensates,transcriptional_condensate,CDCODE,1
+MEF2D Condensate,transcriptional_condensate,CDCODE,1
+RNA polymerase clusters,transcriptional_condensate,CDCODE,1
+nYAC,transcriptional_condensate,CDCODE,1
+TWN body,twn_body,PhaSepDB,3
+U1 snRNP condensate,u1_snrnp_condensate,PhaSepDB,2
+U-body,u_body,CDCODE,5
+U body,u_body,DrLLPS,3
+UBQLN puncta,ubqln_puncta,PhaSepDB,4
+Ubqln puncta,ubqln_puncta,CDCODE,3
+ViPR body,vipr_body,PhaSepDB,2
+Viral factory,viral_factory,CDCODE,5
+cytoplasmic viral factory,viral_factory,PhasePro,5
+cytoplasmic Virion Assembly Compartments (cVACs),viral_factory,CDCODE,4
+Cytoplasmic viral factory,viral_factory,CDCODE,3
+HIV core condensate,viral_factory,CDCODE,3
+HIV-1-MLO,viral_factory,PhaSepDB,3
+RPSA-VIM-ENO Condensate,viral_factory,CDCODE,3
+RdRp condensates,viral_factory,CDCODE,3
+LANA body,viral_factory,CDCODE,2
+Viral Factory,viral_factory,CDCODE,2
+Cytoplasmic virion assembly compartment,viral_factory,PhaSepDB,1
+Virion assembly compartment,viral_factory,PhaSepDB,1
+Viroplasm,viroplasm,PhaSepDB,23
+GCRV viroplasm,viroplasm,CDCODE,13
+viroplasm,viroplasm,PhasePro,3
+WNK body,wnk_body,CDCODE,4
+Beta-Catenin Destruction Complex,wnt_destruction_complex,CDCODE,6
+Destruction complex condensate,wnt_destruction_complex,PhaSepDB,6
+Wnt signalodroplet,wnt_signaling_condensate,PhaSepDB,4
+LEF1/Beta-catenin condensate,wnt_signaling_condensate,CDCODE,2
+DVL2 condensates,wnt_signaling_condensate,CDCODE,1
+Dishevelled condensate,wnt_signaling_condensate,CDCODE,1
+Dvl2 condensate,wnt_signaling_condensate,PhaSepDB,1
+Yb body,yb_body,"PhaSepDB,PhasePro",5
+Yb-body,yb_body,CDCODE,4
+Z granule,z_granule,PhaSepDB,48
+Z-granule,z_granule,CDCODE,3
+Junctional condensate,zo_protein_compartment,CDCODE,5

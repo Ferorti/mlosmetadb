@@ -1,5 +1,14 @@
 # About Page Implementation Plan
 
+> **Correction (2026-08-08).** This document treats `PhaseDB` and `PhasePDB`
+> as two source databases (or counts six sources where there are five). They
+> were two ingestion tags for one resource, **PhaSepDB**, whose two parsers
+> read byte-identical copies of the same export files — so every PhaSepDB
+> annotation was loaded twice. The document is left as written because it
+> records a past design decision; the tags no longer exist in the data. See
+> `docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md`.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the `AboutPage.vue` stub with a full page: interactive data

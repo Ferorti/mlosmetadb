@@ -1,7 +1,7 @@
 # MLOsMetaDB
 
-A meta-database unifying protein annotations from six source databases
-(PhaseDB, PhasePDB, DrLLPS, LLPSDB, PhasePro, CD-CODE) related to
+A meta-database unifying protein annotations from five source databases
+(PhaSepDB, DrLLPS, LLPSDB, PhasePro, CD-CODE) related to
 liquid-liquid phase separation (LLPS) and membraneless organelles (MLOs),
 enriched with UniProt metadata, InterPro/MobiDB sequence features, BioGRID
 protein-protein interactions, and OMA orthologs.
@@ -25,10 +25,12 @@ Serves `mlos.leloir.org.ar`'s public REST API and SPA frontend.
 - `docs/` — spec/plan history for this restructuring.
 - `OLD/` — the pre-restructuring codebase, retired. No *code* here is
   depended on by anything current, but `OLD/database/databases_input_data/`
-  is still the only copy of the PhasePDB and V1 source inputs
-  `parsers/parse_phasepdb.py`, `database/compare_v1_v2.py`, and
-  `database/get_phasepdb_mlo_entries.py` need — see `REFACTOR_LOG.md`
-  Entry 10 before deleting anything under `OLD/`.
+  is still the only copy of the V1 source inputs `database/compare_v1_v2.py`
+  and `database/get_phasepdb_mlo_entries.py` need — see `REFACTOR_LOG.md`
+  Entry 10 before deleting anything under `OLD/`. Its `phasepdb/`
+  subdirectory holds byte-identical copies of two PhaSepDB exports already
+  present in `database/raw/`; nothing in the pipeline reads them since the
+  PhaSepDB parsers were merged.
 
 ## Running it
 

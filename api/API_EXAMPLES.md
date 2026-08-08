@@ -25,8 +25,8 @@ Server for all examples below: `refactor/api`, `python3 -m uvicorn main:app
 curl "http://127.0.0.1:8010/stats"
 ```
 
-Real response (head — `mlo_annotations.by_source` continues past `PhaseDB`
-in the actual response; truncated here only for length):
+Real response (head — the other top-level sections are truncated here only
+for length):
 
 ```json
 {
@@ -39,24 +39,31 @@ in the actual response; truncated here only for length):
         "total_organisms": 0
     },
     "mlo_annotations": {
-        "total": 53396,
+        "total": 34582,
         "unique_mlos": 167,
         "by_source": {
-            "CDCODE": 13851,
+            "CDCODE": 13845,
             "DrLLPS": 9483,
             "LLPSDB": 380,
-            "PhaseDB": 14608,
-            "PhasePDB": 14875,
+            "PhaSepDB": 10675,
             "PhasePro": 199
         }
     }
 }
 ```
 
-`mlo_annotations.total` (53396) is the count of `dataset_active=1` rows —
+`by_source` has **five** keys, one per source database. An older capture of
+this response showed six, splitting PhaSepDB across `PhaseDB` (14,608) and
+`PhasePDB` (14,875) — those were two ingestion tags for one resource, and the
+duplicate rows behind them were removed on 2026-08-08 (see
+[docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md](../docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md)).
+If a live response still shows either tag, the server is holding an in-memory
+copy of a pre-fix DB — restart `uvicorn`.
+
+`mlo_annotations.total` (34582) is the count of `dataset_active=1` rows —
 confirmed by cross-checking against `SELECT COUNT(*) FROM mlo_annotations
 WHERE dataset_active = 1` directly on the DB, which returns the identical
-number. The 1,390 `dataset_active=0` DrLLPS Regulator rows are excluded from
+number. The 1,389 `dataset_active=0` DrLLPS Regulator rows are excluded from
 this total, per the serving policy (see `CLAUDE.md`'s "Serving policy"
 section).
 

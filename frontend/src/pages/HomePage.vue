@@ -51,7 +51,7 @@ function searchExample(term) {
         <p class="text-gray-500 text-sm max-w-2xl mx-auto mt-2 leading-relaxed">
           A meta-database of proteins associated with membraneless organelles
           involved in liquid-liquid phase separation.
-          Integrates <span class="font-medium text-gray-600">PhaseDB, DrLLPS, PhasePro, LLPSDB</span>
+          Integrates <span class="font-medium text-gray-600">PhaSepDB, DrLLPS, PhaSePro, LLPSDB</span>
           and <span class="font-medium text-gray-600">CD-CODE</span>.
         </p>
 

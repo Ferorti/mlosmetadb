@@ -58,7 +58,7 @@ def test_get_proteins_export_excludes_inactive_regulator_row(test_db):
 
 
 def test_get_proteins_export_source_db_filter_is_multi_value(test_db):
-    rows = asyncio.run(get_proteins_export(None, None, None, None, ["PhaseDB", "CDCODE"]))
+    rows = asyncio.run(get_proteins_export(None, None, None, None, ["PhaSepDB", "CDCODE"]))
     ids = {r["uniprot_id"] for r in rows}
     assert ids == {"P35637", "PCLIENT", "PNULLROLE"}
 

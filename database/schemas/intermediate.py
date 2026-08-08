@@ -19,10 +19,12 @@ COLUMNS = [
 # Sentinel value for missing optional fields
 NULL = "NULL"
 
-# Valid source_db values
+# Valid source_db values — five source databases, one tag each.
+# "PhaseDB" and "PhasePDB" were two tags for a single resource, PhaSepDB,
+# ingested twice by two parsers reading identical files. Both are retired:
+# the only valid tag for that source is "PhaSepDB".
 SOURCE_DBS = [
-    "PhaseDB",
-    "PhasePDB",
+    "PhaSepDB",
     "DrLLPS",
     "LLPSDB",
     "PhasePro",

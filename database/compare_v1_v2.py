@@ -26,9 +26,9 @@ DB_MAP = {
     "drllps_clients":    "DrLLPS",
     "drllps_regulators": "DrLLPS",
     "drllps_scaffolds":  "DrLLPS",
-    "phasepdb_ht":       "PhaseDB",
-    "phasepdb_lt":       "PhaseDB",
-    "phasepdb_ps":       "PhaseDB",
+    "phasepdb_ht":       "PhaSepDB",
+    "phasepdb_lt":       "PhaSepDB",
+    "phasepdb_ps":       "PhaSepDB",
     "phasepro":          "PhasePro",
     "llpsdb":            "LLPSDB",
 }
@@ -87,7 +87,7 @@ def main() -> None:
     print(f"  Solo en V2 (nuevas):    {len(only_v2):>7}  ({100*len(only_v2)/len(uid_v2):.1f}% de V2)")
 
     print("\n  Por source_db (sin CDCODE):")
-    for db in ["PhaseDB", "DrLLPS", "LLPSDB", "PhasePro"]:
+    for db in ["PhaSepDB", "DrLLPS", "LLPSDB", "PhasePro"]:
         u1 = set(v1[v1["source_db"] == db]["uniprot"])
         u2 = set(v2[v2["source_db"] == db]["uniprot_id"])
         s, o1, o2 = u1 & u2, u1 - u2, u2 - u1

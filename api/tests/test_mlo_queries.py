@@ -13,7 +13,7 @@ def test_get_mlo_stats_excludes_inactive_only_protein(test_db):
 def test_get_mlo_stats_counts_active_protein(test_db):
     stats = asyncio.run(get_mlo_stats("stress_granule"))
     assert stats["total_proteins"] == 1
-    assert stats["by_source"] == {"PhaseDB": 1}
+    assert stats["by_source"] == {"PhaSepDB": 1}
     assert stats["by_role"] == {"driver": 1}
 
 

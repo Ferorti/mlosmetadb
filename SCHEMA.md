@@ -43,7 +43,7 @@ CREATE TABLE proteins (
 CREATE TABLE mlo_annotations (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
     uniprot_id       TEXT NOT NULL REFERENCES proteins(uniprot_id),
-    source_db        TEXT NOT NULL,        -- PhaseDB | PhasePDB | DrLLPS | PhasePro | LLPSDB | CDCODE
+    source_db        TEXT NOT NULL,        -- PhaSepDB | DrLLPS | PhasePro | LLPSDB | CDCODE
     source_mlo       TEXT NOT NULL,
     unified_mlo      TEXT NOT NULL REFERENCES mlo_vocabulary(unified_mlo),
     source_role      TEXT,                 -- raw value as reported by source — never overwritten/normalized away
@@ -71,10 +71,23 @@ layer as a computed expression over `unified_role`/`dataset_active`, never baked
 into the stored value. If that policy changes, only the API layer changes — the
 table and the pipeline that populates it do not need to be touched or rerun.
 
-**`source_db` correction (2026-audit)**: `PhasePDB` is a sixth source, not in the
-original 5-source design — it's currently the single largest contributor to
-`mlo_annotations` (~14.9k rows). Parsed by `parsers/parse_phasepdb.py`. Not yet
-documented in `parsers/CLAUDE.md` — needs a section there.
+**`source_db` correction (2026-08-08)**: there are **five** source databases, one
+tag each. An earlier note here claimed `PhasePDB` was a sixth source alongside
+`PhaseDB`; that was wrong. Both tags were the same resource, **PhaSepDB**,
+ingested twice by two parsers reading byte-identical copies of the same export
+files, which double-counted every PhaSepDB annotation. The two tags no longer
+exist in the data — one parser (`parsers/parse_phasesepdb.py`), one tag
+(`PhaSepDB`). A query returning `PhaseDB` or `PhasePDB` is reading a stale
+database file, not a sixth source. See
+[docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md](docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md).
+
+**Row grain**: one row per `(uniprot_id, source_db, source_mlo, source_role)`,
+enforced by `scripts/integrate.py`'s `collapse_duplicates()` for every source.
+Sources that report one row per supporting publication have those rows collapsed
+into a single annotation whose `evidence` holds all the PMIDs. Note the role is
+part of the key: a protein annotated as both a driver and a component of the
+same MLO by the same source keeps both rows, because those are two different
+experimental observations (see `BIOLOGY.md`).
 
 ## mlo_vocabulary
 

@@ -41,16 +41,16 @@ INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, l
     ('P00010', 'ZZZ10',   'Casein kinase II subunit alpha',     'Homo sapiens', 9606, 950, 1);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
-    ('P00001', 1, 0, 2, 2, '["stress_granule","nucleolus"]', 'PhaseDB,DrLLPS'),
-    ('P00002', 0, 1, 1, 1, '["stress_granule"]',             'PhaseDB'),
+    ('P00001', 1, 0, 2, 2, '["stress_granule","nucleolus"]', 'PhaSepDB,DrLLPS'),
+    ('P00002', 0, 1, 1, 1, '["stress_granule"]',             'PhaSepDB'),
     ('KINASE9',0, 0, 1, 0, NULL,                             'CDCODE'),
-    ('P00004', 1, 0, 1, 1, '["nucleolus"]',                  'PhaseDB'),
-    ('P00005', 0, 0, 1, 0, NULL,                             'PhaseDB'),
-    ('P00006', 0, 0, 1, 0, NULL,                             'PhaseDB'),
-    ('P00007', 0, 0, 1, 0, NULL,                             'PhaseDB'),
-    ('P00008', 0, 0, 1, 0, NULL,                             'PhaseDB'),
-    ('P00009', 0, 0, 1, 0, NULL,                             'PhaseDB'),
-    ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaseDB');
+    ('P00004', 1, 0, 1, 1, '["nucleolus"]',                  'PhaSepDB'),
+    ('P00005', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00006', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00007', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00008', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00009', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaSepDB');
 
 INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
     ('stress_granule', 'Cytoplasmic'),
@@ -58,13 +58,13 @@ INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
     ('p_granule',      'Cytoplasmic');
 
 INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('P00001', 'PhaseDB', 'stress_granule', 'driver', 1),
+    ('P00001', 'PhaSepDB', 'stress_granule', 'driver', 1),
     ('P00001', 'DrLLPS',  'nucleolus',      'driver', 1),
-    ('P00002', 'PhaseDB', 'stress_granule', 'client', 1),
-    ('P00004', 'PhaseDB', 'nucleolus',      'driver', 1),
-    ('P00010', 'PhaseDB', 'stress_granule', 'driver', 1),
+    ('P00002', 'PhaSepDB', 'stress_granule', 'client', 1),
+    ('P00004', 'PhaSepDB', 'nucleolus',      'driver', 1),
+    ('P00010', 'PhaSepDB', 'stress_granule', 'driver', 1),
     -- inactive dataset: must be invisible through every endpoint
-    ('P00006', 'PhaseDB', 'p_granule',      'driver', 0);
+    ('P00006', 'PhaSepDB', 'p_granule',      'driver', 0);
 """
 
 # Sorting corpus: NULLs and ties are where the two sort implementations can
@@ -81,20 +81,20 @@ INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, l
     ('S00006', 'DELTA', 'Sortable six',   'Homo sapiens', 9606, 100, 1, 0.50);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
-    ('S00001', 1, 0, 3, 5, '["stress_granule"]', 'PhaseDB'),
-    ('S00002', 0, 1, 1, 1, '["nucleolus"]',      'PhaseDB'),
-    ('S00003', 0, 0, 2, 3, '["nucleolus"]',      'PhaseDB'),
-    ('S00004', 1, 0, 2, 2, '["nucleolus"]',      'PhaseDB'),
-    ('S00005', 0, 0, 2, 2, '["nucleolus"]',      'PhaseDB'),
-    ('S00006', 0, 0, 2, 2, '["nucleolus"]',      'PhaseDB');
+    ('S00001', 1, 0, 3, 5, '["stress_granule"]', 'PhaSepDB'),
+    ('S00002', 0, 1, 1, 1, '["nucleolus"]',      'PhaSepDB'),
+    ('S00003', 0, 0, 2, 3, '["nucleolus"]',      'PhaSepDB'),
+    ('S00004', 1, 0, 2, 2, '["nucleolus"]',      'PhaSepDB'),
+    ('S00005', 0, 0, 2, 2, '["nucleolus"]',      'PhaSepDB'),
+    ('S00006', 0, 0, 2, 2, '["nucleolus"]',      'PhaSepDB');
 
 INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('S00001', 'PhaseDB', 'stress_granule', 'driver', 1),
-    ('S00002', 'PhaseDB', 'nucleolus',      'client', 1),
-    ('S00003', 'PhaseDB', 'nucleolus',      NULL,     1),
-    ('S00004', 'PhaseDB', 'nucleolus',      'driver', 1),
-    ('S00005', 'PhaseDB', 'nucleolus',      NULL,     1),
-    ('S00006', 'PhaseDB', 'nucleolus',      NULL,     1);
+    ('S00001', 'PhaSepDB', 'stress_granule', 'driver', 1),
+    ('S00002', 'PhaSepDB', 'nucleolus',      'client', 1),
+    ('S00003', 'PhaSepDB', 'nucleolus',      NULL,     1),
+    ('S00004', 'PhaSepDB', 'nucleolus',      'driver', 1),
+    ('S00005', 'PhaSepDB', 'nucleolus',      NULL,     1),
+    ('S00006', 'PhaSepDB', 'nucleolus',      NULL,     1);
 """
 
 
