@@ -1,7 +1,14 @@
 import axios from 'axios'
 
+// Sits under whatever base the app was built for: '/api' normally, '/v2/api'
+// for a sub-path build. BASE_URL always ends in a slash.
+//
+// Nothing strips the '/api' prefix inside FastAPI — its routes are '/search',
+// '/proteins', etc. In development Vite's proxy removes it (see
+// vite.config.js); in production nginx does, via a proxy_pass with a trailing
+// slash. Point this at a bare uvicorn and every call 404s.
 const client = axios.create({
-  baseURL: '/api',
+  baseURL: `${import.meta.env.BASE_URL}api`,
   timeout: 20000,
 })
 

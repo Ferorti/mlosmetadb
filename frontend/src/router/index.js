@@ -13,6 +13,8 @@ const routes = [
 ]
 
 export default createRouter({
-  history: createWebHistory(),
+  // Derived from vite.config.js's `base`, so a build made for /v2/ produces
+  // /v2/results rather than /results. '/' in a normal build.
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
