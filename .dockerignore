@@ -1,0 +1,15 @@
+# The build context is the repo root (policy.py has to come along), so keep the
+# heavy and irrelevant parts out of it.
+.git
+OLD/
+database/
+docs/
+frontend/node_modules
+frontend/src
+frontend/public
+scripts/
+parsers/
+tests/
+api/tests/
+**/__pycache__
+*.pyc
