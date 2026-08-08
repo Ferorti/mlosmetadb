@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 import sqlite3
 from typing import Any
 
@@ -45,6 +46,23 @@ async def get_db() -> aiosqlite.Connection:
 
 async def open_db() -> None:
     global _db, _mem_hold
+
+    # sqlite3.connect() CREATES an empty file when the path does not exist, so a
+    # wrong DB_PATH does not fail here — it fails much later, and unhelpfully,
+    # as "no such table: main.proteins" while FTS5 is being built. Check first
+    # and say what is actually wrong.
+    # os.path, not Path methods: DB_PATH is a Path from config but the tests
+    # monkeypatch it with a plain string, and a guard is worthless if it is
+    # itself fragile.
+    if not os.path.exists(DB_PATH):
+        raise RuntimeError(
+            f"Database not found at {DB_PATH}. Set MLOSMETADB_PATH, or place the "
+            f"file there — sqlite would otherwise create an empty one and the "
+            f"first query would fail with a confusing 'no such table' error."
+        )
+    if os.path.getsize(DB_PATH) == 0:
+        raise RuntimeError(f"Database at {DB_PATH} is empty (0 bytes).")
+
     logger.info("Loading database into memory from %s ...", DB_PATH)
 
     def _backup() -> sqlite3.Connection:

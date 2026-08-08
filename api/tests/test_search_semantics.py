@@ -156,3 +156,25 @@ def test_inactive_annotations_are_not_searchable(search_db):
         r = c.get("/proteins", params={"mlo": "p_granule"})
     assert r.status_code == 200
     assert r.json()["total"] == 0
+
+
+# ── startup guard ────────────────────────────────────────────────────────────
+
+def test_a_missing_database_fails_loudly(tmp_path, monkeypatch):
+    """sqlite3.connect() creates an empty file for a path that does not exist,
+    so a wrong MLOSMETADB_PATH used to surface as "no such table: main.proteins"
+    from inside the FTS5 build — which says nothing about the real problem."""
+    import asyncio
+
+    import database as db_module
+
+    monkeypatch.setattr(db_module, "DB_PATH", tmp_path / "nope.db")
+    try:
+        asyncio.run(db_module.open_db())
+    except RuntimeError as e:
+        assert "Database not found" in str(e)
+        assert "nope.db" in str(e)
+    else:
+        raise AssertionError("open_db() accepted a nonexistent database")
+    finally:
+        db_module._db = None
