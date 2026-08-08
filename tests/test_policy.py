@@ -5,12 +5,17 @@ REFACTOR_ROOT = Path(__file__).resolve().parent.parent
 if str(REFACTOR_ROOT) not in sys.path:
     sys.path.insert(0, str(REFACTOR_ROOT))
 
+sys.path.insert(0, str(REFACTOR_ROOT / "database"))
+
 from policy import (
+    CANONICAL_SOURCE_NAMES,
     EXCLUDED_MLO_CATEGORIES,
     active_annotation_clause,
+    canonical_source_case_sql,
     component_role_clause,
     excluded_mlo_category_clause,
 )
+from schemas.intermediate import SOURCE_DBS
 
 
 def test_active_annotation_clause_default_alias():
@@ -55,3 +60,54 @@ def test_component_role_clause_custom_alias():
         component_role_clause("x")
         == "(x.unified_role IS NULL OR LOWER(x.unified_role) != 'driver')"
     )
+
+
+# ---------------------------------------------------------------------------
+# Canonical source names
+#
+# CANONICAL_SOURCE_NAMES is a display-name map, and for a while it was also
+# acting as cover for a data defect: it carried a sixth and seventh key,
+# "PhaseDB" and "PhasePDB", both folding to "PhaSepDB", because one source
+# database was being ingested twice under two tags. Mapping the display name
+# hid the duplication from the About page while every underlying count stayed
+# doubled. See docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md.
+#
+# The invariant that would have caught it: this map's keys are exactly the
+# valid source_db values, one entry per ingested source, no more.
+# ---------------------------------------------------------------------------
+
+def test_canonical_source_names_keys_are_exactly_the_valid_source_dbs():
+    assert set(CANONICAL_SOURCE_NAMES) == set(SOURCE_DBS)
+
+
+def test_canonical_source_names_has_one_entry_per_source():
+    assert len(CANONICAL_SOURCE_NAMES) == len(SOURCE_DBS)
+
+
+def test_no_two_tags_fold_into_the_same_display_name():
+    """Two tags sharing a display name means one source is ingested twice."""
+    names = list(CANONICAL_SOURCE_NAMES.values())
+    assert len(names) == len(set(names)), f"duplicate display names: {names}"
+
+
+def test_retired_ingestion_tags_are_not_reintroduced():
+    for retired in ("PhaseDB", "PhasePDB"):
+        assert retired not in CANONICAL_SOURCE_NAMES
+        assert retired not in SOURCE_DBS
+
+
+def test_phasepdb_is_spelled_with_a_lowercase_p_before_db():
+    """Matches the database's own Nucleic Acids Research paper title."""
+    assert CANONICAL_SOURCE_NAMES["PhaSepDB"] == "PhaSepDB"
+
+
+def test_canonical_source_case_sql_covers_every_tag():
+    sql = canonical_source_case_sql()
+    for raw, canonical in CANONICAL_SOURCE_NAMES.items():
+        assert f"WHEN '{raw}' THEN '{canonical}'" in sql
+
+
+def test_canonical_source_case_sql_honours_a_custom_column():
+    sql = canonical_source_case_sql("ma.source_db")
+    assert sql.startswith("CASE ma.source_db ")
+    assert sql.endswith("ELSE ma.source_db END")
