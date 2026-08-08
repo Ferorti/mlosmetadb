@@ -35,5 +35,9 @@ export function buildExportUrl(params = {}) {
       search.append(key, value)
     }
   }
-  return `/api/proteins/export?${search.toString()}`
+  // The browser navigates to this URL directly — it is a file download, not an
+  // XHR — so it never passes through the axios instance and does not inherit
+  // its baseURL. It has to apply the deployment base itself, or a build served
+  // under /v2/ silently links to /api, which is a different deployment.
+  return `${import.meta.env.BASE_URL}api/proteins/export?${search.toString()}`
 }

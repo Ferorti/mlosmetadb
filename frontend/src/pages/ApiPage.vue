@@ -1,5 +1,11 @@
 <script setup>
+// Shown to readers as the public base of the API. Hardcoded on purpose: it has
+// to name the production URL even when the page is opened from localhost.
 const BASE_URL = 'https://mlos.leloir.org.ar/api'
+
+// Where *this* deployment's API actually lives, for links that must resolve.
+// '/api/' at the root, '/v2/api/' for a sub-path build.
+const apiBase = `${import.meta.env.BASE_URL}api/`
 
 const ENDPOINTS = [
   { method: 'GET', path: '/protein/{uniprot_id}', purpose: 'Full protein record: metadata, MLO annotations, sequence features, PPI summary' },
@@ -160,7 +166,7 @@ const ERROR_EXAMPLE = `{ "error": "protein_not_found", "message": "No protein wi
     <!-- Links out -->
     <section class="flex gap-3">
       <a
-        href="/docs"
+        :href="`${apiBase}docs`"
         target="_blank"
         rel="noopener"
         class="inline-flex items-center px-4 py-2 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
@@ -168,7 +174,7 @@ const ERROR_EXAMPLE = `{ "error": "protein_not_found", "message": "No protein wi
         Interactive docs (Swagger) →
       </a>
       <a
-        href="/redoc"
+        :href="`${apiBase}redoc`"
         target="_blank"
         rel="noopener"
         class="inline-flex items-center px-4 py-2 rounded border border-[#185FA5] text-[#185FA5] text-sm font-medium hover:bg-[#EBF3FB] transition-colors"
