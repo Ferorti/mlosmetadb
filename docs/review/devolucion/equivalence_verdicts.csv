@@ -1,0 +1,243 @@
+source_name,unified_mlo,category,verdict,n_prot,resources,n_org,rationale
+Actin cortical patch,actin_cortical_patch,Citoesqueleto,correct,0,,,Case variant.
+BR-body,bacterial_rnp_body,Procariota,correct,14,CDCODE,7.0,BR-bodies are the bacterial RNP bodies.
+bacterial RNP-bodies (BR-bodies),bacterial_rnp_body,Procariota,correct,1,PhasePro,1.0,Direct match.
+Carboxysome,carboxysome,Procariota,correct,3,"CDCODE,PhaSepDB",2.0,Direct match.
+pericentriolar material,centrosome,Citoesqueleto,correct,1,PhasePro,1.0,PCM is the condensate phase of the centrosome.
+Pericentriolar compartment,centrosome,Citoesqueleto,correct,2,CDCODE,2.0,Same PCM structure.
+cGAS foci,cgas_dna_complex,Citoplasmático,correct,4,"CDCODE,PhasePro",2.0,cGAS-DNA foci are the same nucleoprotein condensate.
+Chloroplast Stress granule,chloroplast_stress_granule,Plastídico,correct,79,CDCODE,2.0,"Correctly kept separate: plastid-localised, compositionally distinct from cytoplasmic stress granules."
+Chromatin,chromatin_compartment,Nuclear,correct,1,DrLLPS,1.0,Generic chromatin label matching the generic canonical.
+Chromogranin condensates,chromogranin_condensate,Citoplasmático,correct,3,CDCODE,3.0,Direct match.
+Contractile ring condensate,contractile_ring,Citoesqueleto,correct,1,CDCODE,1.0,Direct match.
+Contractile ring,contractile_ring,Citoesqueleto,correct,0,,,Case variant.
+Cpeb1b-Pabpc1b-shh Condensate,cytoplasmic_rnp_granule,Citoplasmático,correct,3,CDCODE,1.0,Maternal mRNA-binding RNP condensate in zebrafish; within the generic cytoplasmic RNP granule class.
+WHI3 cluster,cytoplasmic_rnp_granule,Citoplasmático,correct,1,CDCODE,1.0,Whi3 RNA-binding protein granules in Ashbya; RNP granule by composition.
+MEX3B granule,cytoplasmic_rnp_granule,Citoplasmático,correct,1,CDCODE,1.0,MEX3B is an RNA-binding protein forming cytoplasmic RNP granules.
+PARP1-DNA condensate,dna_damage_foci,Nuclear,correct,3,CDCODE,1.0,PARP1-DNA condensates form at damage sites and nucleate the repair focus; merge is consistent with the canonical's scope.
+SOSS-INTAC Condensate,dna_damage_foci,Nuclear,correct,5,CDCODE,1.0,SOSS-Integrator condensates assemble at DNA damage sites for resection/repair; within scope.
+Ede1 condensate,endocytic_condensate,Membrana,correct,11,CDCODE,1.0,Ede1 nucleates yeast endocytic-site condensates.
+Endocytic condensates,endocytic_condensate,Membrana,correct,3,CDCODE,1.0,Plural variant.
+nuclear bodies that occur at super enhancers in mESCs,enhancer_condensate,Nuclear,correct,2,PhasePro,1.0,"Descriptive phrasing of super-enhancer condensates; correct target, but the label should be normalised rather than stored verbatim."
+robustly E2-activated enhancers (MegaTrans) enhancers,enhancer_condensate,Nuclear,correct,2,PhasePro,1.0,"MegaTrans complexes at estrogen-activated enhancers; correct target, malformed label."
+Enhancer cluster,enhancer_condensate,Nuclear,correct,1,CDCODE,1.0,Direct match.
+MegaTrans enhancer complex,enhancer_condensate,Nuclear,correct,2,CDCODE,1.0,Direct match.
+ERES,eres_condensate,Citoplasmático,correct,8,CDCODE,1.0,ER exit sites; standard abbreviation.
+SDC4 exosomal condensate,exosomal_condensate,Extracelular,correct,1,CDCODE,1.0,Syndecan-4-dependent exosomal cargo condensate.
+Ftsz-rich droplets at specific chromosomal DNA sites,ftsz_droplet,Procariota,correct,2,PhasePro,1.0,FtsZ condensates; verbose label.
+FtsZ/SlmA body,ftsz_droplet,Procariota,correct,2,CDCODE,1.0,SlmA-FtsZ nucleoid occlusion bodies; FtsZ condensate.
+FtsZ condensate,ftsz_droplet,Procariota,correct,1,CDCODE,1.0,Direct match.
+galectin complex,galectin_lattice,Membrana,correct,1,PhasePro,1.0,The galectin-glycan lattice is the assembly named.
+SMN1 nuclear body,gem,Nuclear,correct,1,CDCODE,1.0,Gems are SMN-containing nuclear bodies; SMN1 nuclear body is the same structure named by its scaffold.
+Gemini of cajal body,gem,Nuclear,correct,2,DrLLPS,1.0,'Gemini of coiled/Cajal bodies' is the original full name of gems.
+Gems,gem,Nuclear,correct,1,PhaSepDB,1.0,Plural of gem.
+Founder granule,germ_plasm,Germinal,correct,1,CDCODE,1.0,Founder granules are the germ-plasm assemblies of early Drosophila/zebrafish embryos.
+germ plasm,germ_plasm,Germinal,correct,2,PhasePro,1.0,Case variant.
+G-body,glycolytic_body,Citoplasmático,correct,5,CDCODE,1.0,G-bodies are the yeast glycolytic condensates.
+PFK-1.1 condensates,glycolytic_body,Citoplasmático,correct,1,CDCODE,1.0,Phosphofructokinase condensates in C. elegans neurons; glycolytic body.
+Glycolytic body,glycolytic_body,Citoplasmático,correct,9,PhaSepDB,3.0,Direct match.
+Golgin condensate,golgin_condensate,Citoplasmático,correct,7,"CDCODE,PhaSepDB",1.0,Direct match.
+Hippo signalosome,hippo_condensate,Membrana,correct,7,CDCODE,1.0,Hippo pathway signalosome; direct match to the canonical.
+TAZ Condensate,hippo_condensate,Membrana,correct,8,CDCODE,1.0,TAZ/WWTR1 is a core Hippo effector forming transcriptional condensates.
+Histone Locus Body,histone_locus_body,Nuclear,correct,15,CDCODE,4.0,"Case variant, but the 11 vs 15 protein counts indicate two near-duplicate records of one dataset."
+Hypersomatic shock foci,hyperosmotic_shock_foci,Citoplasmático,correct,17,CDCODE,1.0,"Misspelling of 'hyperosmotic'; correctly unified, though the 17 vs 18 protein counts show the two spellings are near-duplicate records of one dataset that should be collapsed at ingestion."
+INAVA condensates,inava_condensate,Citoplasmático,correct,1,CDCODE,1.0,Direct match.
+IL-1b-induced INAVA condensates,inava_condensate,Citoplasmático,correct,1,CDCODE,1.0,Same condensate under a stimulus qualifier.
+Htt inclusion,inclusion_body,Patológico,correct,3,"CDCODE,PhaSepDB",2.0,Huntingtin polyQ inclusions are the paradigm pathological inclusion body.
+TDP-25 inclusions,inclusion_body,Patológico,correct,1,CDCODE,1.0,C-terminal TDP-43 fragment aggregates; pathological inclusion.
+Inflammasome,inflammasome,Citoplasmático,correct,2,CDCODE,1.0,Direct match.
+Insulator body,insulator_body,Nuclear,correct,8,"CDCODE,DrLLPS",1.0,Case variant.
+focal adhesion (FA) condensate,integrin_adhesion_complex,Membrana,correct,3,CDCODE,1.0,Focal adhesions are the canonical integrin adhesion complexes.
+Integrin adhesion complex,integrin_adhesion_complex,Membrana,correct,3,PhaSepDB,1.0,Direct match.
+L-bodies,l_body,Germinal,correct,10,CDCODE,1.0,Plural variant.
+liquid-like DYRK3 speckles,liquid_dyrk3_speckle,Nuclear/Mitótico,correct,1,PhasePro,1.0,Direct match.
+DYRK3 speckle,liquid_dyrk3_speckle,Nuclear/Mitótico,correct,1,CDCODE,1.0,Direct match.
+Rbm14-maternal mRNA condensate,maternal_mrna_condensate,Nuclear,correct,1,PhaSepDB,1.0,Direct match.
+Mediator condensate,mediator_condensate,Nuclear,correct,6,PhaSepDB,2.0,Direct match.
+micro-ribonucleoprotein complex,mirisc,Citoplasmático,correct,2,PhasePro,1.0,miRISC is the micro-RNP complex.
+miRISC condensate,mirisc,Citoplasmático,correct,2,CDCODE,1.0,Direct match.
+mtRNA granule,mitochondrial_rna_granule,Mitocondrial,correct,42,CDCODE,1.0,Standard abbreviation.
+MORC3-NBs,morc3_nuclear_body,Nuclear,correct,1,PhasePro,1.0,Abbreviation of MORC3 nuclear bodies.
+small RNA amplification complex,mutator_foci,Germinal,correct,1,PhasePro,1.0,Mutator foci are the small-RNA amplification compartment; the functional description names the same structure.
+mutator focus,mutator_foci,Germinal,correct,1,PhasePro,1.0,Singular variant.
+MUTator foci,mutator_foci,Germinal,correct,1,CDCODE,1.0,Case variant.
+Arsenite-induced Necrosome,necrosome,Citoplasmático,correct,7,CDCODE,2.0,Necrosome formed under arsenite stress; same assembly.
+Necrosome,necrosome,Citoplasmático,correct,2,PhaSepDB,1.0,Direct match.
+IMP1 ribonucleoprotein granule,neuronal_granule,Neuronal,correct,0,,,IMP1/IGF2BP1 transport granules in neurons.
+IMP1 RNP granule,neuronal_granule,Neuronal,correct,39,CDCODE,1.0,Same structure.
+RNP transport granule,neuronal_granule,Neuronal,correct,2,PhaSepDB,1.0,Neuronal transport granules.
+RBFOX1 RNP granule,neuronal_granule,Neuronal,correct,2,CDCODE,1.0,RBFOX1 neuronal granules.
+Neuronal RNP granule,neuronal_granule,Neuronal,correct,66,CDCODE,4.0,Direct match.
+neuronal ribonucleoprotein granule,neuronal_granule,Neuronal,correct,5,PhasePro,2.0,Direct match.
+NP bodies,norad_pum_body,Nuclear,correct,2,CDCODE,1.0,NORAD-PUMILIO bodies; abbreviation of the same structure.
+IMC (intermitochondrial cement),nuage,Germinal,correct,1,CDCODE,1.0,Intermitochondrial cement is a recognised nuage compartment in mammalian germ cells.
+Nuage,nuage,Germinal,correct,10,"CDCODE,DrLLPS,PhaSepDB",5.0,Case variant.
+NAB3 nuclear body,nuclear_body,Nuclear,correct,1,CDCODE,1.0,Nab3/Nrd1 nuclear foci in yeast.
+nuclear pore central transport channel,nuclear_pore_complex,Nuclear,correct,3,PhasePro,2.0,The FG-nucleoporin permeability barrier is the condensate phase of the NPC; correctly unified.
+selective hydrogel-like meshwork formed by FG-nucleoporins in nuclear pore central channel,nuclear_pore_complex,Nuclear,correct,3,PhasePro,2.0,"Verbose description of the same FG-nucleoporin phase; correct target, label needs normalisation."
+ALYREF condensates,nuclear_speckle,Nuclear,correct,1,CDCODE,1.0,ALYREF is an export adaptor enriched in speckles.
+METTL14 condensate,nuclear_speckle,Nuclear,correct,1,CDCODE,1.0,m6A writer complex localises to nuclear speckles.
+dense fibrillar component,nucleolus,Nuclear,correct,2,PhasePro,2.0,Nucleolar sub-compartment; the merge is a deliberate granularity decision consistent with the project's coverage rule.
+granular component,nucleolus,Nuclear,correct,1,PhasePro,1.0,Nucleolar sub-compartment; same granularity decision.
+ORF8/p62 condensate,p62_body,Citoplasmático,correct,4,CDCODE,2.0,SARS-CoV-2 ORF8 condensates with p62; p62 body by composition.
+p62-dependent P-bodies (pd-PBs),p_body,Citoplasmático,correct,11,CDCODE,2.0,p62-dependent P-bodies are P-bodies distinguished by a nucleating factor.
+GW-body,p_body,Citoplasmático,correct,3,"CDCODE,PhasePro",1.0,GW bodies and P bodies are the same structure named by GW182 content; long-established synonymy.
+PB-like Assembly,p_body,Citoplasmático,correct,3,CDCODE,1.0,Explicitly described as P-body-like.
+PGL granules,p_granule,Germinal,correct,5,CDCODE,1.0,PGL-1/PGL-3 are core P-granule scaffolds in C. elegans.
+ParABS DNA,parabs_condensate,Procariota,correct,1,CDCODE,1.0,ParABS partition complex; direct match.
+ParABS,parabs_condensate,Procariota,correct,0,,,Direct match.
+Perinucleolar compartment,perinucleolar_compartment,Nuclear,correct,1,DrLLPS,1.0,Direct match.
+CRY2/SPA1/FIO1 condensate,plant_photobody,Plastídico,correct,3,CDCODE,1.0,Cryptochrome photobody components in Arabidopsis.
+Photobody,plant_photobody,Plastídico,correct,7,PhaSepDB,1.0,Photobodies are the plant light-signalling nuclear bodies.
+OsJAZ2 condensate,plant_signaling_condensate,Citoplasmático,correct,1,CDCODE,1.0,Rice jasmonate signalling repressor condensate.
+OsSRO1c-OsDREB2B condensate,plant_signaling_condensate,Citoplasmático,correct,2,CDCODE,1.0,Rice drought-response transcription factor condensate.
+PARCL condensate,plant_signaling_condensate,Citoplasmático,correct,1,CDCODE,1.0,Plant condensate.
+PodJ condensates,polarity_condensate,Neuronal,correct,3,CDCODE,1.0,PodJ is a Caulobacter polarity hub.
+PopZ condensate,polarity_condensate,Neuronal,correct,6,CDCODE,3.0,PopZ is the paradigm bacterial polar microdomain.
+Par complex,polarity_condensate,Neuronal,correct,5,"CDCODE,PhaSepDB",3.0,PAR polarity complex condensates.
+Numb/Pon condensate,polarity_condensate,Neuronal,correct,2,CDCODE,1.0,Numb-Pon crescent is a polarity condensate in dividing neuroblasts.
+basal Numb-Pon crescent in dividing neuroblasts,polarity_condensate,Neuronal,correct,2,PhasePro,1.0,"Same structure, verbose label."
+PcG chromatin condensates,polycomb_body,Nuclear,correct,1,PhasePro,1.0,Polycomb chromatin condensates are Polycomb bodies.
+PcG body,polycomb_body,Nuclear,correct,35,"CDCODE,DrLLPS",3.0,Standard abbreviation.
+ArgBP2 dendritic spine condensate,postsynaptic_density,Neuronal,correct,1,CDCODE,1.0,Dendritic spine condensates are PSD assemblies.
+ATG condensate,pre_autophagosomal_structure,Citoplasmático,correct,5,CDCODE,1.0,ATG protein condensates nucleate the PAS.
+Presynaptic clusters,presynaptic_active_zone,Neuronal,correct,15,CDCODE,4.0,Presynaptic protein clusters at the active zone.
+senescence-associated nuclear proteasome foci,proteasome_foci,Nuclear,correct,5,CDCODE,1.0,Nuclear proteasome foci; within scope.
+Proteasome condensate,proteasome_foci,Nuclear,correct,8,CDCODE,2.0,Direct match.
+Proteasome containing foci,proteasome_foci,Nuclear,correct,7,PhaSepDB,1.0,Direct match.
+Pyrenoid matrix,pyrenoid,Plastídico,correct,181,DrLLPS,1.0,The pyrenoid matrix is the Rubisco condensate phase of the pyrenoid.
+Pre-replication compartment (PRC),replication_compartment,Viral/Nuclear,correct,3,CDCODE,2.0,Herpesvirus pre-replication compartments mature into replication compartments.
+viral replication compartment (VRC),replication_compartment,Viral/Nuclear,correct,8,CDCODE,3.0,Direct match.
+Virus-induced replication (VIR) condensate,replication_compartment,Viral/Nuclear,correct,1,CDCODE,1.0,Direct match.
+VRO-associated condensate,replication_compartment,Viral/Nuclear,correct,1,PhaSepDB,1.0,Viral replication organelle-associated condensate.
+Sam68 nuclear bodies (SNBs),sam68_nuclear_body,Nuclear,correct,2,PhasePro,1.0,Direct match.
+FXR-driven SARS-CoV-2 condensate,sars_cov2_n_condensate,Viral,correct,5,CDCODE,2.0,FXR1-driven N-protein condensates; same assembly.
+Sec-body,sec_body,Citoplasmático,correct,8,CDCODE,2.0,Spelling variant.
+EML4-ALK condensates,signaling_condensate,Citoplasmático,correct,1,CDCODE,1.0,Oncogenic fusion-kinase condensates that nucleate RAS-MAPK signalling.
+Insulin/IGF-1 signalosomes,signaling_condensate,Citoplasmático,correct,1,CDCODE,1.0,Pathway signalosome within the generic class.
+PGAM5-MAVS Condensate,signaling_condensate,Citoplasmático,correct,2,CDCODE,1.0,MAVS signalosome regulation; innate-immune signalling condensate.
+BMP2K condensate,signaling_condensate,Citoplasmático,correct,1,CDCODE,1.0,BMP2K kinase condensate; signalling assembly.
+Sint speckle,sint_speckle,Citoplasmático,correct,4,CDCODE,1.0,Case variant.
+Sirna body,sirna_body,Citoplasmático,correct,5,CDCODE,1.0,Case variant.
+SMN-Rpp20 complex,smn_complex,Nuclear/Citoplasmático,correct,1,CDCODE,1.0,SMN complex variant.
+spindle matrix,spindle_apparatus,Citoesqueleto,correct,1,PhasePro,1.0,The spindle matrix is the non-microtubule spindle-associated phase.
+condensed compartments of microtubule bundling,spindle_apparatus,Citoesqueleto,correct,1,PhasePro,1.0,Descriptive label for spindle microtubule-bundling condensates.
+Birc5b assembly,spindle_apparatus,Citoesqueleto,correct,1,CDCODE,0.0,Survivin/BIRC5 is a chromosomal passenger complex component at the spindle midzone.
+Std1 bodies,std1_body,Citoplasmático,correct,1,PhasePro,1.0,Plural variant.
+DHX9 Stress Granules,stress_granule,Citoplasmático,correct,12,CDCODE,1.0,DHX9-containing stress granules are canonical stress granules described through one component; merge is correct.
+a matrix holding together clusters of synaptic vesicles (SVs),synapsin_condensate,Neuronal,correct,2,PhasePro,1.0,Descriptive label for the synapsin-vesicle condensate.
+LAT signalosome,t_cell_signalosome,Membrana,correct,3,PhasePro,1.0,LAT is the scaffold of the TCR-proximal signalosome; the same assembly.
+TCR signalosome,t_cell_signalosome,Membrana,correct,3,PhasePro,1.0,Direct match.
+Tam body,tam_body,Nuclear,correct,11,CDCODE,1.0,Case variant.
+Transcription Elongation Condensate,transcriptional_condensate,Nuclear,correct,8,CDCODE,1.0,Elongation condensates are transcriptional condensates at a defined cycle stage; class aggregation is deliberate.
+Elongation complex,transcriptional_condensate,Nuclear,correct,5,PhaSepDB,1.0,"Same, named as a complex."
+BRD4 condensate,transcriptional_condensate,Nuclear,correct,3,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+cBAF condensate,transcriptional_condensate,Nuclear,correct,4,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+CEBPZ condensates,transcriptional_condensate,Nuclear,correct,3,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+c‐Maf condensates,transcriptional_condensate,Nuclear,correct,6,CDCODE,2.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+EWSR1 condensates,transcriptional_condensate,Nuclear,correct,1,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+IFN-I transcriptional condensate,transcriptional_condensate,Nuclear,correct,2,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+KAT8-IRF1 condensate,transcriptional_condensate,Nuclear,correct,2,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+MEF2D Condensate,transcriptional_condensate,Nuclear,correct,1,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+nYAC,transcriptional_condensate,Nuclear,correct,1,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+RNA polymerase clusters,transcriptional_condensate,Nuclear,correct,1,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+SGF29 condensate,transcriptional_condensate,Nuclear,correct,4,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+TFAP2β condensates,transcriptional_condensate,Nuclear,correct,3,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+POLII clusters,transcriptional_condensate,Nuclear,correct,2,PhasePro,2.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+Transcription condensate,transcriptional_condensate,Nuclear,correct,4,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+Transcriptional condensates,transcriptional_condensate,Nuclear,correct,3,CDCODE,1.0,"Factor-specific transcriptional condensate absorbed into the functional class. Defensible under the project's granularity rule since no source annotates the generic term at factor resolution, but the class should be declared as an aggregation rather than presented as an equivalence."
+U-body,u_body,Citoplasmático,correct,5,CDCODE,2.0,Hyphen variant.
+Ubqln puncta,ubqln_puncta,Citoplasmático,correct,3,CDCODE,1.0,Case variant.
+cytoplasmic Virion Assembly Compartments (cVACs),viral_factory,Viral,correct,4,CDCODE,1.0,cVACs are the cytoplasmic assembly compartments of herpesviruses; within the viral factory class.
+RdRp condensates,viral_factory,Viral,correct,3,CDCODE,3.0,Viral RNA-dependent RNA polymerase condensates are the replication compartment.
+GCRV viroplasm,viroplasm,Viral,correct,13,CDCODE,2.0,Grass carp reovirus viroplasm; direct match.
+viroplasm viral factory,viroplasm,Viral,correct,0,,,Compound label naming the same reoviral structure.
+Beta-Catenin Destruction Complex,wnt_destruction_complex,Citoplasmático,correct,6,CDCODE,1.0,Direct match.
+Destruction complex condensate,wnt_destruction_complex,Citoplasmático,correct,6,PhaSepDB,1.0,Direct match.
+Dishevelled condensate,wnt_signaling_condensate,Citoplasmático,correct,1,CDCODE,1.0,DVL polymerisation forms the Wnt signalosome.
+Wnt signalodroplet,wnt_signaling_condensate,Citoplasmático,correct,4,PhaSepDB,1.0,Descriptive variant of the Wnt signalosome.
+Yb-body,yb_body,Germinal,correct,4,CDCODE,1.0,Hyphen variant.
+Z-granule,z_granule,Germinal,correct,3,CDCODE,1.0,Hyphen variant.
+Junctional condensate,zo_protein_compartment,Membrana,correct,5,CDCODE,1.0,ZO-1/ZO-2 tight-junction condensates are the compartment this canonical names; 'junctional condensate' is the generic description of the same assembly.
+ABC transporter condensate,bacterial_rnp_body,Procariota,error,2,CDCODE,2.0,An ABC transporter condensate is a membrane-transport assembly; BR-bodies are RNase E-nucleated bacterial RNP granules. No compositional or functional relation beyond both being bacterial.
+Large dense-core vesicles,chromogranin_condensate,Citoplasmático,error,1,CDCODE,1.0,Dense-core vesicles are membrane-bounded secretory vesicles. The chromogranin condensate is the intravesicular dense core; equating the vesicle with the condensate imports a membrane-bound organelle into an MLO vocabulary.
+Cytoplasmic protein granule,cytoplasmic_rnp_granule,Citoplasmático,error,5,CDCODE,2.0,"Case-only variant of 'cytoplasmic protein granule', which maps to cytoplasmic_protein_granule. The same source label is split across two canonicals by capitalisation alone — a normalisation failure, not a curation judgement. Also asserts RNA content the label does not state."
+Golgi ribbon,golgin_condensate,Citoplasmático,error,1,CDCODE,1.0,"The Golgi ribbon is a membrane-bound organelle arrangement, not a biomolecular condensate; GOLGA2/GM130 tethering is a golgin function but the ribbon itself is outside the MLO definition. Discard or reassign the protein to golgin_condensate without importing the ribbon as a compartment name."
+XY body,heterochromatin,Nuclear,error,10,PhaSepDB,1.0,"XY (sex) body is the meiotic sex-chromosome domain silenced by MSCI; its 10 proteins (Topbp1, Mdc1, Brca1) are the ATR-MDC1 damage-response machinery, sharing zero proteins with the 42 heterochromatin proteins in the same resource and organism. Also collides with the existing sex_body canonical, whose justification describes a third structure (Barr body). Split into a dedicated xy_body term and correct sex_body."
+DDR1 condensate,hippo_condensate,Membrana,error,2,CDCODE,1.0,"DDR1 is a collagen receptor tyrosine kinase; its condensates are not Hippo-pathway assemblies. The canonical groups by pathway, so this is a category error within a pathway-defined term."
+inclusion body-associated granule (IBAG),inclusion_body,Patológico,error,9,CDCODE,4.0,"IBAGs are sub-compartments of respiratory syncytial virus replication inclusions (M2-1 plus host eIF4F); they are viral factories, not the pathological protein-aggregate inclusion bodies that define this canonical. Move to viral_factory."
+P6 inclusion body,inclusion_body,Patológico,error,6,CDCODE,2.0,"Cauliflower mosaic virus P6 inclusion bodies are viral replication/assembly factories in plant cells (P6 with host DCP5/LSM1B/VCS), not pathological aggregates. Move to viral_factory."
+TIFA-TRAF6 Condensate,inflammasome,Citoplasmático,error,7,CDCODE,1.0,"TIFAsomes are ALPK1-TIFA-TRAF6 innate-immune assemblies that activate NF-κB; they are not inflammasomes (no NLR sensor, no ASC speck, no caspase-1). Distinct innate-immune condensate class."
+FATZ-1 condensate,postsynaptic_density,Neuronal,error,1,CDCODE,1.0,FATZ-1/MYOZ1 is a sarcomeric Z-disc protein of skeletal muscle; the Z-disc is not the postsynaptic density. Likely a name-similarity match ('Z-disc'/'density'). Reassign to a sarcomeric/Z-disc term or discard.
+Presynaptic clusters and postsynaptic densities,presynaptic_active_zone,Neuronal,error,1366,CDCODE,1.0,"Compound CDCODE label naming two distinct compartments on opposite sides of the synapse; 1,366 proteins (99% of presynaptic_active_zone) are assigned to the presynaptic term alone, silently discarding the postsynaptic half. This is the unexploded-compound case the normalisation rule was written for."
+Proteasome Storage Granule,proteasome_foci,Nuclear,error,5,PhaSepDB,1.0,Yeast proteasome storage granules are cytoplasmic quiescence structures that sequester proteasomes during carbon starvation; proteasome_foci is categorised Nuclear and groups nuclear/senescence-associated proteasome bodies. Distinct compartment and wrong category.
+HSP condensate,signaling_condensate,Citoplasmático,error,1,CDCODE,1.0,"Heat-shock protein condensates are chaperone/stress assemblies, not signalling condensates; the generic Signalosome class is the wrong parent."
+Plectin condensates,signaling_condensate,Citoplasmático,error,2,CDCODE,1.0,"Plectin is a cytoskeletal linker crosslinking intermediate filaments; its condensates belong under a cytoskeletal term, not signalling."
+SSB condensate,signaling_condensate,Citoplasmático,error,3,CDCODE,2.0,"Single-stranded DNA-binding protein condensates function in DNA replication/repair, not signalling."
+Centrosome/Spindle pole body,spindle_pole_body,Citoesqueleto,error,872,DrLLPS,8.0,"DrLLPS uses this compound label for BOTH structures; the 872 proteins are 58% human/mouse, where no spindle pole body exists (it is the yeast/fungal MTOC equivalent). Assigning the whole set to spindle_pole_body makes the metazoan centrosome proteome disappear into a fungal term and inflates spindle_pole_body to rank 11. Split by organism: fungal taxa to spindle_pole_body, metazoan to centrosome."
+α-synuclein condensates,synapsin_condensate,Neuronal,error,6,"CDCODE,PhaSepDB",2.0,"α-synuclein condensates are assigned to synapsin_condensate, but α-syn condensation is studied both as a synaptic-vesicle clustering factor and as the pathological aggregation route to Lewy bodies; the merged proteins include TH and DLG4 (postsynaptic). Synapsin and α-synuclein condensates are distinct assemblies that co-occur at the presynapse. Separate, or move α-syn to a pathological term."
+α-synnuclein condensates,synapsin_condensate,Neuronal,error,1,CDCODE,1.0,"Same as the correctly spelled variant, plus a misspelling that should be normalised at ingestion."
+Actin nucleator,actin_cortical_patch,Citoesqueleto,review,1,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to actin_cortical_patch asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+Cobl condensate,actin_cortical_patch,Citoesqueleto,review,1,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to actin_cortical_patch asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+Row 1-specific tip complex condensates,ankle_link_condensate,Membrana,review,4,CDCODE,1.0,Hair-cell tip-link and ankle-link complexes are distinct stereociliary adhesion structures at different positions along the bundle.
+Mitochondrial cloud,balbiani_body,Germinal,review,598,CDCODE,1.0,"Defensible as a synonym in Xenopus (the mitochondrial cloud is the nascent Balbiani body), but the 598 Xenopus proteins now dominate balbiani_body and are a bulk proteomic dataset rather than curated residents. Keep the merge, flag the evidence tier."
+mitochondrial cloud,balbiani_body,Germinal,review,2,PhasePro,1.0,"Defensible as a synonym in Xenopus (the mitochondrial cloud is the nascent Balbiani body), but the 598 Xenopus proteins now dominate balbiani_body and are a bulk proteomic dataset rather than curated residents. Keep the merge, flag the evidence tier."
+Enzyme_shell proteins condensates,carboxysome,Procariota,review,2,CDCODE,1.0,"Generic description of shell-plus-cargo architecture that also fits other bacterial microcompartments (metabolosomes, encapsulin); assigning it to carboxysome specifically is an over-commitment on 2 proteins."
+eukaryotic topoisomerase ii,chromatin_compartment,Nuclear,review,2,CDCODE,2.0,"Source label names a protein or complex, not a compartment. Mapping it to chromatin_compartment asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+euchromatin,chromatin_compartment,Nuclear,review,2,PhasePro,2.0,Euchromatin and heterochromatin are opposite chromatin states; a single chromatin_compartment canonical that absorbs euchromatin while heterochromatin is separate is internally inconsistent.
+Euchromatin,chromatin_compartment,Nuclear,review,2,CDCODE,2.0,Same as the lowercase variant.
+Cytoplasmic bodies,cytoplasmic_protein_granule,Citoplasmático,review,3,CDCODE,1.0,"Fully generic label with no compositional commitment; could denote P-bodies, stress granules or aggregates."
+Translational Condensate,cytoplasmic_rnp_granule,Citoplasmático,review,4,CDCODE,1.0,Generic functional label; could equally denote stress granules or neuronal transport granules. Ambiguous source term rather than a wrong merge.
+Ddx3xb condensates,cytoplasmic_rnp_granule,Citoplasmático,review,1,CDCODE,1.0,DDX3X condensates are most often described as stress-granule components; routing them to the generic RNP class loses that link.
+53BP1 Mitotic Stress Body (MSBs),dna_damage_foci,Nuclear,review,3,CDCODE,1.0,"MSBs are mitotic 53BP1 bodies that sequester unrepaired lesions through mitosis without recruiting repair machinery — deliberately repair-incompetent, unlike interphase damage foci. Related but not equivalent."
+SCOTIN condensate,eres_condensate,Citoplasmático,review,3,CDCODE,1.0,SCOTIN/SHISA5 is an ER transmembrane p53 target; its condensates are not established as ER exit sites.
+YBX1 condensate,exosomal_condensate,Extracelular,review,1,CDCODE,1.0,YBX1 condensates are described both as exosomal sorting hubs and as cytoplasmic stress-granule-related assemblies.
+Germ plasm/Polar granule,germ_plasm,Germinal,review,0,,,"Compound label joining germ plasm and polar granules with a slash; polar granules are the Drosophila germ-plasm RNP granules, so the merge is defensible but the label is unexploded."
+NEDD4 condensates,hippo_condensate,Membrana,review,3,CDCODE,1.0,NEDD4 ubiquitinates LATS1 and other Hippo components but is a promiscuous E3 ligase; assigning its condensates to the Hippo canonical over-commits.
+Nuclear poly(A) domains,maternal_mrna_condensate,Nuclear,review,1,CDCODE,1.0,"Nuclear poly(A) RNA domains are speckle-associated retention sites, not specifically maternal mRNA storage."
+RISC complex,mirisc,Citoplasmático,review,2,PhasePro,1.0,"RISC covers both siRNA- and miRNA-loaded complexes; mapping the general term to the miRNA-specific canonical loses the siRNA branch, which has its own sirna_body canonical."
+TIAR2 neuronal granule,neuronal_granule,Neuronal,review,1,CDCODE,1.0,"The dossier's v4 decisions list axonal_tiar2_granule as a split; this row still routes TIAR-2 granules into the generic neuronal class, and the corresponding mapping line is the malformed CSV row."
+Mimi granules,neuronal_granule,Neuronal,review,3,CDCODE,1.0,Ambiguous label; 'Mimi' suggests mimivirus rather than a neuronal granule.
+Leucocyte nuclear body,nuclear_body,Nuclear,review,21,CDCODE,1.0,"A cell-type-qualified nuclear body with 21 proteins; absorbing it into the generic nuclear_body class loses the qualifier without gaining evidence, since no source annotates the generic term at that resolution."
+Ccer1 condensate,nuclear_body,Nuclear,review,2,CDCODE,1.0,Uncharacterised protein assigned to the generic nuclear body class on 2 proteins.
+VRN1 nuclear body,nuclear_body,Nuclear,review,1,CDCODE,1.0,VRN1 is a plant vernalisation factor; the generic nuclear_body class is defined on animal/yeast structures.
+RBM15 condensate,nuclear_body,Nuclear,review,2,CDCODE,1.0,RBM15 is an m6A adaptor concentrated in nuclear speckles; nuclear_speckle is the closer target.
+SPRI2 Nuclear Condensate,nuclear_body,Nuclear,review,2,CDCODE,1.0,Uncharacterised label; cannot be verified as a generic nuclear body.
+Omega speckle,nuclear_speckle,Nuclear,review,1,CDCODE,1.0,"Drosophila omega speckles are hnRNP-storage nuclear bodies nucleated by hsr-omega lncRNA; functionally analogous to mammalian speckles but compositionally distinct and lncRNA-dependent. Merge is defensible on function, weak on composition; the single protein annotated is TBPH."
+AFAP1-AS1 condensates,nuclear_speckle,Nuclear,review,2,CDCODE,1.0,AFAP1-AS1 is an antisense lncRNA; its condensates are not established speckle components.
+A-bodies,nuclear_stress_body,Nuclear,review,2,CDCODE,1.0,"Amyloid bodies (A-bodies) are acidosis/heat-induced nucleolar-rim amyloidogenic structures nucleated by rIGS RNA; nuclear stress bodies are HSATIII-nucleated and form at pericentromeric satellite III repeats. Different nucleating RNA, different site. Distinct terms in the current literature."
+rDNA locus,nucleolus,Nuclear,review,2,CDCODE,1.0,"The rDNA locus is a genomic region, not a compartment; it nucleates the nucleolus but is not identical to it. Genomic-locus labels should be handled by a distinct rule."
+CCR4-NOT1 complex,p_body,Citoplasmático,review,1,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to p_body asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+Trbd,p_granule,Germinal,review,1,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to p_granule asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+Germ granule,p_granule,Germinal,review,14,CDCODE,3.0,'Germ granule' is the pan-species class term; P granules are the C. elegans instance. Mapping the class onto one species' instance inverts the hierarchy — the same conflation the dossier avoids elsewhere.
+NONO,paraspeckle,Nuclear,review,3,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to paraspeckle asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+Peri-nucleolar condensate,perinucleolar_compartment,Nuclear,review,6,CDCODE,2.0,Hyphenated variant may denote the PNC proper or any perinucleolar assembly; 6 proteins vs 1 for the exact term suggests the variant carries most of the evidence.
+Plant growth regulator,plant_signaling_condensate,Citoplasmático,review,1,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to plant_signaling_condensate asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+RH20 condensate,plant_signaling_condensate,Citoplasmático,review,2,CDCODE,1.0,RH20 is a DEAD-box RNA helicase; its condensates are RNP granules rather than signalling assemblies.
+PML/RARα microspeckle,pml_nuclear_body,Nuclear,review,1,PhaSepDB,1.0,"In APL, PML/RARα disrupts normal PML bodies into microspeckles; these are the pathological disassembled state, arguably a distinct entity from the intact PML nuclear body."
+Fus1 condensate,polarity_condensate,Neuronal,review,1,CDCODE,1.0,Fus1 is a fission-yeast fusion-focus formin scaffold; the fusion focus is a mating structure distinct from cell-polarity condensates.
+Rapsn condensate,postsynaptic_density,Neuronal,review,7,CDCODE,1.0,Rapsyn clusters acetylcholine receptors at the neuromuscular junction postsynapse; the NMJ postsynaptic apparatus is structurally distinct from the CNS PSD.
+ATG4B condensate,pre_autophagosomal_structure,Citoplasmático,review,1,CDCODE,1.0,ATG4B is the LC3-processing protease acting on autophagosome membranes rather than as a PAS scaffold.
+presynaptic cytosol,presynaptic_active_zone,Neuronal,review,2,PhasePro,1.0,"The presynaptic cytosol is a cellular region, not the active-zone condensate."
+BAG2,proteasome_foci,Nuclear,review,1,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to proteasome_foci asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+ORC1 bodies,replication_compartment,Viral/Nuclear,review,5,CDCODE,1.0,"ORC1 bodies (ORC1 with CBX5/SUV39H1/DNMT1/EZH2) are heterochromatin-licensing foci at replication origins, not the viral/nuclear replication compartments that dominate this canonical. Closer to heterochromatin or a dedicated origin-licensing term."
+SARS-CoV-2 condensate,sars_cov2_n_condensate,Viral,review,4,CDCODE,2.0,"Generic label; SARS-CoV-2 forms N-protein, ORF8 and NSP condensates. Assigning the generic term to the N-specific canonical over-commits."
+Receptor cluster,signaling_cluster,Membrana,review,16,"DrLLPS,PhaSepDB",2.0,Fully generic label; covers any clustered receptor including the T-cell and integrin cases handled by dedicated canonicals.
+membrane cluster,signaling_cluster,Membrana,review,3,PhasePro,1.0,Generic membrane-clustering label with no signalling commitment in the source term.
+PARP5A–RNF146 condensate,signaling_condensate,Citoplasmático,review,2,CDCODE,1.0,Tankyrase-RNF146 condensates act in Wnt signalling via axin degradation; wnt_signaling_condensate exists as a separate canonical and is the closer target.
+PCBP2 condensates,signaling_condensate,Citoplasmático,review,5,CDCODE,2.0,PCBP2 is an RNA-binding protein; its condensates are usually described as RNP granules or MAVS-regulatory assemblies.
+Nur77 condensate,signaling_condensate,Citoplasmático,review,1,CDCODE,1.0,"Nur77/NR4A1 is a nuclear receptor and transcription factor; its condensates are transcriptional rather than cytoplasmic signalling assemblies, and the canonical is categorised Citoplasmático."
+TBC1D2B condensate,signaling_condensate,Citoplasmático,review,1,CDCODE,1.0,TBC1D2B is a Rab GAP acting in membrane trafficking and lysosomal repair rather than signal transduction.
++TIP,spindle_apparatus,Citoesqueleto,review,3,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to spindle_apparatus asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
++TIP body,spindle_apparatus,Citoesqueleto,review,6,CDCODE,2.0,"Plus-end tracking protein bodies form on microtubule tips generally, not only on spindle microtubules; interphase +TIP condensates would be misfiled."
+Spindle pole,spindle_pole_body,Citoesqueleto,review,0,,,'Spindle pole' is the generic MTOC-at-the-spindle term covering both centrosome and SPB; mapping it to the fungal-specific canonical repeats the compound-label problem.
+Osmotic stress granule,stress_granule,Citoplasmático,review,1,PhaSepDB,1.0,Hyperosmotic stress granules are kept separate as hyperosmotic_shock_foci; this near-synonym goes to the canonical stress granule instead. Choose one treatment for osmotic-stress assemblies.
+Sh3gl2,synapsin_condensate,Neuronal,review,0,,,Endophilin A1 label used as compartment name.
+Tau inclusion,tau_condensate,Neuronal,review,1,CDCODE,1.0,Tau inclusions (neurofibrillary tangles) are irreversible amyloid aggregates; tau condensates are the reversible liquid precursor. Merging them collapses the phase transition the field distinguishes.
+EWS-FLI1,transcriptional_condensate,Nuclear,review,2,CDCODE,1.0,"Source label names a protein or complex, not a compartment. Mapping it to transcriptional_condensate asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+"RNA polymerase II, holoenzyme",transcriptional_condensate,Nuclear,review,2,PhasePro,2.0,"Source label names a protein or complex, not a compartment. Mapping it to transcriptional_condensate asserts that the protein's condensate is that compartment, which the source does not state. Route these through the discard rule for non-compartment labels or record them as protein-level condensates in a separate field."
+HIV core condensate,viral_factory,Viral,review,3,CDCODE,2.0,The HIV-1 capsid core is a proteinaceous shell that traffics the genome; describing it as a viral factory conflates a virion component with a replication compartment.
+HIV-1-MLO,viral_factory,Viral,review,3,PhaSepDB,3.0,"Uninformative source label; HIV-1 forms several distinct condensates (capsid, Gag assembly, Rev). Cannot be verified as a factory from the name."
+LANA body,viral_factory,Viral,review,2,CDCODE,2.0,"KSHV LANA nuclear bodies tether the episome to host chromatin during latency; they are latency maintenance structures, not lytic replication factories."
+RPSA-VIM-ENO Condensate,viral_factory,Viral,review,3,CDCODE,2.0,"Host ribosomal/cytoskeletal/glycolytic proteins; assignment to a viral factory rests on the source's experimental context, not on the label."
+LEF1/Beta-catenin condensate,wnt_signaling_condensate,Citoplasmático,review,2,CDCODE,1.0,LEF1/β-catenin condensates are transcriptional effectors downstream of Wnt; closer to a transcriptional condensate than to the membrane-proximal signalosome.

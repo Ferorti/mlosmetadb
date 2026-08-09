@@ -1,0 +1,910 @@
+unified_mlo,source_mlo,resource,source_db_tags,term_status,in_served_data,category,verdict,proteins,assertions,organisms,top_organism,distinct_pmids,roles
+DISCARD,Arp2/3 protein complex,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,collagen-containing extracellular matrix,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,cytoplasmic microtubule,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,extracellular matrix,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,intracellular non-membrane-bounded organelle,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,Microtubule,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,neuron projection,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,obsolete cytoskeletal part,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,PcG protein complex,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,protein-containing complex,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,protein complex involved in cell-cell adhesion,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,ribonucleoprotein complex,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,synaptosome,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,TRIM45 bodies,,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+DISCARD,"synaptosome, neuron projection",,,excluded_discard,no,,not_reviewed,0,0,0,,0,
+NULL,Others,,,excluded_null,no,,not_reviewed,0,0,0,,0,
+NULL,Others,,,excluded_null,no,,not_reviewed,0,0,0,,0,
+NULL,_,,,excluded_null,no,,not_reviewed,0,0,0,,0,
+NotInformed,NotInformed,PhaSepDB,PhaseDB|PhasePDB,served,yes,Unspecified,trivial_variant,1217,1217,108,Homo sapiens,985,driver
+abscission_checkpoint_body,Abscission checkpoint body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,3,3,1,Homo sapiens,1,driver
+actin_cortical_patch,actin cortical patch,PhasePro,PhasePro,served,yes,Citoesqueleto,trivial_variant,3,3,1,Homo sapiens,1,driver
+actin_cortical_patch,Actin nucleator,CDCODE,CDCODE,served,yes,Citoesqueleto,review,1,1,1,Homo sapiens,0,
+actin_cortical_patch,Cobl condensate,CDCODE,CDCODE,served,yes,Citoesqueleto,review,1,1,1,Mus musculus,0,
+actin_cortical_patch,Actin cortical patch,,,served,no,Citoesqueleto,correct,0,0,0,,0,
+adhesin_nanodomain,Adhesin nanodomain,,,served,no,Membrana,trivial_variant,0,0,0,,0,
+aggresome,Aggresome,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,6,6,1,Escherichia coli (strain K12),0,
+amyloid_aggregate,Als5p amyloid,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,1,1,1,Candida albicans (strain SC5314 / ATCC MYA-2876),0,
+amyloid_body,Amyloid body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,1,driver
+anisosome,Anisosome,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,6,6,1,Homo sapiens,0,
+anisosome,Anisosome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,6,6,1,Homo sapiens,50,driver
+ankle_link_condensate,Ankle Link Complex (ALC) Condensate,CDCODE,CDCODE,served,yes,Membrana,not_reviewed,4,4,1,Mus musculus,0,
+ankle_link_condensate,Row 1-specific tip complex condensates,CDCODE,CDCODE,served,yes,Membrana,review,4,4,1,Homo sapiens,0,
+antiviral_condensate,Antiviral condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasma,trivial_variant,1,1,1,Arabidopsis thaliana,1,driver
+assemblysome,Assemblysome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,3,3,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),2,driver
+assemblysome,Assemblysome,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,1,1,1,Homo sapiens,0,
+axonal_tiar2_granule,axonal TIAR-2 granules,PhasePro,PhasePro,served,yes,Neuronal,not_reviewed,1,1,1,Caenorhabditis elegans,1,driver
+bacterial_rnp_body,BR-body,CDCODE,CDCODE,served,yes,Procariota,correct,14,14,7,Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15),0,
+bacterial_rnp_body,ABC transporter condensate,CDCODE,CDCODE,served,yes,Procariota,error,2,2,2,Mycolicibacterium smegmatis (strain ATCC 700084 / mc(2)155),0,
+bacterial_rnp_body,BR-bodies,PhaSepDB,PhaseDB|PhasePDB,served,yes,Procariota,not_reviewed,2,2,2,Caulobacter vibrioides,3,driver
+bacterial_rnp_body,bacterial RNP-bodies (BR-bodies),PhasePro,PhasePro,served,yes,Procariota,correct,1,1,1,Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15),1,driver
+bag2_condensate,BAG2 condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasma,trivial_variant,1,1,1,Homo sapiens,1,driver
+balbiani_body,Mitochondrial cloud,CDCODE,CDCODE,served,yes,Germinal,review,598,598,1,Xenopus laevis,0,
+balbiani_body,Balbiani body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,332,333,3,Danio rerio,6,client|driver
+balbiani_body,Balbiani body,CDCODE,CDCODE,served,yes,Germinal,trivial_variant,14,14,2,Danio rerio,0,
+balbiani_body,Balbiani body,DrLLPS,DrLLPS,served,yes,Germinal,trivial_variant,7,7,2,Danio rerio,5,client|driver
+balbiani_body,Balbiani body,PhasePro,PhasePro,served,yes,Germinal,trivial_variant,2,2,1,Danio rerio,1,driver
+balbiani_body,mitochondrial cloud,PhasePro,PhasePro,served,yes,Germinal,review,2,2,1,Danio rerio,1,driver
+baz2a_body,BAZ2A bodies,CDCODE,CDCODE,served,yes,Nuclear,not_reviewed,1,1,1,Mus musculus,0,
+cajal_body,Cajal body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,215,222,2,Homo sapiens,86,client|driver
+cajal_body,Cajal body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,90,90,5,Homo sapiens,0,
+cajal_body,Cajal body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,40,40,4,Homo sapiens,40,client|driver
+carboxysome,Carboxysome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Procariota,correct,2,2,2,Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805),4,driver
+carboxysome,Enzyme_shell proteins condensates,CDCODE,CDCODE,served,yes,Procariota,review,2,2,1,Salmonella typhimurium (strain LT2 / SGSC1412 / ATCC 700720),0,
+carboxysome,Carboxysome,CDCODE,CDCODE,served,yes,Procariota,correct,1,1,1,Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805),0,
+centrosome,Centrosome,CDCODE,CDCODE,served,yes,Citoesqueleto,trivial_variant,965,965,9,Homo sapiens,0,
+centrosome,Centrosome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoesqueleto,trivial_variant,22,22,2,Homo sapiens,35,client|driver
+centrosome,Pericentriolar matrix,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoesqueleto,not_reviewed,10,10,3,Caenorhabditis elegans,6,driver
+centrosome,Pericentriolar matrix,CDCODE,CDCODE,served,yes,Citoesqueleto,not_reviewed,8,8,2,Caenorhabditis elegans,0,
+centrosome,Pericentriolar material,CDCODE,CDCODE,served,yes,Citoesqueleto,not_reviewed,3,3,1,Drosophila melanogaster,0,
+centrosome,Pericentriolar compartment,CDCODE,CDCODE,served,yes,Citoesqueleto,correct,2,2,2,Homo sapiens,0,
+centrosome,Pericentriolar matrix,DrLLPS,DrLLPS,served,yes,Citoesqueleto,not_reviewed,1,1,1,Caenorhabditis elegans,1,driver
+centrosome,pericentriolar material,PhasePro,PhasePro,served,yes,Citoesqueleto,correct,1,1,1,Caenorhabditis elegans,1,driver
+centrosome,Centrosome/,,,served,no,Citoesqueleto,trivial_variant,0,0,0,,0,
+cgas_dna_complex,cGAS foci,CDCODE,CDCODE,served,yes,Citoplasmático,correct,4,4,2,Homo sapiens,0,
+cgas_dna_complex,cGAS-DNA complex,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,3,3,2,Homo sapiens,8,driver
+cgas_dna_complex,cGAS foci,PhasePro,PhasePro,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,1,driver
+chloroplast_stress_granule,Chloroplast Stress granule,CDCODE,CDCODE,served,yes,Plastídico,correct,79,79,2,Arabidopsis thaliana,0,
+chromatin_compartment,Euchromatin,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,2,Gallus gallus,0,
+chromatin_compartment,euchromatin,PhasePro,PhasePro,served,yes,Nuclear,review,2,2,2,Gallus gallus,2,driver
+chromatin_compartment,eukaryotic topoisomerase ii,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+chromatin_compartment,Chromatin,DrLLPS,DrLLPS,served,yes,Nuclear,correct,1,1,1,Drosophila melanogaster,1,driver
+chromatoid_body,Chromatoid body,CDCODE,CDCODE,served,yes,Germinal,trivial_variant,109,109,3,Mus musculus,0,
+chromatoid_body,Chromatoid body,DrLLPS,DrLLPS,served,yes,Germinal,trivial_variant,106,106,3,Mus musculus,17,client|driver
+chromogranin_condensate,Chromogranin condensates,CDCODE,CDCODE,served,yes,Citoplasmático,correct,3,3,3,Mus musculus,0,
+chromogranin_condensate,Large dense-core vesicles,CDCODE,CDCODE,served,yes,Citoplasmático,error,1,1,1,Homo sapiens,0,
+cleavage_body,Cleavage body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,3,3,1,Homo sapiens,0,
+cleavage_body,Cleavage body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,2,driver
+cojusome,Cojusome,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,1,1,1,Tetrahymena thermophila,0,
+contractile_ring,Contractile ring condensate,CDCODE,CDCODE,served,yes,Citoesqueleto,correct,1,1,1,Schizosaccharomyces pombe (strain 972 / ATCC 24843),0,
+contractile_ring,contractile ring,PhasePro,PhasePro,served,yes,Citoesqueleto,trivial_variant,1,1,1,Schizosaccharomyces pombe (strain 972 / ATCC 24843),1,driver
+contractile_ring,Contractile ring,,,served,no,Citoesqueleto,correct,0,0,0,,0,
+cortical_condensate,Cortical condensate,PhaSepDB,PhasePDB,served,yes,Membrana,trivial_variant,1,1,1,Homo sapiens,4,driver
+cytoplasmic_nucleoporin_granule,Cytoplasmic Nucleoporin Granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,3,3,1,Homo sapiens,8,driver
+cytoplasmic_protein_granule,cytoplasmic protein granule,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,14,14,6,Drosophila melanogaster,8,driver
+cytoplasmic_protein_granule,Cytoplasmic bodies,CDCODE,CDCODE,served,yes,Citoplasmático,review,3,3,1,Homo sapiens,0,
+cytoplasmic_rnp_granule,RNP granules,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,not_reviewed,43,43,7,Homo sapiens,34,client|driver
+cytoplasmic_rnp_granule,cytoplasmic ribonucleoprotein granule,PhasePro,PhasePro,served,yes,Citoplasmático,not_reviewed,7,7,3,Homo sapiens,7,driver
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,CDCODE,CDCODE,served,yes,Citoplasmático,error,5,5,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+cytoplasmic_rnp_granule,Translational Condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,4,4,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,3,3,1,Danio rerio,0,
+cytoplasmic_rnp_granule,RNP granule,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,3,3,1,Caenorhabditis elegans,0,
+cytoplasmic_rnp_granule,CPEB4 granule,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,1,1,1,Xenopus laevis,0,
+cytoplasmic_rnp_granule,Ddx3xb condensates,CDCODE,CDCODE,served,yes,Citoplasmático,review,1,1,1,Danio rerio,0,
+cytoplasmic_rnp_granule,FXR1 condensates,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,1,1,1,Mus musculus,0,
+cytoplasmic_rnp_granule,FXR1 network,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,not_reviewed,1,1,1,Homo sapiens,3,driver
+cytoplasmic_rnp_granule,MEX3B granule,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+cytoplasmic_rnp_granule,WHI3 cluster,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+d_granule,D-granule,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,1,1,1,Mus musculus,0,
+ddx1_body,DDX1 body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,0,
+ddx1_body,DDX1 body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,2,driver
+degradosome,Degradosome,CDCODE,CDCODE,served,yes,Procariota,trivial_variant,12,12,1,Escherichia coli (strain K12),0,
+dna_damage_foci,DNA damage foci,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,36,38,4,Homo sapiens,129,client|driver
+dna_damage_foci,DNA damage foci,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,23,23,2,Homo sapiens,0,
+dna_damage_foci,DNA damage foci,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,7,7,1,Homo sapiens,19,client|driver
+dna_damage_foci,SOSS-INTAC Condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,5,5,1,Homo sapiens,0,
+dna_damage_foci,53BP1 Mitotic Stress Body (MSBs),CDCODE,CDCODE,served,yes,Nuclear,review,3,3,1,Homo sapiens,0,
+dna_damage_foci,PARP1-DNA condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,3,3,1,Homo sapiens,0,
+dna_damage_foci,TopBP1 condensate,CDCODE,CDCODE,served,yes,Nuclear,not_reviewed,1,1,1,Homo sapiens,0,
+dps_condensate,Dps condensate,CDCODE,CDCODE,served,yes,Procariota,trivial_variant,1,1,1,Escherichia coli (strain K12),0,
+elastin_granule,Elastin granule,CDCODE,CDCODE,served,yes,Extracelular,trivial_variant,1,1,1,Homo sapiens,0,
+elks_condensate,ELKS condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,trivial_variant,1,1,1,Homo sapiens,1,driver
+elva,ELVA,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,13,13,1,Mus musculus,0,
+endocytic_condensate,Ede1 condensate,CDCODE,CDCODE,served,yes,Membrana,correct,11,11,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+endocytic_condensate,Endocytic condensates,CDCODE,CDCODE,served,yes,Membrana,correct,3,3,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+enhanceosome,enhanceosome,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,4,4,1,Homo sapiens,2,driver
+enhancer_condensate,enhancer condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,4,4,1,Homo sapiens,17,driver
+enhancer_condensate,MegaTrans enhancer complex,CDCODE,CDCODE,served,yes,Nuclear,correct,2,2,1,Homo sapiens,0,
+enhancer_condensate,nuclear bodies that occur at super enhancers in mESCs,PhasePro,PhasePro,served,yes,Nuclear,correct,2,2,1,Homo sapiens,1,driver
+enhancer_condensate,robustly E2-activated enhancers (MegaTrans) enhancers,PhasePro,PhasePro,served,yes,Nuclear,correct,2,2,1,Homo sapiens,1,driver
+enhancer_condensate,Enhancer cluster,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Homo sapiens,0,
+eres_condensate,ERES,CDCODE,CDCODE,served,yes,Citoplasmático,correct,8,8,1,Homo sapiens,0,
+eres_condensate,SCOTIN condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,3,3,1,Homo sapiens,0,
+escrt_condensate,ESCRTs,CDCODE,CDCODE,served,yes,Membrana,not_reviewed,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+exosomal_condensate,SDC4 exosomal condensate,CDCODE,CDCODE,served,yes,Extracelular,correct,1,1,1,Homo sapiens,0,
+exosomal_condensate,YBX1 condensate,CDCODE,CDCODE,served,yes,Extracelular,review,1,1,1,Homo sapiens,0,
+ferritin_condensate,Ferritin-NCOA4 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,3,3,1,Homo sapiens,0,
+fip200_puncta,FIP200 puncta,PhaSepDB,PhasePDB,served,yes,Autofagia,trivial_variant,2,2,1,Homo sapiens,3,driver
+frq_condensate,FRQ condensate,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,1,1,1,Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987),0,
+ftsz_droplet,FtsZ/SlmA body,CDCODE,CDCODE,served,yes,Procariota,correct,2,2,1,Escherichia coli (strain K12),0,
+ftsz_droplet,Ftsz-rich droplets at specific chromosomal DNA sites,PhasePro,PhasePro,served,yes,Procariota,correct,2,2,1,Escherichia coli (strain K12),1,driver
+ftsz_droplet,FtsZ condensate,CDCODE,CDCODE,served,yes,Procariota,correct,1,1,1,Escherichia coli (strain K12),0,
+galectin_condensate,Galectin complex,CDCODE,CDCODE,served,yes,Membrana,not_reviewed,1,1,1,Homo sapiens,0,
+galectin_lattice,galectin complex,PhasePro,PhasePro,served,yes,Membrana,correct,1,1,1,Homo sapiens,1,driver
+galectin_lattice,galectin lattice,PhasePro,PhasePro,served,yes,Membrana,trivial_variant,1,1,1,Homo sapiens,1,driver
+gbpl_condensate,GBPL defense-activated condensates,PhaSepDB,PhaseDB|PhasePDB,served,yes,Vegetal,not_reviewed,1,1,1,Arabidopsis thaliana,2,driver
+gem,Gemini of cajal body,DrLLPS,DrLLPS,served,yes,Nuclear,correct,2,2,1,Homo sapiens,13,driver
+gem,Gems,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,correct,1,1,1,Homo sapiens,2,driver
+gem,SMN1 nuclear body,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Mus musculus,0,
+germ_plasm,Germ plasm,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,4,4,3,Drosophila melanogaster,4,client|driver
+germ_plasm,germ plasm,PhasePro,PhasePro,served,yes,Germinal,correct,2,2,1,Danio rerio,1,driver
+germ_plasm,Founder granule,CDCODE,CDCODE,served,yes,Germinal,correct,1,1,1,Drosophila melanogaster,0,
+germ_plasm,Germ plasm/Polar granule,,,served,no,Germinal,review,0,0,0,,0,
+glycolytic_body,Glycolytic body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,correct,9,9,3,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),4,client|driver
+glycolytic_body,G-body,CDCODE,CDCODE,served,yes,Citoplasmático,correct,5,5,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+glycolytic_body,PFK-1.1 condensates,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Caenorhabditis elegans,0,
+golgin_condensate,Golgin condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,7,7,1,Homo sapiens,0,
+golgin_condensate,Golgin condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,correct,7,7,1,Homo sapiens,2,driver
+golgin_condensate,Golgi ribbon,CDCODE,CDCODE,served,yes,Citoplasmático,error,1,1,1,Homo sapiens,0,
+haemoglobin_body,Haemoglobin body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasma,trivial_variant,2,2,1,Mus musculus,1,driver
+heterochromatin,Heterochromatin,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,41,41,8,Homo sapiens,56,driver
+heterochromatin,Heterochromatin,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,10,10,6,Arabidopsis thaliana,0,
+heterochromatin,XY body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,error,10,10,1,Mus musculus,2,driver
+heterochromatin,heterochromatin,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,4,4,3,Homo sapiens,4,driver
+hippo_condensate,TAZ Condensate,CDCODE,CDCODE,served,yes,Membrana,correct,8,8,1,Homo sapiens,0,
+hippo_condensate,Hippo signalosome,CDCODE,CDCODE,served,yes,Membrana,correct,7,7,1,Homo sapiens,0,
+hippo_condensate,NEDD4 condensates,CDCODE,CDCODE,served,yes,Membrana,review,3,3,1,Homo sapiens,0,
+hippo_condensate,DDR1 condensate,CDCODE,CDCODE,served,yes,Membrana,error,2,2,1,Mus musculus,0,
+histone_locus_body,Histone Locus Body,CDCODE,CDCODE,served,yes,Nuclear,correct,15,15,4,Homo sapiens,0,
+histone_locus_body,Histone locus body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,7,8,3,Homo sapiens,10,client|driver
+histone_locus_body,Histone locus body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,4,4,2,Drosophila melanogaster,4,client
+hyperosmotic_shock_foci,Hyperosmotic shock foci,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,18,18,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),10,driver
+hyperosmotic_shock_foci,Hypersomatic shock foci,CDCODE,CDCODE,served,yes,Citoplasmático,correct,17,17,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+icp22_condensate,ICP22 condensate,PhaSepDB,PhasePDB,served,yes,Viral,trivial_variant,2,2,1,Human herpesvirus 1 (strain 17),1,driver
+in_vitro_droplet,in vitro droplet,LLPSDB,LLPSDB,served,yes,In vitro,trivial_variant,380,380,64,Homo sapiens,289,driver
+in_vitro_droplet,in vitro droplet,DrLLPS,DrLLPS,served,yes,In vitro,trivial_variant,144,144,11,Homo sapiens,98,client|driver
+in_vitro_droplet,Droplet,,,served,no,In vitro,not_reviewed,0,0,0,,0,
+inava_condensate,IL-1b-induced INAVA condensates,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+inava_condensate,INAVA condensates,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+inclusion_body,Inclusion body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Patológico,trivial_variant,49,49,20,Homo sapiens,100,driver
+inclusion_body,Inclusion body,CDCODE,CDCODE,served,yes,Patológico,trivial_variant,18,18,8,Chandipura virus (strain I653514),0,
+inclusion_body,inclusion body-associated granule (IBAG),CDCODE,CDCODE,served,yes,Patológico,error,9,9,4,Homo sapiens,0,
+inclusion_body,P6 inclusion body,CDCODE,CDCODE,served,yes,Patológico,error,6,6,2,Arabidopsis thaliana,0,
+inclusion_body,Inclusion Body,CDCODE,CDCODE,served,yes,Patológico,trivial_variant,4,4,3,Tomato yellow mottle-associated virus,0,
+inclusion_body,Htt inclusion,CDCODE,CDCODE,served,yes,Patológico,correct,3,3,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+inclusion_body,inclusion body,PhasePro,PhasePro,served,yes,Patológico,trivial_variant,3,3,2,Measles virus (strain Edmonston-AIK-C vaccine),2,driver
+inclusion_body,Htt inclusion,PhaSepDB,PhaseDB|PhasePDB,served,yes,Patológico,correct,2,2,2,Homo sapiens,4,driver
+inclusion_body,TDP-25 inclusions,CDCODE,CDCODE,served,yes,Patológico,correct,1,1,1,Homo sapiens,0,
+inflammasome,TIFA-TRAF6 Condensate,CDCODE,CDCODE,served,yes,Citoplasmático,error,7,7,1,Homo sapiens,0,
+inflammasome,Inflammasome,CDCODE,CDCODE,served,yes,Citoplasmático,correct,2,2,1,Homo sapiens,0,
+inq_compartment,Intranuclear quality control compartment,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,not_reviewed,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),1,driver
+insulator_body,Insulator body,CDCODE,CDCODE,served,yes,Nuclear,correct,8,8,1,Drosophila melanogaster,0,
+insulator_body,Insulator body,DrLLPS,DrLLPS,served,yes,Nuclear,correct,6,6,1,Drosophila melanogaster,7,client
+insulator_body,insulator body,,,served,no,Nuclear,trivial_variant,0,0,0,,0,
+integrin_adhesion_complex,Integrin adhesion complex,PhaSepDB,PhaseDB|PhasePDB,served,yes,Membrana,correct,3,3,1,Mus musculus,1,driver
+integrin_adhesion_complex,focal adhesion (FA) condensate,CDCODE,CDCODE,served,yes,Membrana,correct,3,3,1,Homo sapiens,0,
+intracellular_dna_protein_granule,intracellular DNA/protein granule,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,1,1,1,Homo sapiens,1,driver
+kat6a_condensate,KAT6A droplet,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,not_reviewed,1,1,1,Homo sapiens,1,driver
+l_body,L-body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,76,76,1,Xenopus laevis,2,client|driver
+l_body,L-bodies,CDCODE,CDCODE,served,yes,Germinal,correct,10,10,1,Xenopus laevis,0,
+liquid_dyrk3_speckle,DYRK3 speckle,CDCODE,CDCODE,served,yes,Nuclear/Mitótico,correct,1,1,1,Homo sapiens,0,
+liquid_dyrk3_speckle,liquid-like DYRK3 speckles,PhasePro,PhasePro,served,yes,Nuclear/Mitótico,correct,1,1,1,Homo sapiens,1,driver
+mardo,MARDO,CDCODE,CDCODE,served,yes,Germinal,trivial_variant,7,7,2,Mus musculus,0,
+mast_cell_granule,Mast cell extracellular granules (MCEGs),CDCODE,CDCODE,served,yes,Secretor,not_reviewed,533,533,3,Mus musculus,0,
+maternal_mrna_condensate,Nuclear poly(A) domains,CDCODE,CDCODE,served,yes,Nuclear,review,1,1,1,Mus musculus,0,
+maternal_mrna_condensate,Rbm14-maternal mRNA condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,correct,1,1,1,Danio rerio,1,driver
+mcd_condensate,McdB condensate,CDCODE,CDCODE,served,yes,Procariota,not_reviewed,2,2,1,Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805),0,
+mediator_condensate,Mediator condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,correct,6,6,2,Homo sapiens,13,driver
+mediator_condensate,mediator condensate,,,served,no,Nuclear,trivial_variant,0,0,0,,0,
+mesh_condensate,Mesh-like condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasma,not_reviewed,3,3,1,Homo sapiens,82,driver
+midbody_granule,Midbody Granule,CDCODE,CDCODE,served,yes,Mitótico,trivial_variant,7,7,1,Homo sapiens,0,
+mirisc,RISC complex,PhasePro,PhasePro,served,yes,Citoplasmático,review,2,2,1,Homo sapiens,1,driver
+mirisc,miRISC,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,2,2,1,Homo sapiens,2,driver
+mirisc,miRISC,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,2,2,1,Homo sapiens,1,driver
+mirisc,miRISC condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,2,2,1,Homo sapiens,0,
+mirisc,micro-ribonucleoprotein complex,PhasePro,PhasePro,served,yes,Citoplasmático,correct,2,2,1,Homo sapiens,1,driver
+mitochondrial_nucleoid,Mitochondrial nucleoid,PhaSepDB,PhaseDB|PhasePDB,served,yes,Mitocondrial,trivial_variant,6,6,2,Homo sapiens,2,driver
+mitochondrial_rna_granule,mtRNA granule,CDCODE,CDCODE,served,yes,Mitocondrial,correct,42,42,1,Homo sapiens,0,
+mitochondrial_rna_granule,Mitochondrial RNA granule,DrLLPS,DrLLPS,served,yes,Mitocondrial,trivial_variant,40,40,1,Homo sapiens,16,client
+morc3_nuclear_body,MORC3 nuclear body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,1,1,1,Homo sapiens,0,
+morc3_nuclear_body,MORC3-NBs,PhasePro,PhasePro,served,yes,Nuclear,correct,1,1,1,Homo sapiens,1,driver
+mutator_foci,MUTator foci,CDCODE,CDCODE,served,yes,Germinal,correct,1,1,1,Caenorhabditis elegans,0,
+mutator_foci,Mutator foci,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,1,1,1,Caenorhabditis elegans,2,driver
+mutator_foci,mutator focus,PhasePro,PhasePro,served,yes,Germinal,correct,1,1,1,Caenorhabditis elegans,1,driver
+mutator_foci,small RNA amplification complex,PhasePro,PhasePro,served,yes,Germinal,correct,1,1,1,Caenorhabditis elegans,1,driver
+necrosome,Arsenite-induced Necrosome,CDCODE,CDCODE,served,yes,Citoplasmático,correct,7,7,2,Mus musculus,0,
+necrosome,Necrosome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,correct,2,2,1,Homo sapiens,1,driver
+negri_body,Negri body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral,trivial_variant,5,5,3,Rabies virus (strain CVS-11),3,client|driver
+negri_body,Negri body,CDCODE,CDCODE,served,yes,Viral,trivial_variant,2,2,1,Rabies virus (strain CVS-11),0,
+negri_body,Negri body,PhasePro,PhasePro,served,yes,Viral,trivial_variant,2,2,1,Rabies virus (strain CVS-11),1,driver
+neuronal_granule,Neuronal RNP granule,CDCODE,CDCODE,served,yes,Neuronal,correct,66,66,4,Mus musculus,0,
+neuronal_granule,Neuronal granule,DrLLPS,DrLLPS,served,yes,Neuronal,trivial_variant,49,49,3,Mus musculus,21,client|driver
+neuronal_granule,IMP1 RNP granule,CDCODE,CDCODE,served,yes,Neuronal,correct,39,39,1,Homo sapiens,0,
+neuronal_granule,Neuronal granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,trivial_variant,8,8,2,Homo sapiens,92,driver
+neuronal_granule,neuronal ribonucleoprotein granule,PhasePro,PhasePro,served,yes,Neuronal,correct,5,5,2,Homo sapiens,4,driver
+neuronal_granule,Mimi granules,CDCODE,CDCODE,served,yes,Neuronal,review,3,3,1,Drosophila melanogaster,0,
+neuronal_granule,Neuronal granule,CDCODE,CDCODE,served,yes,Neuronal,trivial_variant,3,3,1,Caenorhabditis elegans,0,
+neuronal_granule,RBFOX1 RNP granule,CDCODE,CDCODE,served,yes,Neuronal,correct,2,2,1,Drosophila melanogaster,0,
+neuronal_granule,RNP transport granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,correct,2,2,1,Homo sapiens,51,driver
+neuronal_granule,TIAR2 neuronal granule,CDCODE,CDCODE,served,yes,Neuronal,review,1,1,1,Caenorhabditis elegans,0,
+neuronal_granule,IMP1 ribonucleoprotein granule,,,served,no,Neuronal,correct,0,0,0,,0,
+nikr_compartment,NikR compartments,PhaSepDB,PhaseDB|PhasePDB,served,yes,Procariota,not_reviewed,1,1,1,Escherichia coli (strain K12),1,driver
+nono_condensate,Non-paraspeckle NONO condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,not_reviewed,3,3,1,Mus musculus,1,driver
+norad_pum_body,NORAD-PUM body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,1,driver
+norad_pum_body,NP bodies,CDCODE,CDCODE,served,yes,Nuclear,correct,2,2,1,Homo sapiens,0,
+npr1_condensate,NPR1 Condensate,,,served,no,Citoplasmático,trivial_variant,0,0,0,,0,
+nuage,Nuage,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,correct,8,8,5,Homo sapiens,24,driver
+nuage,Nuage,DrLLPS,DrLLPS,served,yes,Germinal,correct,3,3,2,Mus musculus,5,client|driver
+nuage,IMC (intermitochondrial cement),CDCODE,CDCODE,served,yes,Germinal,correct,1,1,1,Homo sapiens,0,
+nuage,Nuage,CDCODE,CDCODE,served,yes,Germinal,correct,1,1,1,Homo sapiens,0,
+nuclear_body,Nuclear body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,214,216,6,Homo sapiens,114,client|driver
+nuclear_body,Leucocyte nuclear body,CDCODE,CDCODE,served,yes,Nuclear,review,21,21,1,Homo sapiens,0,
+nuclear_body,nuclear body,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,16,16,6,Homo sapiens,11,driver
+nuclear_body,Nuclear body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,10,10,4,Homo sapiens,0,
+nuclear_body,Ccer1 condensate,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Mus musculus,0,
+nuclear_body,RBM15 condensate,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Homo sapiens,0,
+nuclear_body,SPRI2 Nuclear Condensate,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Arabidopsis thaliana,0,
+nuclear_body,NAB3 nuclear body,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+nuclear_body,VRN1 nuclear body,CDCODE,CDCODE,served,yes,Nuclear,review,1,1,1,Arabidopsis thaliana,0,
+nuclear_dicing_body,Nuclear dicing body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,3,3,1,Arabidopsis thaliana,0,
+nuclear_dicing_body,Nuclear dicing body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,3,3,1,Arabidopsis thaliana,2,driver
+nuclear_pore_complex,Nuclear pore complex,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,56,59,10,Homo sapiens,163,client|driver
+nuclear_pore_complex,Nuclear pore complex,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,51,51,10,Homo sapiens,0,
+nuclear_pore_complex,Nuclear pore complex,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,4,4,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),2,driver
+nuclear_pore_complex,nuclear pore central transport channel,PhasePro,PhasePro,served,yes,Nuclear,correct,3,3,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),2,driver
+nuclear_pore_complex,selective hydrogel-like meshwork formed by FG-nucleoporins in nuclear pore central channel,PhasePro,PhasePro,served,yes,Nuclear,correct,3,3,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),2,driver
+nuclear_protein_granule,nuclear protein granule,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,6,6,1,Homo sapiens,4,driver
+nuclear_speckle,Nuclear speckle,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,633,661,6,Homo sapiens,343,client|driver
+nuclear_speckle,Nuclear speckle,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,238,238,6,Homo sapiens,0,
+nuclear_speckle,Nuclear speckle,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,110,110,5,Homo sapiens,85,client|driver
+nuclear_speckle,nuclear speckle,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,3,3,1,Homo sapiens,2,driver
+nuclear_speckle,AFAP1-AS1 condensates,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Homo sapiens,0,
+nuclear_speckle,ALYREF condensates,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Homo sapiens,0,
+nuclear_speckle,METTL14 condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Mus musculus,0,
+nuclear_speckle,Omega speckle,CDCODE,CDCODE,served,yes,Nuclear,review,1,1,1,Drosophila melanogaster,0,
+nuclear_speckle,nuclear speck,,,served,no,Nuclear,not_reviewed,0,0,0,,0,
+nuclear_stress_body,Nuclear stress body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,574,575,1,Homo sapiens,15,client|driver
+nuclear_stress_body,Nuclear stress body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,12,12,2,Homo sapiens,0,
+nuclear_stress_body,Nuclear stress body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,7,7,1,Homo sapiens,12,client
+nuclear_stress_body,A-bodies,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Homo sapiens,0,
+nucleolus,Nucleolus,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,3717,3717,15,Arabidopsis thaliana,0,
+nucleolus,Nucleolus,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,3386,3386,13,Arabidopsis thaliana,225,client|driver
+nucleolus,Nucleolus,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,2187,2220,12,Homo sapiens,438,client|driver
+nucleolus,Dense Fibrillar Component,CDCODE,CDCODE,served,yes,Nuclear,not_reviewed,9,9,2,Homo sapiens,0,
+nucleolus,nucleolus,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,5,5,3,Drosophila melanogaster,3,driver
+nucleolus,Dense fibrillar component,CDCODE,CDCODE,served,yes,Nuclear,not_reviewed,2,2,2,Caenorhabditis elegans,0,
+nucleolus,Granular component,CDCODE,CDCODE,served,yes,Nuclear,not_reviewed,2,2,2,Mus musculus,0,
+nucleolus,dense fibrillar component,PhasePro,PhasePro,served,yes,Nuclear,correct,2,2,2,Caenorhabditis elegans,2,driver
+nucleolus,rDNA locus,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+nucleolus,granular component,PhasePro,PhasePro,served,yes,Nuclear,correct,1,1,1,Homo sapiens,1,driver
+opt_domain,OPT domain,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,5,5,1,Homo sapiens,2,client
+oskar_granule,Oskar granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,4,4,2,Homo sapiens,82,driver
+p62_body,p62 cluster,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,not_reviewed,780,784,3,Homo sapiens,28,client|driver
+p62_body,ORF8/p62 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,4,4,2,Homo sapiens,0,
+p62_body,P62 cluster,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,4,4,2,Mus musculus,0,
+p62_body,P62 body,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,3,3,1,Homo sapiens,0,
+p62_body,p62 body,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,1,1,1,Homo sapiens,1,driver
+p_body,P-body,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,981,981,10,Homo sapiens,0,
+p_body,P-body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,487,513,9,Homo sapiens,154,client|driver
+p_body,P-body,DrLLPS,DrLLPS,served,yes,Citoplasmático,trivial_variant,373,373,9,Homo sapiens,175,client|driver
+p_body,p62-dependent P-bodies (pd-PBs),CDCODE,CDCODE,served,yes,Citoplasmático,correct,11,11,2,Homo sapiens,0,
+p_body,P-body,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,9,9,2,Homo sapiens,6,driver
+p_body,GW-body,CDCODE,CDCODE,served,yes,Citoplasmático,correct,3,3,1,Homo sapiens,0,
+p_body,PB-like Assembly,CDCODE,CDCODE,served,yes,Citoplasmático,correct,3,3,1,Homo sapiens,0,
+p_body,GW-body,PhasePro,PhasePro,served,yes,Citoplasmático,correct,2,2,1,Homo sapiens,1,driver
+p_body,CCR4-NOT1 complex,CDCODE,CDCODE,served,yes,Citoplasmático,review,1,1,1,Oryza sativa subsp. japonica,0,
+p_body,P body,,,served,no,Citoplasmático,trivial_variant,0,0,0,,0,
+p_body,P-bodies,,,served,no,Citoplasmático,not_reviewed,0,0,0,,0,
+p_granule,P granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,562,573,2,Caenorhabditis elegans,49,client|driver
+p_granule,P-granule,CDCODE,CDCODE,served,yes,Germinal,trivial_variant,49,49,1,Caenorhabditis elegans,0,
+p_granule,P granule,DrLLPS,DrLLPS,served,yes,Germinal,trivial_variant,37,37,1,Caenorhabditis elegans,18,client|driver
+p_granule,Germ granule,CDCODE,CDCODE,served,yes,Germinal,review,14,14,3,Drosophila melanogaster,0,
+p_granule,P granule,PhasePro,PhasePro,served,yes,Germinal,trivial_variant,5,5,3,Caenorhabditis elegans,5,driver
+p_granule,PGL granules,CDCODE,CDCODE,served,yes,Germinal,correct,5,5,1,Caenorhabditis elegans,0,
+p_granule,Trbd,CDCODE,CDCODE,served,yes,Germinal,review,1,1,1,Drosophila melanogaster,0,
+pab2_condensate,Pab2 nuclear condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,not_reviewed,1,1,1,Schizosaccharomyces japonicus (strain yFS275 / FY16936),1,driver
+parabs_condensate,ParABS DNA,CDCODE,CDCODE,served,yes,Procariota,correct,1,1,1,Bacillus subtilis (strain 168),0,
+parabs_condensate,ParABS,,,served,no,Procariota,correct,0,0,0,,0,
+paraspeckle,Paraspeckle,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,259,267,3,Homo sapiens,165,client|driver
+paraspeckle,Paraspeckle,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,73,73,2,Homo sapiens,0,
+paraspeckle,Paraspeckle,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,31,31,1,Homo sapiens,36,client|driver
+paraspeckle,NONO,CDCODE,CDCODE,served,yes,Nuclear,review,3,3,1,Mus musculus,0,
+paraspeckle,paraspeckle,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,3,3,1,Homo sapiens,2,driver
+paraspeckle,paraspeckles,,,served,no,Nuclear,not_reviewed,0,0,0,,0,
+perinucleolar_compartment,Peri-nucleolar condensate,CDCODE,CDCODE,served,yes,Nuclear,review,6,6,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+perinucleolar_compartment,Perinucleolar compartment,DrLLPS,DrLLPS,served,yes,Nuclear,correct,1,1,1,Arabidopsis thaliana,1,client
+pi_body,pi-body,PhasePro,PhasePro,served,yes,Germinal,trivial_variant,1,1,1,Homo sapiens,1,driver
+plant_photobody,Photobody,PhaSepDB,PhaseDB|PhasePDB,served,yes,Plastídico,correct,7,7,1,Arabidopsis thaliana,6,driver
+plant_photobody,Plant Photobody,CDCODE,CDCODE,served,yes,Plastídico,trivial_variant,5,5,1,Arabidopsis thaliana,0,
+plant_photobody,CRY2/SPA1/FIO1 condensate,CDCODE,CDCODE,served,yes,Plastídico,correct,3,3,1,Arabidopsis thaliana,0,
+plant_signaling_condensate,OsSRO1c-OsDREB2B condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,2,2,1,Oryza sativa subsp. japonica,0,
+plant_signaling_condensate,RH20 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,2,2,1,Arabidopsis thaliana,0,
+plant_signaling_condensate,OsJAZ2 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Oryza sativa subsp. indica,0,
+plant_signaling_condensate,PARCL condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Arabidopsis thaliana,0,
+plant_signaling_condensate,Plant growth regulator,CDCODE,CDCODE,served,yes,Citoplasmático,review,1,1,1,Arabidopsis thaliana,0,
+pml_nuclear_body,PML body,CDCODE,CDCODE,served,yes,Nuclear,not_reviewed,561,561,5,Homo sapiens,0,
+pml_nuclear_body,PML nuclear body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,326,337,2,Homo sapiens,135,client|driver
+pml_nuclear_body,PML nuclear body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,72,72,2,Homo sapiens,49,client|driver
+pml_nuclear_body,PML body,PhasePro,PhasePro,served,yes,Nuclear,not_reviewed,1,1,1,Homo sapiens,1,driver
+pml_nuclear_body,PML/RARα microspeckle,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,review,1,1,1,Homo sapiens,2,driver
+polarisome,Polarisome,CDCODE,CDCODE,served,yes,Citoesqueleto,trivial_variant,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+polarity_condensate,PopZ condensate,CDCODE,CDCODE,served,yes,Neuronal,correct,6,6,3,Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15),0,
+polarity_condensate,Par complex,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,correct,4,4,2,Drosophila melanogaster,2,driver
+polarity_condensate,Par complex,CDCODE,CDCODE,served,yes,Neuronal,correct,3,3,2,Mus musculus,0,
+polarity_condensate,PodJ condensates,CDCODE,CDCODE,served,yes,Neuronal,correct,3,3,1,Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15),0,
+polarity_condensate,Numb/Pon condensate,CDCODE,CDCODE,served,yes,Neuronal,correct,2,2,1,Drosophila melanogaster,0,
+polarity_condensate,basal Numb-Pon crescent in dividing neuroblasts,PhasePro,PhasePro,served,yes,Neuronal,correct,2,2,1,Drosophila melanogaster,1,driver
+polarity_condensate,Fus1 condensate,CDCODE,CDCODE,served,yes,Neuronal,review,1,1,1,Schizosaccharomyces pombe (strain 972 / ATCC 24843),0,
+polycomb_body,PcG body,CDCODE,CDCODE,served,yes,Nuclear,correct,35,35,3,Drosophila melanogaster,0,
+polycomb_body,PcG body,DrLLPS,DrLLPS,served,yes,Nuclear,correct,29,29,2,Drosophila melanogaster,10,client|driver
+polycomb_body,Polycomb body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,10,11,3,Homo sapiens,9,client|driver
+polycomb_body,PcG chromatin condensates,PhasePro,PhasePro,served,yes,Nuclear,correct,1,1,1,Homo sapiens,1,driver
+polyp_granule,PolyP granule,CDCODE,CDCODE,served,yes,Procariota,trivial_variant,1,1,1,Pseudomonas aeruginosa (strain ATCC 15692 / DSM 22644 / CIP 104116 / JCM 14847 / LMG 12228 / 1C / PRS 101 / PAO1),0,
+postsynaptic_density,Postsynaptic density,DrLLPS,DrLLPS,served,yes,Neuronal,trivial_variant,2793,2793,2,Mus musculus,250,client|driver
+postsynaptic_density,Postsynaptic density,CDCODE,CDCODE,served,yes,Neuronal,trivial_variant,1483,1483,2,Mus musculus,0,
+postsynaptic_density,Postsynaptic density,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,trivial_variant,124,126,3,Mus musculus,43,client|driver
+postsynaptic_density,Rapsn condensate,CDCODE,CDCODE,served,yes,Neuronal,review,7,7,1,Homo sapiens,0,
+postsynaptic_density,postsynaptic density,PhasePro,PhasePro,served,yes,Neuronal,trivial_variant,2,2,2,Mus musculus,1,driver
+postsynaptic_density,ArgBP2 dendritic spine condensate,CDCODE,CDCODE,served,yes,Neuronal,correct,1,1,1,Homo sapiens,0,
+postsynaptic_density,FATZ-1 condensate,CDCODE,CDCODE,served,yes,Neuronal,error,1,1,1,Homo sapiens,0,
+pre_autophagosomal_structure,ATG condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,5,5,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+pre_autophagosomal_structure,Pre-autophagosomal structure,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,5,5,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),4,driver
+pre_autophagosomal_structure,ATG4B condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,1,1,1,Homo sapiens,0,
+presynaptic_active_zone,Presynaptic clusters and postsynaptic densities,CDCODE,CDCODE,served,yes,Neuronal,error,1366,1366,1,Homo sapiens,0,
+presynaptic_active_zone,Presynaptic clusters,CDCODE,CDCODE,served,yes,Neuronal,correct,15,15,4,Mus musculus,0,
+presynaptic_active_zone,Presynaptic active zone condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,not_reviewed,11,11,4,Rattus norvegicus,8,driver
+presynaptic_active_zone,presynaptic cytosol,PhasePro,PhasePro,served,yes,Neuronal,review,2,2,1,Homo sapiens,1,driver
+proteasome_foci,Proteasome condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,8,8,2,Homo sapiens,0,
+proteasome_foci,Proteasome containing foci,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,correct,7,7,1,Homo sapiens,7,driver
+proteasome_foci,Proteasome Storage Granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,error,5,5,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),1,driver
+proteasome_foci,senescence-associated nuclear proteasome foci,CDCODE,CDCODE,served,yes,Nuclear,correct,5,5,1,Homo sapiens,0,
+proteasome_foci,BAG2,CDCODE,CDCODE,served,yes,Nuclear,review,1,1,1,Homo sapiens,0,
+purinosome,Purinosome,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,4,4,1,Homo sapiens,0,
+purinosome,Purinosome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,4,4,1,Homo sapiens,2,driver
+pyrenoid,Pyrenoid matrix,DrLLPS,DrLLPS,served,yes,Plastídico,correct,181,181,1,Chlamydomonas reinhardtii,4,client|driver
+pyrenoid,Pyrenoid,CDCODE,CDCODE,served,yes,Plastídico,trivial_variant,84,84,1,Chlamydomonas reinhardtii,0,
+pyrenoid,pyrenoid,PhasePro,PhasePro,served,yes,Plastídico,trivial_variant,2,2,1,Chlamydomonas reinhardtii,1,driver
+refractile_body,Refractile body,CDCODE,CDCODE,served,yes,Procariota,trivial_variant,1,1,1,Eimeria tenella,0,
+replication_compartment,viral replication compartment (VRC),CDCODE,CDCODE,served,yes,Viral/Nuclear,correct,8,8,3,Human adenovirus C serotype 5,0,
+replication_compartment,ORC1 bodies,CDCODE,CDCODE,served,yes,Viral/Nuclear,review,5,5,1,Homo sapiens,0,
+replication_compartment,Replication compartment,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral/Nuclear,trivial_variant,5,5,4,Severe acute respiratory syndrome coronavirus 2,25,driver
+replication_compartment,Pre-replication compartment (PRC),CDCODE,CDCODE,served,yes,Viral/Nuclear,correct,3,3,2,Murid herpesvirus 1 (strain K181),0,
+replication_compartment,VRO-associated condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral/Nuclear,correct,1,1,1,Nicotiana benthamiana,1,driver
+replication_compartment,Virus-induced replication (VIR) condensate,CDCODE,CDCODE,served,yes,Viral/Nuclear,correct,1,1,1,Tomato bushy stunt virus (strain Cherry),0,
+rho_body,Rho body,CDCODE,CDCODE,served,yes,Procariota,trivial_variant,1,1,0,,0,
+rna_helicase_condensate,RNA-helicase condensates,PhaSepDB,PhasePDB,served,yes,Citoplasma,not_reviewed,1,1,1,Homo sapiens,1,driver
+rosenthal_fiber,Rosenthal fiber,,,served,no,Patológico,trivial_variant,0,0,0,,0,
+sam68_nuclear_body,Sam68 nuclear body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,15,15,1,Homo sapiens,0,
+sam68_nuclear_body,Sam68 nuclear body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,12,12,1,Homo sapiens,21,client|driver
+sam68_nuclear_body,Sam68 nuclear body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,10,10,1,Homo sapiens,2,client
+sam68_nuclear_body,Sam68 nuclear bodies (SNBs),PhasePro,PhasePro,served,yes,Nuclear,correct,2,2,1,Homo sapiens,1,driver
+sars_cov2_n_condensate,FXR-driven SARS-CoV-2 condensate,CDCODE,CDCODE,served,yes,Viral,correct,5,5,2,Homo sapiens,0,
+sars_cov2_n_condensate,SARS-CoV-2 N condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral,trivial_variant,4,4,2,Severe acute respiratory syndrome coronavirus 2,36,driver
+sars_cov2_n_condensate,SARS-CoV-2 condensate,CDCODE,CDCODE,served,yes,Viral,review,4,4,2,Severe acute respiratory syndrome coronavirus 2,0,
+sec_body,Sec body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,8,8,3,Rattus norvegicus,2,client|driver
+sec_body,Sec-body,CDCODE,CDCODE,served,yes,Citoplasmático,correct,8,8,2,Rattus norvegicus,0,
+sec_body,Sec body,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,3,3,1,Drosophila melanogaster,1,driver
+sex_body,sex body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,2,2,2,Mus musculus,0,
+signaling_cluster,Signaling cluster,CDCODE,CDCODE,served,yes,Membrana,trivial_variant,25,25,3,Homo sapiens,0,
+signaling_cluster,Receptor cluster,PhaSepDB,PhaseDB|PhasePDB,served,yes,Membrana,review,15,15,2,Homo sapiens,35,driver
+signaling_cluster,membrane cluster,PhasePro,PhasePro,served,yes,Membrana,review,3,3,1,Homo sapiens,1,driver
+signaling_cluster,Receptor cluster,DrLLPS,DrLLPS,served,yes,Membrana,review,1,1,1,Homo sapiens,1,client
+signaling_condensate,PCBP2 condensates,CDCODE,CDCODE,served,yes,Citoplasmático,review,5,5,2,Homo sapiens,0,
+signaling_condensate,SSB condensate,CDCODE,CDCODE,served,yes,Citoplasmático,error,3,3,2,Escherichia coli (strain K12),0,
+signaling_condensate,PARP5A–RNF146 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,2,2,1,Mus musculus,0,
+signaling_condensate,PGAM5-MAVS Condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,2,2,1,Mus musculus,0,
+signaling_condensate,Plectin condensates,CDCODE,CDCODE,served,yes,Citoplasmático,error,2,2,1,Mus musculus,0,
+signaling_condensate,BMP2K condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+signaling_condensate,EML4-ALK condensates,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+signaling_condensate,HSP condensate,CDCODE,CDCODE,served,yes,Citoplasmático,error,1,1,1,Dictyostelium discoideum,0,
+signaling_condensate,Insulin/IGF-1 signalosomes,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+signaling_condensate,Nur77 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,1,1,1,Homo sapiens,0,
+signaling_condensate,Signalosome,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,1,1,1,Drosophila melanogaster,0,
+signaling_condensate,TBC1D2B condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,1,1,1,Homo sapiens,0,
+simr_foci,SIMR foci,CDCODE,CDCODE,served,yes,Germinal,trivial_variant,2,2,1,Caenorhabditis elegans,0,
+sint_speckle,SINT-speckle,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,5,5,1,Homo sapiens,1,driver
+sint_speckle,Sint speckle,CDCODE,CDCODE,served,yes,Citoplasmático,correct,4,4,1,Homo sapiens,0,
+sirna_body,Sirna body,CDCODE,CDCODE,served,yes,Citoplasmático,correct,5,5,1,Arabidopsis thaliana,0,
+sirna_body,siRNA body,DrLLPS,DrLLPS,served,yes,Citoplasmático,trivial_variant,2,2,1,Arabidopsis thaliana,3,client
+slit_diaphragm_condensate,Slit diaphragm condensate,CDCODE,CDCODE,served,yes,Membrana,trivial_variant,3,3,1,Homo sapiens,0,
+smn_complex,SMN-Rpp20 complex,CDCODE,CDCODE,served,yes,Nuclear/Citoplasmático,correct,1,1,1,Homo sapiens,0,
+smn_complex,SMN complex,,,served,no,Nuclear/Citoplasmático,trivial_variant,0,0,0,,0,
+spider_silk_condensate,Spider Silk Spidroin,CDCODE,CDCODE,served,yes,Extracelular,not_reviewed,1,1,1,Latrodectus hesperus,0,
+spindle_apparatus,Spindle apparatus,DrLLPS,DrLLPS,served,yes,Citoesqueleto,trivial_variant,64,64,7,Arabidopsis thaliana,98,client|driver
+spindle_apparatus,Spindle apparatus,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoesqueleto,trivial_variant,10,10,2,Homo sapiens,11,client|driver
+spindle_apparatus,+TIP body,CDCODE,CDCODE,served,yes,Citoesqueleto,review,6,6,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+spindle_apparatus,+TIP,CDCODE,CDCODE,served,yes,Citoesqueleto,review,3,3,1,Homo sapiens,0,
+spindle_apparatus,Birc5b assembly,CDCODE,CDCODE,served,yes,Citoesqueleto,correct,1,1,0,,0,
+spindle_apparatus,EB1F condensate,CDCODE,CDCODE,served,yes,Citoesqueleto,not_reviewed,1,1,1,Mus musculus,0,
+spindle_apparatus,GAS2L3 condensates,CDCODE,CDCODE,served,yes,Citoesqueleto,not_reviewed,1,1,1,Homo sapiens,0,
+spindle_apparatus,Spindle matrix,CDCODE,CDCODE,served,yes,Citoesqueleto,not_reviewed,1,1,1,Xenopus laevis,0,
+spindle_apparatus,condensed compartments of microtubule bundling,PhasePro,PhasePro,served,yes,Citoesqueleto,correct,1,1,1,Homo sapiens,1,driver
+spindle_apparatus,spindle matrix,PhasePro,PhasePro,served,yes,Citoesqueleto,correct,1,1,1,Xenopus laevis,1,driver
+spindle_pole_body,Centrosome/Spindle pole body,DrLLPS,DrLLPS,served,yes,Citoesqueleto,error,872,872,8,Homo sapiens,1127,client|driver
+spindle_pole_body,Spindle pole,,,served,no,Citoesqueleto,review,0,0,0,,0,
+spliceosome,Splicesome,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,not_reviewed,1,1,1,Homo sapiens,9,driver
+sponge_body,Sponge body,CDCODE,CDCODE,served,yes,Germinal,trivial_variant,13,13,1,Drosophila melanogaster,0,
+sponge_body,Sponge body,DrLLPS,DrLLPS,served,yes,Germinal,trivial_variant,12,12,1,Drosophila melanogaster,6,client
+spop_daxx_body,SPOP/DAXX body,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,0,
+spop_daxx_body,SPOP/DAXX body,PhasePro,PhasePro,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,1,driver
+std1_body,STD1 body,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+std1_body,Std1 bodies,PhasePro,PhasePro,served,yes,Citoplasmático,correct,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),1,driver
+sting_phase_separator,STING phase-separator,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,2,2,1,Homo sapiens,0,
+sting_phase_separator,STING phase-separator,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,1,1,1,Homo sapiens,2,driver
+stress_granule,Stress granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,1738,1809,22,Homo sapiens,579,client|driver
+stress_granule,Stress granule,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,1638,1638,17,Homo sapiens,0,
+stress_granule,Stress granule,DrLLPS,DrLLPS,served,yes,Citoplasmático,trivial_variant,1067,1067,8,Homo sapiens,274,client|driver
+stress_granule,Stress Granule,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,56,56,3,Toxoplasma gondii,0,
+stress_granule,cytoplasmic stress granule,PhasePro,PhasePro,served,yes,Citoplasmático,not_reviewed,18,18,4,Homo sapiens,17,driver
+stress_granule,DHX9 Stress Granules,CDCODE,CDCODE,served,yes,Citoplasmático,correct,12,12,1,Homo sapiens,0,
+stress_granule,Osmotic stress granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,review,1,1,1,Arabidopsis thaliana,2,driver
+stress_granule,eIF5B granules,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,1,1,1,Homo sapiens,0,
+stress_granule,Stress granules,,,served,no,Citoplasmático,not_reviewed,0,0,0,,0,
+stress_granule,stress_granule,,,served,no,Citoplasmático,trivial_variant,0,0,0,,0,
+stress_granule,sress-granule,,,served,no,Citoplasmático,not_reviewed,0,0,0,,0,
+sup35_condensate,Sup35 condensate,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,2,2,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+sup35_condensate,Sup35 condensate,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,2,2,2,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),1,driver
+synapsin_condensate,α-synuclein condensates,CDCODE,CDCODE,served,yes,Neuronal,error,6,6,2,Mus musculus,0,
+synapsin_condensate,Synapsin condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,trivial_variant,5,5,2,Homo sapiens,32,driver
+synapsin_condensate,a matrix holding together clusters of synaptic vesicles (SVs),PhasePro,PhasePro,served,yes,Neuronal,correct,2,2,1,Homo sapiens,1,driver
+synapsin_condensate,α-synnuclein condensates,CDCODE,CDCODE,served,yes,Neuronal,error,1,1,1,Homo sapiens,0,
+synapsin_condensate,α-synuclein condensates,PhaSepDB,PhasePDB,served,yes,Neuronal,error,1,1,1,Homo sapiens,18,driver
+synthetic_condensate,Synthetic Condensate 000001,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000002,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000003,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000004,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000005,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000006,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000007,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000008,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000009,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000010,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000011,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000012,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000013,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000014,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000015,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000016,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000017,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000018,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000019,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000020,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000021,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000022,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000023,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000024,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000025,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000026,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000027,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000028,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000029,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000030,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000031,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000032,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000033,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000034,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000035,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000036,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000037,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000038,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000039,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000040,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000041,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000042,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000043,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000044,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000045,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000046,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000047,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000048,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000049,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000050,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000051,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000052,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000053,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000054,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000055,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000056,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000057,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000058,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000059,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000060,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000061,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000062,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000063,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000064,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000065,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000066,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000067,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000068,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000069,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000070,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000071,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000072,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000073,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000074,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000075,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000076,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000077,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000078,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000079,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000080,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000081,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000082,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000083,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000084,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000085,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000086,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000087,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000088,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000089,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000090,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000091,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000092,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000093,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000094,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000095,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000096,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000097,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000098,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000099,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000100,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000101,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000102,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000103,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000104,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000105,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000106,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000107,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000108,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000109,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000110,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000111,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000112,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000113,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000114,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000115,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000116,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000117,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000118,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000119,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000120,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000121,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000122,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000123,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000124,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000125,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000126,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000127,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000128,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000129,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000130,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000131,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000132,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000133,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000134,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000135,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000136,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000137,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000138,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000139,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000140,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000141,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000142,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000143,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000144,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000145,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000146,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000147,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000148,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000149,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000150,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000151,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000152,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000153,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000154,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000155,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000156,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000157,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000158,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000159,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000160,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000161,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000162,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000163,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000164,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000165,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000166,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000167,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000168,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000169,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000170,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000171,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000172,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000173,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000174,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000175,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000176,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000177,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000178,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000179,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000180,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000181,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000182,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000183,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000184,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000185,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000186,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000187,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000188,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000189,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000190,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000191,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000192,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000193,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000194,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000195,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000196,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000197,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000198,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000199,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000200,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000201,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000202,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000203,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000204,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000205,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000206,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000207,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000208,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000209,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000210,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000211,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000212,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000213,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000214,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000215,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000216,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000217,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000218,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000219,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000220,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000221,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000222,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000223,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000224,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000225,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000226,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000227,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000228,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000229,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000230,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000231,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000232,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000233,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000234,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000235,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000236,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000237,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000238,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000239,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000240,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000241,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000242,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000243,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000244,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000245,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000246,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000247,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000248,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000249,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000250,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000251,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000252,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000253,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000254,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000255,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000256,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000257,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000258,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000259,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000260,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000261,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000262,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000263,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000264,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000265,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000266,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000267,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000268,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000269,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000270,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000271,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000272,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000273,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000274,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000275,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000276,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000277,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000278,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000279,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000280,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000281,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000282,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000283,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000284,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000285,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000286,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000287,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000288,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000289,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000290,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000291,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000292,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000293,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000294,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000295,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000296,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000297,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000298,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000299,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000300,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000301,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000302,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000303,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000304,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000305,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000306,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000307,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000308,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000309,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000310,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000311,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000312,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000313,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000314,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000315,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000316,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000317,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000318,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000319,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000320,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000321,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000322,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000323,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000324,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000325,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000326,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000327,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000328,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000329,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000330,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000331,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000332,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000333,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000334,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000335,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000336,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000337,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000338,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000339,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000340,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000341,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000342,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000343,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000344,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000345,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000346,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000347,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000348,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000349,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000350,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000351,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000352,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000353,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000354,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000355,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000356,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000357,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000358,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000359,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000360,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000361,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000362,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000363,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000364,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000365,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000366,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000367,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000368,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000369,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000370,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000371,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000372,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000373,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000374,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000375,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000376,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000377,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000378,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000379,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000380,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000381,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000382,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000383,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000384,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000385,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+synthetic_condensate,Synthetic Condensate 000386,,,excluded_synthetic,no,,not_reviewed,0,0,0,,0,
+t_cell_signalosome,LAT signalosome,PhasePro,PhasePro,served,yes,Membrana,correct,3,3,1,Homo sapiens,1,driver
+t_cell_signalosome,T-cell signalosome,CDCODE,CDCODE,served,yes,Membrana,trivial_variant,3,3,1,Homo sapiens,0,
+t_cell_signalosome,TCR signalosome,PhasePro,PhasePro,served,yes,Membrana,correct,3,3,1,Homo sapiens,1,driver
+tam_body,Tam body,CDCODE,CDCODE,served,yes,Nuclear,correct,11,11,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+tam_body,TAM body,DrLLPS,DrLLPS,served,yes,Nuclear,trivial_variant,9,9,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),2,client
+tau_condensate,Tau condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Neuronal,trivial_variant,270,270,2,Mus musculus,44,client|driver
+tau_condensate,Tau Condensate,CDCODE,CDCODE,served,yes,Neuronal,trivial_variant,5,5,1,Homo sapiens,0,
+tau_condensate,Tau inclusion,CDCODE,CDCODE,served,yes,Neuronal,review,1,1,1,Mus musculus,0,
+tdp43_nuclear_condensate,TDP-43 nuclear condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,2,2,1,Homo sapiens,46,driver
+tis_granule,TIS granule,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,1,1,1,Homo sapiens,0,
+tis_granule,TIS granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,1,1,1,Homo sapiens,1,driver
+tis_granule,TIS granule,PhasePro,PhasePro,served,yes,Citoplasmático,trivial_variant,1,1,1,Homo sapiens,1,driver
+tmar_condensate,TmaR condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Procariota,trivial_variant,1,1,1,Escherichia coli (strain K12),2,driver
+transcriptional_condensate,Transcriptional condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,105,105,8,Homo sapiens,234,driver
+transcriptional_condensate,Transcriptional condensate,CDCODE,CDCODE,served,yes,Nuclear,trivial_variant,58,58,5,Homo sapiens,0,
+transcriptional_condensate,Transcription Elongation Condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,8,8,1,Homo sapiens,0,
+transcriptional_condensate,c‐Maf condensates,CDCODE,CDCODE,served,yes,Nuclear,correct,6,6,2,Mus musculus,0,
+transcriptional_condensate,Elongation complex,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,correct,5,5,1,Homo sapiens,7,driver
+transcriptional_condensate,SGF29 condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,4,4,1,Homo sapiens,0,
+transcriptional_condensate,Transcription condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,4,4,1,Danio rerio,0,
+transcriptional_condensate,cBAF condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,4,4,1,Homo sapiens,0,
+transcriptional_condensate,BRD4 condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,3,3,1,Homo sapiens,0,
+transcriptional_condensate,CEBPZ condensates,CDCODE,CDCODE,served,yes,Nuclear,correct,3,3,1,Homo sapiens,0,
+transcriptional_condensate,TFAP2β condensates,CDCODE,CDCODE,served,yes,Nuclear,correct,3,3,1,Homo sapiens,0,
+transcriptional_condensate,Transcriptional condensates,CDCODE,CDCODE,served,yes,Nuclear,correct,3,3,1,Escherichia coli (strain K12),0,
+transcriptional_condensate,EWS-FLI1,CDCODE,CDCODE,served,yes,Nuclear,review,2,2,1,Homo sapiens,0,
+transcriptional_condensate,IFN-I transcriptional condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,2,2,1,Homo sapiens,0,
+transcriptional_condensate,KAT8-IRF1 condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,2,2,1,Homo sapiens,0,
+transcriptional_condensate,POLII clusters,PhasePro,PhasePro,served,yes,Nuclear,correct,2,2,2,Homo sapiens,1,driver
+transcriptional_condensate,"RNA polymerase II, holoenzyme",PhasePro,PhasePro,served,yes,Nuclear,review,2,2,2,Homo sapiens,1,driver
+transcriptional_condensate,EWSR1 condensates,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Homo sapiens,0,
+transcriptional_condensate,MEF2D Condensate,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Homo sapiens,0,
+transcriptional_condensate,RNA polymerase clusters,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Saccharomyces cerevisiae (strain ATCC 204508 / S288c),0,
+transcriptional_condensate,nYAC,CDCODE,CDCODE,served,yes,Nuclear,correct,1,1,1,Homo sapiens,0,
+twn_body,TWN body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Vegetal,trivial_variant,3,3,1,Homo sapiens,1,driver
+u1_snrnp_condensate,U1 snRNP condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,2,2,1,Mus musculus,1,driver
+u_body,U-body,CDCODE,CDCODE,served,yes,Citoplasmático,correct,5,5,2,Drosophila melanogaster,0,
+u_body,U body,DrLLPS,DrLLPS,served,yes,Citoplasmático,trivial_variant,1,1,1,Drosophila melanogaster,1,client
+ubqln_puncta,UBQLN puncta,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,trivial_variant,4,4,2,Homo sapiens,8,driver
+ubqln_puncta,Ubqln puncta,CDCODE,CDCODE,served,yes,Citoplasmático,correct,3,3,1,Homo sapiens,0,
+vipr_body,ViPR body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Nuclear,trivial_variant,2,2,2,Homo sapiens,8,driver
+viral_factory,Viral factory,CDCODE,CDCODE,served,yes,Viral,trivial_variant,5,5,3,Measles virus (strain Edmonston-AIK-C vaccine),0,
+viral_factory,cytoplasmic viral factory,PhasePro,PhasePro,served,yes,Viral,not_reviewed,5,5,2,Vesicular stomatitis Indiana virus (strain San Juan),2,driver
+viral_factory,cytoplasmic Virion Assembly Compartments (cVACs),CDCODE,CDCODE,served,yes,Viral,correct,4,4,1,Murid herpesvirus 4,0,
+viral_factory,Cytoplasmic viral factory,CDCODE,CDCODE,served,yes,Viral,not_reviewed,3,3,1,Vesicular stomatitis Indiana virus (strain San Juan),0,
+viral_factory,HIV core condensate,CDCODE,CDCODE,served,yes,Viral,review,3,3,2,Human immunodeficiency virus type 1,0,
+viral_factory,HIV-1-MLO,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral,review,3,3,3,Mus musculus,3,driver
+viral_factory,RPSA-VIM-ENO Condensate,CDCODE,CDCODE,served,yes,Viral,review,3,3,2,Homo sapiens,0,
+viral_factory,RdRp condensates,CDCODE,CDCODE,served,yes,Viral,correct,3,3,3,Norovirus GII.4,0,
+viral_factory,LANA body,CDCODE,CDCODE,served,yes,Viral,review,2,2,2,Homo sapiens,0,
+viral_factory,Viral Factory,CDCODE,CDCODE,served,yes,Viral,trivial_variant,2,2,2,Zaire ebolavirus (strain Mayinga-76),0,
+viral_factory,Cytoplasmic virion assembly compartment,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral,not_reviewed,1,1,1,Murid herpesvirus 4,2,driver
+viral_factory,Virion assembly compartment,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral,not_reviewed,1,1,1,Rous sarcoma virus subgroup C (strain Prague),1,driver
+viroplasm,Viroplasm,PhaSepDB,PhaseDB|PhasePDB,served,yes,Viral,trivial_variant,23,23,6,Homo sapiens,8,client|driver
+viroplasm,GCRV viroplasm,CDCODE,CDCODE,served,yes,Viral,correct,13,13,2,Grass carp reovirus,0,
+viroplasm,viroplasm,PhasePro,PhasePro,served,yes,Viral,trivial_variant,3,3,1,Vesicular stomatitis Indiana virus (strain San Juan),1,driver
+viroplasm,viroplasm viral factory,,,served,no,Viral,correct,0,0,0,,0,
+wnk_body,WNK body,CDCODE,CDCODE,served,yes,Citoplasmático,trivial_variant,4,4,1,Mus musculus,0,
+wnt_destruction_complex,Beta-Catenin Destruction Complex,CDCODE,CDCODE,served,yes,Citoplasmático,correct,6,6,1,Homo sapiens,0,
+wnt_destruction_complex,Destruction complex condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,correct,6,6,1,Homo sapiens,12,driver
+wnt_signaling_condensate,Wnt signalodroplet,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,correct,4,4,1,Homo sapiens,11,driver
+wnt_signaling_condensate,LEF1/Beta-catenin condensate,CDCODE,CDCODE,served,yes,Citoplasmático,review,2,2,1,Homo sapiens,0,
+wnt_signaling_condensate,DVL2 condensates,CDCODE,CDCODE,served,yes,Citoplasmático,not_reviewed,1,1,1,Homo sapiens,0,
+wnt_signaling_condensate,Dishevelled condensate,CDCODE,CDCODE,served,yes,Citoplasmático,correct,1,1,1,Homo sapiens,0,
+wnt_signaling_condensate,Dvl2 condensate,PhaSepDB,PhaseDB|PhasePDB,served,yes,Citoplasmático,not_reviewed,1,1,1,Mus musculus,2,driver
+yb_body,Yb body,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,4,4,2,Drosophila melanogaster,2,driver
+yb_body,Yb-body,CDCODE,CDCODE,served,yes,Germinal,correct,4,4,1,Drosophila melanogaster,0,
+yb_body,Yb body,PhasePro,PhasePro,served,yes,Germinal,trivial_variant,1,1,1,Drosophila melanogaster,1,driver
+z_granule,Z granule,PhaSepDB,PhaseDB|PhasePDB,served,yes,Germinal,trivial_variant,46,48,3,Caenorhabditis elegans,8,client|driver
+z_granule,Z-granule,CDCODE,CDCODE,served,yes,Germinal,correct,3,3,1,Caenorhabditis elegans,0,
+zo_protein_compartment,Junctional condensate,CDCODE,CDCODE,served,yes,Membrana,correct,5,5,1,Homo sapiens,0,
+zo_protein_compartment,ZO protein compartment,,,served,no,Membrana,trivial_variant,0,0,0,,0,

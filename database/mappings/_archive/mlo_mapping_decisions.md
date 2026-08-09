@@ -565,3 +565,146 @@ en células germinales, y el IMC cumple esa definición en espermatocitos.
 Lo que era incorrecto era colapsar el **cuerpo cromatoide** con el IMC
 bajo `nuage` — eso ya fue corregido separando `chromatoid_body`. El IMC
 → `nuage` se mantiene.
+---
+
+## 11. Revisión v5 — auditoría biológica externa (2026-08-08)
+
+Devolución completa en `docs/review/devolucion/`. La auditoría corrió sobre una
+copia previa al fix de doble ingesta de PhaSepDB, así que sus dos acciones
+bloqueantes de ingesta (colapsar los tags `PhaseDB`/`PhasePDB` y normalizar las
+filas por PMID) ya estaban resueltas al recibirla; se verificó contra la base
+actual antes de descartarlas.
+
+Se revisaron 242 equivalencias: 160 correctas, 64 pendientes de curador, 18
+errores. Esta revisión aplica los 18 errores y las correcciones de esquema que
+no dependen de criterio biológico. Los 64 casos "a revisar" quedan abiertos —
+necesitan que un curador lea la publicación original.
+
+### 11.1 Etiquetas compuestas sin explotar
+
+La regla de explosión de compuestos cubría el separador `;` pero no los
+patrones `X/Y` ni `X and Y`. Dos etiquetas se colaron, y entre las dos
+concentran el 95% de las proteínas afectadas por errores de equivalencia.
+
+**`Centrosome/Spindle pole body` → `centrosome`** (default) **+
+`spindle_pole_body`** (filas fúngicas).
+DrLLPS usa una sola etiqueta para ambas estructuras. De las 910 filas, 775 son
+de organismos sin cuerpo polar del huso (humano 533, ratón 130, *Drosophila*
+66, *C. elegans* 32) y solo 135 son fúngicas (*S. cerevisiae* 87, *S. pombe*
+48). Mandarlas todas al término fúngico hacía desaparecer el proteoma del
+centrosoma de metazoos y llevaba `spindle_pole_body` al puesto 11 del
+inventario.
+
+`mlo_mapping.csv` no puede expresar una etiqueta cuyo significado depende del
+organismo, así que se agrega **`database/mappings/mlo_organism_scoped.csv`**:
+el mapeo principal fija el default y ese archivo redirige las filas que
+matchean un organismo. `source_mlo` nunca se reescribe — la DB conserva la
+etiqueta que usó la fuente.
+
+*Imprecisión conocida:* las 12 filas de *Arabidopsis* caen en el default
+`centrosome` y las plantas son acentrosómicas. La regla de la auditoría solo
+cubre fúngico vs. metazoo, e inventar un tercer destino iría más allá del
+hallazgo.
+
+**`Presynaptic clusters and postsynaptic densities` → `synaptic_compartment`**
+(canónico nuevo). Etiqueta de CD-CODE que nombra los dos lados de la sinapsis:
+1.366 proteínas humanas, una por fila. Todo iba a `presynaptic_active_zone` y
+la mitad postsináptica se perdía sin registro. Se descartaron duplicar cada
+proteína en ambos canónicos (afirma más de lo que dice la fuente) y descartar
+el conjunto como fracción bioquímica. La fuente anota a resolución de sinapsis
+y no distingue lados: el canónico refleja esa resolución, que es la misma regla
+de "la cobertura limita la granularidad" aplicada en §10.
+
+### 11.2 XY body / sex body: dos nombres de una estructura, tres descripciones
+
+`XY body` estaba fusionado a `heterochromatin` sin compartir **ninguna**
+proteína con él en el mismo recurso y organismo: sus 10 proteínas (Topbp1,
+Mdc1, Brca1) son maquinaria de respuesta a daño reclutada en el silenciamiento
+meiótico del cromosoma sexual. Su justificación remitía a `sex body`, que
+existía como canónico pero cuya justificación describía el **cuerpo de Barr**.
+
+Al revisar las proteínas de `sex body` (Rnf212, recombinación meiótica) queda
+claro que esa etiqueta también es el cuerpo sexual meiótico, y que el error
+estaba en su texto. `XY body` y `sex body` son sinónimos en la literatura:
+ambos van a **`xy_body`** (Germinal) y `sex_body` desaparece.
+
+**No se crea `barr_body`**: ninguna fuente lo anota, y la regla de cobertura
+aplica igual que en §10.
+
+### 11.3 `polarity_condensate`: tres sistemas biológicos, cero composición común
+
+El dossier ya pedía veredicto sobre este canónico y la auditoría lo confirma
+como fusión indebida: agrupaba por la palabra "polaridad", no por composición.
+Se abre en tres:
+
+| Nombres fuente | → canónico | Categoría |
+|---|---|---|
+| `PodJ condensates`, `PopZ condensate` (*Caulobacter*) | `bacterial_polarity_condensate` | Procariota |
+| `Fus1 condensate` (*S. pombe*) | `fusion_focus` | Citoesqueleto |
+| `Par complex`, `Numb/Pon condensate`, `basal Numb-Pon crescent in dividing neuroblasts` | `cell_polarity_condensate` | Neuronal |
+
+### 11.4 Resto de los errores de equivalencia
+
+| Nombre fuente | Antes | Ahora | Razón |
+|---|---|---|---|
+| `inclusion body-associated granule (IBAG)` | `inclusion_body` | `viral_factory` | Subcompartimiento de inclusiones de replicación del VRS (M2-1 + eIF4F), no un agregado patológico |
+| `P6 inclusion body` | `inclusion_body` | `viral_factory` | Factoría del virus del mosaico de la coliflor en células vegetales |
+| `TIFA-TRAF6 Condensate` | `inflammasome` | `tifasome` | ALPK1-TIFA-TRAF6 activa NF-κB sin sensor NLR, sin mota de ASC y sin caspasa-1 |
+| `Proteasome Storage Granule` | `proteasome_foci` | `proteasome_storage_granule` | Estructura citoplasmática de quiescencia en levadura; el canónico agrupaba cuerpos proteasomales nucleares |
+| `SSB condensate` | `signaling_condensate` | `dna_damage_foci` | Replicación y reparación de ADN, no señalización (revierte la reclasificación de v3) |
+| `DDR1 condensate` | `hippo_condensate` | `signaling_cluster` | Receptor tirosina quinasa de colágeno, no vía Hippo |
+| `FATZ-1 condensate` | `postsynaptic_density` | `z_disc_condensate` | MYOZ1 es del disco Z sarcomérico; probable match por similitud de nombre |
+| `α-synuclein condensates`, `α-synnuclein condensates` | `synapsin_condensate` | `alpha_synuclein_condensate` | Ensamblajes distintos que coexisten en el presináptico; incluye normalizar la variante mal escrita |
+| `Plectin condensates` | `signaling_condensate` | `plectin_condensate` | Entrecruzamiento de filamentos intermedios, citoesquelético |
+| `HSP condensate` | `signaling_condensate` | `chaperone_condensate` | Chaperonas de desarrollo en *Dictyostelium* |
+| `ABC transporter condensate` | `bacterial_rnp_body` | `abc_transporter_condensate` | Transporte de membrana en *Mycobacterium*; los BR-bodies son gránulos de RNP nucleados por RNasa E |
+| `Cytoplasmic protein granule` | `cytoplasmic_rnp_granule` | `cytoplasmic_protein_granule` | La misma etiqueta se repartía entre dos canónicos según su capitalización |
+| `Golgi ribbon` | `golgin_condensate` | `DISCARD` | Disposición de organela con membrana, fuera de la definición de MLO |
+
+**`Large dense-core vesicles` se mantiene en `chromogranin_condensate`.** La
+auditoría lo marca error porque la etiqueta nombra la vesícula con membrana y
+no el condensado. Pero su propio razonamiento es que el condensado *es* el
+núcleo denso intravesicular, y eso es exactamente `chromogranin_condensate`.
+Descartarlo habría eliminado SEMG2 del dataset por completo (era su única
+anotación) y roto el invariante de que toda proteína tiene al menos una
+anotación. Se corrige la justificación para que no equipare continente y
+contenido, y se conserva la asignación.
+
+### 11.5 Categorías: de arbitrarias a curadas
+
+23 canónicos tenían `Categoria` en conflicto entre sus filas fuente, y el
+loader resolvía por orden de lectura del archivo (`INSERT OR IGNORE`), o sea
+que la categoría almacenada era arbitraria. Seis de esos conflictos no eran
+biología: **`Citoplasma` y `Citoplasmático` eran la misma categoría con dos
+grafías** y se unificaron.
+
+Los 17 restantes recibieron una categoría curada, con este criterio en orden:
+
+1. Si el término es exclusivo de un dominio taxonómico o de un tipo celular,
+   gana esa etiqueta — es como el esquema ya trata Viral, Vegetal, Procariota,
+   Germinal y Neuronal.
+2. Si no, gana el compartimiento, usando `compartment_class` de
+   `docs/review/devolucion/category_scheme_proposed.csv` como referencia.
+3. Ante empate, la mayoría de las filas fuente.
+
+Dos merecen nota: **`plant_photobody` pasó de Plastídico a Vegetal** porque los
+fotocuerpos de phyB son nucleares y no plastídicos (ninguna de las dos opciones
+del archivo era correcta, Vegetal es la menos incorrecta bajo un eje único), y
+**`maternal_mrna_condensate` pasó de Nuclear a Germinal** por tratarse de hubs
+de transcriptos maternos en ovocitos.
+
+El loader ahora **falla** ante una `Categoria` en conflicto en vez de elegir en
+silencio.
+
+### 11.6 Lo que esta revisión NO hace
+
+- El reemplazo de `Categoria` por los cinco ejes ortogonales que propone la
+  auditoría (`category_scheme_proposed.csv`). Cambia el esquema de la DB, la
+  API y el frontend.
+- Agregar `evidence_type` a cada anotación para distinguir "separa de fase in
+  vitro" de "es necesaria en células".
+- Eliminar `NotInformed` e `in_vitro_droplet` del vocabulario de organelas.
+- Reinstaurar los reguladores de DrLLPS como tercer valor de rol (hoy 1.389
+  aserciones con `dataset_active=0`, de las cuales 502 proteínas no aparecen
+  por ningún otro lado).
+- Los 64 casos "a revisar" de `equivalence_verdicts.csv`.

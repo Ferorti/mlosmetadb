@@ -1,0 +1,87 @@
+unified_mlo,n_source_names,n_proteins,mean_jaccard,max_jaccard,mean_overlap_coef,max_overlap_coef,n_pairs,pairs_zero_overlap,mean_organism_jaccard,source_names,merge_type,testable_pairs,zero_overlap_testable
+nucleolus,8,5002,0.095,1.0,0.446,1.0,28,15,0.208,Dense Fibrillar Component; Dense fibrillar component; Granular component; Nucleolus; dense fibrillar component; granular component; nucleolus; rDNA locus,structure_synonyms,1,0
+postsynaptic_density,5,2891,0.0,0.001,0.179,1.0,10,7,0.617,ArgBP2 dendritic spine condensate; FATZ-1 condensate; Postsynaptic density; Rapsn condensate; postsynaptic density,structure_synonyms,1,0
+stress_granule,6,2651,0.008,0.111,0.217,1.0,15,11,0.117,DHX9 Stress Granules; Osmotic stress granule; Stress Granule; Stress granule; cytoplasmic stress granule; eIF5B granules,structure_synonyms,1,0
+presynaptic_active_zone,4,1383,0.074,0.444,0.303,1.0,6,3,0.35,Presynaptic active zone condensate; Presynaptic clusters; Presynaptic clusters and postsynaptic densities; presynaptic cytosol,structure_synonyms,0,0
+p_body,5,1198,0.009,0.077,0.388,1.0,10,5,0.238,CCR4-NOT1 complex; GW-body; P-body; PB-like Assembly; p62-dependent P-bodies (pd-PBs),structure_synonyms,1,0
+centrosome,5,977,0.011,0.1,0.323,1.0,10,6,0.136,Centrosome; Pericentriolar compartment; Pericentriolar material; Pericentriolar matrix; pericentriolar material,structure_synonyms,1,0
+balbiani_body,3,887,0.022,0.06,0.385,1.0,3,1,0.167,Balbiani body; Mitochondrial cloud; mitochondrial cloud,structure_synonyms,1,0
+p62_body,5,785,0.093,0.333,0.542,1.0,10,2,0.492,ORF8/p62 condensate; P62 body; P62 cluster; p62 body; p62 cluster,structure_synonyms,0,0
+pml_nuclear_body,3,774,0.064,0.186,0.801,1.0,3,0,0.367,PML body; PML nuclear body; PML/RARα microspeckle,structure_synonyms,0,0
+nuclear_speckle,6,701,0.001,0.004,0.2,1.0,15,12,0.23,AFAP1-AS1 condensates; ALYREF condensates; METTL14 condensate; Nuclear speckle; Omega speckle; nuclear speckle,structure_synonyms,0,0
+p_granule,5,594,0.019,0.102,0.304,1.0,10,6,0.283,Germ granule; P granule; P-granule; PGL granules; Trbd,structure_synonyms,1,0
+nuclear_stress_body,2,585,0.002,0.002,0.5,0.5,1,0,0.5,A-bodies; Nuclear stress body,structure_synonyms,0,0
+tau_condensate,3,274,0.002,0.004,0.4,1.0,3,1,0.333,Tau Condensate; Tau condensate; Tau inclusion,structure_synonyms,0,0
+paraspeckle,3,272,0.005,0.011,0.444,1.0,3,1,0.222,NONO; Paraspeckle; paraspeckle,structure_synonyms,0,0
+nuclear_body,8,242,0.018,0.321,0.131,1.0,28,22,0.143,Ccer1 condensate; Leucocyte nuclear body; NAB3 nuclear body; Nuclear body; RBM15 condensate; SPRI2 Nuclear Condensate; VRN1 nuclear body; nuclear body,class_aggregation,1,0
+pyrenoid,3,182,0.162,0.456,0.829,1.0,3,0,1.0,Pyrenoid; Pyrenoid matrix; pyrenoid,structure_synonyms,0,0
+transcriptional_condensate,20,163,0.019,1.0,0.072,1.0,190,169,0.542,"BRD4 condensate; CEBPZ condensates; EWS-FLI1; EWSR1 condensates; Elongation complex; IFN-I transcriptional condensate; KAT8-IRF1 condensate; MEF2D Condensate; POLII clusters; RNA polymerase II, holoenzyme; RNA polymerase clusters; SGF29 condensate; TFAP2β condensates; Transcription Elongation Condensate; Transcription condensate; Transcriptional condensate; Transcriptional condensates; cBAF condensate; c‐Maf condensates; nYAC",class_aggregation,4,1
+neuronal_granule,8,113,0.034,0.722,0.176,1.0,28,19,0.252,IMP1 RNP granule; Mimi granules; Neuronal RNP granule; Neuronal granule; RBFOX1 RNP granule; RNP transport granule; TIAR2 neuronal granule; neuronal ribonucleoprotein granule,class_aggregation,3,0
+spindle_apparatus,9,86,0.029,1.0,0.083,1.0,36,33,0.135,+TIP; +TIP body; Birc5b assembly; EB1F condensate; GAS2L3 condensates; Spindle apparatus; Spindle matrix; condensed compartments of microtubule bundling; spindle matrix,class_aggregation,0,0
+l_body,2,83,0.036,0.036,0.3,0.3,1,0,1.0,L-bodies; L-body,structure_synonyms,0,0
+inclusion_body,7,78,0.005,0.062,0.093,1.0,21,17,0.112,Htt inclusion; Inclusion Body; Inclusion body; P6 inclusion body; TDP-25 inclusions; inclusion body; inclusion body-associated granule (IBAG),class_aggregation,2,0
+cytoplasmic_rnp_granule,12,66,0.002,0.07,0.032,1.0,66,63,0.087,CPEB4 granule; Cpeb1b-Pabpc1b-shh Condensate; Cytoplasmic protein granule; Ddx3xb condensates; FXR1 condensates; FXR1 network; MEX3B granule; RNP granule; RNP granules; Translational Condensate; WHI3 cluster; cytoplasmic ribonucleoprotein granule,class_aggregation,0,0
+nuclear_pore_complex,3,63,0.365,1.0,1.0,1.0,3,0,0.467,Nuclear pore complex; nuclear pore central transport channel; selective hydrogel-like meshwork formed by FG-nucleoporins in nuclear pore central channel,structure_synonyms,0,0
+dna_damage_foci,5,60,0.011,0.036,0.253,1.0,10,6,0.7,53BP1 Mitotic Stress Body (MSBs); DNA damage foci; PARP1-DNA condensate; SOSS-INTAC Condensate; TopBP1 condensate,structure_synonyms,1,0
+heterochromatin,3,52,0.032,0.095,0.333,1.0,3,2,0.148,Heterochromatin; XY body; heterochromatin,structure_synonyms,1,1
+z_granule,2,46,0.065,0.065,1.0,1.0,1,0,0.333,Z granule; Z-granule,structure_synonyms,0,0
+mitochondrial_rna_granule,2,42,0.952,0.952,1.0,1.0,1,0,1.0,Mitochondrial RNA granule; mtRNA granule,structure_synonyms,0,0
+polycomb_body,3,40,0.085,0.125,0.833,1.0,3,0,0.389,PcG body; PcG chromatin condensates; Polycomb body,structure_synonyms,0,0
+viroplasm,3,36,0.043,0.13,0.333,1.0,3,2,0.056,GCRV viroplasm; Viroplasm; viroplasm,structure_synonyms,0,0
+viral_factory,12,30,0.017,0.6,0.038,1.0,66,63,0.067,Cytoplasmic viral factory; Cytoplasmic virion assembly compartment; HIV core condensate; HIV-1-MLO; LANA body; RPSA-VIM-ENO Condensate; RdRp condensates; Viral Factory; Viral factory; Virion assembly compartment; cytoplasmic Virion Assembly Compartments (cVACs); cytoplasmic viral factory,class_aggregation,0,0
+signaling_cluster,3,30,0.225,0.367,0.896,1.0,3,0,0.5,Receptor cluster; Signaling cluster; membrane cluster,structure_synonyms,0,0
+replication_compartment,6,21,0.015,0.143,0.036,0.333,15,13,0.024,ORC1 bodies; Pre-replication compartment (PRC); Replication compartment; VRO-associated condensate; Virus-induced replication (VIR) condensate; viral replication compartment (VRC),structure_synonyms,0,0
+signaling_condensate,12,21,0.0,0.0,0.0,0.0,66,66,0.301,BMP2K condensate; EML4-ALK condensates; HSP condensate; Insulin/IGF-1 signalosomes; Nur77 condensate; PARP5A–RNF146 condensate; PCBP2 condensates; PGAM5-MAVS Condensate; Plectin condensates; SSB condensate; Signalosome; TBC1D2B condensate,structure_synonyms,0,0
+bacterial_rnp_body,4,18,0.012,0.071,0.167,1.0,6,5,0.024,ABC transporter condensate; BR-bodies; BR-body; bacterial RNP-bodies (BR-bodies),structure_synonyms,0,0
+hyperosmotic_shock_foci,2,18,0.944,0.944,1.0,1.0,1,0,1.0,Hyperosmotic shock foci; Hypersomatic shock foci,structure_synonyms,0,0
+proteasome_foci,5,18,0.084,0.364,0.157,0.6,10,6,0.5,BAG2; Proteasome Storage Granule; Proteasome condensate; Proteasome containing foci; senescence-associated nuclear proteasome foci,structure_synonyms,1,0
+hippo_condensate,4,18,0.03,0.111,0.079,0.333,6,4,0.5,DDR1 condensate; Hippo signalosome; NEDD4 condensates; TAZ Condensate,structure_synonyms,1,0
+polarity_condensate,6,17,0.067,1.0,0.067,1.0,15,14,0.133,Fus1 condensate; Numb/Pon condensate; Par complex; PodJ condensates; PopZ condensate; basal Numb-Pon crescent in dividing neuroblasts,structure_synonyms,0,0
+cytoplasmic_protein_granule,2,17,0.0,0.0,0.0,0.0,1,1,0.167,Cytoplasmic bodies; cytoplasmic protein granule,structure_synonyms,0,0
+histone_locus_body,2,17,0.529,0.529,0.818,0.818,1,0,1.0,Histone Locus Body; Histone locus body,structure_synonyms,0,0
+sam68_nuclear_body,2,16,0.125,0.125,1.0,1.0,1,0,1.0,Sam68 nuclear bodies (SNBs); Sam68 nuclear body,structure_synonyms,0,0
+endocytic_condensate,2,12,0.167,0.167,0.667,0.667,1,0,1.0,Ede1 condensate; Endocytic condensates,structure_synonyms,0,0
+sec_body,2,11,0.545,0.545,0.75,0.75,1,0,0.667,Sec body; Sec-body,structure_synonyms,0,0
+tam_body,2,11,0.818,0.818,1.0,1.0,1,0,1.0,TAM body; Tam body,structure_synonyms,0,0
+synapsin_condensate,4,11,0.106,0.2,0.45,1.0,6,2,0.667,Synapsin condensate; a matrix holding together clusters of synaptic vesicles (SVs); α-synnuclein condensates; α-synuclein condensates,structure_synonyms,1,0
+nuage,2,10,0.1,0.1,1.0,1.0,1,0,0.2,IMC (intermitochondrial cement); Nuage,structure_synonyms,0,0
+plant_photobody,3,10,0.257,0.429,0.578,1.0,3,0,1.0,CRY2/SPA1/FIO1 condensate; Photobody; Plant Photobody,structure_synonyms,0,0
+sars_cov2_n_condensate,3,10,0.153,0.333,0.25,0.5,3,1,1.0,FXR-driven SARS-CoV-2 condensate; SARS-CoV-2 N condensate; SARS-CoV-2 condensate,structure_synonyms,0,0
+eres_condensate,2,10,0.1,0.1,0.333,0.333,1,0,1.0,ERES; SCOTIN condensate,structure_synonyms,0,0
+inflammasome,2,9,0.0,0.0,0.0,0.0,1,1,1.0,Inflammasome; TIFA-TRAF6 Condensate,structure_synonyms,0,0
+enhancer_condensate,5,9,0.1,1.0,0.1,1.0,10,9,1.0,Enhancer cluster; MegaTrans enhancer complex; enhancer condensate; nuclear bodies that occur at super enhancers in mESCs; robustly E2-activated enhancers (MegaTrans) enhancers,structure_synonyms,0,0
+glycolytic_body,3,9,0.222,0.556,0.667,1.0,3,1,0.222,G-body; Glycolytic body; PFK-1.1 condensates,structure_synonyms,0,0
+necrosome,2,9,0.0,0.0,0.0,0.0,1,1,0.5,Arsenite-induced Necrosome; Necrosome,structure_synonyms,0,0
+ankle_link_condensate,2,8,0.0,0.0,0.0,0.0,1,1,0.0,Ankle Link Complex (ALC) Condensate; Row 1-specific tip complex condensates,structure_synonyms,0,0
+wnt_signaling_condensate,5,7,0.15,1.0,0.3,1.0,10,7,0.6,DVL2 condensates; Dishevelled condensate; Dvl2 condensate; LEF1/Beta-catenin condensate; Wnt signalodroplet,structure_synonyms,0,0
+plant_signaling_condensate,5,7,0.0,0.0,0.0,0.0,10,10,0.3,OsJAZ2 condensate; OsSRO1c-OsDREB2B condensate; PARCL condensate; Plant growth regulator; RH20 condensate,structure_synonyms,0,0
+pre_autophagosomal_structure,3,7,0.222,0.667,0.267,0.8,3,2,0.333,ATG condensate; ATG4B condensate; Pre-autophagosomal structure,structure_synonyms,0,0
+perinucleolar_compartment,2,7,0.0,0.0,0.0,0.0,1,1,0.0,Peri-nucleolar condensate; Perinucleolar compartment,structure_synonyms,0,0
+golgin_condensate,2,7,0.143,0.143,1.0,1.0,1,0,1.0,Golgi ribbon; Golgin condensate,structure_synonyms,0,0
+wnt_destruction_complex,2,7,0.714,0.714,0.833,0.833,1,0,1.0,Beta-Catenin Destruction Complex; Destruction complex condensate,structure_synonyms,0,0
+germ_plasm,3,6,0.067,0.2,0.167,0.5,3,2,0.222,Founder granule; Germ plasm; germ plasm,structure_synonyms,0,0
+integrin_adhesion_complex,2,6,0.0,0.0,0.0,0.0,1,1,0.0,Integrin adhesion complex; focal adhesion (FA) condensate,structure_synonyms,0,0
+actin_cortical_patch,3,5,0.0,0.0,0.0,0.0,3,3,0.333,Actin nucleator; Cobl condensate; actin cortical patch,structure_synonyms,0,0
+carboxysome,2,5,0.0,0.0,0.0,0.0,1,1,0.0,Carboxysome; Enzyme_shell proteins condensates,structure_synonyms,0,0
+sirna_body,2,5,0.4,0.4,1.0,1.0,1,0,1.0,Sirna body; siRNA body,structure_synonyms,0,0
+sint_speckle,2,5,0.8,0.8,1.0,1.0,1,0,1.0,SINT-speckle; Sint speckle,structure_synonyms,0,0
+yb_body,2,5,0.8,0.8,1.0,1.0,1,0,0.5,Yb body; Yb-body,structure_synonyms,0,0
+u_body,2,5,0.2,0.2,1.0,1.0,1,0,0.5,U body; U-body,structure_synonyms,0,0
+chromatin_compartment,4,5,0.167,1.0,0.167,1.0,6,5,0.278,Chromatin; Euchromatin; euchromatin; eukaryotic topoisomerase ii,structure_synonyms,0,0
+gem,3,4,0.0,0.0,0.0,0.0,3,3,0.333,Gemini of cajal body; Gems; SMN1 nuclear body,structure_synonyms,0,0
+chromogranin_condensate,2,4,0.0,0.0,0.0,0.0,1,1,0.333,Chromogranin condensates; Large dense-core vesicles,structure_synonyms,0,0
+cgas_dna_complex,2,4,0.75,0.75,1.0,1.0,1,0,1.0,cGAS foci; cGAS-DNA complex,structure_synonyms,0,0
+ubqln_puncta,2,4,0.75,0.75,1.0,1.0,1,0,0.5,UBQLN puncta; Ubqln puncta,structure_synonyms,0,0
+t_cell_signalosome,3,3,1.0,1.0,1.0,1.0,3,0,1.0,LAT signalosome; T-cell signalosome; TCR signalosome,structure_synonyms,0,0
+norad_pum_body,2,2,1.0,1.0,1.0,1.0,1,0,1.0,NORAD-PUM body; NP bodies,structure_synonyms,0,0
+maternal_mrna_condensate,2,2,0.0,0.0,0.0,0.0,1,1,0.0,Nuclear poly(A) domains; Rbm14-maternal mRNA condensate,structure_synonyms,0,0
+exosomal_condensate,2,2,0.0,0.0,0.0,0.0,1,1,1.0,SDC4 exosomal condensate; YBX1 condensate,structure_synonyms,0,0
+ftsz_droplet,3,2,0.667,1.0,1.0,1.0,3,0,1.0,FtsZ condensate; FtsZ/SlmA body; Ftsz-rich droplets at specific chromosomal DNA sites,structure_synonyms,0,0
+mirisc,4,2,1.0,1.0,1.0,1.0,6,0,1.0,RISC complex; miRISC; miRISC condensate; micro-ribonucleoprotein complex,structure_synonyms,0,0
+contractile_ring,2,1,1.0,1.0,1.0,1.0,1,0,1.0,Contractile ring condensate; contractile ring,structure_synonyms,0,0
+galectin_lattice,2,1,1.0,1.0,1.0,1.0,1,0,1.0,galectin complex; galectin lattice,structure_synonyms,0,0
+mutator_foci,4,1,1.0,1.0,1.0,1.0,6,0,1.0,MUTator foci; Mutator foci; mutator focus; small RNA amplification complex,structure_synonyms,0,0
+inava_condensate,2,1,1.0,1.0,1.0,1.0,1,0,1.0,IL-1b-induced INAVA condensates; INAVA condensates,structure_synonyms,0,0
+liquid_dyrk3_speckle,2,1,1.0,1.0,1.0,1.0,1,0,1.0,DYRK3 speckle; liquid-like DYRK3 speckles,structure_synonyms,0,0
+morc3_nuclear_body,2,1,1.0,1.0,1.0,1.0,1,0,1.0,MORC3 nuclear body; MORC3-NBs,structure_synonyms,0,0
+std1_body,2,1,1.0,1.0,1.0,1.0,1,0,1.0,STD1 body; Std1 bodies,structure_synonyms,0,0

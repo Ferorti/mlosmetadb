@@ -10,6 +10,55 @@ para una fase posterior.
 Ver [REFACTOR_LOG.md](REFACTOR_LOG.md) para el detalle paso a paso de qué se
 copió, qué se dejó afuera, y por qué.
 
+## 2026-08-09 — correcciones de la auditoría biológica, etapa 1
+
+Llegó la devolución de la revisión externa (`docs/review/devolucion/`): informe
+más 12 CSVs y 5 figuras. De 242 equivalencias revisadas, 160 correctas, 64
+pendientes de curador y 18 errores.
+
+Lo primero fue verificar contra la base actual, porque la auditoría corrió
+sobre una copia previa al fix de doble ingesta de PhaSepDB. Sus dos acciones
+bloqueantes de ingesta (colapsar los tags duplicados y normalizar las filas por
+PMID) ya estaban resueltas: la base tiene 35.971 filas con clave
+`(uniprot_id, source_db, source_mlo, source_role)` única, y FUS aparece con 5
+filas de `stress_granule`, no con las 119 que reportaba el informe.
+
+Se hizo la etapa 1 en dos commits sobre `fix/biology-audit-stage1`.
+
+**Defectos que no dependen de criterio biológico.** La `Categoria` almacenada
+era arbitraria para 23 de los 170 canónicos: el loader deduplicaba por canónico
+e insertaba con `INSERT OR IGNORE`, así que ganaba la fila que leyera primero.
+Seis de esos conflictos ni siquiera eran biología (`Citoplasma` y
+`Citoplasmático` eran la misma categoría con dos grafías). Ahora hay una
+categoría curada por canónico y el loader falla si el archivo se contradice.
+Además: `evidence` tenía el string literal `'NULL'` en 13.847 filas,
+`mapping_version` estaba en `v3` para un mapeo que ya era v4, y tres términos
+del vocabulario no tenían ninguna anotación detrás.
+
+**Los 18 errores de equivalencia.** Los dos grandes eran etiquetas compuestas
+que la regla de explosión no cubría, porque solo contemplaba `;` y no `X/Y` ni
+`X and Y`. `Centrosome/Spindle pole body` mandaba 775 proteínas de metazoos al
+término fúngico; se resolvió con un archivo nuevo,
+`database/mappings/mlo_organism_scoped.csv`, que redirige por organismo sin
+reescribir nunca `source_mlo`. `Presynaptic clusters and postsynaptic densities`
+asignaba 1.366 proteínas al lado presináptico y perdía el postsináptico; ahora
+tiene canónico propio a la resolución que la fuente realmente anota.
+
+`XY body` y `sex body` resultaron ser dos nombres de la misma estructura
+meiótica, con la justificación de `sex_body` describiendo el cuerpo de Barr:
+ambos van a `xy_body` y no se crea `barr_body` porque nada lo anota.
+`polarity_condensate` se abrió en tres, que era lo que el dossier ya venía
+preguntando.
+
+Verificado: anotaciones 35.971 → 35.970, proteínas 15.879 sin cambio,
+vocabulario 167 → 177, `spindle_pole_body` 910 → 135, `centrosome`
+1.015 → 1.790. 67 tests del pipeline y 94 de la API en verde.
+
+Queda abierto y documentado en `mlo_mapping_decisions.md` §11.6: el esquema de
+cinco ejes, `evidence_type`, sacar `NotInformed` e `in_vitro_droplet` del
+vocabulario de organelas, reinstaurar los reguladores de DrLLPS y los 64 casos
+"a revisar".
+
 ## 2026-08-08 — dossier de biología para revisión externa + bug de doble ingesta
 
 Se armó `docs/review/` (dossier de curación biológica en inglés,

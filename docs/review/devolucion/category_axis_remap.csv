@@ -1,0 +1,23 @@
+current_category,n_terms,compartment_class,taxonomic_scope,cell_type_context,functional_process,physiological_state
+Nuclear,48,nucleoplasm,eukaryotic,none,—,physiological
+Citoplasmático,39,cytosol,eukaryotic,none,—,physiological
+Citoplasma,5,cytosol,eukaryotic,none,—,physiological
+Membrana,13,membrane_associated,eukaryotic,none,—,physiological
+Mitocondrial,2,mitochondrial,eukaryotic,none,—,physiological
+Plastídico,3,plastid,plants_algae,none,—,physiological
+Extracelular,3,extracellular,metazoa,none,—,physiological
+Secretor,1,membrane_associated,metazoa,none,—,physiological
+Germinal,14,<from data>,<from data>,germline,—,physiological
+Neuronal,8,<from data>,metazoa,neuron,—,physiological
+Procariota,12,<from data>,bacteria,none,—,physiological
+Vegetal,2,<from data>,plants_algae,none,—,physiological
+Viral,5,<from data>,viruses,none,host_pathogen,physiological
+Citoesqueleto,6,cytosol,eukaryotic,none,cell_division / cell_polarity,physiological
+Mitótico,1,<from data>,eukaryotic,none,cell_division,physiological
+Autofagia,1,cytosol,eukaryotic,none,protein_quality_control,physiological
+Patológico,2,<from data>,metazoa,none,—,pathological
+In vitro,1,cell_free,—,none,—,engineered
+Unspecified,1,<null>,—,none,—,—
+Nuclear/Mitótico,1,nucleoplasm,eukaryotic,none,cell_division,physiological
+Viral/Nuclear,1,nucleoplasm,viruses,none,host_pathogen,physiological
+Nuclear/Citoplasmático,1,<split or shuttling flag>,eukaryotic,none,—,physiological

@@ -1,0 +1,6 @@
+escenario,terminos,nota,delta_vs_actual
+Vocabulario actual (sin corregir),170,"incluye NotInformed, in_vitro_droplet y 3 huérfanos",0
+Sólo acciones que bloquean publicación (1-12),169,"-NotInformed, -in_vitro_droplet, +xy_body",-1
+Bloqueantes + correcciones de error (acción 15),172,"+tifasome, +proteasome_storage_granule, +z_disc_condensate",2
+Todo lo anterior + huecos de cobertura media/alta,174,"+barr_body, +amyloid_body",4
+"Escenario completo, excluyendo los 3 huérfanos sin anotación",171,"retira adhesin_nanodomain, npr1_condensate, rosenthal_fiber",1

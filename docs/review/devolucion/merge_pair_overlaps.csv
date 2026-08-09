@@ -1,0 +1,826 @@
+unified_mlo,name_a,name_b,n_a,n_b,shared,overlap_coef,same_resource,shared_organism,res_a,res_b
+actin_cortical_patch,Actin nucleator,Cobl condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+actin_cortical_patch,Actin nucleator,actin cortical patch,1,3,0,0.0,False,True,CDCODE,PhasePro
+actin_cortical_patch,Cobl condensate,actin cortical patch,1,3,0,0.0,False,False,CDCODE,PhasePro
+ankle_link_condensate,Ankle Link Complex (ALC) Condensate,Row 1-specific tip complex condensates,4,4,0,0.0,True,False,CDCODE,CDCODE
+bacterial_rnp_body,ABC transporter condensate,BR-bodies,2,2,0,0.0,False,False,CDCODE,PhaSepDB
+bacterial_rnp_body,ABC transporter condensate,BR-body,2,14,0,0.0,True,False,CDCODE,CDCODE
+bacterial_rnp_body,ABC transporter condensate,bacterial RNP-bodies (BR-bodies),2,1,0,0.0,False,False,CDCODE,PhasePro
+bacterial_rnp_body,BR-bodies,BR-body,2,14,0,0.0,False,False,PhaSepDB,CDCODE
+bacterial_rnp_body,BR-bodies,bacterial RNP-bodies (BR-bodies),2,1,0,0.0,False,False,PhaSepDB,PhasePro
+bacterial_rnp_body,BR-body,bacterial RNP-bodies (BR-bodies),14,1,1,1.0,False,True,CDCODE,PhasePro
+balbiani_body,Balbiani body,Mitochondrial cloud,342,598,53,0.155,True,True,"CDCODE,DrLLPS,PhaSepDB,PhasePro",CDCODE
+balbiani_body,Balbiani body,mitochondrial cloud,342,2,2,1.0,True,True,"CDCODE,DrLLPS,PhaSepDB,PhasePro",PhasePro
+balbiani_body,Mitochondrial cloud,mitochondrial cloud,598,2,0,0.0,False,False,CDCODE,PhasePro
+carboxysome,Carboxysome,Enzyme_shell proteins condensates,3,2,0,0.0,True,False,"CDCODE,PhaSepDB",CDCODE
+centrosome,Centrosome,Pericentriolar compartment,972,2,0,0.0,True,True,"CDCODE,PhaSepDB",CDCODE
+centrosome,Centrosome,Pericentriolar material,972,3,1,0.333,True,True,"CDCODE,PhaSepDB",CDCODE
+centrosome,Centrosome,Pericentriolar matrix,972,10,9,0.9,True,True,"CDCODE,PhaSepDB","CDCODE,DrLLPS,PhaSepDB"
+centrosome,Centrosome,pericentriolar material,972,1,1,1.0,False,True,"CDCODE,PhaSepDB",PhasePro
+centrosome,Pericentriolar compartment,Pericentriolar material,2,3,0,0.0,True,False,CDCODE,CDCODE
+centrosome,Pericentriolar compartment,Pericentriolar matrix,2,10,0,0.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+centrosome,Pericentriolar compartment,pericentriolar material,2,1,0,0.0,False,False,CDCODE,PhasePro
+centrosome,Pericentriolar material,Pericentriolar matrix,3,10,0,0.0,True,False,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+centrosome,Pericentriolar material,pericentriolar material,3,1,0,0.0,False,False,CDCODE,PhasePro
+centrosome,Pericentriolar matrix,pericentriolar material,10,1,1,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+cgas_dna_complex,cGAS foci,cGAS-DNA complex,4,3,3,1.0,False,True,"CDCODE,PhasePro",PhaSepDB
+chromatin_compartment,Chromatin,Euchromatin,1,2,0,0.0,False,False,DrLLPS,CDCODE
+chromatin_compartment,Chromatin,euchromatin,1,2,0,0.0,False,False,DrLLPS,PhasePro
+chromatin_compartment,Chromatin,eukaryotic topoisomerase ii,1,2,0,0.0,False,False,DrLLPS,CDCODE
+chromatin_compartment,Euchromatin,euchromatin,2,2,2,1.0,False,True,CDCODE,PhasePro
+chromatin_compartment,Euchromatin,eukaryotic topoisomerase ii,2,2,0,0.0,True,True,CDCODE,CDCODE
+chromatin_compartment,euchromatin,eukaryotic topoisomerase ii,2,2,0,0.0,False,True,PhasePro,CDCODE
+chromogranin_condensate,Chromogranin condensates,Large dense-core vesicles,3,1,0,0.0,True,True,CDCODE,CDCODE
+contractile_ring,Contractile ring condensate,contractile ring,1,1,1,1.0,False,True,CDCODE,PhasePro
+cytoplasmic_protein_granule,Cytoplasmic bodies,cytoplasmic protein granule,3,14,0,0.0,False,True,CDCODE,PhasePro
+cytoplasmic_rnp_granule,CPEB4 granule,Cpeb1b-Pabpc1b-shh Condensate,1,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,Cytoplasmic protein granule,1,5,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,Ddx3xb condensates,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,FXR1 condensates,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,FXR1 network,1,1,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,CPEB4 granule,MEX3B granule,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,RNP granule,1,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,RNP granules,1,43,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,CPEB4 granule,Translational Condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,WHI3 cluster,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,CPEB4 granule,cytoplasmic ribonucleoprotein granule,1,7,0,0.0,False,False,CDCODE,PhasePro
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,Cytoplasmic protein granule,3,5,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,Ddx3xb condensates,3,1,0,0.0,True,True,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,FXR1 condensates,3,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,FXR1 network,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,MEX3B granule,3,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,RNP granule,3,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,RNP granules,3,43,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,Translational Condensate,3,4,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,WHI3 cluster,3,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cpeb1b-Pabpc1b-shh Condensate,cytoplasmic ribonucleoprotein granule,3,7,0,0.0,False,False,CDCODE,PhasePro
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,Ddx3xb condensates,5,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,FXR1 condensates,5,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,FXR1 network,5,1,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,MEX3B granule,5,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,RNP granule,5,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,RNP granules,5,43,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,Translational Condensate,5,4,0,0.0,True,True,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,WHI3 cluster,5,1,0,0.0,True,True,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Cytoplasmic protein granule,cytoplasmic ribonucleoprotein granule,5,7,0,0.0,False,True,CDCODE,PhasePro
+cytoplasmic_rnp_granule,Ddx3xb condensates,FXR1 condensates,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Ddx3xb condensates,FXR1 network,1,1,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,Ddx3xb condensates,MEX3B granule,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Ddx3xb condensates,RNP granule,1,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Ddx3xb condensates,RNP granules,1,43,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,Ddx3xb condensates,Translational Condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Ddx3xb condensates,WHI3 cluster,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Ddx3xb condensates,cytoplasmic ribonucleoprotein granule,1,7,0,0.0,False,False,CDCODE,PhasePro
+cytoplasmic_rnp_granule,FXR1 condensates,FXR1 network,1,1,0,0.0,False,False,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,FXR1 condensates,MEX3B granule,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,FXR1 condensates,RNP granule,1,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,FXR1 condensates,RNP granules,1,43,1,1.0,False,True,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,FXR1 condensates,Translational Condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,FXR1 condensates,WHI3 cluster,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,FXR1 condensates,cytoplasmic ribonucleoprotein granule,1,7,0,0.0,False,False,CDCODE,PhasePro
+cytoplasmic_rnp_granule,FXR1 network,MEX3B granule,1,1,0,0.0,False,True,PhaSepDB,CDCODE
+cytoplasmic_rnp_granule,FXR1 network,RNP granule,1,3,0,0.0,False,False,PhaSepDB,CDCODE
+cytoplasmic_rnp_granule,FXR1 network,RNP granules,1,43,0,0.0,True,True,PhaSepDB,PhaSepDB
+cytoplasmic_rnp_granule,FXR1 network,Translational Condensate,1,4,0,0.0,False,False,PhaSepDB,CDCODE
+cytoplasmic_rnp_granule,FXR1 network,WHI3 cluster,1,1,0,0.0,False,False,PhaSepDB,CDCODE
+cytoplasmic_rnp_granule,FXR1 network,cytoplasmic ribonucleoprotein granule,1,7,0,0.0,False,True,PhaSepDB,PhasePro
+cytoplasmic_rnp_granule,MEX3B granule,RNP granule,1,3,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,MEX3B granule,RNP granules,1,43,0,0.0,False,True,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,MEX3B granule,Translational Condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,MEX3B granule,WHI3 cluster,1,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,MEX3B granule,cytoplasmic ribonucleoprotein granule,1,7,0,0.0,False,True,CDCODE,PhasePro
+cytoplasmic_rnp_granule,RNP granule,RNP granules,3,43,3,1.0,False,True,CDCODE,PhaSepDB
+cytoplasmic_rnp_granule,RNP granule,Translational Condensate,3,4,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,RNP granule,WHI3 cluster,3,1,0,0.0,True,False,CDCODE,CDCODE
+cytoplasmic_rnp_granule,RNP granule,cytoplasmic ribonucleoprotein granule,3,7,0,0.0,False,False,CDCODE,PhasePro
+cytoplasmic_rnp_granule,RNP granules,Translational Condensate,43,4,0,0.0,False,False,PhaSepDB,CDCODE
+cytoplasmic_rnp_granule,RNP granules,WHI3 cluster,43,1,0,0.0,False,False,PhaSepDB,CDCODE
+cytoplasmic_rnp_granule,RNP granules,cytoplasmic ribonucleoprotein granule,43,7,1,0.143,False,True,PhaSepDB,PhasePro
+cytoplasmic_rnp_granule,Translational Condensate,WHI3 cluster,4,1,0,0.0,True,True,CDCODE,CDCODE
+cytoplasmic_rnp_granule,Translational Condensate,cytoplasmic ribonucleoprotein granule,4,7,0,0.0,False,False,CDCODE,PhasePro
+cytoplasmic_rnp_granule,WHI3 cluster,cytoplasmic ribonucleoprotein granule,1,7,0,0.0,False,False,CDCODE,PhasePro
+dna_damage_foci,53BP1 Mitotic Stress Body (MSBs),DNA damage foci,3,54,2,0.667,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+dna_damage_foci,53BP1 Mitotic Stress Body (MSBs),PARP1-DNA condensate,3,3,0,0.0,True,True,CDCODE,CDCODE
+dna_damage_foci,53BP1 Mitotic Stress Body (MSBs),SOSS-INTAC Condensate,3,5,0,0.0,True,True,CDCODE,CDCODE
+dna_damage_foci,53BP1 Mitotic Stress Body (MSBs),TopBP1 condensate,3,1,0,0.0,True,True,CDCODE,CDCODE
+dna_damage_foci,DNA damage foci,PARP1-DNA condensate,54,3,2,0.667,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+dna_damage_foci,DNA damage foci,SOSS-INTAC Condensate,54,5,1,0.2,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+dna_damage_foci,DNA damage foci,TopBP1 condensate,54,1,1,1.0,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+dna_damage_foci,PARP1-DNA condensate,SOSS-INTAC Condensate,3,5,0,0.0,True,True,CDCODE,CDCODE
+dna_damage_foci,PARP1-DNA condensate,TopBP1 condensate,3,1,0,0.0,True,True,CDCODE,CDCODE
+dna_damage_foci,SOSS-INTAC Condensate,TopBP1 condensate,5,1,0,0.0,True,True,CDCODE,CDCODE
+endocytic_condensate,Ede1 condensate,Endocytic condensates,11,3,2,0.667,True,True,CDCODE,CDCODE
+enhancer_condensate,Enhancer cluster,MegaTrans enhancer complex,1,2,0,0.0,True,True,CDCODE,CDCODE
+enhancer_condensate,Enhancer cluster,enhancer condensate,1,4,0,0.0,False,True,CDCODE,PhaSepDB
+enhancer_condensate,Enhancer cluster,nuclear bodies that occur at super enhancers in mESCs,1,2,0,0.0,False,True,CDCODE,PhasePro
+enhancer_condensate,Enhancer cluster,robustly E2-activated enhancers (MegaTrans) enhancers,1,2,0,0.0,False,True,CDCODE,PhasePro
+enhancer_condensate,MegaTrans enhancer complex,enhancer condensate,2,4,0,0.0,False,True,CDCODE,PhaSepDB
+enhancer_condensate,MegaTrans enhancer complex,nuclear bodies that occur at super enhancers in mESCs,2,2,0,0.0,False,True,CDCODE,PhasePro
+enhancer_condensate,MegaTrans enhancer complex,robustly E2-activated enhancers (MegaTrans) enhancers,2,2,2,1.0,False,True,CDCODE,PhasePro
+enhancer_condensate,enhancer condensate,nuclear bodies that occur at super enhancers in mESCs,4,2,0,0.0,False,True,PhaSepDB,PhasePro
+enhancer_condensate,enhancer condensate,robustly E2-activated enhancers (MegaTrans) enhancers,4,2,0,0.0,False,True,PhaSepDB,PhasePro
+enhancer_condensate,nuclear bodies that occur at super enhancers in mESCs,robustly E2-activated enhancers (MegaTrans) enhancers,2,2,0,0.0,True,True,PhasePro,PhasePro
+eres_condensate,ERES,SCOTIN condensate,8,3,1,0.333,True,True,CDCODE,CDCODE
+exosomal_condensate,SDC4 exosomal condensate,YBX1 condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+ftsz_droplet,FtsZ condensate,FtsZ/SlmA body,1,2,1,1.0,True,True,CDCODE,CDCODE
+ftsz_droplet,FtsZ condensate,Ftsz-rich droplets at specific chromosomal DNA sites,1,2,1,1.0,False,True,CDCODE,PhasePro
+ftsz_droplet,FtsZ/SlmA body,Ftsz-rich droplets at specific chromosomal DNA sites,2,2,2,1.0,False,True,CDCODE,PhasePro
+galectin_lattice,galectin complex,galectin lattice,1,1,1,1.0,True,True,PhasePro,PhasePro
+gem,Gemini of cajal body,Gems,2,1,0,0.0,False,True,DrLLPS,PhaSepDB
+gem,Gemini of cajal body,SMN1 nuclear body,2,1,0,0.0,False,False,DrLLPS,CDCODE
+gem,Gems,SMN1 nuclear body,1,1,0,0.0,False,False,PhaSepDB,CDCODE
+germ_plasm,Founder granule,Germ plasm,1,4,0,0.0,False,True,CDCODE,PhaSepDB
+germ_plasm,Founder granule,germ plasm,1,2,0,0.0,False,False,CDCODE,PhasePro
+germ_plasm,Germ plasm,germ plasm,4,2,1,0.5,False,True,PhaSepDB,PhasePro
+glycolytic_body,G-body,Glycolytic body,5,9,5,1.0,False,True,CDCODE,PhaSepDB
+glycolytic_body,G-body,PFK-1.1 condensates,5,1,0,0.0,True,False,CDCODE,CDCODE
+glycolytic_body,Glycolytic body,PFK-1.1 condensates,9,1,1,1.0,False,True,PhaSepDB,CDCODE
+golgin_condensate,Golgi ribbon,Golgin condensate,1,7,1,1.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+heterochromatin,Heterochromatin,XY body,42,10,0,0.0,True,True,"CDCODE,PhaSepDB",PhaSepDB
+heterochromatin,Heterochromatin,heterochromatin,42,4,4,1.0,False,True,"CDCODE,PhaSepDB",PhasePro
+heterochromatin,XY body,heterochromatin,10,4,0,0.0,False,False,PhaSepDB,PhasePro
+hippo_condensate,DDR1 condensate,Hippo signalosome,2,7,0,0.0,True,False,CDCODE,CDCODE
+hippo_condensate,DDR1 condensate,NEDD4 condensates,2,3,0,0.0,True,False,CDCODE,CDCODE
+hippo_condensate,DDR1 condensate,TAZ Condensate,2,8,0,0.0,True,False,CDCODE,CDCODE
+hippo_condensate,Hippo signalosome,NEDD4 condensates,7,3,1,0.333,True,True,CDCODE,CDCODE
+hippo_condensate,Hippo signalosome,TAZ Condensate,7,8,1,0.143,True,True,CDCODE,CDCODE
+hippo_condensate,NEDD4 condensates,TAZ Condensate,3,8,0,0.0,True,True,CDCODE,CDCODE
+histone_locus_body,Histone Locus Body,Histone locus body,15,11,9,0.818,False,True,CDCODE,"DrLLPS,PhaSepDB"
+hyperosmotic_shock_foci,Hyperosmotic shock foci,Hypersomatic shock foci,18,17,17,1.0,False,True,PhaSepDB,CDCODE
+inava_condensate,IL-1b-induced INAVA condensates,INAVA condensates,1,1,1,1.0,True,True,CDCODE,CDCODE
+inclusion_body,Htt inclusion,Inclusion Body,3,4,0,0.0,True,False,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,Htt inclusion,Inclusion body,3,59,1,0.333,True,True,"CDCODE,PhaSepDB","CDCODE,PhaSepDB"
+inclusion_body,Htt inclusion,P6 inclusion body,3,6,0,0.0,True,False,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,Htt inclusion,TDP-25 inclusions,3,1,0,0.0,True,True,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,Htt inclusion,inclusion body,3,3,0,0.0,False,True,"CDCODE,PhaSepDB",PhasePro
+inclusion_body,Htt inclusion,inclusion body-associated granule (IBAG),3,9,0,0.0,True,True,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,Inclusion Body,Inclusion body,4,59,0,0.0,True,False,CDCODE,"CDCODE,PhaSepDB"
+inclusion_body,Inclusion Body,P6 inclusion body,4,6,0,0.0,True,False,CDCODE,CDCODE
+inclusion_body,Inclusion Body,TDP-25 inclusions,4,1,0,0.0,True,False,CDCODE,CDCODE
+inclusion_body,Inclusion Body,inclusion body,4,3,0,0.0,False,False,CDCODE,PhasePro
+inclusion_body,Inclusion Body,inclusion body-associated granule (IBAG),4,9,0,0.0,True,False,CDCODE,CDCODE
+inclusion_body,Inclusion body,P6 inclusion body,59,6,1,0.167,True,True,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,Inclusion body,TDP-25 inclusions,59,1,1,1.0,True,True,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,Inclusion body,inclusion body,59,3,0,0.0,False,True,"CDCODE,PhaSepDB",PhasePro
+inclusion_body,Inclusion body,inclusion body-associated granule (IBAG),59,9,4,0.444,True,True,"CDCODE,PhaSepDB",CDCODE
+inclusion_body,P6 inclusion body,TDP-25 inclusions,6,1,0,0.0,True,False,CDCODE,CDCODE
+inclusion_body,P6 inclusion body,inclusion body,6,3,0,0.0,False,False,CDCODE,PhasePro
+inclusion_body,P6 inclusion body,inclusion body-associated granule (IBAG),6,9,0,0.0,True,False,CDCODE,CDCODE
+inclusion_body,TDP-25 inclusions,inclusion body,1,3,0,0.0,False,True,CDCODE,PhasePro
+inclusion_body,TDP-25 inclusions,inclusion body-associated granule (IBAG),1,9,0,0.0,True,True,CDCODE,CDCODE
+inclusion_body,inclusion body,inclusion body-associated granule (IBAG),3,9,0,0.0,False,True,PhasePro,CDCODE
+inflammasome,Inflammasome,TIFA-TRAF6 Condensate,2,7,0,0.0,True,True,CDCODE,CDCODE
+integrin_adhesion_complex,Integrin adhesion complex,focal adhesion (FA) condensate,3,3,0,0.0,False,False,PhaSepDB,CDCODE
+l_body,L-bodies,L-body,10,76,3,0.3,False,True,CDCODE,PhaSepDB
+liquid_dyrk3_speckle,DYRK3 speckle,liquid-like DYRK3 speckles,1,1,1,1.0,False,True,CDCODE,PhasePro
+maternal_mrna_condensate,Nuclear poly(A) domains,Rbm14-maternal mRNA condensate,1,1,0,0.0,False,False,CDCODE,PhaSepDB
+mirisc,RISC complex,miRISC,2,2,2,1.0,True,True,PhasePro,"PhaSepDB,PhasePro"
+mirisc,RISC complex,miRISC condensate,2,2,2,1.0,False,True,PhasePro,CDCODE
+mirisc,RISC complex,micro-ribonucleoprotein complex,2,2,2,1.0,True,True,PhasePro,PhasePro
+mirisc,miRISC,miRISC condensate,2,2,2,1.0,False,True,"PhaSepDB,PhasePro",CDCODE
+mirisc,miRISC,micro-ribonucleoprotein complex,2,2,2,1.0,True,True,"PhaSepDB,PhasePro",PhasePro
+mirisc,miRISC condensate,micro-ribonucleoprotein complex,2,2,2,1.0,False,True,CDCODE,PhasePro
+mitochondrial_rna_granule,Mitochondrial RNA granule,mtRNA granule,40,42,40,1.0,False,True,DrLLPS,CDCODE
+morc3_nuclear_body,MORC3 nuclear body,MORC3-NBs,1,1,1,1.0,False,True,CDCODE,PhasePro
+mutator_foci,MUTator foci,Mutator foci,1,1,1,1.0,False,True,CDCODE,PhaSepDB
+mutator_foci,MUTator foci,mutator focus,1,1,1,1.0,False,True,CDCODE,PhasePro
+mutator_foci,MUTator foci,small RNA amplification complex,1,1,1,1.0,False,True,CDCODE,PhasePro
+mutator_foci,Mutator foci,mutator focus,1,1,1,1.0,False,True,PhaSepDB,PhasePro
+mutator_foci,Mutator foci,small RNA amplification complex,1,1,1,1.0,False,True,PhaSepDB,PhasePro
+mutator_foci,mutator focus,small RNA amplification complex,1,1,1,1.0,True,True,PhasePro,PhasePro
+necrosome,Arsenite-induced Necrosome,Necrosome,7,2,0,0.0,False,True,CDCODE,PhaSepDB
+neuronal_granule,IMP1 RNP granule,Mimi granules,39,3,0,0.0,True,False,CDCODE,CDCODE
+neuronal_granule,IMP1 RNP granule,Neuronal RNP granule,39,66,3,0.077,True,True,CDCODE,CDCODE
+neuronal_granule,IMP1 RNP granule,Neuronal granule,39,58,2,0.051,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+neuronal_granule,IMP1 RNP granule,RBFOX1 RNP granule,39,2,0,0.0,True,False,CDCODE,CDCODE
+neuronal_granule,IMP1 RNP granule,RNP transport granule,39,2,1,0.5,False,True,CDCODE,PhaSepDB
+neuronal_granule,IMP1 RNP granule,TIAR2 neuronal granule,39,1,0,0.0,True,False,CDCODE,CDCODE
+neuronal_granule,IMP1 RNP granule,neuronal ribonucleoprotein granule,39,5,1,0.2,False,True,CDCODE,PhasePro
+neuronal_granule,Mimi granules,Neuronal RNP granule,3,66,0,0.0,True,True,CDCODE,CDCODE
+neuronal_granule,Mimi granules,Neuronal granule,3,58,0,0.0,True,False,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+neuronal_granule,Mimi granules,RBFOX1 RNP granule,3,2,0,0.0,True,True,CDCODE,CDCODE
+neuronal_granule,Mimi granules,RNP transport granule,3,2,0,0.0,False,False,CDCODE,PhaSepDB
+neuronal_granule,Mimi granules,TIAR2 neuronal granule,3,1,0,0.0,True,False,CDCODE,CDCODE
+neuronal_granule,Mimi granules,neuronal ribonucleoprotein granule,3,5,0,0.0,False,True,CDCODE,PhasePro
+neuronal_granule,Neuronal RNP granule,Neuronal granule,66,58,52,0.897,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+neuronal_granule,Neuronal RNP granule,RBFOX1 RNP granule,66,2,0,0.0,True,True,CDCODE,CDCODE
+neuronal_granule,Neuronal RNP granule,RNP transport granule,66,2,2,1.0,False,True,CDCODE,PhaSepDB
+neuronal_granule,Neuronal RNP granule,TIAR2 neuronal granule,66,1,0,0.0,True,False,CDCODE,CDCODE
+neuronal_granule,Neuronal RNP granule,neuronal ribonucleoprotein granule,66,5,5,1.0,False,True,CDCODE,PhasePro
+neuronal_granule,Neuronal granule,RBFOX1 RNP granule,58,2,0,0.0,True,False,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+neuronal_granule,Neuronal granule,RNP transport granule,58,2,0,0.0,True,True,"CDCODE,DrLLPS,PhaSepDB",PhaSepDB
+neuronal_granule,Neuronal granule,TIAR2 neuronal granule,58,1,1,1.0,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+neuronal_granule,Neuronal granule,neuronal ribonucleoprotein granule,58,5,1,0.2,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+neuronal_granule,RBFOX1 RNP granule,RNP transport granule,2,2,0,0.0,False,False,CDCODE,PhaSepDB
+neuronal_granule,RBFOX1 RNP granule,TIAR2 neuronal granule,2,1,0,0.0,True,False,CDCODE,CDCODE
+neuronal_granule,RBFOX1 RNP granule,neuronal ribonucleoprotein granule,2,5,0,0.0,False,True,CDCODE,PhasePro
+neuronal_granule,RNP transport granule,TIAR2 neuronal granule,2,1,0,0.0,False,False,PhaSepDB,CDCODE
+neuronal_granule,RNP transport granule,neuronal ribonucleoprotein granule,2,5,0,0.0,False,True,PhaSepDB,PhasePro
+neuronal_granule,TIAR2 neuronal granule,neuronal ribonucleoprotein granule,1,5,0,0.0,False,False,CDCODE,PhasePro
+norad_pum_body,NORAD-PUM body,NP bodies,2,2,2,1.0,False,True,PhaSepDB,CDCODE
+nuage,IMC (intermitochondrial cement),Nuage,1,10,1,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nuclear_body,Ccer1 condensate,Leucocyte nuclear body,2,21,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Ccer1 condensate,NAB3 nuclear body,2,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Ccer1 condensate,Nuclear body,2,221,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+nuclear_body,Ccer1 condensate,RBM15 condensate,2,2,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Ccer1 condensate,SPRI2 Nuclear Condensate,2,2,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Ccer1 condensate,VRN1 nuclear body,2,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Ccer1 condensate,nuclear body,2,16,0,0.0,False,False,CDCODE,PhasePro
+nuclear_body,Leucocyte nuclear body,NAB3 nuclear body,21,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Leucocyte nuclear body,Nuclear body,21,221,9,0.429,True,True,CDCODE,"CDCODE,PhaSepDB"
+nuclear_body,Leucocyte nuclear body,RBM15 condensate,21,2,0,0.0,True,True,CDCODE,CDCODE
+nuclear_body,Leucocyte nuclear body,SPRI2 Nuclear Condensate,21,2,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Leucocyte nuclear body,VRN1 nuclear body,21,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,Leucocyte nuclear body,nuclear body,21,16,9,0.562,False,True,CDCODE,PhasePro
+nuclear_body,NAB3 nuclear body,Nuclear body,1,221,0,0.0,True,False,CDCODE,"CDCODE,PhaSepDB"
+nuclear_body,NAB3 nuclear body,RBM15 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,NAB3 nuclear body,SPRI2 Nuclear Condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,NAB3 nuclear body,VRN1 nuclear body,1,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,NAB3 nuclear body,nuclear body,1,16,1,1.0,False,True,CDCODE,PhasePro
+nuclear_body,Nuclear body,RBM15 condensate,221,2,1,0.5,True,True,"CDCODE,PhaSepDB",CDCODE
+nuclear_body,Nuclear body,SPRI2 Nuclear Condensate,221,2,0,0.0,True,True,"CDCODE,PhaSepDB",CDCODE
+nuclear_body,Nuclear body,VRN1 nuclear body,221,1,0,0.0,True,True,"CDCODE,PhaSepDB",CDCODE
+nuclear_body,Nuclear body,nuclear body,221,16,3,0.188,False,True,"CDCODE,PhaSepDB",PhasePro
+nuclear_body,RBM15 condensate,SPRI2 Nuclear Condensate,2,2,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,RBM15 condensate,VRN1 nuclear body,2,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_body,RBM15 condensate,nuclear body,2,16,0,0.0,False,True,CDCODE,PhasePro
+nuclear_body,SPRI2 Nuclear Condensate,VRN1 nuclear body,2,1,0,0.0,True,True,CDCODE,CDCODE
+nuclear_body,SPRI2 Nuclear Condensate,nuclear body,2,16,0,0.0,False,True,CDCODE,PhasePro
+nuclear_body,VRN1 nuclear body,nuclear body,1,16,1,1.0,False,True,CDCODE,PhasePro
+nuclear_pore_complex,Nuclear pore complex,nuclear pore central transport channel,63,3,3,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+nuclear_pore_complex,Nuclear pore complex,selective hydrogel-like meshwork formed by FG-nucleoporins in nuclear pore central channel,63,3,3,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+nuclear_pore_complex,nuclear pore central transport channel,selective hydrogel-like meshwork formed by FG-nucleoporins in nuclear pore central channel,3,3,3,1.0,True,True,PhasePro,PhasePro
+nuclear_speckle,AFAP1-AS1 condensates,ALYREF condensates,2,1,0,0.0,True,True,CDCODE,CDCODE
+nuclear_speckle,AFAP1-AS1 condensates,METTL14 condensate,2,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_speckle,AFAP1-AS1 condensates,Nuclear speckle,2,699,2,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nuclear_speckle,AFAP1-AS1 condensates,Omega speckle,2,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_speckle,AFAP1-AS1 condensates,nuclear speckle,2,3,0,0.0,False,True,CDCODE,PhasePro
+nuclear_speckle,ALYREF condensates,METTL14 condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_speckle,ALYREF condensates,Nuclear speckle,1,699,1,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nuclear_speckle,ALYREF condensates,Omega speckle,1,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_speckle,ALYREF condensates,nuclear speckle,1,3,0,0.0,False,True,CDCODE,PhasePro
+nuclear_speckle,METTL14 condensate,Nuclear speckle,1,699,0,0.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nuclear_speckle,METTL14 condensate,Omega speckle,1,1,0,0.0,True,False,CDCODE,CDCODE
+nuclear_speckle,METTL14 condensate,nuclear speckle,1,3,0,0.0,False,False,CDCODE,PhasePro
+nuclear_speckle,Nuclear speckle,Omega speckle,699,1,0,0.0,True,False,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+nuclear_speckle,Nuclear speckle,nuclear speckle,699,3,3,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+nuclear_speckle,Omega speckle,nuclear speckle,1,3,0,0.0,False,False,CDCODE,PhasePro
+nuclear_stress_body,A-bodies,Nuclear stress body,2,584,1,0.5,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nucleolus,Dense Fibrillar Component,Dense fibrillar component,9,2,0,0.0,True,False,CDCODE,CDCODE
+nucleolus,Dense Fibrillar Component,Granular component,9,2,0,0.0,True,True,CDCODE,CDCODE
+nucleolus,Dense Fibrillar Component,Nucleolus,9,5002,9,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nucleolus,Dense Fibrillar Component,dense fibrillar component,9,2,0,0.0,False,False,CDCODE,PhasePro
+nucleolus,Dense Fibrillar Component,granular component,9,1,0,0.0,False,True,CDCODE,PhasePro
+nucleolus,Dense Fibrillar Component,nucleolus,9,5,0,0.0,False,True,CDCODE,PhasePro
+nucleolus,Dense Fibrillar Component,rDNA locus,9,2,0,0.0,True,False,CDCODE,CDCODE
+nucleolus,Dense fibrillar component,Granular component,2,2,0,0.0,True,False,CDCODE,CDCODE
+nucleolus,Dense fibrillar component,Nucleolus,2,5002,2,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nucleolus,Dense fibrillar component,dense fibrillar component,2,2,2,1.0,False,True,CDCODE,PhasePro
+nucleolus,Dense fibrillar component,granular component,2,1,0,0.0,False,False,CDCODE,PhasePro
+nucleolus,Dense fibrillar component,nucleolus,2,5,2,1.0,False,True,CDCODE,PhasePro
+nucleolus,Dense fibrillar component,rDNA locus,2,2,0,0.0,True,False,CDCODE,CDCODE
+nucleolus,Granular component,Nucleolus,2,5002,2,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+nucleolus,Granular component,dense fibrillar component,2,2,0,0.0,False,False,CDCODE,PhasePro
+nucleolus,Granular component,granular component,2,1,1,1.0,False,True,CDCODE,PhasePro
+nucleolus,Granular component,nucleolus,2,5,1,0.5,False,True,CDCODE,PhasePro
+nucleolus,Granular component,rDNA locus,2,2,0,0.0,True,False,CDCODE,CDCODE
+nucleolus,Nucleolus,dense fibrillar component,5002,2,2,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+nucleolus,Nucleolus,granular component,5002,1,1,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+nucleolus,Nucleolus,nucleolus,5002,5,5,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+nucleolus,Nucleolus,rDNA locus,5002,2,2,1.0,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+nucleolus,dense fibrillar component,granular component,2,1,0,0.0,True,False,PhasePro,PhasePro
+nucleolus,dense fibrillar component,nucleolus,2,5,2,1.0,True,True,PhasePro,PhasePro
+nucleolus,dense fibrillar component,rDNA locus,2,2,0,0.0,False,False,PhasePro,CDCODE
+nucleolus,granular component,nucleolus,1,5,1,1.0,True,True,PhasePro,PhasePro
+nucleolus,granular component,rDNA locus,1,2,0,0.0,False,False,PhasePro,CDCODE
+nucleolus,nucleolus,rDNA locus,5,2,0,0.0,False,False,PhasePro,CDCODE
+p62_body,ORF8/p62 condensate,P62 body,4,3,1,0.333,True,True,CDCODE,CDCODE
+p62_body,ORF8/p62 condensate,P62 cluster,4,4,0,0.0,True,True,CDCODE,CDCODE
+p62_body,ORF8/p62 condensate,p62 body,4,1,1,1.0,False,True,CDCODE,PhasePro
+p62_body,ORF8/p62 condensate,p62 cluster,4,780,1,0.25,False,True,CDCODE,PhaSepDB
+p62_body,P62 body,P62 cluster,3,4,1,0.333,True,True,CDCODE,CDCODE
+p62_body,P62 body,p62 body,3,1,1,1.0,False,True,CDCODE,PhasePro
+p62_body,P62 body,p62 cluster,3,780,3,1.0,False,True,CDCODE,PhaSepDB
+p62_body,P62 cluster,p62 body,4,1,0,0.0,False,True,CDCODE,PhasePro
+p62_body,P62 cluster,p62 cluster,4,780,2,0.5,False,True,CDCODE,PhaSepDB
+p62_body,p62 body,p62 cluster,1,780,1,1.0,False,True,PhasePro,PhaSepDB
+p_body,CCR4-NOT1 complex,GW-body,1,3,0,0.0,True,False,CDCODE,"CDCODE,PhasePro"
+p_body,CCR4-NOT1 complex,P-body,1,1193,1,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB,PhasePro"
+p_body,CCR4-NOT1 complex,PB-like Assembly,1,3,0,0.0,True,False,CDCODE,CDCODE
+p_body,CCR4-NOT1 complex,p62-dependent P-bodies (pd-PBs),1,11,0,0.0,True,False,CDCODE,CDCODE
+p_body,GW-body,P-body,3,1193,3,1.0,True,True,"CDCODE,PhasePro","CDCODE,DrLLPS,PhaSepDB,PhasePro"
+p_body,GW-body,PB-like Assembly,3,3,0,0.0,True,True,"CDCODE,PhasePro",CDCODE
+p_body,GW-body,p62-dependent P-bodies (pd-PBs),3,11,0,0.0,True,True,"CDCODE,PhasePro",CDCODE
+p_body,P-body,PB-like Assembly,1193,3,3,1.0,True,True,"CDCODE,DrLLPS,PhaSepDB,PhasePro",CDCODE
+p_body,P-body,p62-dependent P-bodies (pd-PBs),1193,11,6,0.545,True,True,"CDCODE,DrLLPS,PhaSepDB,PhasePro",CDCODE
+p_body,PB-like Assembly,p62-dependent P-bodies (pd-PBs),3,11,1,0.333,True,True,CDCODE,CDCODE
+p_granule,Germ granule,P granule,14,576,2,0.143,False,True,CDCODE,"DrLLPS,PhaSepDB,PhasePro"
+p_granule,Germ granule,P-granule,14,49,0,0.0,True,False,CDCODE,CDCODE
+p_granule,Germ granule,PGL granules,14,5,0,0.0,True,False,CDCODE,CDCODE
+p_granule,Germ granule,Trbd,14,1,0,0.0,True,True,CDCODE,CDCODE
+p_granule,P granule,P-granule,576,49,44,0.898,False,True,"DrLLPS,PhaSepDB,PhasePro",CDCODE
+p_granule,P granule,PGL granules,576,5,5,1.0,False,True,"DrLLPS,PhaSepDB,PhasePro",CDCODE
+p_granule,P granule,Trbd,576,1,0,0.0,False,True,"DrLLPS,PhaSepDB,PhasePro",CDCODE
+p_granule,P-granule,PGL granules,49,5,5,1.0,True,True,CDCODE,CDCODE
+p_granule,P-granule,Trbd,49,1,0,0.0,True,False,CDCODE,CDCODE
+p_granule,PGL granules,Trbd,5,1,0,0.0,True,False,CDCODE,CDCODE
+paraspeckle,NONO,Paraspeckle,3,270,1,0.333,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+paraspeckle,NONO,paraspeckle,3,3,0,0.0,False,False,CDCODE,PhasePro
+paraspeckle,Paraspeckle,paraspeckle,270,3,3,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+perinucleolar_compartment,Peri-nucleolar condensate,Perinucleolar compartment,6,1,0,0.0,False,False,CDCODE,DrLLPS
+plant_photobody,CRY2/SPA1/FIO1 condensate,Photobody,3,7,3,1.0,False,True,CDCODE,PhaSepDB
+plant_photobody,CRY2/SPA1/FIO1 condensate,Plant Photobody,3,5,1,0.333,True,True,CDCODE,CDCODE
+plant_photobody,Photobody,Plant Photobody,7,5,2,0.4,False,True,PhaSepDB,CDCODE
+plant_signaling_condensate,OsJAZ2 condensate,OsSRO1c-OsDREB2B condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,OsJAZ2 condensate,PARCL condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,OsJAZ2 condensate,Plant growth regulator,1,1,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,OsJAZ2 condensate,RH20 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,OsSRO1c-OsDREB2B condensate,PARCL condensate,2,1,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,OsSRO1c-OsDREB2B condensate,Plant growth regulator,2,1,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,OsSRO1c-OsDREB2B condensate,RH20 condensate,2,2,0,0.0,True,False,CDCODE,CDCODE
+plant_signaling_condensate,PARCL condensate,Plant growth regulator,1,1,0,0.0,True,True,CDCODE,CDCODE
+plant_signaling_condensate,PARCL condensate,RH20 condensate,1,2,0,0.0,True,True,CDCODE,CDCODE
+plant_signaling_condensate,Plant growth regulator,RH20 condensate,1,2,0,0.0,True,True,CDCODE,CDCODE
+pml_nuclear_body,PML body,PML nuclear body,561,357,144,0.403,False,True,"CDCODE,PhasePro","DrLLPS,PhaSepDB"
+pml_nuclear_body,PML body,PML/RARα microspeckle,561,1,1,1.0,False,True,"CDCODE,PhasePro",PhaSepDB
+pml_nuclear_body,PML nuclear body,PML/RARα microspeckle,357,1,1,1.0,True,True,"DrLLPS,PhaSepDB",PhaSepDB
+polarity_condensate,Fus1 condensate,Numb/Pon condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+polarity_condensate,Fus1 condensate,Par complex,1,5,0,0.0,True,False,CDCODE,"CDCODE,PhaSepDB"
+polarity_condensate,Fus1 condensate,PodJ condensates,1,3,0,0.0,True,False,CDCODE,CDCODE
+polarity_condensate,Fus1 condensate,PopZ condensate,1,6,0,0.0,True,False,CDCODE,CDCODE
+polarity_condensate,Fus1 condensate,basal Numb-Pon crescent in dividing neuroblasts,1,2,0,0.0,False,False,CDCODE,PhasePro
+polarity_condensate,Numb/Pon condensate,Par complex,2,5,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+polarity_condensate,Numb/Pon condensate,PodJ condensates,2,3,0,0.0,True,False,CDCODE,CDCODE
+polarity_condensate,Numb/Pon condensate,PopZ condensate,2,6,0,0.0,True,False,CDCODE,CDCODE
+polarity_condensate,Numb/Pon condensate,basal Numb-Pon crescent in dividing neuroblasts,2,2,2,1.0,False,True,CDCODE,PhasePro
+polarity_condensate,Par complex,PodJ condensates,5,3,0,0.0,True,False,"CDCODE,PhaSepDB",CDCODE
+polarity_condensate,Par complex,PopZ condensate,5,6,0,0.0,True,False,"CDCODE,PhaSepDB",CDCODE
+polarity_condensate,Par complex,basal Numb-Pon crescent in dividing neuroblasts,5,2,0,0.0,False,True,"CDCODE,PhaSepDB",PhasePro
+polarity_condensate,PodJ condensates,PopZ condensate,3,6,0,0.0,True,True,CDCODE,CDCODE
+polarity_condensate,PodJ condensates,basal Numb-Pon crescent in dividing neuroblasts,3,2,0,0.0,False,False,CDCODE,PhasePro
+polarity_condensate,PopZ condensate,basal Numb-Pon crescent in dividing neuroblasts,6,2,0,0.0,False,False,CDCODE,PhasePro
+polycomb_body,PcG body,PcG chromatin condensates,35,1,1,1.0,False,True,"CDCODE,DrLLPS",PhasePro
+polycomb_body,PcG body,Polycomb body,35,10,5,0.5,False,True,"CDCODE,DrLLPS",PhaSepDB
+polycomb_body,PcG chromatin condensates,Polycomb body,1,10,1,1.0,False,True,PhasePro,PhaSepDB
+postsynaptic_density,ArgBP2 dendritic spine condensate,FATZ-1 condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+postsynaptic_density,ArgBP2 dendritic spine condensate,Postsynaptic density,1,2884,1,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+postsynaptic_density,ArgBP2 dendritic spine condensate,Rapsn condensate,1,7,0,0.0,True,True,CDCODE,CDCODE
+postsynaptic_density,ArgBP2 dendritic spine condensate,postsynaptic density,1,2,0,0.0,False,True,CDCODE,PhasePro
+postsynaptic_density,FATZ-1 condensate,Postsynaptic density,1,2884,0,0.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+postsynaptic_density,FATZ-1 condensate,Rapsn condensate,1,7,0,0.0,True,True,CDCODE,CDCODE
+postsynaptic_density,FATZ-1 condensate,postsynaptic density,1,2,0,0.0,False,True,CDCODE,PhasePro
+postsynaptic_density,Postsynaptic density,Rapsn condensate,2884,7,2,0.286,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+postsynaptic_density,Postsynaptic density,postsynaptic density,2884,2,1,0.5,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+postsynaptic_density,Rapsn condensate,postsynaptic density,7,2,0,0.0,False,True,CDCODE,PhasePro
+pre_autophagosomal_structure,ATG condensate,ATG4B condensate,5,1,0,0.0,True,False,CDCODE,CDCODE
+pre_autophagosomal_structure,ATG condensate,Pre-autophagosomal structure,5,5,4,0.8,False,True,CDCODE,PhaSepDB
+pre_autophagosomal_structure,ATG4B condensate,Pre-autophagosomal structure,1,5,0,0.0,False,False,CDCODE,PhaSepDB
+presynaptic_active_zone,Presynaptic active zone condensate,Presynaptic clusters,11,15,8,0.727,False,True,PhaSepDB,CDCODE
+presynaptic_active_zone,Presynaptic active zone condensate,Presynaptic clusters and postsynaptic densities,11,1366,1,0.091,False,True,PhaSepDB,CDCODE
+presynaptic_active_zone,Presynaptic active zone condensate,presynaptic cytosol,11,2,0,0.0,False,True,PhaSepDB,PhasePro
+presynaptic_active_zone,Presynaptic clusters,Presynaptic clusters and postsynaptic densities,15,1366,0,0.0,True,False,CDCODE,CDCODE
+presynaptic_active_zone,Presynaptic clusters,presynaptic cytosol,15,2,0,0.0,False,False,CDCODE,PhasePro
+presynaptic_active_zone,Presynaptic clusters and postsynaptic densities,presynaptic cytosol,1366,2,2,1.0,False,True,CDCODE,PhasePro
+proteasome_foci,BAG2,Proteasome Storage Granule,1,5,0,0.0,False,False,CDCODE,PhaSepDB
+proteasome_foci,BAG2,Proteasome condensate,1,8,0,0.0,True,True,CDCODE,CDCODE
+proteasome_foci,BAG2,Proteasome containing foci,1,7,0,0.0,False,True,CDCODE,PhaSepDB
+proteasome_foci,BAG2,senescence-associated nuclear proteasome foci,1,5,0,0.0,True,True,CDCODE,CDCODE
+proteasome_foci,Proteasome Storage Granule,Proteasome condensate,5,8,3,0.6,False,True,PhaSepDB,CDCODE
+proteasome_foci,Proteasome Storage Granule,Proteasome containing foci,5,7,0,0.0,True,False,PhaSepDB,PhaSepDB
+proteasome_foci,Proteasome Storage Granule,senescence-associated nuclear proteasome foci,5,5,0,0.0,False,False,PhaSepDB,CDCODE
+proteasome_foci,Proteasome condensate,Proteasome containing foci,8,7,4,0.571,False,True,CDCODE,PhaSepDB
+proteasome_foci,Proteasome condensate,senescence-associated nuclear proteasome foci,8,5,1,0.2,True,True,CDCODE,CDCODE
+proteasome_foci,Proteasome containing foci,senescence-associated nuclear proteasome foci,7,5,1,0.2,False,True,PhaSepDB,CDCODE
+pyrenoid,Pyrenoid,Pyrenoid matrix,84,181,83,0.988,False,True,CDCODE,DrLLPS
+pyrenoid,Pyrenoid,pyrenoid,84,2,2,1.0,False,True,CDCODE,PhasePro
+pyrenoid,Pyrenoid matrix,pyrenoid,181,2,1,0.5,False,True,DrLLPS,PhasePro
+replication_compartment,ORC1 bodies,Pre-replication compartment (PRC),5,3,0,0.0,True,False,CDCODE,CDCODE
+replication_compartment,ORC1 bodies,Replication compartment,5,5,0,0.0,False,False,CDCODE,PhaSepDB
+replication_compartment,ORC1 bodies,VRO-associated condensate,5,1,0,0.0,False,False,CDCODE,PhaSepDB
+replication_compartment,ORC1 bodies,Virus-induced replication (VIR) condensate,5,1,0,0.0,True,False,CDCODE,CDCODE
+replication_compartment,ORC1 bodies,viral replication compartment (VRC),5,8,0,0.0,True,False,CDCODE,CDCODE
+replication_compartment,Pre-replication compartment (PRC),Replication compartment,3,5,1,0.333,False,True,CDCODE,PhaSepDB
+replication_compartment,Pre-replication compartment (PRC),VRO-associated condensate,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+replication_compartment,Pre-replication compartment (PRC),Virus-induced replication (VIR) condensate,3,1,0,0.0,True,False,CDCODE,CDCODE
+replication_compartment,Pre-replication compartment (PRC),viral replication compartment (VRC),3,8,0,0.0,True,False,CDCODE,CDCODE
+replication_compartment,Replication compartment,VRO-associated condensate,5,1,0,0.0,True,False,PhaSepDB,PhaSepDB
+replication_compartment,Replication compartment,Virus-induced replication (VIR) condensate,5,1,0,0.0,False,False,PhaSepDB,CDCODE
+replication_compartment,Replication compartment,viral replication compartment (VRC),5,8,1,0.2,False,True,PhaSepDB,CDCODE
+replication_compartment,VRO-associated condensate,Virus-induced replication (VIR) condensate,1,1,0,0.0,False,False,PhaSepDB,CDCODE
+replication_compartment,VRO-associated condensate,viral replication compartment (VRC),1,8,0,0.0,False,False,PhaSepDB,CDCODE
+replication_compartment,Virus-induced replication (VIR) condensate,viral replication compartment (VRC),1,8,0,0.0,True,False,CDCODE,CDCODE
+sam68_nuclear_body,Sam68 nuclear bodies (SNBs),Sam68 nuclear body,2,16,2,1.0,False,True,PhasePro,"CDCODE,DrLLPS,PhaSepDB"
+sars_cov2_n_condensate,FXR-driven SARS-CoV-2 condensate,SARS-CoV-2 N condensate,5,4,0,0.0,False,True,CDCODE,PhaSepDB
+sars_cov2_n_condensate,FXR-driven SARS-CoV-2 condensate,SARS-CoV-2 condensate,5,4,1,0.25,True,True,CDCODE,CDCODE
+sars_cov2_n_condensate,SARS-CoV-2 N condensate,SARS-CoV-2 condensate,4,4,2,0.5,False,True,PhaSepDB,CDCODE
+sec_body,Sec body,Sec-body,9,8,6,0.75,False,True,"PhaSepDB,PhasePro",CDCODE
+signaling_cluster,Receptor cluster,Signaling cluster,16,25,11,0.688,False,True,"DrLLPS,PhaSepDB",CDCODE
+signaling_cluster,Receptor cluster,membrane cluster,16,3,3,1.0,False,True,"DrLLPS,PhaSepDB",PhasePro
+signaling_cluster,Signaling cluster,membrane cluster,25,3,3,1.0,False,True,CDCODE,PhasePro
+signaling_condensate,BMP2K condensate,EML4-ALK condensates,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,HSP condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,Insulin/IGF-1 signalosomes,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,Nur77 condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,PARP5A–RNF146 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,PCBP2 condensates,1,5,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,PGAM5-MAVS Condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,Plectin condensates,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,SSB condensate,1,3,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,Signalosome,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,BMP2K condensate,TBC1D2B condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,HSP condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,Insulin/IGF-1 signalosomes,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,Nur77 condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,PARP5A–RNF146 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,PCBP2 condensates,1,5,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,PGAM5-MAVS Condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,Plectin condensates,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,SSB condensate,1,3,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,Signalosome,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,EML4-ALK condensates,TBC1D2B condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,HSP condensate,Insulin/IGF-1 signalosomes,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,Nur77 condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,PARP5A–RNF146 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,PCBP2 condensates,1,5,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,PGAM5-MAVS Condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,Plectin condensates,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,SSB condensate,1,3,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,Signalosome,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,HSP condensate,TBC1D2B condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,Nur77 condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,PARP5A–RNF146 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,PCBP2 condensates,1,5,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,PGAM5-MAVS Condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,Plectin condensates,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,SSB condensate,1,3,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,Signalosome,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Insulin/IGF-1 signalosomes,TBC1D2B condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,PARP5A–RNF146 condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,PCBP2 condensates,1,5,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,PGAM5-MAVS Condensate,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,Plectin condensates,1,2,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,SSB condensate,1,3,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,Signalosome,1,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Nur77 condensate,TBC1D2B condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PARP5A–RNF146 condensate,PCBP2 condensates,2,5,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PARP5A–RNF146 condensate,PGAM5-MAVS Condensate,2,2,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PARP5A–RNF146 condensate,Plectin condensates,2,2,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PARP5A–RNF146 condensate,SSB condensate,2,3,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,PARP5A–RNF146 condensate,Signalosome,2,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,PARP5A–RNF146 condensate,TBC1D2B condensate,2,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,PCBP2 condensates,PGAM5-MAVS Condensate,5,2,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PCBP2 condensates,Plectin condensates,5,2,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PCBP2 condensates,SSB condensate,5,3,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PCBP2 condensates,Signalosome,5,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,PCBP2 condensates,TBC1D2B condensate,5,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PGAM5-MAVS Condensate,Plectin condensates,2,2,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,PGAM5-MAVS Condensate,SSB condensate,2,3,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,PGAM5-MAVS Condensate,Signalosome,2,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,PGAM5-MAVS Condensate,TBC1D2B condensate,2,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Plectin condensates,SSB condensate,2,3,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Plectin condensates,Signalosome,2,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,Plectin condensates,TBC1D2B condensate,2,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,SSB condensate,Signalosome,3,1,0,0.0,True,False,CDCODE,CDCODE
+signaling_condensate,SSB condensate,TBC1D2B condensate,3,1,0,0.0,True,True,CDCODE,CDCODE
+signaling_condensate,Signalosome,TBC1D2B condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+sint_speckle,SINT-speckle,Sint speckle,5,4,4,1.0,False,True,PhaSepDB,CDCODE
+sirna_body,Sirna body,siRNA body,5,2,2,1.0,False,True,CDCODE,DrLLPS
+spindle_apparatus,+TIP,+TIP body,3,6,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP,Birc5b assembly,3,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP,EB1F condensate,3,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP,GAS2L3 condensates,3,1,0,0.0,True,True,CDCODE,CDCODE
+spindle_apparatus,+TIP,Spindle apparatus,3,73,0,0.0,False,True,CDCODE,"DrLLPS,PhaSepDB"
+spindle_apparatus,+TIP,Spindle matrix,3,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP,condensed compartments of microtubule bundling,3,1,0,0.0,False,True,CDCODE,PhasePro
+spindle_apparatus,+TIP,spindle matrix,3,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,+TIP body,Birc5b assembly,6,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP body,EB1F condensate,6,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP body,GAS2L3 condensates,6,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP body,Spindle apparatus,6,73,0,0.0,False,True,CDCODE,"DrLLPS,PhaSepDB"
+spindle_apparatus,+TIP body,Spindle matrix,6,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,+TIP body,condensed compartments of microtubule bundling,6,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,+TIP body,spindle matrix,6,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,Birc5b assembly,EB1F condensate,1,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,Birc5b assembly,GAS2L3 condensates,1,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,Birc5b assembly,Spindle apparatus,1,73,0,0.0,False,False,CDCODE,"DrLLPS,PhaSepDB"
+spindle_apparatus,Birc5b assembly,Spindle matrix,1,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,Birc5b assembly,condensed compartments of microtubule bundling,1,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,Birc5b assembly,spindle matrix,1,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,EB1F condensate,GAS2L3 condensates,1,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,EB1F condensate,Spindle apparatus,1,73,0,0.0,False,True,CDCODE,"DrLLPS,PhaSepDB"
+spindle_apparatus,EB1F condensate,Spindle matrix,1,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,EB1F condensate,condensed compartments of microtubule bundling,1,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,EB1F condensate,spindle matrix,1,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,GAS2L3 condensates,Spindle apparatus,1,73,0,0.0,False,True,CDCODE,"DrLLPS,PhaSepDB"
+spindle_apparatus,GAS2L3 condensates,Spindle matrix,1,1,0,0.0,True,False,CDCODE,CDCODE
+spindle_apparatus,GAS2L3 condensates,condensed compartments of microtubule bundling,1,1,0,0.0,False,True,CDCODE,PhasePro
+spindle_apparatus,GAS2L3 condensates,spindle matrix,1,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,Spindle apparatus,Spindle matrix,73,1,1,1.0,False,True,"DrLLPS,PhaSepDB",CDCODE
+spindle_apparatus,Spindle apparatus,condensed compartments of microtubule bundling,73,1,0,0.0,False,True,"DrLLPS,PhaSepDB",PhasePro
+spindle_apparatus,Spindle apparatus,spindle matrix,73,1,1,1.0,False,True,"DrLLPS,PhaSepDB",PhasePro
+spindle_apparatus,Spindle matrix,condensed compartments of microtubule bundling,1,1,0,0.0,False,False,CDCODE,PhasePro
+spindle_apparatus,Spindle matrix,spindle matrix,1,1,1,1.0,False,True,CDCODE,PhasePro
+spindle_apparatus,condensed compartments of microtubule bundling,spindle matrix,1,1,0,0.0,True,False,PhasePro,PhasePro
+std1_body,STD1 body,Std1 bodies,1,1,1,1.0,False,True,CDCODE,PhasePro
+stress_granule,DHX9 Stress Granules,Osmotic stress granule,12,1,0,0.0,False,False,CDCODE,PhaSepDB
+stress_granule,DHX9 Stress Granules,Stress Granule,12,56,0,0.0,True,False,CDCODE,CDCODE
+stress_granule,DHX9 Stress Granules,Stress granule,12,2594,12,1.0,True,True,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+stress_granule,DHX9 Stress Granules,cytoplasmic stress granule,12,18,3,0.25,False,True,CDCODE,PhasePro
+stress_granule,DHX9 Stress Granules,eIF5B granules,12,1,0,0.0,True,True,CDCODE,CDCODE
+stress_granule,Osmotic stress granule,Stress Granule,1,56,0,0.0,False,False,PhaSepDB,CDCODE
+stress_granule,Osmotic stress granule,Stress granule,1,2594,0,0.0,True,True,PhaSepDB,"CDCODE,DrLLPS,PhaSepDB"
+stress_granule,Osmotic stress granule,cytoplasmic stress granule,1,18,0,0.0,False,False,PhaSepDB,PhasePro
+stress_granule,Osmotic stress granule,eIF5B granules,1,1,0,0.0,False,False,PhaSepDB,CDCODE
+stress_granule,Stress Granule,Stress granule,56,2594,0,0.0,True,False,CDCODE,"CDCODE,DrLLPS,PhaSepDB"
+stress_granule,Stress Granule,cytoplasmic stress granule,56,18,0,0.0,False,False,CDCODE,PhasePro
+stress_granule,Stress Granule,eIF5B granules,56,1,0,0.0,True,False,CDCODE,CDCODE
+stress_granule,Stress granule,cytoplasmic stress granule,2594,18,18,1.0,False,True,"CDCODE,DrLLPS,PhaSepDB",PhasePro
+stress_granule,Stress granule,eIF5B granules,2594,1,1,1.0,True,True,"CDCODE,DrLLPS,PhaSepDB",CDCODE
+stress_granule,cytoplasmic stress granule,eIF5B granules,18,1,0,0.0,False,True,PhasePro,CDCODE
+synapsin_condensate,Synapsin condensate,a matrix holding together clusters of synaptic vesicles (SVs),5,2,1,0.5,False,True,PhaSepDB,PhasePro
+synapsin_condensate,Synapsin condensate,α-synnuclein condensates,5,1,1,1.0,False,True,PhaSepDB,CDCODE
+synapsin_condensate,Synapsin condensate,α-synuclein condensates,5,6,1,0.2,True,True,PhaSepDB,"CDCODE,PhaSepDB"
+synapsin_condensate,a matrix holding together clusters of synaptic vesicles (SVs),α-synnuclein condensates,2,1,0,0.0,False,True,PhasePro,CDCODE
+synapsin_condensate,a matrix holding together clusters of synaptic vesicles (SVs),α-synuclein condensates,2,6,0,0.0,False,True,PhasePro,"CDCODE,PhaSepDB"
+synapsin_condensate,α-synnuclein condensates,α-synuclein condensates,1,6,1,1.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+t_cell_signalosome,LAT signalosome,T-cell signalosome,3,3,3,1.0,False,True,PhasePro,CDCODE
+t_cell_signalosome,LAT signalosome,TCR signalosome,3,3,3,1.0,True,True,PhasePro,PhasePro
+t_cell_signalosome,T-cell signalosome,TCR signalosome,3,3,3,1.0,False,True,CDCODE,PhasePro
+tam_body,TAM body,Tam body,9,11,9,1.0,False,True,DrLLPS,CDCODE
+tau_condensate,Tau Condensate,Tau condensate,5,270,1,0.2,False,True,CDCODE,PhaSepDB
+tau_condensate,Tau Condensate,Tau inclusion,5,1,0,0.0,True,False,CDCODE,CDCODE
+tau_condensate,Tau condensate,Tau inclusion,270,1,1,1.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,BRD4 condensate,CEBPZ condensates,3,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,EWS-FLI1,3,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,EWSR1 condensates,3,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,Elongation complex,3,5,0,0.0,False,True,CDCODE,PhaSepDB
+transcriptional_condensate,BRD4 condensate,IFN-I transcriptional condensate,3,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,KAT8-IRF1 condensate,3,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,MEF2D Condensate,3,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,POLII clusters,3,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,BRD4 condensate,"RNA polymerase II, holoenzyme",3,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,BRD4 condensate,RNA polymerase clusters,3,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,SGF29 condensate,3,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,TFAP2β condensates,3,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,Transcription Elongation Condensate,3,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,Transcription condensate,3,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,Transcriptional condensate,3,131,2,0.667,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,BRD4 condensate,Transcriptional condensates,3,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,cBAF condensate,3,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,c‐Maf condensates,3,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,BRD4 condensate,nYAC,3,1,1,1.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,EWS-FLI1,3,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,EWSR1 condensates,3,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,Elongation complex,3,5,0,0.0,False,True,CDCODE,PhaSepDB
+transcriptional_condensate,CEBPZ condensates,IFN-I transcriptional condensate,3,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,KAT8-IRF1 condensate,3,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,MEF2D Condensate,3,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,POLII clusters,3,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,CEBPZ condensates,"RNA polymerase II, holoenzyme",3,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,CEBPZ condensates,RNA polymerase clusters,3,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,SGF29 condensate,3,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,TFAP2β condensates,3,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,Transcription Elongation Condensate,3,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,Transcription condensate,3,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,Transcriptional condensate,3,131,1,0.333,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,CEBPZ condensates,Transcriptional condensates,3,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,cBAF condensate,3,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,c‐Maf condensates,3,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,CEBPZ condensates,nYAC,3,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,EWSR1 condensates,2,1,1,1.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,Elongation complex,2,5,0,0.0,False,True,CDCODE,PhaSepDB
+transcriptional_condensate,EWS-FLI1,IFN-I transcriptional condensate,2,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,KAT8-IRF1 condensate,2,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,MEF2D Condensate,2,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,POLII clusters,2,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,EWS-FLI1,"RNA polymerase II, holoenzyme",2,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,EWS-FLI1,RNA polymerase clusters,2,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,SGF29 condensate,2,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,TFAP2β condensates,2,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,Transcription Elongation Condensate,2,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,Transcription condensate,2,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,Transcriptional condensate,2,131,1,0.5,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,EWS-FLI1,Transcriptional condensates,2,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,cBAF condensate,2,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,c‐Maf condensates,2,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWS-FLI1,nYAC,2,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,Elongation complex,1,5,0,0.0,False,True,CDCODE,PhaSepDB
+transcriptional_condensate,EWSR1 condensates,IFN-I transcriptional condensate,1,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,KAT8-IRF1 condensate,1,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,MEF2D Condensate,1,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,POLII clusters,1,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,EWSR1 condensates,"RNA polymerase II, holoenzyme",1,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,EWSR1 condensates,RNA polymerase clusters,1,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,SGF29 condensate,1,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,TFAP2β condensates,1,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,Transcription Elongation Condensate,1,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,Transcription condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,Transcriptional condensate,1,131,1,1.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,EWSR1 condensates,Transcriptional condensates,1,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,cBAF condensate,1,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,c‐Maf condensates,1,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,EWSR1 condensates,nYAC,1,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,Elongation complex,IFN-I transcriptional condensate,5,2,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,KAT8-IRF1 condensate,5,2,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,MEF2D Condensate,5,1,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,POLII clusters,5,2,0,0.0,False,True,PhaSepDB,PhasePro
+transcriptional_condensate,Elongation complex,"RNA polymerase II, holoenzyme",5,2,0,0.0,False,True,PhaSepDB,PhasePro
+transcriptional_condensate,Elongation complex,RNA polymerase clusters,5,1,0,0.0,False,False,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,SGF29 condensate,5,4,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,TFAP2β condensates,5,3,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,Transcription Elongation Condensate,5,8,2,0.4,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,Transcription condensate,5,4,0,0.0,False,False,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,Transcriptional condensate,5,131,3,0.6,True,True,PhaSepDB,"CDCODE,PhaSepDB"
+transcriptional_condensate,Elongation complex,Transcriptional condensates,5,3,0,0.0,False,False,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,cBAF condensate,5,4,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,c‐Maf condensates,5,6,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,Elongation complex,nYAC,5,1,0,0.0,False,True,PhaSepDB,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,KAT8-IRF1 condensate,2,2,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,MEF2D Condensate,2,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,POLII clusters,2,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,IFN-I transcriptional condensate,"RNA polymerase II, holoenzyme",2,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,IFN-I transcriptional condensate,RNA polymerase clusters,2,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,SGF29 condensate,2,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,TFAP2β condensates,2,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,Transcription Elongation Condensate,2,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,Transcription condensate,2,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,Transcriptional condensate,2,131,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,IFN-I transcriptional condensate,Transcriptional condensates,2,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,cBAF condensate,2,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,c‐Maf condensates,2,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,IFN-I transcriptional condensate,nYAC,2,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,MEF2D Condensate,2,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,POLII clusters,2,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,KAT8-IRF1 condensate,"RNA polymerase II, holoenzyme",2,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,KAT8-IRF1 condensate,RNA polymerase clusters,2,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,SGF29 condensate,2,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,TFAP2β condensates,2,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,Transcription Elongation Condensate,2,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,Transcription condensate,2,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,Transcriptional condensate,2,131,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,KAT8-IRF1 condensate,Transcriptional condensates,2,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,cBAF condensate,2,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,c‐Maf condensates,2,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,KAT8-IRF1 condensate,nYAC,2,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,POLII clusters,1,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,MEF2D Condensate,"RNA polymerase II, holoenzyme",1,2,0,0.0,False,True,CDCODE,PhasePro
+transcriptional_condensate,MEF2D Condensate,RNA polymerase clusters,1,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,SGF29 condensate,1,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,TFAP2β condensates,1,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,Transcription Elongation Condensate,1,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,Transcription condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,Transcriptional condensate,1,131,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,MEF2D Condensate,Transcriptional condensates,1,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,cBAF condensate,1,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,c‐Maf condensates,1,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,MEF2D Condensate,nYAC,1,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,POLII clusters,"RNA polymerase II, holoenzyme",2,2,2,1.0,True,True,PhasePro,PhasePro
+transcriptional_condensate,POLII clusters,RNA polymerase clusters,2,1,1,1.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,SGF29 condensate,2,4,1,0.5,False,True,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,TFAP2β condensates,2,3,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,Transcription Elongation Condensate,2,8,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,Transcription condensate,2,4,0,0.0,False,False,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,Transcriptional condensate,2,131,1,0.5,False,True,PhasePro,"CDCODE,PhaSepDB"
+transcriptional_condensate,POLII clusters,Transcriptional condensates,2,3,0,0.0,False,False,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,cBAF condensate,2,4,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,c‐Maf condensates,2,6,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,POLII clusters,nYAC,2,1,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",RNA polymerase clusters,2,1,1,1.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",SGF29 condensate,2,4,1,0.5,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",TFAP2β condensates,2,3,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",Transcription Elongation Condensate,2,8,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",Transcription condensate,2,4,0,0.0,False,False,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",Transcriptional condensate,2,131,1,0.5,False,True,PhasePro,"CDCODE,PhaSepDB"
+transcriptional_condensate,"RNA polymerase II, holoenzyme",Transcriptional condensates,2,3,0,0.0,False,False,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",cBAF condensate,2,4,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",c‐Maf condensates,2,6,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,"RNA polymerase II, holoenzyme",nYAC,2,1,0,0.0,False,True,PhasePro,CDCODE
+transcriptional_condensate,RNA polymerase clusters,SGF29 condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,TFAP2β condensates,1,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,Transcription Elongation Condensate,1,8,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,Transcription condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,Transcriptional condensate,1,131,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,RNA polymerase clusters,Transcriptional condensates,1,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,cBAF condensate,1,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,c‐Maf condensates,1,6,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,RNA polymerase clusters,nYAC,1,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,TFAP2β condensates,4,3,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,Transcription Elongation Condensate,4,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,Transcription condensate,4,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,Transcriptional condensate,4,131,2,0.5,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,SGF29 condensate,Transcriptional condensates,4,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,cBAF condensate,4,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,c‐Maf condensates,4,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,SGF29 condensate,nYAC,4,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,TFAP2β condensates,Transcription Elongation Condensate,3,8,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,TFAP2β condensates,Transcription condensate,3,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,TFAP2β condensates,Transcriptional condensate,3,131,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,TFAP2β condensates,Transcriptional condensates,3,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,TFAP2β condensates,cBAF condensate,3,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,TFAP2β condensates,c‐Maf condensates,3,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,TFAP2β condensates,nYAC,3,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,Transcription Elongation Condensate,Transcription condensate,8,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcription Elongation Condensate,Transcriptional condensate,8,131,6,0.75,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,Transcription Elongation Condensate,Transcriptional condensates,8,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcription Elongation Condensate,cBAF condensate,8,4,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,Transcription Elongation Condensate,c‐Maf condensates,8,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,Transcription Elongation Condensate,nYAC,8,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,Transcription condensate,Transcriptional condensate,4,131,0,0.0,True,True,CDCODE,"CDCODE,PhaSepDB"
+transcriptional_condensate,Transcription condensate,Transcriptional condensates,4,3,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcription condensate,cBAF condensate,4,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcription condensate,c‐Maf condensates,4,6,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcription condensate,nYAC,4,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcriptional condensate,Transcriptional condensates,131,3,1,0.333,True,True,"CDCODE,PhaSepDB",CDCODE
+transcriptional_condensate,Transcriptional condensate,cBAF condensate,131,4,2,0.5,True,True,"CDCODE,PhaSepDB",CDCODE
+transcriptional_condensate,Transcriptional condensate,c‐Maf condensates,131,6,1,0.167,True,True,"CDCODE,PhaSepDB",CDCODE
+transcriptional_condensate,Transcriptional condensate,nYAC,131,1,1,1.0,True,True,"CDCODE,PhaSepDB",CDCODE
+transcriptional_condensate,Transcriptional condensates,cBAF condensate,3,4,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcriptional condensates,c‐Maf condensates,3,6,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,Transcriptional condensates,nYAC,3,1,0,0.0,True,False,CDCODE,CDCODE
+transcriptional_condensate,cBAF condensate,c‐Maf condensates,4,6,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,cBAF condensate,nYAC,4,1,0,0.0,True,True,CDCODE,CDCODE
+transcriptional_condensate,c‐Maf condensates,nYAC,6,1,0,0.0,True,True,CDCODE,CDCODE
+u_body,U body,U-body,1,5,1,1.0,False,True,DrLLPS,CDCODE
+ubqln_puncta,UBQLN puncta,Ubqln puncta,4,3,3,1.0,False,True,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic viral factory,Cytoplasmic virion assembly compartment,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,Cytoplasmic viral factory,HIV core condensate,3,3,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,HIV-1-MLO,3,3,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,Cytoplasmic viral factory,LANA body,3,2,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,RPSA-VIM-ENO Condensate,3,3,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,RdRp condensates,3,3,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,Viral Factory,3,2,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,Viral factory,3,5,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,Virion assembly compartment,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,Cytoplasmic viral factory,cytoplasmic Virion Assembly Compartments (cVACs),3,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Cytoplasmic viral factory,cytoplasmic viral factory,3,5,3,1.0,False,True,CDCODE,PhasePro
+viral_factory,Cytoplasmic virion assembly compartment,HIV core condensate,1,3,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,HIV-1-MLO,1,3,0,0.0,True,False,PhaSepDB,PhaSepDB
+viral_factory,Cytoplasmic virion assembly compartment,LANA body,1,2,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,RPSA-VIM-ENO Condensate,1,3,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,RdRp condensates,1,3,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,Viral Factory,1,2,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,Viral factory,1,5,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,Virion assembly compartment,1,1,0,0.0,True,False,PhaSepDB,PhaSepDB
+viral_factory,Cytoplasmic virion assembly compartment,cytoplasmic Virion Assembly Compartments (cVACs),1,4,1,1.0,False,True,PhaSepDB,CDCODE
+viral_factory,Cytoplasmic virion assembly compartment,cytoplasmic viral factory,1,5,0,0.0,False,False,PhaSepDB,PhasePro
+viral_factory,HIV core condensate,HIV-1-MLO,3,3,0,0.0,False,True,CDCODE,PhaSepDB
+viral_factory,HIV core condensate,LANA body,3,2,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,HIV core condensate,RPSA-VIM-ENO Condensate,3,3,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,HIV core condensate,RdRp condensates,3,3,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,HIV core condensate,Viral Factory,3,2,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,HIV core condensate,Viral factory,3,5,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,HIV core condensate,Virion assembly compartment,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,HIV core condensate,cytoplasmic Virion Assembly Compartments (cVACs),3,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,HIV core condensate,cytoplasmic viral factory,3,5,0,0.0,False,False,CDCODE,PhasePro
+viral_factory,HIV-1-MLO,LANA body,3,2,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,HIV-1-MLO,RPSA-VIM-ENO Condensate,3,3,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,HIV-1-MLO,RdRp condensates,3,3,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,HIV-1-MLO,Viral Factory,3,2,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,HIV-1-MLO,Viral factory,3,5,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,HIV-1-MLO,Virion assembly compartment,3,1,0,0.0,True,False,PhaSepDB,PhaSepDB
+viral_factory,HIV-1-MLO,cytoplasmic Virion Assembly Compartments (cVACs),3,4,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,HIV-1-MLO,cytoplasmic viral factory,3,5,0,0.0,False,False,PhaSepDB,PhasePro
+viral_factory,LANA body,RPSA-VIM-ENO Condensate,2,3,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,LANA body,RdRp condensates,2,3,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,LANA body,Viral Factory,2,2,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,LANA body,Viral factory,2,5,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,LANA body,Virion assembly compartment,2,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,LANA body,cytoplasmic Virion Assembly Compartments (cVACs),2,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,LANA body,cytoplasmic viral factory,2,5,0,0.0,False,False,CDCODE,PhasePro
+viral_factory,RPSA-VIM-ENO Condensate,RdRp condensates,3,3,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,RPSA-VIM-ENO Condensate,Viral Factory,3,2,1,0.5,True,True,CDCODE,CDCODE
+viral_factory,RPSA-VIM-ENO Condensate,Viral factory,3,5,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,RPSA-VIM-ENO Condensate,Virion assembly compartment,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,RPSA-VIM-ENO Condensate,cytoplasmic Virion Assembly Compartments (cVACs),3,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,RPSA-VIM-ENO Condensate,cytoplasmic viral factory,3,5,0,0.0,False,False,CDCODE,PhasePro
+viral_factory,RdRp condensates,Viral Factory,3,2,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,RdRp condensates,Viral factory,3,5,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,RdRp condensates,Virion assembly compartment,3,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,RdRp condensates,cytoplasmic Virion Assembly Compartments (cVACs),3,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,RdRp condensates,cytoplasmic viral factory,3,5,0,0.0,False,False,CDCODE,PhasePro
+viral_factory,Viral Factory,Viral factory,2,5,0,0.0,True,True,CDCODE,CDCODE
+viral_factory,Viral Factory,Virion assembly compartment,2,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,Viral Factory,cytoplasmic Virion Assembly Compartments (cVACs),2,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Viral Factory,cytoplasmic viral factory,2,5,0,0.0,False,False,CDCODE,PhasePro
+viral_factory,Viral factory,Virion assembly compartment,5,1,0,0.0,False,False,CDCODE,PhaSepDB
+viral_factory,Viral factory,cytoplasmic Virion Assembly Compartments (cVACs),5,4,0,0.0,True,False,CDCODE,CDCODE
+viral_factory,Viral factory,cytoplasmic viral factory,5,5,0,0.0,False,False,CDCODE,PhasePro
+viral_factory,Virion assembly compartment,cytoplasmic Virion Assembly Compartments (cVACs),1,4,0,0.0,False,False,PhaSepDB,CDCODE
+viral_factory,Virion assembly compartment,cytoplasmic viral factory,1,5,0,0.0,False,False,PhaSepDB,PhasePro
+viral_factory,cytoplasmic Virion Assembly Compartments (cVACs),cytoplasmic viral factory,4,5,0,0.0,False,False,CDCODE,PhasePro
+viroplasm,GCRV viroplasm,Viroplasm,13,23,0,0.0,False,False,CDCODE,PhaSepDB
+viroplasm,GCRV viroplasm,viroplasm,13,3,0,0.0,False,False,CDCODE,PhasePro
+viroplasm,Viroplasm,viroplasm,23,3,3,1.0,False,True,PhaSepDB,PhasePro
+wnt_destruction_complex,Beta-Catenin Destruction Complex,Destruction complex condensate,6,6,5,0.833,False,True,CDCODE,PhaSepDB
+wnt_signaling_condensate,DVL2 condensates,Dishevelled condensate,1,1,1,1.0,True,True,CDCODE,CDCODE
+wnt_signaling_condensate,DVL2 condensates,Dvl2 condensate,1,1,0,0.0,False,False,CDCODE,PhaSepDB
+wnt_signaling_condensate,DVL2 condensates,LEF1/Beta-catenin condensate,1,2,0,0.0,True,True,CDCODE,CDCODE
+wnt_signaling_condensate,DVL2 condensates,Wnt signalodroplet,1,4,1,1.0,False,True,CDCODE,PhaSepDB
+wnt_signaling_condensate,Dishevelled condensate,Dvl2 condensate,1,1,0,0.0,False,False,CDCODE,PhaSepDB
+wnt_signaling_condensate,Dishevelled condensate,LEF1/Beta-catenin condensate,1,2,0,0.0,True,True,CDCODE,CDCODE
+wnt_signaling_condensate,Dishevelled condensate,Wnt signalodroplet,1,4,1,1.0,False,True,CDCODE,PhaSepDB
+wnt_signaling_condensate,Dvl2 condensate,LEF1/Beta-catenin condensate,1,2,0,0.0,False,False,PhaSepDB,CDCODE
+wnt_signaling_condensate,Dvl2 condensate,Wnt signalodroplet,1,4,0,0.0,True,False,PhaSepDB,PhaSepDB
+wnt_signaling_condensate,LEF1/Beta-catenin condensate,Wnt signalodroplet,2,4,0,0.0,False,True,CDCODE,PhaSepDB
+yb_body,Yb body,Yb-body,5,4,4,1.0,False,True,"PhaSepDB,PhasePro",CDCODE
+z_granule,Z granule,Z-granule,46,3,3,1.0,False,True,PhaSepDB,CDCODE

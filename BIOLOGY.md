@@ -95,6 +95,44 @@ source_mlo values are dropped when loading `mlo_annotations`): `DISCARD`, `NULL`
 `synthetic_condensate`, empty string. (`NotInformed` is deliberately NOT on this
 list — see the dedicated section below.)
 
+### Corrections from the external biological audit (2026-08-08, mapping v5)
+
+Full account in `database/mappings/_archive/mlo_mapping_decisions.md` §11;
+the audit itself is in `docs/review/devolucion/`. The calls that change how the
+biology reads:
+
+- **A source label can be compound in ways `;` does not catch.** `X/Y` and
+  `X and Y` both slipped through. DrLLPS's `Centrosome/Spindle pole body` put
+  775 metazoan proteins into the fungal spindle pole body, and CD-CODE's
+  `Presynaptic clusters and postsynaptic densities` put 1,366 proteins on the
+  presynaptic side and dropped the postsynaptic half. When a label's meaning
+  depends on the organism, the rule lives in
+  `database/mappings/mlo_organism_scoped.csv`, never inside a parser.
+- **`XY body` and `sex body` are the same meiotic structure** and both map to
+  `xy_body`. The old `sex_body` canonical carried a justification describing the
+  Barr body while holding meiotic proteins. **No `barr_body` canonical exists** —
+  nothing annotates it, and coverage gates granularity.
+- **`polarity_condensate` was split three ways** (bacterial / fungal fusion
+  focus / metazoan cell polarity). It had merged three unrelated systems on the
+  strength of the word "polarity".
+- **Protein homology is not compartment identity, and neither is pathway
+  membership.** `DDR1 condensate` left `hippo_condensate`, `TIFA-TRAF6` left
+  `inflammasome`, `SSB condensate` returned to `dna_damage_foci`, and
+  `FATZ-1 condensate` (sarcomeric Z-disc) left `postsynaptic_density`.
+- **A membrane-bounded structure is still not an MLO, but its contents may be.**
+  `Golgi ribbon` is discarded; `Large dense-core vesicles` keeps its protein
+  under `chromogranin_condensate`, because the condensate is the intravesicular
+  dense core rather than the vesicle.
+- **One curated category per canonical.** 23 canonicals had their category
+  decided by file-read order. `Citoplasma` and `Citoplasmático` were one
+  category under two spellings.
+
+Still open after this round, and deliberately so: the five-axis category scheme,
+an `evidence_type` column separating "phase separates in vitro" from "required
+in cells", removing `NotInformed` and `in_vitro_droplet` from the organelle
+vocabulary, reinstating DrLLPS regulators, and the 64 equivalences the audit
+marked as needing a curator to read the original paper.
+
 ---
 
 ## Protein identifier hierarchy
@@ -186,3 +224,19 @@ for the implementation (`filterMlos()` in `frontend/src/utils/format.js`).
   two causes, not one: intentional consolidation of synonymous names (see mapping
   decisions above) AND genuinely missing entries in `mlo_mapping.tsv` coverage
   (~50-60 PhaSepDB rows). Do not assume all discrepancy is intentional consolidation.
+- **`Arabidopsis` rows of `Centrosome/Spindle pole body` (12) resolve to
+  `centrosome`, and plants are acentrosomal.** The organism-scoped rule
+  separates fungal from everything else, which is as far as the audit's finding
+  goes; inventing a third destination would exceed it. Revisit if a source ever
+  annotates plant MTOCs directly.
+- **Wide canonicals are functional aggregations, not synonym sets.**
+  `transcriptional_condensate` absorbs 20 source names including
+  factor-specific condensates (BRD4, cBAF, EWS-FLI1) that share function but not
+  composition; the same holds for `cytoplasmic_rnp_granule`, `viral_factory` and
+  `signaling_condensate`. This is defensible under the coverage rule — no source
+  annotates at factor resolution — but presenting them as equivalences misleads.
+- **Protein-set overlap is not a valid test of whether a merge was right in this
+  dataset.** Of 825 merged pairs, 365 share no organism and 238 more share no
+  resource, so zero overlap is usually an artefact of disjoint coverage. Only 22
+  pairs are actually evaluable. Absence of overlap signal does not validate a
+  merge, and its presence is what exposed the `XY body` error.

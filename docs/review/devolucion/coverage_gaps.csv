@@ -1,0 +1,13 @@
+missing_term,rationale,priority,evidence_in_db
+Barr body,"Inactive X chromosome territory (Xist-coated); a distinct, widely studied nuclear condensate. The sex_body justification in the mapping file actually describes the Barr body, so the concept is present but attached to the wrong term.",high,sex_body justification text names it; no canonical exists
+XY body / meiotic sex body,"Currently merged into heterochromatin (10 proteins: Topbp1, Mdc1, Brca1). Distinct MSCI compartment.",high,10 proteins already in the database under the wrong term
+Nucleolar fibrillar center,Nucleolus is served as a single term although the tripartite FC/DFC/GC architecture is the textbook example of multiphase condensate organisation; dense fibrillar component and granular component are both present as source names and are merged in.,medium,source names 'dense fibrillar component' and 'granular component' exist in the mapping
+Nucleolar cap,Transcription-inhibition-induced nucleolar caps; distinct from perinucleolar compartment.,low,no source annotates it
+Amyloid body (A-body),"Currently merged into nuclear_stress_body; rIGS-RNA-nucleated, physicochemically distinct (amyloidogenic, not liquid).",medium,source name 'A-bodies' present
+Cleavage body,"Established nuclear body (CPSF/CstF-containing), distinct from Cajal bodies and speckles.",low,absent from all sources
+Postsynaptic density vs. NMJ postsynaptic apparatus,Rapsn condensate (NMJ) is merged into postsynaptic_density (CNS).,low,1 source name affected
+Z-disc / sarcomeric condensate,FATZ-1/MYOZ1 condensate is currently filed under postsynaptic_density; the Z-disc is a recognised condensate-forming structure.,medium,1 protein misfiled
+Purinosome,Well-established metabolic condensate (de novo purine biosynthesis enzymes). Absent from the vocabulary entirely.,medium,no source annotates it — coverage rule blocks creation
+Bacterial microcompartment (non-carboxysome),"Only carboxysome served; 'Enzyme_shell proteins condensates' is routed there, over-committing.",low,1 source name affected
+TIFAsome,TIFA-TRAF6 condensate currently filed as inflammasome; a distinct innate-immune assembly.,medium,7 proteins misfiled
+Proteasome storage granule,Currently merged into proteasome_foci (categorised Nuclear); yeast PSGs are cytoplasmic quiescence structures.,medium,5 proteins misfiled

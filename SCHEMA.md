@@ -99,6 +99,24 @@ CREATE TABLE mlo_vocabulary (
 );
 ```
 
+**`mapping_version` is stamped explicitly, not left to the column DEFAULT.**
+`build_db.py` writes `MAPPING_VERSION` (currently `'v5'`) onto every row and
+fails the load if any row ends up on a different value. Until 2026-08-08
+nothing stamped it at all, so all rows carried the DEFAULT `'v3'` while the
+shipped mapping was already v4 — bump the constant in the same commit that
+changes `mlo_mapping.csv`.
+
+**One curated category per canonical.** Many source names collapse into one
+canonical, so the same canonical appears in many mapping rows. When those rows
+disagreed on `Categoria` the loader used to keep whichever it read first, which
+made the stored category arbitrary for 23 of the terms. It now raises instead —
+resolve the conflict in `mlo_mapping.csv`.
+
+**Terms with zero annotations do not survive the load.** `build_db.py` prunes
+them after loading `mlo_annotations` and reports which ones, enforcing the
+project rule that data coverage gates granularity. Their rows stay in
+`mlo_mapping.csv`: the curation record is not what was wrong.
+
 **`NotInformed` stays in this table (fixed 2026, do not exclude at build time)**:
 rows where a source gave no specific MLO name map to `unified_mlo = 'NotInformed'`,
 `category = 'Unspecified'` — a real, deliberately curated entry (see

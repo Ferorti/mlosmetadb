@@ -1,0 +1,23 @@
+priority,area,action,rationale_ref,effort,blocks_publication
+1,ingestion,"Normalise annotation rows to one row per (uniprot_id, resource, unified_mlo, unified_role); move PMIDs to a separate evidence table with a foreign key",INT-10,medium,yes
+2,ingestion,Collapse source_db tags PhaseDB and PhasePDB to a single PhaSepDB resource,INT-01,low,yes
+3,vocabulary,"Split the compound source label 'Centrosome/Spindle pole body' by organism (fungal -> spindle_pole_body, metazoan -> centrosome)",equivalence_verdicts.csv,medium,yes
+4,vocabulary,Split 'Presynaptic clusters and postsynaptic densities' into its two compartments,equivalence_verdicts.csv,medium,yes
+5,vocabulary,Create xy_body for the meiotic sex body; correct the sex_body definition (currently describes the Barr body); move the 10 MSCI proteins out of heterochromatin,coverage_gaps.csv,low,yes
+6,schema,Replace the single Categoria column with the five orthogonal axes in category_scheme_proposed.csv,CAT-01,high,yes
+7,schema,Merge the category spellings Citoplasma and Citoplasmático,CAT-02,low,yes
+8,schema,Add evidence_type (in_vitro_llps | cellular_requirement | curator_assignment) to every annotation,ROL-01,medium,yes
+9,data,Replace the literal string 'NULL' in evidence with SQL NULL,INT-05,low,yes
+10,vocabulary,Remove NotInformed as a canonical term; represent missing localisation as NULL on the annotation,discard_review.csv,low,yes
+11,vocabulary,Remove in_vitro_droplet as a canonical term; represent as evidence_type + physiological_state='engineered',CAT-05,medium,no
+12,documentation,State per MLO whether any resource contributes a bulk client proteome; never publish driver_share without it,ROL-04,low,yes
+13,documentation,Document that role is protein-scoped in DrLLPS and propagated across all MLOs of a protein,ROL-03,low,yes
+14,data,"Reinstate Regulator as a third role value, or expose the 1,389 excluded rows behind a flag (502 proteins are otherwise invisible)",ROL-06,medium,no
+15,vocabulary,"Correct the 16 remaining equivalence errors in equivalence_verdicts.csv (IBAG and P6 to viral_factory, TIFAsome out of inflammasome, PSG out of proteasome_foci, ...)",equivalence_verdicts.csv,medium,no
+16,vocabulary,Adjudicate the 64 'review' equivalences with a domain curator,equivalence_verdicts.csv,high,no
+17,schema,"Derive taxonomic_scope from annotated organisms; fix refractile_body (protist, not prokaryote) and rho_body",CAT-03,low,no
+18,vocabulary,Define the structural-suffix vocabulary and apply it consistently,naming_review.csv,medium,no
+19,data,Fix the malformed CSV row for axonal TIAR-2 granules (unquoted comma) and quote all free-text fields on export,INT-08,low,no
+20,vocabulary,"Document the three exclusion paths (DISCARD, synthetic_condensate, NULL) as one mechanism with a reason field",discard_review.csv,low,no
+21,vocabulary,Resolve the cytoplasmic_protein_granule / cytoplasmic_rnp_granule boundary; the same label currently splits by capitalisation,naming_review.csv,low,no
+22,vocabulary,Update mapping_version in mlo_vocabulary to match the terms actually present,INT-06,low,no
