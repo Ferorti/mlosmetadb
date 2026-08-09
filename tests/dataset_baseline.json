@@ -1,29 +1,29 @@
 {
   "table_rows": {
     "proteins": 15879,
-    "mlo_annotations": 35971,
-    "mlo_vocabulary": 167,
-    "mlo_definitions": 406,
+    "mlo_annotations": 35970,
+    "mlo_vocabulary": 177,
+    "mlo_definitions": 405,
     "protein_summary": 15879,
     "sequence_features": 358867,
     "ppi": 917468,
     "orthologs": 19289
   },
   "annotations_by_source": {
-    "CDCODE": 13845,
+    "CDCODE": 13844,
     "DrLLPS": 10872,
     "LLPSDB": 380,
     "PhaSepDB": 10675,
     "PhasePro": 199
   },
   "annotations_by_role": {
-    "NULL": 15234,
+    "NULL": 15233,
     "client": 17667,
     "driver": 3070
   },
   "annotations_by_dataset_active": {
     "0": 1389,
-    "1": 34582
+    "1": 34581
   },
   "source_db_count_histogram": {
     "0": 502,
@@ -35,7 +35,7 @@
   },
   "proteins_without_sequence": 474,
   "annotations_with_literal_null_evidence": 0,
-  "distinct_unified_mlos_in_use": 167,
+  "distinct_unified_mlos_in_use": 177,
   "fus_p35637": {
     "source_dbs": "CDCODE,DrLLPS,LLPSDB,PhasePro,PhaSepDB",
     "mlo_count": 18,

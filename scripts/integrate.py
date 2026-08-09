@@ -129,6 +129,46 @@ def apply_mapping(df: pd.DataFrame, map_file: Path, source_col: str, unified_col
     return df
 
 
+def apply_organism_scoped(df: pd.DataFrame, map_file: Path) -> pd.DataFrame:
+    """Redirect unified_mlo for source labels whose meaning depends on organism.
+
+    mlo_mapping.csv maps a source name to exactly one canonical, which cannot
+    express a label that denotes different structures in different clades.
+    DrLLPS's 'Centrosome/Spindle pole body' is one: 775 of its 910 rows are
+    human, mouse, Drosophila or C. elegans, none of which has a spindle pole
+    body, yet all 910 landed on the fungal term and made the metazoan
+    centrosome proteome disappear into it.
+
+    mlo_mapping.csv still carries the default (the majority reading), and this
+    step only overrides the rows whose organism matches. source_mlo is never
+    rewritten — the DB keeps the label the source actually used.
+
+    Known imprecision: the 12 Arabidopsis rows of this label fall through to
+    the centrosome default, and plants are acentrosomal. The audit's rule only
+    covers fungal vs. metazoan, and inventing a third destination would go
+    past what the finding supports.
+    """
+    if not map_file.exists():
+        print(f"\n[INFO] {map_file.name} no encontrado — sin overrides por organismo")
+        return df
+
+    print(f"\n=== Aplicando {map_file.name} ===")
+    with open(map_file, newline="", encoding="utf-8") as f:
+        rules = [
+            (r["source_mlo"].strip(), r["organism_contains"].strip(), r["unified_mlo"].strip())
+            for r in _csv.DictReader(f)
+        ]
+
+    for source_mlo, organism_contains, unified_mlo in rules:
+        hit = (df["source_mlo"] == source_mlo) & df["organism"].str.contains(organism_contains, na=False)
+        n = int(hit.sum())
+        df.loc[hit, "unified_mlo"] = unified_mlo
+        print(f"  {source_mlo!r} + organismo ~ {organism_contains!r} → {unified_mlo}: {n} filas")
+        if not n:
+            print(f"    [WARN] la regla no matcheó ninguna fila — ¿el nombre fuente cambió?")
+    return df
+
+
 def compute_role_and_active(source_db: str, source_role: str) -> tuple:
     """Map (source_db, source_role) -> (unified_role, dataset_active).
 
@@ -189,6 +229,8 @@ def main() -> None:
     else:
         print(f"\n[INFO] {mlo_map.name} no encontrado — unified_mlo = 'unmapped'")
         df["unified_mlo"] = "unmapped"
+
+    df = apply_organism_scoped(df, MAP_DIR / "mlo_organism_scoped.csv")
 
     # ── Orden final de columnas ───────────────────────────────────────────────
     final_cols = [

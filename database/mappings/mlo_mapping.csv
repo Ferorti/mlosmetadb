@@ -7,7 +7,7 @@ Arp2/3 protein complex,DISCARD,—,Complejo proteico estructural; no es un MLO s
 axonal TIAR-2 granules,axonal_tiar2_granule,Neuronal,"Gránulos axonales formados post-lesión en C. elegans; inhiben la regeneración del cono axonal via PrLD. Estímulo, localización y función distintos al stress granule canónico — la homología con TIA-1 no implica identidad de compartimento. [PMID:31378567]"
 bacterial RNP-bodies (BR-bodies),bacterial_rnp_body,Procariota,Gránulos de RNP bacterianos; condensados procariotas sin equivalente en eucariotas
 Balbiani body,balbiani_body,Germinal,Condensado de oocito temprano con propiedades sólidas; conservado en metazoos [PMID:28755153]
-basal Numb-Pon crescent in dividing neuroblasts,polarity_condensate,Neuronal,Condensado de polaridad celular en neuroblastos; agrupa con otros condensados de polaridad tipo Par complex
+basal Numb-Pon crescent in dividing neuroblasts,cell_polarity_condensate,Neuronal,Media luna basal de Numb-Pon en neuroblastos en división; ver Par complex. [auditoría 2026-08-08]
 Cajal body,cajal_body,Nuclear,Centro de ensamblaje de snRNPs y scaRNPs; marcado por coilina [PMID:27819531]
 Carboxysome,carboxysome,Procariota,Compartimento de fijación de CO2 en cianobacterias; análogo prokariota al pirenoide [PMID:34759380]
 Centrosome,centrosome,Citoesqueleto,MTOC animal; PCM se ensambla por LLPS [PMID:29258725]
@@ -100,7 +100,7 @@ P-bodies,p_body,Citoplasmático,Variante plural
 p62 body,p62_body,Citoplasmático,Condensado de p62 dependiente de poliubiquitina [PMID:29343546]
 p62 cluster,p62_body,Citoplasmático,Variante sintáctica
 P granule,p_granule,Germinal,Gránulo germinal de C. elegans; condensado RNP perinuclear [PMID:30096346]
-Par complex,polarity_condensate,Neuronal,Condensado de polaridad Par3/Par6 en neuroblastos [PMID:32385244]
+Par complex,cell_polarity_condensate,Neuronal,Complejo Par3/Par6/aPKC de polaridad celular en metazoos. Separado de la polaridad bacteriana y del foco de fusión fúngico. [auditoría 2026-08-08]
 ParABS,parabs_condensate,Procariota,Sistema de partición plasmídica bacteriano por LLPS [PMID:34902429]
 Paraspeckle,paraspeckle,Nuclear,Cuerpo nuclear mamífero-específico organizado por NEAT1 lncRNA [PMID:29289458]
 paraspeckle,paraspeckle,Nuclear,Variante de caja baja
@@ -185,7 +185,7 @@ Mitochondrial cloud,balbiani_body,Germinal,Sinónimo del cuerpo de Balbiani en X
 +TIP body,spindle_apparatus,Citoesqueleto,Cuerpo de proteínas +TIP; variante nomenclatural
 53BP1 Mitotic Stress Body (MSBs),dna_damage_foci,Nuclear,Focos de 53BP1 en estrés mitótico; variante de DNA damage foci en mitosis
 A-bodies,nuclear_stress_body,Nuclear,Cuerpos A inducidos por acidificación; condensados nucleares de ARN no codificante relacionados con nuclear stress bodies
-ABC transporter condensate,bacterial_rnp_body,Procariota,Condensado de transportador ABC en bacterias; condensado procariota
+ABC transporter condensate,abc_transporter_condensate,Procariota,Ensamblaje de transporte de membrana en Mycobacterium. Los BR-bodies son gránulos de RNP bacterianos nucleados por RNasa E: sin relación compositiva ni funcional más allá de ser ambos bacterianos. [auditoría 2026-08-08]
 Actin nucleator,actin_cortical_patch,Citoesqueleto,Nucleador de actina; condensado de nucleación; agrupa con actin_cortical_patch
 AFAP1-AS1 condensates,nuclear_speckle,Nuclear,AFAP1-AS1 regula splicing alternativo reclutando factores de splicing como nuclear speckles; más cercano a nuclear_speckle que a nuclear_body genérico [CDCODE]
 Aggresome,aggresome,Citoplasmático,Estructura perinuclear de proteínas ubiquitinadas mal plegadas; condensado hidrogel-like de control de calidad proteica
@@ -219,7 +219,7 @@ Cpeb1b-Pabpc1b-shh Condensate,cytoplasmic_rnp_granule,Citoplasmático,Condensado
 CRY2/SPA1/FIO1 condensate,plant_photobody,Vegetal,Condensado de fotorreceptor CRY2 con SPA1 en plantas; relacionado con plant photobody
 Cytoplasmic bodies,cytoplasmic_protein_granule,Citoplasmático,Cuerpos citoplasmáticos genéricos; término catch-all en CDCODE
 D-granule,d_granule,Citoplasmático,D-gránulo (dense granule) en plaquetas; gránulo de secreción especializado
-DDR1 condensate,hippo_condensate,Membrana,"DDR1 en células musculares lisas vasculares contrarresta específicamente la vía YAP-Hippo inducida por rigidez/colágeno; es un modulador de Hippo, no signaling_condensate genérico [CDCODE]"
+DDR1 condensate,signaling_cluster,Membrana,DDR1 es un receptor tirosina quinasa de colágeno; sus condensados no son ensamblajes de la vía Hippo. signaling_cluster es el catch-all documentado para condensados de membrana sin identidad más específica. [auditoría 2026-08-08]
 Ddx3xb condensates,cytoplasmic_rnp_granule,Citoplasmático,Condensados de Ddx3xb; helicasa DEAD-box en gránulos de ARN citoplasmáticos
 Degradosome,degradosome,Procariota,Degradosoma bacteriano; complejo de degradación de ARN que forma condensados en E. coli
 DHX9 Stress Granules,stress_granule,Citoplasmático,Gránulos de estrés enriquecidos en DHX9; variante composicional del stress granule
@@ -241,24 +241,24 @@ eukaryotic topoisomerase ii,chromatin_compartment,Nuclear,"Topo II eucariota for
 EWS-FLI1,transcriptional_condensate,Nuclear,Fusión oncogénica EWS-FLI1; forma condensados transcripcionales aberrantes
 EWSR1 condensates,transcriptional_condensate,Nuclear,Condensados de EWSR1; proteína FUS-like que forma condensados transcripcionales
 Ede1 condensate,endocytic_condensate,Membrana,Condensado de Ede1 (Eps15 homolog) en endocitosis en levaduras
-FATZ-1 condensate,postsynaptic_density,Neuronal,Condensado de FATZ-1; componente del disco Z muscular; relacionado con postsynaptic density
+FATZ-1 condensate,z_disc_condensate,Citoesqueleto,FATZ-1/MYOZ1 es proteína del disco Z sarcomérico de músculo esquelético; el disco Z no es la densidad postsináptica. La asignación previa parece un match por similitud de nombre. [auditoría 2026-08-08]
 Ferritin-NCOA4 condensate,ferritin_condensate,Citoplasmático,Condensado de ferritina con NCOA4 en ferritinofagia; condensado de almacenamiento de hierro
 focal adhesion (FA) condensate,integrin_adhesion_complex,Membrana,Condensado de adhesión focal; equivalente al integrin adhesion complex
 Founder granule,germ_plasm,Germinal,Gránulo fundador en embriones de Drosophila; precursor del germ plasm
 FRQ condensate,frq_condensate,Citoplasmático,Condensado del reloj circadiano FRQ en Neurospora; condensado de control temporal
 FtsZ condensate,ftsz_droplet,Procariota,Condensado de FtsZ bacteriano; variante del ftsz_droplet
 FtsZ/SlmA body,ftsz_droplet,Procariota,Cuerpo FtsZ/SlmA con regulador SlmA; variante del ftsz condensate
-Fus1 condensate,polarity_condensate,Neuronal,Condensado de Fus1 en levaduras; involucrado en fusión celular y polaridad
+Fus1 condensate,fusion_focus,Citoesqueleto,Foco de fusión de S. pombe: estructura nucleadora de actina en la punta de la proyección de apareamiento. Sin relación compositiva con la polaridad bacteriana ni con la neuronal. [auditoría 2026-08-08]
 FXR-driven SARS-CoV-2 condensate,sars_cov2_n_condensate,Viral,Condensado de SARS-CoV-2 mediado por FXR; variante del condensado N
 FXR1 condensates,cytoplasmic_rnp_granule,Citoplasmático,Condensados de FXR1; RNP granule de control traduccional en músculo
 GAS2L3 condensates,spindle_apparatus,Citoesqueleto,Condensados de GAS2L3; asociado al citoesqueleto mitótico
 GCRV viroplasm,viroplasm,Viral,Viroplasma del GCRV (grass carp reovirus); variante del viroplasm
 Germ granule,p_granule,Germinal,Gránulo germinal genérico; en contextos de CDCODE refiere a P granules o equivalentes según especie
 G-body,glycolytic_body,Citoplasmático,G-body = glycolytic body en levaduras; condensado de enzimas glicolíticas en hipoxia
-Golgi ribbon,golgin_condensate,Citoplasmático,Cinta del Golgi; estructura continua con propiedades de condensado; agrupa con golgin_condensate
+Golgi ribbon,DISCARD,DISCARD,"La cinta del Golgi es una disposición de organela con membrana, no un condensado biomolecular. El tethering por GOLGA2/GM130 es una función de golgina, pero la cinta en sí queda fuera de la definición de MLO — mismo criterio con el que ya se descartaron sinaptosoma y matriz extracelular. [auditoría 2026-08-08]"
 HIV core condensate,viral_factory,Viral,Condensado del core del HIV; cápside viral con propiedades de condensado
 Hippo signalosome,hippo_condensate,Membrana,Signalosoma de la vía Hippo; condensado de señalización de YAP/TAZ
-HSP condensate,signaling_condensate,Citoplasmático,HSP48 en Dictyostelium forma condensado estabilizado por polifosfato durante desarrollo; no es un stress granule canónico sino un condensado de chaperones de desarrollo [CDCODE]
+HSP condensate,chaperone_condensate,Citoplasmático,"Condensado de chaperonas de desarrollo en Dictyostelium; ensamblaje de respuesta a estrés, no de señalización. [auditoría 2026-08-08]"
 Hypersomatic shock foci,hyperosmotic_shock_foci,Citoplasmático,Variante ortográfica de hyperosmotic shock foci en CDCODE
 IFN-I transcriptional condensate,transcriptional_condensate,Nuclear,Condensado transcripcional de respuesta a interferón tipo I
 IL-1b-induced INAVA condensates,inava_condensate,Citoplasmático,Condensados de INAVA inducidos por IL-1β; condensado de señalización inflamatoria
@@ -269,7 +269,7 @@ Insulin/IGF-1 signalosomes,signaling_condensate,Citoplasmático,Signalosomas de 
 Junctional condensate,zo_protein_compartment,Membrana,Condensado de unión celular en tight junctions; agrupa con ZO protein compartment
 KAT8-IRF1 condensate,transcriptional_condensate,Nuclear,Condensado de KAT8-IRF1; complejo de acetilación en respuesta inmune transcripcional
 LANA body,viral_factory,Viral,Cuerpo de LANA del herpesvirus KSHV; condensado nuclear viral
-Large dense-core vesicles,chromogranin_condensate,Citoplasmático,Vesículas de núcleo denso neuroendocrinas; agrupa con chromogranin condensate
+Large dense-core vesicles,chromogranin_condensate,Citoplasmático,"El condensado es el núcleo denso intravesicular (cromograninas), no la vesícula con membrana que lo contiene: la etiqueta fuente nombra el continente y el canónico nombra el contenido. Se conserva la asignación —la semenogelina es una proteína de gránulo secretor que separa de fase— y se corrige la justificación, que antes equiparaba ambas cosas e importaba una organela con membrana al vocabulario. [auditoría 2026-08-08]"
 LEF1/Beta-catenin condensate,wnt_signaling_condensate,Citoplasmático,Condensado nuclear de LEF1/β-catenina; efector transcripcional de la vía Wnt
 Leucocyte nuclear body,nuclear_body,Nuclear,Cuerpo nuclear de leucocitos; nuclear body específico de células inmunes
 MARDO,mardo,Germinal,"MARDO (Mitochondria-Associated RNP Domain in Oocytes) es un hidrogel de etapa tardía en oocitos de mamífero con composición molecular propia. Biofísicamente distinto del cuerpo de Balbiani (condensado amiloide de etapa temprana, PMID:27135929). No son equivalentes."
@@ -289,7 +289,7 @@ Neuronal RNP granule,neuronal_granule,Neuronal,Gránulo de RNP neuronal; sinóni
 NONO,paraspeckle,Nuclear,NONO es proteína estructural de paraspeckles; su condensado en CDCODE corresponde a paraspeckles
 NP bodies,norad_pum_body,Citoplasmático,NP bodies son condensados de Pumilio inhibido por lncRNA NORAD que previenen mitosis aberrante; equivalentes al NORAD-PUM body ya definido como canonical [CDCODE]
 Nuclear poly(A) domains,maternal_mrna_condensate,Germinal,NPADs son condensados de ARNm recién transcrito en oocitos en desarrollo ligados a infertilidad femenina; no son nuclear speckles sino hubs de transcritos maternos [CDCODE]
-Numb/Pon condensate,polarity_condensate,Neuronal,Condensado de Numb/Pon en neuroblastos; equivalente al Par complex / polarity_condensate
+Numb/Pon condensate,cell_polarity_condensate,Neuronal,Determinante de destino celular polarizado en neuroblastos de Drosophila; ver Par complex. [auditoría 2026-08-08]
 Nur77 condensate,signaling_condensate,Citoplasmático,"Nur77 forma condensados en mitocondrias ubiquitinadas promoviendo apoptosis; es un condensado de señalización pro-apoptótica citoplasmática, no transcripcional [CDCODE]"
 nYAC,transcriptional_condensate,Nuclear,"nYAC son condensados nucleares de YTHDC1 y m6A que mantienen células AML en estado indiferenciado suprimiendo diferenciación; condensados transcripcionales/epigenéticos, no nuclear_body genérico [CDCODE]"
 ORC1 bodies,replication_compartment,Viral/Nuclear,Cuerpos de ORC1; condensados de replicación en contexto viral
@@ -297,7 +297,7 @@ ORF8/p62 condensate,p62_body,Citoplasmático,Condensado de proteína ORF8 viral 
 Omega speckle,nuclear_speckle,Nuclear,Omega speckle en Drosophila; speckle nuclear enriquecido en hrp65; variante del nuclear speckle
 OsJAZ2 condensate,plant_signaling_condensate,Citoplasmático,Condensado de OsJAZ2 en respuesta a jasmonato en arroz
 OsSRO1c-OsDREB2B condensate,plant_signaling_condensate,Citoplasmático,Condensado de factores de transcripción de estrés en arroz
-P6 inclusion body,inclusion_body,Patológico,Cuerpo de inclusión P6 de virus de plantas; variante del inclusion body
+P6 inclusion body,viral_factory,Viral,"Factoría de replicación y ensamblaje del virus del mosaico de la coliflor en células vegetales (P6 con DCP5/LSM1B/VCS del huésped), no un agregado patológico. [auditoría 2026-08-08]"
 P-granule,p_granule,Germinal,Variante de P granule con guión; mismo MLO
 PARCL condensate,plant_signaling_condensate,Citoplasmático,Condensado de PARCL en plantas; regulación post-transcripcional
 ParABS DNA,parabs_condensate,Procariota,Variante de ParABS; sistema de partición de DNA bacteriano
@@ -312,13 +312,13 @@ PGAM5-MAVS Condensate,signaling_condensate,Citoplasmático,Condensado de PGAM5-M
 PGL granules,p_granule,Germinal,Gránulos de PGL-1/PGL-3; componentes scaffolding de P granules de C. elegans
 Plant growth regulator,plant_signaling_condensate,Citoplasmático,Regulador de crecimiento vegetal; término genérico en CDCODE para condensados de señalización vegetal
 Plant Photobody,plant_photobody,Vegetal,Fotocuerpo de plantas; condensado nuclear de fotorreceptores como phyB
-Plectin condensates,signaling_condensate,Citoplasmático,"Plectina via IDR promueve diferenciación osteoblástica secuestrando Anxa2 por phase separation; condensado de señalización de diferenciación, no aggresome [CDCODE]"
-PodJ condensates,polarity_condensate,Neuronal,Condensados de PodJ en Caulobacter; condensado de polaridad bacteriana
+Plectin condensates,plectin_condensate,Citoesqueleto,"La plectina entrecruza filamentos intermedios; sus condensados son citoesqueléticos, no de señalización. [auditoría 2026-08-08]"
+PodJ condensates,bacterial_polarity_condensate,Procariota,"Andamios de polaridad polar de Caulobacter. Fusionarlos con la polaridad neuronal y con el foco de fusión de S. pombe bajo polarity_condensate agrupaba por la palabra 'polaridad', no por composición. [auditoría 2026-08-08]"
 PolyP granule,polyp_granule,Procariota,Gránulo de polifosfato inorgánico en bacterias; condensado de almacenamiento metabólico
-PopZ condensate,polarity_condensate,Neuronal,Condensado de PopZ en Caulobacter; hub de señalización en polo bacteriano
+PopZ condensate,bacterial_polarity_condensate,Procariota,Matriz polar de Caulobacter que ancla el origen cromosómico; ver PodJ condensates. [auditoría 2026-08-08]
 Pre-replication compartment (PRC),replication_compartment,Viral/Nuclear,Compartimento pre-replicativo viral; precursor del replication compartment
 Presynaptic clusters,presynaptic_active_zone,Neuronal,Clusters presinápticos; equivalente al presynaptic active zone condensate
-Presynaptic clusters and postsynaptic densities,presynaptic_active_zone,Neuronal,Término combinado; mapea a presynaptic_active_zone como estructura dominante
+Presynaptic clusters and postsynaptic densities,synaptic_compartment,Neuronal,"Etiqueta compuesta de CD-CODE que nombra los dos lados de la sinapsis; 1366 proteínas humanas, una por fila. Mapearla entera a presynaptic_active_zone asignaba todo al lado presináptico y descartaba el postsináptico en silencio. La fuente anota a resolución de sinapsis y no distingue lados: canónico propio en vez de inventar el lado. [auditoría 2026-08-08]"
 Proteasome condensate,proteasome_foci,Nuclear,Condensado de proteasoma; equivalente al proteasome containing foci
 Rapsn condensate,postsynaptic_density,Neuronal,Condensado de Rapsyn en unión neuromuscular; organiza receptores de acetilcolina
 RBFOX1 RNP granule,neuronal_granule,Neuronal,Gránulo de RNP de RBFOX1; proteína de splicing neuronal; variante del neuronal granule
@@ -336,7 +336,7 @@ SARS-CoV-2 condensate,sars_cov2_n_condensate,Viral,Condensado de proteínas de S
 SCOTIN condensate,eres_condensate,Citoplasmático,"SCOTIN/SHISA-5 forma condensados en la membrana del RE secuestrando Sec31/13 e impidiendo tráfico ER-Golgi; es un condensado del sitio de salida del RE (ERES), no un stress granule [CDCODE]"
 SDC4 exosomal condensate,exosomal_condensate,Extracelular,Condensado exosomal de sindecán-4; condensado en vesículas extracelulares
 senescence-associated nuclear proteasome foci,proteasome_foci,Nuclear,Focos de proteasoma nuclear en senescencia; variante del proteasome containing foci
-sex body,sex_body,Nuclear,"Cuerpo de Barr (cromosoma X inactivo); heterocromatina facultativa con organización en capas y dinámica molecular específica (XIST, SHARP, HDAC3). Biológicamente distinto de la heterocromatina constitutiva HP1α-driven. [PMID:30886132]"
+sex body,xy_body,Germinal,"Sinónimo de XY body en la literatura. Su justificación previa describía el cuerpo de Barr (X inactivo somático), que ninguna fuente anota — pero sus proteínas (Rnf212, recombinación meiótica) son las del cuerpo sexual meiótico. Se corrige la justificación y se unifica con xy_body; no se crea barr_body por la regla de cobertura. [auditoría 2026-08-08]"
 SGF29 condensate,transcriptional_condensate,Nuclear,Condensado de SGF29 (complejo SAGA); condensado de activación transcripcional
 Signaling cluster,signaling_cluster,Membrana,Variante de Receptor cluster / signaling cluster
 Signalosome,signaling_condensate,Citoplasmático,Signalosoma genérico; condensado de señalización en membrana
@@ -347,7 +347,7 @@ SMN1 nuclear body,gem,Nuclear,Cuerpo nuclear de SMN1; equivalente a las Gems
 SOSS-INTAC Condensate,dna_damage_foci,Nuclear,Condensado de SOSS-INTAC en respuesta a daño en DNA
 Spider Silk Spidroin,spider_silk_condensate,Extracelular,Condensado de espidroína en glándula de seda de araña; condensado de secreción especializado
 SPRI2 Nuclear Condensate,nuclear_body,Nuclear,Condensado nuclear de SPRI2 en plantas; nuclear body vegetal
-SSB condensate,signaling_condensate,Citoplasmático,"SSB bacteriano (procariota) almacena proteínas de reparación de DNA y se disuelve bajo estrés genómico para movilizarlas; depósito regulatorio procariota, no foco de daño al DNA eucariota [CDCODE]"
+SSB condensate,dna_damage_foci,Nuclear,"Los condensados de la proteína de unión a ADN de cadena simple funcionan en replicación y reparación de ADN, no en señalización. Revierte la reclasificación de v3. [auditoría 2026-08-08]"
 STD1 body,std1_body,Citoplasmático,Variante de capitalización de Std1 bodies en levaduras
 Sec-body,sec_body,Citoplasmático,Variante con guión de Sec body
 T-cell signalosome,t_cell_signalosome,Membrana,Variante de TCR signalosome
@@ -356,7 +356,7 @@ TBC1D2B condensate,signaling_condensate,Citoplasmático,Condensado de TBC1D2B (G
 TDP-25 inclusions,inclusion_body,Patológico,Inclusiones de TDP-25 (fragmento de TDP-43); agregados patológicos neurodegenerativos
 TFAP2β condensates,transcriptional_condensate,Nuclear,Condensados del factor de transcripción TFAP2β
 TIAR2 neuronal granule,neuronal_granule,Neuronal,Gránulo neuronal de TIAR-2 en C. elegans; variante del neuronal granule
-TIFA-TRAF6 Condensate,inflammasome,Citoplasmático,Condensado de TIFA-TRAF6 en señalización de NF-κB; relacionado con inflamasoma
+TIFA-TRAF6 Condensate,tifasome,Citoplasmático,"Los TIFAsomas son ensamblajes ALPK1-TIFA-TRAF6 de inmunidad innata que activan NF-κB; no son inflamasomas (sin sensor NLR, sin mota de ASC, sin caspasa-1). Clase distinta. [auditoría 2026-08-08]"
 TopBP1 condensate,dna_damage_foci,Nuclear,Condensado de TopBP1 en checkpoint de replicación; co-localiza con focos de daño en DNA
 Transcription condensate,transcriptional_condensate,Nuclear,Variante sintáctica de transcriptional condensate
 Transcription Elongation Condensate,transcriptional_condensate,Nuclear,Condensado de elongación transcripcional; variante del transcriptional condensate
@@ -374,11 +374,11 @@ WNK body,wnk_body,Citoplasmático,Cuerpo de WNK kinasa; condensado de señalizac
 YBX1 condensate,exosomal_condensate,Extracelular,"YBX1 forma condensados que reclutan miRNAs (miR-223) hacia exosomas secretados; función primaria en biogénesis de exosomas, no en respuesta al estrés [CDCODE]"
 Yb-body,yb_body,Germinal,Variante con guión de Yb body
 cytoplasmic Virion Assembly Compartments (cVACs),viral_factory,Viral,Compartimento de ensamblaje viral citoplasmático; variante de viral factory
-inclusion body-associated granule (IBAG),inclusion_body,Patológico,Gránulo asociado a cuerpos de inclusión viral; subtipo del inclusion body
+inclusion body-associated granule (IBAG),viral_factory,Viral,"Subcompartimiento de las inclusiones de replicación del virus respiratorio sincicial (M2-1 más eIF4F del huésped): es una factoría viral, no un agregado proteico patológico. [auditoría 2026-08-08]"
 p62-dependent P-bodies (pd-PBs),p_body,Citoplasmático,P-bodies dependientes de p62; variante composicional del P-body
 Z-granule,z_granule,Germinal,Variante con guión de Z granule
-α-synuclein condensates,synapsin_condensate,Neuronal,Condensados de α-sinucleína; se reclutan en condensados de sinapsina y participan en organización presináptica
-α-synnuclein condensates,synapsin_condensate,Neuronal,Variante ortográfica de α-synuclein condensates
+α-synuclein condensates,alpha_synuclein_condensate,Neuronal,Sinapsina y α-sinucleína forman ensamblajes distintos que coexisten en el presináptico. La condensación de α-sinucleína se estudia como agrupamiento de vesículas sinápticas y como ruta hacia los cuerpos de Lewy; un canónico propio no obliga a elegir entre fisiología y patología. [auditoría 2026-08-08]
+α-synnuclein condensates,alpha_synuclein_condensate,Neuronal,Variante mal escrita de α-synuclein condensates; mismo destino. [auditoría 2026-08-08]
 Synthetic Condensate 000001,synthetic_condensate,Sintético,Condensado sintético de CDCODE; no corresponde a un MLO biológico natural
 Synthetic Condensate 000002,synthetic_condensate,Sintético,Condensado sintético de CDCODE; no corresponde a un MLO biológico natural
 Synthetic Condensate 000003,synthetic_condensate,Sintético,Condensado sintético de CDCODE; no corresponde a un MLO biológico natural
@@ -790,7 +790,7 @@ Tam body,tam_body,Nuclear,Variante de capitalización de 'TAM body'
 Tau Condensate,tau_condensate,Neuronal,Variante de capitalización de 'Tau condensate'
 Tau inclusion,tau_condensate,Neuronal,Inclusión de tau; forma patológica del tau condensate
 Viral factory,viral_factory,Viral,Variante de capitalización; fábrica viral genérica
-Centrosome/Spindle pole body,spindle_pole_body,Citoesqueleto,Entrada mixta de bases de datos; término de SPB fúngico. Ver spindle_pole_body.
+Centrosome/Spindle pole body,centrosome,Citoesqueleto,"Etiqueta compuesta de DrLLPS para ambas estructuras. 775 de 910 filas son no fúngicas (humano, ratón, Drosophila, C. elegans), organismos sin cuerpo polar del huso, así que mandarlas todas al término fúngico hacía desaparecer el proteoma del centrosoma de metazoos. Default a centrosome; las 135 filas fúngicas van a spindle_pole_body via mlo_organism_scoped.csv. [auditoría 2026-08-08]"
 contractile ring,contractile_ring,Citoesqueleto,Anillo de actomiosina en citocinesis (PhasePro); estructura condensado-like mantenida como entrada independiente
 Cytoplasmic virion assembly compartment,viral_factory,Viral,Compartimento citoplasmático de ensamblaje viral; equivalente a viral_factory
 Destruction complex condensate,wnt_destruction_complex,Citoplasmático,Variante de nombre para el complejo de destrucción de β-catenina. Ver wnt_destruction_complex.
@@ -801,14 +801,14 @@ IMP1 RNP granule,neuronal_granule,Neuronal,Gránulo IMP1; similar a neuronal gra
 NotInformed,NotInformed,Unspecified,Valor especial: proteína sin MLO asignado en la fuente; incluida en DB como phase-separating sin contexto de condensado específico
 Pericentriolar material,centrosome,Citoesqueleto,PCM es el componente condensado del centrosoma (decisions §3.1)
 Photobody,plant_photobody,Vegetal,Cuerpo nuclear de fotorreceptores en plantas (PhyB/CRY); equivalente a plant_photobody
-Proteasome Storage Granule,proteasome_foci,Nuclear,PSG de levaduras; gránulo de almacenamiento del proteasoma bajo ayuno; agrupado con proteasome_foci
+Proteasome Storage Granule,proteasome_storage_granule,Citoplasmático,Estructura citoplasmática de quiescencia en levadura que secuestra proteasomas durante inanición de carbono. proteasome_foci agrupa cuerpos proteasomales nucleares y de senescencia: compartimiento distinto y categoría equivocada. [auditoría 2026-08-08]
 Spindle matrix,spindle_apparatus,Citoesqueleto,Matriz proteinácea del huso; variante de spindle apparatus (decisions §3.1)
 "synaptosome, neuron projection",DISCARD,NULL,Término GO de morfología neuronal; no es un MLO (decisions §4)
 ViPR body,vipr_body,Nuclear,Cuerpo nuclear inducido por infección viral (PhaSepDB); condensado de respuesta antiviral nuclear
 Virion assembly compartment,viral_factory,Viral,Compartimento de ensamblaje viral; equivalente a viral_factory
 VRO-associated condensate,replication_compartment,Viral/Nuclear,Condensado de VRO (Viral Replication Organelle); incluido en replication_compartment (decisions §3.9)
 Wnt signalodroplet,wnt_signaling_condensate,Citoplasmático,Droplet de señalización Wnt de PhaSepDB; equivalente funcional a DVL2/Dishevelled condensate
-XY body,heterochromatin,Nuclear,Cuerpo sexual cromosómico; heterocromatina facultativa (decisions §3.7; cf. sex body)
+XY body,xy_body,Germinal,"Dominio de cromosomas sexuales silenciado por MSCI en espermatocitos. Sus 10 proteínas (Topbp1, Mdc1, Brca1) son maquinaria de respuesta a daño y no comparten ninguna proteína con las 42 de heterochromatin del mismo recurso y organismo: la fusión previa no tenía base compositiva. [auditoría 2026-08-08]"
 Abscission checkpoint body,abscission_checkpoint_body,Nuclear,Cuerpos ESCRT-III que detienen la abscisión en el puente de citocinesis [PMID:29093048]
 Amyloid body,amyloid_body,Nuclear,Amiloide funcional nucleolar (Rim101/CPEB); estructura distinta del amyloid_aggregate patológico
 Antiviral condensate,antiviral_condensate,Citoplasmático,Condensado de respuesta antiviral innata; distinto del stress granule aunque comparte componentes
@@ -834,7 +834,7 @@ RNP transport granule,neuronal_granule,Neuronal,Gránulo de transporte de ARNm n
 NORAD-PUM body,norad_pum_body,Citoplasmático,Condensado NORAD-PUMILIO; regula la actividad de PUM1/2 secuestrándola en un condensado citoplasmático [PMID:30449725]
 PML/RARα microspeckle,pml_nuclear_body,Nuclear,Microspeckle de PML con fusión RARα; forma variante de cuerpo PML en leucemia promielocítica aguda
 Pab2 nuclear condensate,pab2_condensate,Nuclear,Condensado nuclear de Pab2 en S. pombe; condensado de poliadenilación nuclear en levaduras
-Cytoplasmic protein granule,cytoplasmic_rnp_granule,Citoplasmático,Término CDCODE para gránulos citoplasmáticos; agrupado con cytoplasmic ribonucleoprotein granule
+Cytoplasmic protein granule,cytoplasmic_protein_granule,Citoplasmático,"Variante de capitalización de 'cytoplasmic protein granule'. La misma etiqueta fuente se repartía entre dos canónicos según su capitalización — fallo de normalización, no de criterio. La etiqueta además no afirma contenido de ARN. [auditoría 2026-08-08]"
 Galectin complex,galectin_condensate,Membrana,Complejo de galectinas en membrana; forma condensados en respuesta a daño de membrana [PMID:30257216]
 FIP200 puncta,fip200_puncta,Autofagia,Puncta formadas por FIP200 (RB1CC1) durante iniciación de autofagia; condensados de pre-autofagosoma [PMID:35165166]
 Cortical condensate,cortical_condensate,Membrana,Condensado cortical en membrana plasmática; estructuras asociadas al córtex de actina

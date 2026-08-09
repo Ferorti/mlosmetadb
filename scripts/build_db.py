@@ -24,7 +24,7 @@ SKIP_MLO = {"DISCARD", "NULL", "synthetic_condensate", ""}
 # (spindle_pole_body, chromatoid_body, sex_body, simr_foci, mardo,
 # axonal_tiar2_granule, wnt_destruction_complex) were present in the data under
 # a version label that predated them.
-MAPPING_VERSION = "v4"
+MAPPING_VERSION = "v5"
 
 
 def nullable(value: str | None) -> str | None:

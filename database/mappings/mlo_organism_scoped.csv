@@ -1,0 +1,3 @@
+source_mlo,organism_contains,unified_mlo,justificacion
+Centrosome/Spindle pole body,Saccharomyces,spindle_pole_body,"El cuerpo polar del huso es el MTOC de hongos, embebido permanentemente en la envoltura nuclear (mitosis cerrada). DrLLPS usa una sola etiqueta compuesta para él y para el centrosoma de metazoos; solo las filas fúngicas corresponden al término fúngico. [auditoría 2026-08-08]"
+Centrosome/Spindle pole body,Schizosaccharomyces,spindle_pole_body,"Ídem Saccharomyces: S. pombe también tiene cuerpo polar del huso, no centrosoma. [auditoría 2026-08-08]"
