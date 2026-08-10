@@ -52,6 +52,11 @@ CREATE TABLE mlo_annotations (
                                             -- third category the project chooses not to model as a role) and
                                             -- for CD-CODE (source provides no role data at all). Never a
                                             -- placeholder string like 'unmapped', never 'Driver'/'Client' cased.
+    evidence_type    TEXT,                 -- what kind of claim the row makes, which unified_role cannot
+                                            -- express: 'in_vitro_llps' | 'cellular_localisation' |
+                                            -- 'cellular_requirement' | 'curator_assignment' |
+                                            -- 'membership_only'. Assigned from (source_db, source_role) by
+                                            -- compute_evidence_type() in integrate.py; never NULL.
     dataset_active   INTEGER NOT NULL DEFAULT 1,  -- 0 = retained for full provenance but excluded from the
                                             -- served/counted MLOsMetaDB dataset by default (currently: DrLLPS
                                             -- Regulator rows). This is a presentation-layer decision, not data
@@ -81,6 +86,28 @@ exist in the data — one parser (`parsers/parse_phasesepdb.py`), one tag
 database file, not a sixth source. See
 [docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md](docs/issues/001-phasedb-phasepdb-duplicate-ingestion.md).
 
+**`evidence_type` (added 2026-08-10)**: `unified_role` collapses five source
+vocabularies into two values, which hides that the underlying assertions are not
+comparable. A PhaSePro `driver` means a purified protein phase-separates in a
+buffer; a PhaSepDB `driver` means perturbing it disrupts the condensate in cells.
+The two resources agree on only 58.6% of the annotations they share, and that
+disagreement is this difference rather than curation noise. `evidence_type`
+records the kind of claim, orthogonally to the role:
+
+| value | meaning | sources |
+|---|---|---|
+| `in_vitro_llps` | purified protein phase-separates; no cellular claim | LLPSDB, PhaSePro |
+| `cellular_localisation` | reported present in the condensate in cells | PhaSepDB `client` |
+| `cellular_requirement` | perturbing it disrupts the condensate in cells | PhaSepDB `driver` |
+| `curator_assignment` | curator-assigned, and **protein-scoped** in DrLLPS: the same label propagates to every MLO of that protein, so it is not a per-compartment claim | DrLLPS |
+| `membership_only` | the resource asserts membership and makes no role claim | CD-CODE |
+
+`membership_only` is the value that changes how the data reads: the 13,844 rows
+with `unified_role IS NULL` are CD-CODE's **declared scope**, not a gap in
+ingestion. Assigned from the `(source_db, source_role)` pair, which was verified
+exhaustive and homogeneous per resource — eight pairs, five values. Two tests in
+`tests/test_dataset_invariants.py` assert no NULL and no value outside the five.
+
 **Row grain**: one row per `(uniprot_id, source_db, source_mlo, source_role)`,
 enforced by `scripts/integrate.py`'s `collapse_duplicates()` for every source.
 Sources that report one row per supporting publication have those rows collapsed
@@ -100,7 +127,7 @@ CREATE TABLE mlo_vocabulary (
 ```
 
 **`mapping_version` is stamped explicitly, not left to the column DEFAULT.**
-`build_db.py` writes `MAPPING_VERSION` (currently `'v5'`) onto every row and
+`build_db.py` writes `MAPPING_VERSION` (currently `'v6'`) onto every row and
 fails the load if any row ends up on a different value. Until 2026-08-08
 nothing stamped it at all, so all rows carried the DEFAULT `'v3'` while the
 shipped mapping was already v4 — bump the constant in the same commit that

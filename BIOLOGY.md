@@ -127,11 +127,44 @@ biology reads:
   decided by file-read order. `Citoplasma` and `Citoplasmático` were one
   category under two spellings.
 
-Still open after this round, and deliberately so: the five-axis category scheme,
-an `evidence_type` column separating "phase separates in vitro" from "required
-in cells", removing `NotInformed` and `in_vitro_droplet` from the organelle
-vocabulary, reinstating DrLLPS regulators, and the 64 equivalences the audit
-marked as needing a curator to read the original paper.
+### Second review round (2026-08-10, mapping v6)
+
+Documento in `docs/review/ultima/`. It verified v5, accepted the two places we
+had argued back, and reversed one of our calls. Details in
+`mlo_mapping_decisions.md` §12.
+
+- **`synaptic_compartment` was wrong and is retired.** v5 created it to avoid
+  inventing a side of the synapse for CD-CODE's compound label. But 1,353 of its
+  1,366 proteins are annotated `postsynaptic_density` by **DrLLPS**, and only 3
+  as presynaptic. The label is a synonym of `postsynaptic_density`. The lesson
+  generalises: **before creating a canonical at a coarser resolution because one
+  source is vague, check whether another source already resolves the same protein
+  set.** Cross-resource agreement is evidence; it is not the same as one resource
+  duplicating itself.
+- **`plant_mtoc`.** Plants have neither a centrosome nor a spindle pole body, so
+  neither branch of the fungal/metazoan split fits them. This term exists **only
+  in `mlo_organism_scoped.csv`** — the first canonical no source name reaches
+  unconditionally.
+- **`evidence_type` records what kind of claim a row makes**, which
+  `unified_role` structurally cannot. See `SCHEMA.md`. The key consequence for
+  reading the biology: rows with no role are not missing data — for CD-CODE they
+  are `membership_only`, its declared scope. And `curator_assignment` carries the
+  warning that DrLLPS roles are **protein-scoped**: the same label propagates to
+  every MLO of that protein, so a DrLLPS "driver" is not a claim about that
+  compartment.
+- **Cases closed as correct**, worth recording because two were flagged as
+  exposed: CD-CODE `Germ granule` → `p_granule` (the merge the dossier most
+  wanted challenged) and `Mitochondrial cloud` → `balbiani_body`, both confirmed
+  from gene lists.
+
+Still open after this round, and deliberately so: the category-axis migration
+(now **four** axes, not five — omitting `functional_process` leaves only three
+terms unclassified), reinstating DrLLPS regulators as a third role value,
+removing `NotInformed` and `in_vitro_droplet` from the organelle vocabulary, and
+the review equivalences still unadjudicated. Three of those need the original
+publication: `Receptor cluster`, `Peri-nucleolar condensate`, `ORC1 bodies`.
+Also unadjudicated despite the second round assuming otherwise: `RNA polymerase
+II, holoenzyme`, which no document has ever given a verdict.
 
 ---
 

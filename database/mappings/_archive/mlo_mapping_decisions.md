@@ -708,3 +708,160 @@ silencio.
   aserciones con `dataset_active=0`, de las cuales 502 proteínas no aparecen
   por ningún otro lado).
 - Los 64 casos "a revisar" de `equivalence_verdicts.csv`.
+
+---
+
+## 12. Revisión v6 — segunda devolución de la auditoría (2026-08-10)
+
+Documento en `docs/review/ultima/`. Verifica los conteos de cierre de v5,
+revisa las cuatro decisiones donde nos apartamos de la recomendación, y responde
+las seis consultas de `docs/review/RESPUESTA_A_LA_DEVOLUCION.md` §6.
+
+De las cuatro decisiones de v5: **dos aceptadas** (`xy_body`/`sex_body` y
+`Large dense-core vesicles`, en ambos casos indicando que nuestra lectura era
+mejor que la suya), **una revertida** (`synaptic_compartment`) y **una
+corregida** (MTOCs vegetales).
+
+### 12.1 `synaptic_compartment` se retira
+
+v5 le había dado canónico propio a `Presynaptic clusters and postsynaptic
+densities` para no inventar un reparto que la fuente no provee. El dato lo
+resuelve sin necesidad de la publicación, que era lo que habíamos pedido:
+
+| | proteínas |
+|---|---:|
+| Total en `synaptic_compartment` | 1.366 |
+| También en `postsynaptic_density` (cualquier recurso) | 1.360 |
+| — de las cuales por **DrLLPS** | **1.353** |
+| — por CD-CODE | 3 |
+| También en `presynaptic_active_zone` | 3 |
+| Exclusivas | 6 |
+
+**Dos precisiones sobre el argumento de la devolución.** Dice que el
+solapamiento es «en el mismo recurso» y que se trata de una reexportación
+redundante de la entrada de PSD de CD-CODE: no es así, 1.353 de las 1.360 vienen
+de DrLLPS y solo 3 de CD-CODE. Y dice que las filas de `synaptic_compartment`
+tienen `evidence` nula «mientras la entrada de PSD de CD-CODE lleva PMID
+23071613»: **ninguna fila de CD-CODE lleva PMID en esta base**, por diseño del
+export (0 de 13.844). Ese PMID debe estar en los metadatos del condensado en
+CD-CODE, no en la anotación.
+
+La conclusión igual se sostiene, y con mejor fundamento del que ellos creían
+tener: la coincidencia es **entre recursos independientes**, que es evidencia
+real, y no duplicación intra-recurso, que sería un artefacto de ingesta. Que
+1.353 proteínas estén anotadas como PSD por DrLLPS y solo 3 como presinápticas
+identifica el conjunto como el proteoma de la PSD. La etiqueta pasa a ser
+sinónimo de `postsynaptic_density`.
+
+Pendiente menor: las 6 proteínas exclusivas (O43236, P17152, Q14DG7, Q5VSY0,
+Q6P995, Q9NQR7) merecen revisión aparte; la devolución señala que una de ellas
+es mitocondrial.
+
+### 12.2 `plant_mtoc`
+
+Las 12 filas de *Arabidopsis* que el split por organismo de v5 había dejado caer
+en `centrosome` —documentado entonces como imprecisión conocida— son TUBG1,
+GCP3, GCP4, NEDD1, GIP1 (complejo γ-TuRC), TON1A, TPX2, EB1A, EB1C, KIN14D, AAA1
+(maquinaria TON1/TRM) y TUBA1. Nucleación acentrosómica de microtúbulos, con
+γ-tubulina dispersa en envoltura nuclear y corteza, sin centríolos. Las plantas
+no tienen centrosoma ni cuerpo polar del huso, así que ninguno de los dos
+destinos del split les correspondía. La lista de genes es diagnóstica y no
+requiere la publicación.
+
+Nuevo canónico `plant_mtoc`, categoría Vegetal, declarado en
+`mlo_organism_scoped.csv`. **Es el primer canónico que no existe en
+`mlo_mapping.csv`**, porque ningún nombre fuente apunta a él sin condición de
+organismo: `build_db.py` ahora lee ambos archivos al armar el vocabulario.
+
+### 12.3 Casos «review» cerrados
+
+De los 64 originales, 62 siguen vivos en v5 y suman 790 proteínas, con
+`Mitochondrial cloud` concentrando 598 de ellas. Nueve fueron adjudicados desde
+las listas de genes, sin leer publicaciones.
+
+**Cerrados como correctos, sin cambio:**
+
+- `Mitochondrial cloud` → `balbiani_body`. En ovocito de *Xenopus* la nube
+  mitocondrial *es* el cuerpo de Balbiani; 594 de 598 proteínas son *X. laevis*.
+- `Germ granule` → `p_granule`. osk, vas, tej, spn-E, me31B, tdrd6 son plasma
+  germinal canónico. Esto cierra el merge que el dossier había marcado como «el
+  que más nos gustaría que cuestionaran».
+- `+TIP body` → `spindle_apparatus`. KAR9/BIM1/BIK1 y mal3/tea2/tip1 son los
+  complejos de rastreo de extremo más; defendible aunque grueso.
+- `Leucocyte nuclear body` → `nuclear_body`, correcto pero pierde información:
+  «leucocito» es contexto de tipo celular, que el esquema de ejes recuperaría.
+
+**Aplicados:**
+
+- `PCBP2 condensates` sale de `signaling_condensate` a `cytoplasmic_rnp_granule`.
+  DCP1A y DDX6 son maquinaria de decapping y cuerpo P, TIA1 es marcador de
+  gránulo de estrés. Se elige el término general y no `p_body` porque el conjunto
+  mezcla ambas cosas.
+- `RISC complex` a `DISCARD`, por nombre de complejo macromolecular. Verificado
+  sin pérdida: `mirisc` conserva sus 8 filas restantes y sus mismas 2 proteínas
+  (AGO2, TNRC6B) por la etiqueta `miRISC`.
+
+**No aplicado, contra lo que la devolución supone:** `RNA polymerase II,
+holoenzyme` (2 filas en `transcriptional_condensate`). La devolución la describe
+como «ya marcada para descarte» al justificar el descarte de `RISC complex`,
+pero **nunca recibió veredicto**: INT-09 de la primera ronda solo pedía mandarla
+a la revisión de descarte, y no aparece ni en `discard_review.csv` ni en
+`equivalence_verdicts.csv`. Queda pendiente de adjudicación explícita.
+
+**Pendientes que requieren la fuente** (35 proteínas en total), registrados sin
+tocar los datos:
+
+| nombre fuente | canónico actual | proteínas | diagnóstico |
+|---|---|---:|---|
+| `Receptor cluster` | `signaling_cluster` | 24 | Mezcla sinapsis inmune (LAT, NCK1, SOS1, WASL), SNAREs de exocitosis (Snap25, Stx1a) y señalización antiviral (MAVS, IRF3). No es un compartimiento: split o descarte |
+| `Peri-nucleolar condensate` | `perinucleolar_compartment` | 6 | HSP104 y SIS1 marcan el compartimiento yuxtanuclear de control de calidad (JUNQ/INQ) en levadura, no el compartimiento perinucleolar de mamífero, que es rico en PTB |
+| `ORC1 bodies` | `replication_compartment` | — | SUV39H1, EZH2, CBX5, DNMT1 son silenciamiento y heterocromatina; solo ORC1 encaja en replicación |
+
+Los 53 casos restantes (109 proteínas) siguen priorizados y sin adjudicar en
+`docs/review/ultima/review_cases_prioritized.csv`.
+
+### 12.4 `evidence_type`: cinco valores, no tres
+
+Acepta nuestra pregunta de §6.3 —la asignación es por recurso— y corrige el
+número de valores hacia arriba, porque PhaSepDB emite dos afirmaciones distintas
+según el rol. Las ocho combinaciones `(source_db, source_role)` se verificaron
+exhaustivas contra `database/interim/*.tsv`.
+
+| `source_db` | `source_role` | `evidence_type` | filas |
+|---|---|---|---:|
+| LLPSDB | driver | `in_vitro_llps` | 380 |
+| PhasePro | driver | `in_vitro_llps` | 197 |
+| PhaSepDB | client | `cellular_localisation` | 8.537 |
+| PhaSepDB | driver | `cellular_requirement` | 2.138 |
+| DrLLPS | Scaffold / Client / Regulator | `curator_assignment` | 10.872 |
+| CDCODE | NotInformed | `membership_only` | 13.844 |
+
+El valor que cambia cómo se lee la base es `membership_only`: hace explícito que
+las 13.844 filas sin rol son el **alcance declarado de CD-CODE**, no un agujero
+de nuestra ingesta. Y `curator_assignment` carga la advertencia de que el rol de
+DrLLPS es de alcance proteína: la misma etiqueta se propaga a todos los MLOs de
+esa proteína, así que no es una afirmación por compartimiento.
+
+Implementado en `compute_evidence_type()` en `integrate.py`, al lado de
+`compute_role_and_active()`, con la misma forma de tabla fija. Dos tests nuevos
+en `test_dataset_invariants.py` afirman que no hay NULL y que no aparece ningún
+valor fuera de los cinco.
+
+### 12.5 Lo que esta revisión NO hace
+
+- **Reinstaurar los reguladores de DrLLPS como tercer valor de rol.** La
+  devolución lo recomienda y acepta el riesgo que planteamos, argumentando que
+  `evidence_type = curator_assignment` más una definición explícita acota la
+  afirmación. Verificado: 1.389 filas, 977 proteínas, de las cuales 502 no
+  tienen ninguna otra anotación; esas 502 aportan 607 anotaciones en 19 MLOs,
+  concentradas en `p_body` (253), `stress_granule` (164) y `p_granule` (107).
+  *La devolución reporta 429 y 418 para los dos primeros, cifras que suman más
+  que el total de 607; parecen contadas sobre las 977 y no sobre las 502.*
+  Pendiente porque cambia lo que el sitio sirve y toca la API.
+- **La migración a cuatro ejes de categoría.** La devolución responde nuestra
+  §6.5: omitir `functional_process` deja sin clasificar solo tres términos
+  (`liquid_dyrk3_speckle`, `midbody_granule`, `fip200_puncta`), así que cuatro
+  ejes alcanzan y la migración es más barata de lo previsto. Sigue siendo la
+  pieza que toca DB, API y frontend a la vez.
+- **Sacar `NotInformed` e `in_vitro_droplet` del vocabulario de organelas.**
+- **Los 53 casos «review» sin adjudicar y los 3 que requieren la fuente** (§12.3).

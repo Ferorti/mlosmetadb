@@ -10,6 +10,52 @@ para una fase posterior.
 Ver [REFACTOR_LOG.md](REFACTOR_LOG.md) para el detalle paso a paso de qué se
 copió, qué se dejó afuera, y por qué.
 
+## 2026-08-10 — segunda ronda de la auditoría: evidence_type y una reversión
+
+Llegó la segunda devolución (`docs/review/ultima/`), que verifica v5, responde
+las seis consultas que le habíamos hecho y revisa las cuatro decisiones donde nos
+habíamos apartado de su recomendación. De esas cuatro: dos aceptadas
+(`xy_body`/`sex_body` y `Large dense-core vesicles`, en ambos casos diciendo que
+nuestra lectura era mejor), una revertida y una corregida.
+
+**La reversión.** `synaptic_compartment`, que en v5 habíamos creado para no
+inventar un lado de la sinapsis, se retira: 1.353 de sus 1.366 proteínas ya están
+anotadas como `postsynaptic_density` por DrLLPS y solo 3 como presinápticas. Al
+verificar encontré que dos detalles de su argumento estaban mal —dicen que el
+solapamiento es intra-recurso, cuando solo 3 vienen de CD-CODE, y citan un PMID
+en filas de CD-CODE, que por diseño no tiene ninguno— pero la conclusión sale
+reforzada: coincidencia entre recursos independientes es mejor evidencia que
+duplicación interna.
+
+**`plant_mtoc`.** Las 12 filas de Arabidopsis que v5 había dejado como
+imprecisión documentada son γ-TuRC más maquinaria TON1/TRM: nucleación
+acentrosómica. Es el primer canónico que no existe en `mlo_mapping.csv`, así que
+`build_db.py` ahora arma el vocabulario leyendo también
+`mlo_organism_scoped.csv`.
+
+**`evidence_type`.** Cinco valores, no los tres que habían propuesto, porque
+PhaSepDB emite dos afirmaciones distintas según el rol. Las ocho combinaciones
+`(source_db, source_role)` se verificaron exhaustivas. El valor que cambia cómo
+se lee la base es `membership_only`: hace explícito que las 13.844 filas sin rol
+son el alcance declarado de CD-CODE y no un agujero de la ingesta. Dos tests
+nuevos afirman que no hay NULL y que no aparece nada fuera de los cinco.
+
+**Casos «review».** De los 62 vivos se cerraron nueve adjudicados desde listas de
+genes. Dos requirieron cambio: `PCBP2 condensates` a `cytoplasmic_rnp_granule` y
+`RISC complex` a descarte. Cuatro se cerraron como correctos, incluidos los dos
+que el dossier había marcado como más expuestos (`Germ granule` → `p_granule` y
+`Mitochondrial cloud` → `balbiani_body`). Tres siguen necesitando la publicación.
+Y no toqué `RNA polymerase II, holoenzyme`: la devolución la da por marcada para
+descarte, pero nunca recibió veredicto en ningún documento.
+
+Verificado: anotaciones 35.970 → 35.968, vocabulario 177, `postsynaptic_density`
+4.478 → 5.844, `centrosome` 1.790 → 1.778, `plant_mtoc` 12. 164 tests en verde.
+
+Queda para la etapa siguiente, en `mlo_mapping_decisions.md` §12.5: reinstaurar
+los reguladores (cambia lo que sirve el sitio) y la migración de categorías, que
+ahora son **cuatro** ejes y no cinco —omitir `functional_process` deja solo tres
+términos sin clasificar—, así que sale más barata de lo previsto.
+
 ## 2026-08-09 — correcciones de la auditoría biológica, etapa 1
 
 Llegó la devolución de la revisión externa (`docs/review/devolucion/`): informe
