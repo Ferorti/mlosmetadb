@@ -698,6 +698,10 @@ silencio.
 
 ### 11.6 Lo que esta revisión NO hace
 
+> El inventario completo y su estado vive en `docs/review/findings.csv`
+> (`python3 scripts/review_ledger.py --check`). Esta sección explica el
+> razonamiento; el libro lleva la cuenta.
+
 - El reemplazo de `Categoria` por los cinco ejes ortogonales que propone la
   auditoría (`category_scheme_proposed.csv`). Cambia el esquema de la DB, la
   API y el frontend.
@@ -708,6 +712,24 @@ silencio.
   aserciones con `dataset_active=0`, de las cuales 502 proteínas no aparecen
   por ningún otro lado).
 - Los 64 casos "a revisar" de `equivalence_verdicts.csv`.
+- Mover los PMIDs de `evidence` a una tabla de evidencia con clave foránea,
+  la mitad de la acción 1 que sigue pendiente (`R1-ACT-01b`).
+- Indicar por MLO si algún recurso aporta proteoma masivo de clientes, para
+  no publicar `driver_share` sin esa advertencia (`R1-ACT-12`).
+- Derivar `taxonomic_scope` de los organismos anotados y corregir
+  `refractile_body` y `rho_body`: confirmado que `refractile_body` está en
+  Procariota con una sola proteína, de *Eimeria tenella* (apicomplejo), y que
+  `rho_body` está en Procariota sin ningún organismo resoluble (`R1-ACT-17`).
+- Definir el vocabulario de sufijos estructurales y aplicarlo
+  consistentemente (`R1-ACT-18`).
+- Documentar las tres vías de exclusión (`DISCARD`, `synthetic_condensate`,
+  `NULL`) como un mecanismo único con motivo (`R1-ACT-20`).
+- Redefinir el límite biológico entre `cytoplasmic_protein_granule` y
+  `cytoplasmic_rnp_granule` (`R1-ACT-21b`).
+- Adjudicar `RNA polymerase II, holoenzyme` (2 filas en
+  `transcriptional_condensate`, que tiene 220 en total): INT-09 solo pedía
+  mandarla a la revisión de descarte y nunca recibió veredicto; ver §12.3
+  (`R1-INT-09`).
 
 ---
 
@@ -849,6 +871,10 @@ valor fuera de los cinco.
 
 ### 12.5 Lo que esta revisión NO hace
 
+> El inventario completo y su estado vive en `docs/review/findings.csv`
+> (`python3 scripts/review_ledger.py --check`). Esta sección explica el
+> razonamiento; el libro lleva la cuenta.
+
 - **Reinstaurar los reguladores de DrLLPS como tercer valor de rol.** La
   devolución lo recomienda y acepta el riesgo que planteamos, argumentando que
   `evidence_type = curator_assignment` más una definición explícita acota la
@@ -865,3 +891,19 @@ valor fuera de los cinco.
   pieza que toca DB, API y frontend a la vez.
 - **Sacar `NotInformed` e `in_vitro_droplet` del vocabulario de organelas.**
 - **Los 53 casos «review» sin adjudicar y los 3 que requieren la fuente** (§12.3).
+- Verificar de nuestro lado los cuatro casos «review» que la devolución cerró
+  como correctos sin que pasáramos por la publicación: `Mitochondrial cloud`
+  → `balbiani_body`, el de mayor volumen con 598 de las 790 proteínas en
+  revisión (`R2-ADJ-mitochondrial-cloud`); `Germ granule` → `p_granule`, que
+  cierra el merge que el dossier señalaba como el que más quería que
+  cuestionáramos (`R2-ADJ-germ-granule`); `+TIP body` → `spindle_apparatus`,
+  defendible aunque grueso (`R2-ADJ-tip-body`); y `Leucocyte nuclear body` →
+  `nuclear_body`, que pierde el calificador de tipo celular que el eje
+  `cell_type_context` recuperaría (`R2-ADJ-leucocyte`). Los cuatro están
+  descritos en §12.3.
+- Revisar aparte las 6 proteínas que quedaron en `postsynaptic_density` solo
+  por la etiqueta compuesta de CD-CODE que remapeó el retiro de
+  `synaptic_compartment` (O43236, P17152, Q14DG7, Q5VSY0, Q6P995, Q9NQR7);
+  ningún otro recurso las corrobora, a diferencia de las otras 1.360, y la
+  devolución señala que P17152/TMEM11 es mitocondrial (§12.1)
+  (`R2-OWN-psd-orphans`).
