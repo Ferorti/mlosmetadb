@@ -9,3 +9,12 @@ R1-ACT-06,1,-,verificado sin verificacion,verificado,,-,-,no
 R1-ACT-07,1,no/existe.csv:X,origen inexistente,abierto,-,-,-,no
 R1-ACT-08,1,-,superado sin decision,superado,-,,-,no
 R1-ACT-09,1,-,cerrado sin decision,cerrado,-,,-,no
+,1,-,fila sin id,abierto,-,-,-,no
+Sinformato,1,-,id sin guiones,abierto,-,-,-,no
+R1-ACT-,1,-,clave vacia,abierto,-,-,-,no
+R1-DEC-01,1,-,abierto con medicion,abierto,ya se midio algo,-,-,no
+R1-DEC-02,1,-,dummy campo mal escapado,abierto,-,decision con, coma sin comillas,-,no
+R1-DEC-03,1,-,bloquea invalido,abierto,-,-,-,quizas
+R1-DEC-04,abc,-,ronda no numerica,abierto,-,-,-,no
+R2-DEC-05,1,-,ronda no coincide con id,abierto,-,-,-,no
+R1-ACT-16,1,devolucion/action_matrix.csv:16,bloquea desincronizado,abierto,-,-,-,si

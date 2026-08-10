@@ -34,8 +34,22 @@ def test_the_real_ledger_is_valid():
     "origen apunta a un archivo que no existe",
     "superado sin decision",
     "cerrado sin decision",
+    "fila sin id",
+    "id no tiene forma R<ronda>-<clase>-<clave>",
+    "id con clave vacía",
+    "abierto con verificado_como — corresponde 'verificado'",
+    "fila con 10 campos y no 9",
+    "bloquea_publicacion 'quizas' no es 'si'/'no'/'-'",
+    "ronda 'abc' no es un entero positivo",
+    "ronda '1' no coincide con el prefijo R<ronda> del id",
+    "no coincide con blocks_publication",
 ])
 def test_validation_catches_each_kind_of_break(fragment):
     rows = review_ledger.load(FIXTURES / "findings_invalid.csv")
     violations = "\n".join(review_ledger.validate(rows, ROOT / "docs" / "review"))
     assert fragment in violations
+
+
+def test_bad_header_raises():
+    with pytest.raises(ValueError, match="encabezado inválido"):
+        review_ledger.load(FIXTURES / "findings_bad_header.csv")
