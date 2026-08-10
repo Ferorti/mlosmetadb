@@ -14,7 +14,7 @@
 
 - `docs/review/findings.csv` usa **LF**, no CRLF. Es archivo nuevo y no hereda la trampa documentada en `database/CLAUDE.md`.
 - Escribir siempre con `csv.writer(..., lineterminator="\n")`; nunca concatenar strings a mano, porque varios campos contienen comas.
-- Los estados válidos son exactamente siete: `abierto`, `verificado`, `refutado`, `aplicado`, `rechazado`, `necesita_fuente`, `superado`.
+- Los estados válidos son exactamente ocho: `abierto`, `verificado`, `refutado`, `aplicado`, `rechazado`, `necesita_fuente`, `superado`, `cerrado`.
 - Las clases de `id` válidas son exactamente seis: `ACT`, `INT`, `EQ`, `DEC`, `ADJ`, `OWN`.
 - El razonamiento largo NO va al CSV. Va en `database/mappings/_archive/mlo_mapping_decisions.md` §11/§12, y la columna `decision` lleva una línea más el puntero.
 - No modificar `_snapshot()` en `tests/test_dataset_invariants.py`. Ver Task 1.
@@ -26,6 +26,7 @@ Dos, decididos al aterrizar el diseño, con su razón:
 
 1. **`_meta` va en `_write_baseline()`, no en `_snapshot()`** (el spec §3.4 dice `_snapshot()`). Si estuviera en `_snapshot()`, la fixture `snapshot` del test lo calcularía en cada corrida y necesitaría invocar git. Poniéndolo donde se escribe el archivo, la intención del spec (línea base autoidentificada, test intacto) se cumple sin ese riesgo.
 2. **Sexta clase de `id`: `OWN`** (el spec §3.2 cierra el conjunto en cinco). Dos de los tres ítems de spec §5.1 no salen de ningún documento de la auditoría, y forzarlos a `INT` mentiría sobre su origen.
+3. **Octavo estado: `cerrado`** (el spec §3.3 cierra el conjunto en siete). Dos filas de la ronda 2 son casos donde la auditoría *aceptó* nuestra decisión: no hay acción pendiente ni cifra que remedir. En `abierto` entrarían al paquete de pendientes que `report()` imprime, listándole a Claude Science dos ítems que ellos mismos cerraron. `cerrado` exige `decision` apuntando a la fila que lo confirma, para que no se confunda con algo que nadie miró. **No** aplica a los cuatro casos `ADJ` cerrados como correctos: esos siguen `abierto` porque sus afirmaciones nunca se verificaron de nuestro lado.
 
 ## File Structure
 
@@ -203,6 +204,7 @@ R1-ACT-05,1,-,rechazado sin razon,rechazado,-,,-,no
 R1-ACT-06,1,-,verificado sin verificacion,verificado,,-,-,no
 R1-ACT-07,1,no/existe.csv:X,origen inexistente,abierto,-,-,-,no
 R1-ACT-08,1,-,superado sin decision,superado,-,,-,no
+R1-ACT-09,1,-,cerrado sin decision,cerrado,-,,-,no
 ```
 
 - [ ] **Step 2: Escribir el test que falla**
@@ -245,6 +247,7 @@ def test_the_real_ledger_is_valid():
     "verificado sin verificado_como",
     "origen apunta a un archivo que no existe",
     "superado sin decision",
+    "cerrado sin decision",
 ])
 def test_validation_catches_each_kind_of_break(fragment):
     rows = review_ledger.load(FIXTURES / "findings_invalid.csv")
@@ -291,7 +294,7 @@ COLUMNS = ["id", "ronda", "origen", "afirmacion", "estado",
            "verificado_como", "decision", "aplicado_en", "bloquea_publicacion"]
 
 STATES = frozenset({"abierto", "verificado", "refutado", "aplicado",
-                    "rechazado", "necesita_fuente", "superado"})
+                    "rechazado", "necesita_fuente", "superado", "cerrado"})
 
 CLASSES = frozenset({"ACT", "INT", "EQ", "DEC", "ADJ", "OWN"})
 
@@ -300,8 +303,10 @@ CLASSES = frozenset({"ACT", "INT", "EQ", "DEC", "ADJ", "OWN"})
 # cifras que corregimos a la auditoría son entregables para ellos.
 NEEDS_VERIFICATION = frozenset({"verificado", "refutado", "aplicado"})
 
-# Estados en los que la columna decision no puede quedar vacía.
-NEEDS_DECISION = frozenset({"rechazado", "superado"})
+# Estados en los que la columna decision no puede quedar vacía. `cerrado` está
+# acá porque un ítem sin acción tiene que decir qué lo cierra: sin eso no se
+# distingue de uno que nadie miró.
+NEEDS_DECISION = frozenset({"rechazado", "superado", "cerrado"})
 
 EMPTY = frozenset({"", "-"})
 
@@ -478,7 +483,7 @@ R1-ACT-09,1,devolucion/action_matrix.csv:9,"Reemplazar la cadena literal 'NULL' 
 R1-ACT-10,1,devolucion/action_matrix.csv:10,"Eliminar NotInformed como canónico y representar la localización ausente como NULL",abierto,"930 anotaciones y 930 proteínas, de las cuales 457 no tienen ninguna otra anotación (el informe reporta 1.217 y 505, infladas por la doble ingesta)",-,-,si
 R1-ACT-11,1,devolucion/action_matrix.csv:11,"Eliminar in_vitro_droplet como canónico y representarlo como evidence_type",abierto,"551 anotaciones, 442 proteínas, 146 sin ningún MLO in vivo (el informe reporta 426 y 142)",-,-,no
 R1-ACT-12,1,devolucion/action_matrix.csv:12,"Indicar por MLO si algún recurso aporta proteoma masivo de clientes",abierto,-,-,-,si
-R1-ACT-13,1,devolucion/action_matrix.csv:13,"Documentar que el rol de DrLLPS es de alcance proteína y se propaga a todos sus MLOs",aplicado,criterio: la devolución lo verificó (1.055 proteínas multi-MLO con rol idéntico, cero excepciones) y no se remidió,"Documentado en SCHEMA.md y BIOLOGY.md via curator_assignment; §12.4",5cd39aa,si
+R1-ACT-13,1,devolucion/action_matrix.csv:13,"Documentar que el rol de DrLLPS es de alcance proteína y se propaga a todos sus MLOs",aplicado,"criterio: la devolución lo verificó (1.055 proteínas multi-MLO con rol idéntico, cero excepciones) y no se remidió","Documentado en SCHEMA.md y BIOLOGY.md via curator_assignment; §12.4",5cd39aa,si
 R1-ACT-14,1,devolucion/action_matrix.csv:14,"Reinstaurar Regulator como tercer valor de rol o exponer las filas excluidas",abierto,"1.389 filas, 977 proteínas, 502 invisibles; esas 502 aportan 607 anotaciones en 19 MLOs: p_body 253, stress_granule 164, p_granule 107 (el informe reporta 429 y 418, que suman más que su propio total)",-,-,no
 R1-ACT-15,1,devolucion/action_matrix.csv:15,"Corregir los errores de equivalencia restantes",aplicado,"Los 18 verificados uno por uno; ver las filas R1-EQ-*","Uno se apartó de la recomendación (Large dense-core vesicles) y la ronda 2 lo aceptó; §11.4",71cdcac,no
 R1-ACT-16,1,devolucion/action_matrix.csv:16,"Adjudicar las 64 equivalencias marcadas 'review' con un curador",abierto,-,"9 adjudicadas en la ronda 2 (ver R2-ADJ-*); 53 siguen abiertas en R2-ADJ-batch",-,no
@@ -522,7 +527,7 @@ R1-INT-09,1,devolucion/data_integrity_findings.csv:INT-09,"'RNA polymerase II, h
 - [ ] **Step 4: Validar**
 
 Run: `python3 scripts/review_ledger.py --check`
-Expected: `40 hallazgos en el libro`, sin violaciones, con este conteo: `aplicado 22`, `abierto 14`, `refutado 2`, `superado 1`, y `necesita_fuente 0`, `rechazado 0`, `verificado 0`.
+Expected: `40 hallazgos en el libro`, sin violaciones, con este conteo: `aplicado 25`, `abierto 12`, `refutado 2`, `superado 1`, y `cerrado 0`, `necesita_fuente 0`, `rechazado 0`, `verificado 0`.
 
 - [ ] **Step 5: Confirmar los finales de línea**
 
@@ -571,8 +576,8 @@ proteins and not 1,217, and the regulator breakdown is 253/164 rather than
 
 ```csv
 R2-DEC-synaptic,2,ultima/SEGUNDA_DEVOLUCION.md:2.1,"Retirar synaptic_compartment y tratar la etiqueta como sinónimo de postsynaptic_density",aplicado,"1.360 de 1.366 proteínas ya están en postsynaptic_density, pero 1.353 vienen de DrLLPS y solo 3 de CD-CODE: el solapamiento es ENTRE recursos y no intra-recurso como afirma el informe. Su segunda señal tampoco se sostiene: ninguna fila de CD-CODE lleva PMID en esta base (0 de 13.844). postsynaptic_density 4.478 -> 5.844","Se revierte R1-ACT-04. La conclusión sale reforzada: coincidencia entre recursos independientes es mejor evidencia que duplicación interna; §12.1",45102ca,-
-R2-DEC-xybody,2,ultima/SEGUNDA_DEVOLUCION.md:2.2,"La devolución acepta que xy_body y sex_body son la misma estructura y que no corresponde crear barr_body",abierto,-,"Sin acción: confirma lo aplicado en R1-ACT-05. No se remidió porque no hay cifra que remedir; §12.1",-,-
-R2-DEC-ldcv,2,ultima/SEGUNDA_DEVOLUCION.md:2.3,"La devolución acepta conservar Large dense-core vesicles en chromogranin_condensate para no perder SEMG2",abierto,-,"Sin acción: confirma lo aplicado en R1-EQ-ldcv; §12.1",-,-
+R2-DEC-xybody,2,ultima/SEGUNDA_DEVOLUCION.md:2.2,"La devolución acepta que xy_body y sex_body son la misma estructura y que no corresponde crear barr_body",cerrado,-,"Sin acción: confirma lo aplicado en R1-ACT-05. No se remidió porque no hay cifra que remedir; §12.1",-,-
+R2-DEC-ldcv,2,ultima/SEGUNDA_DEVOLUCION.md:2.3,"La devolución acepta conservar Large dense-core vesicles en chromogranin_condensate para no perder SEMG2",cerrado,-,"Sin acción: confirma lo aplicado en R1-EQ-ldcv; §12.1",-,-
 R2-DEC-plantmtoc,2,ultima/SEGUNDA_DEVOLUCION.md:2.4,"Crear plant_mtoc y mover las 12 filas de Arabidopsis que el split fúngico dejó en centrosome",aplicado,"Las 12 son TUBG1, GCP3, GCP4, NEDD1, GIP1 (γ-TuRC), TON1A, TPX2, EB1A, EB1C, KIN14D, AAA1 (TON1/TRM) y TUBA1, que el informe omite; nucleación acentrosómica. centrosome 1.790 -> 1.778, plant_mtoc 12","Primer canónico que no existe en mlo_mapping.csv: build_db.py ahora arma el vocabulario leyendo también mlo_organism_scoped.csv; §12.2",45102ca,-
 R2-DEC-axes,2,ultima/SEGUNDA_DEVOLUCION.md:3.5,"Cuatro ejes de categoría alcanzan: omitir functional_process deja sin clasificar solo liquid_dyrk3_speckle, midbody_granule y fip200_puncta",abierto,-,"Responde nuestra consulta §6.5 y abarata R1-ACT-06. La afirmación de los tres términos NO se verificó de nuestro lado",-,-
 ```
@@ -602,7 +607,7 @@ R2-OWN-annotations-indexes,2,-,"mlo_annotations no tiene índice ni en uniprot_i
 - [ ] **Step 4: Validar**
 
 Run: `python3 scripts/review_ledger.py --check`
-Expected: `57 hallazgos en el libro`, sin violaciones, con: `aplicado 26`, `abierto 24`, `necesita_fuente 3`, `refutado 2`, `superado 1`, `rechazado 1`, `verificado 0`.
+Expected: `57 hallazgos en el libro`, sin violaciones, con: `aplicado 29`, `abierto 19`, `necesita_fuente 3`, `cerrado 2`, `refutado 2`, `superado 1`, `rechazado 1`, `verificado 0`.
 
 - [ ] **Step 5: Correr los tests**
 
@@ -647,7 +652,7 @@ Es el criterio de aceptación del spec §5.2, y la task más probable de encontr
 
 Run: `python3 scripts/review_ledger.py --check`
 
-Anotar la lista de `abierto` + `necesita_fuente` (27 filas esperadas).
+Anotar la lista de `abierto` + `necesita_fuente` (22 filas esperadas).
 
 - [ ] **Step 2: Sacar la lista de pendientes de la prosa**
 
