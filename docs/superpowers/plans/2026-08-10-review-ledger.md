@@ -600,7 +600,7 @@ R2-ADJ-batch,2,ultima/review_cases_prioritized.csv,"Los 53 casos de revisión qu
 - [ ] **Step 3: Agregar las 2 filas de ítems propios**
 
 ```csv
-R2-OWN-psd-orphans,2,-,"Las 6 proteínas que quedaron sin cobertura al retirar synaptic_compartment: O43236, P17152, Q14DG7, Q5VSY0, Q6P995, Q9NQR7",abierto,"Las 6 no están en postsynaptic_density por ningún recurso; la devolución señala que una (TMEM11) es mitocondrial","Detectado al aplicar R2-DEC-synaptic. Merecen revisión aparte; §12.1",-,-
+R2-OWN-psd-orphans,2,-,"Las 6 proteínas que quedaron sin cobertura al retirar synaptic_compartment: O43236, P17152, Q14DG7, Q5VSY0, Q6P995, Q9NQR7",abierto,"Las 6 llegan a postsynaptic_density solo por la etiqueta compuesta de CD-CODE que R2-DEC-synaptic remapeó; ningún otro recurso las corrobora, a diferencia de las otras 1.360. La devolución señala que una (P17152/TMEM11) es mitocondrial","Detectado al aplicar R2-DEC-synaptic. Merecen revisión aparte; §12.1",-,-
 R2-OWN-annotations-indexes,2,-,"mlo_annotations no tiene índice ni en uniprot_id ni en unified_mlo",rechazado,"Una consulta con NOT EXISTS sobre la tabla tarda minutos; verificado contra el backup previo que los índices nunca existieron, así que es preexistente y no lo introdujo este trabajo","Fuera del alcance de la auditoría biológica. Se registra para que no se pierda ni se confunda con un pendiente de la auditoría; candidato si se mira performance de la API",-,-
 ```
 
