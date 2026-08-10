@@ -1,0 +1,11 @@
+id,ronda,origen,afirmacion,estado,verificado_como,decision,aplicado_en,bloquea_publicacion
+R1-ACT-01,1,-,estado invalido,inventado,-,-,-,no
+R1-ACT-01,1,-,id duplicado,abierto,-,-,-,no
+R1-XXX-02,1,-,clase invalida,abierto,-,-,-,no
+R1-ACT-03,1,-,aplicado sin verificacion,aplicado,,algo,71cdcac,no
+R1-ACT-04,1,-,aplicado sin commit,aplicado,una consulta,algo,-,no
+R1-ACT-05,1,-,rechazado sin razon,rechazado,-,,-,no
+R1-ACT-06,1,-,verificado sin verificacion,verificado,,-,-,no
+R1-ACT-07,1,no/existe.csv:X,origen inexistente,abierto,-,-,-,no
+R1-ACT-08,1,-,superado sin decision,superado,-,,-,no
+R1-ACT-09,1,-,cerrado sin decision,cerrado,-,,-,no

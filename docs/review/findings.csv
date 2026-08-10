@@ -1,0 +1,2 @@
+id,ronda,origen,afirmacion,estado,verificado_como,decision,aplicado_en,bloquea_publicacion
+R1-ACT-02,1,devolucion/action_matrix.csv:2,"Colapsar los tags source_db PhaseDB y PhasePDB a un solo recurso PhaSepDB",refutado,"SELECT DISTINCT source_db: solo existe PhaSepDB; no se sostiene contra la base viva","Ya resuelto antes de recibir la devolución; ver mlo_mapping_decisions.md §11",2894fad,si
