@@ -1,4 +1,8 @@
 {
+  "_meta": {
+    "generated_on_commit": "b13e18e",
+    "generated_at": "2026-08-10"
+  },
   "table_rows": {
     "proteins": 15879,
     "mlo_annotations": 35968,

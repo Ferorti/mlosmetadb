@@ -26,7 +26,9 @@ Skipped entirely when the DB is absent (it is gitignored, ~250 MB).
 
 import json
 import sqlite3
+import subprocess
 import sys
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -219,7 +221,7 @@ def snapshot(db):
     return _snapshot(db)
 
 
-@pytest.mark.parametrize("section", [
+COMPARED_SECTIONS = [
     "table_rows",
     "annotations_by_source",
     "annotations_by_role",
@@ -230,14 +232,50 @@ def snapshot(db):
     "annotations_with_literal_null_evidence",
     "distinct_unified_mlos_in_use",
     "fus_p35637",
-])
+]
+
+
+@pytest.mark.parametrize("section", COMPARED_SECTIONS)
 def test_dataset_matches_the_committed_baseline(snapshot, baseline, section):
     assert snapshot[section] == baseline[section], REFRESH_HINT
 
 
+def test_baseline_declares_the_commit_it_was_generated_on(baseline):
+    """Sin esto no hay forma de detectar que un análisis externo midió sobre
+    una copia vieja: la ronda 1 de la auditoría corrió sobre 54.786 filas
+    cuando la base viva tenía 35.971, y nada lo declaraba."""
+    meta = baseline.get("_meta")
+    assert meta, "dataset_baseline.json no tiene bloque _meta"
+    assert meta.get("generated_on_commit"), "_meta sin generated_on_commit"
+    assert meta.get("generated_at"), "_meta sin generated_at"
+
+
+def test_meta_is_not_part_of_the_compared_sections():
+    """_meta cambia en cada regeneración. Si entrara en la comparación, el test
+    de la línea base fallaría en cada commit."""
+    assert "_meta" not in COMPARED_SECTIONS
+
+
+def _baseline_meta() -> dict:
+    """Identifica sobre qué commit se generó esta línea base.
+
+    El sha es el de HEAD al momento de regenerar, o sea el commit *anterior*
+    al que va a incluir el archivo. Se lee como "generado sobre el commit X",
+    que es lo que hace falta para detectar deriva contra un análisis externo.
+    """
+    sha = subprocess.run(
+        ["git", "rev-parse", "--short", "HEAD"],
+        capture_output=True, text=True, cwd=Path(__file__).resolve().parent.parent,
+    ).stdout.strip() or "unknown"
+    return {"generated_on_commit": sha, "generated_at": date.today().isoformat()}
+
+
 def _write_baseline() -> None:
     con = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
-    BASELINE_PATH.write_text(json.dumps(_snapshot(con), indent=2) + "\n")
+    # _meta va acá y no en _snapshot() a propósito: la fixture del test usa
+    # _snapshot() en cada corrida y no debe depender de que git esté disponible.
+    payload = {"_meta": _baseline_meta(), **_snapshot(con)}
+    BASELINE_PATH.write_text(json.dumps(payload, indent=2) + "\n")
     con.close()
     print(f"baseline written: {BASELINE_PATH}")
 
