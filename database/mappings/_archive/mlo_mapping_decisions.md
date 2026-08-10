@@ -704,14 +704,24 @@ silencio.
 
 - El reemplazo de `Categoria` por los cinco ejes ortogonales que propone la
   auditoría (`category_scheme_proposed.csv`). Cambia el esquema de la DB, la
-  API y el frontend.
+  API y el frontend (`R1-ACT-06`).
 - Agregar `evidence_type` a cada anotación para distinguir "separa de fase in
   vitro" de "es necesaria en células".
-- Eliminar `NotInformed` e `in_vitro_droplet` del vocabulario de organelas.
+  - **Resuelto en v6** (`R1-ACT-08`, commit `45102ca`): ver §12.4.
+- Eliminar `NotInformed` e `in_vitro_droplet` del vocabulario de organelas
+  (`R1-ACT-10`, `R1-ACT-11`).
 - Reinstaurar los reguladores de DrLLPS como tercer valor de rol (hoy 1.389
   aserciones con `dataset_active=0`, de las cuales 502 proteínas no aparecen
-  por ningún otro lado).
-- Los 64 casos "a revisar" de `equivalence_verdicts.csv`.
+  por ningún otro lado) (`R1-ACT-14`).
+- Los 64 casos "a revisar" de `equivalence_verdicts.csv` (`R1-ACT-16`).
+  - **Parcialmente resuelto en v6** (`R1-ACT-16`): de los 64, 9 fueron
+    adjudicados en la segunda ronda —2 aplicados (`R2-ADJ-pcbp2`,
+    `R2-ADJ-risc`), 4 cerrados como correctos por la devolución pero sin
+    verificar de nuestro lado (`R2-ADJ-mitochondrial-cloud`,
+    `R2-ADJ-germ-granule`, `R2-ADJ-tip-body`, `R2-ADJ-leucocyte`) y 3 que
+    requieren la publicación (`R2-ADJ-perinucleolar`, `R2-ADJ-orc1`,
+    `R2-ADJ-receptor-cluster`)—; los 53 restantes siguen abiertos en
+    `R2-ADJ-batch`. Ver §12.3.
 - Mover los PMIDs de `evidence` a una tabla de evidencia con clave foránea,
   la mitad de la acción 1 que sigue pendiente (`R1-ACT-01b`).
 - Indicar por MLO si algún recurso aporta proteoma masivo de clientes, para
@@ -888,9 +898,11 @@ valor fuera de los cinco.
   §6.5: omitir `functional_process` deja sin clasificar solo tres términos
   (`liquid_dyrk3_speckle`, `midbody_granule`, `fip200_puncta`), así que cuatro
   ejes alcanzan y la migración es más barata de lo previsto. Sigue siendo la
-  pieza que toca DB, API y frontend a la vez.
+  pieza que toca DB, API y frontend a la vez (`R2-DEC-axes`).
 - **Sacar `NotInformed` e `in_vitro_droplet` del vocabulario de organelas.**
-- **Los 53 casos «review» sin adjudicar y los 3 que requieren la fuente** (§12.3).
+- **Los 53 casos «review» sin adjudicar** (`R2-ADJ-batch`) **y los 3 que
+  requieren la fuente** (`R2-ADJ-perinucleolar`, `R2-ADJ-orc1`,
+  `R2-ADJ-receptor-cluster`) (§12.3).
 - Verificar de nuestro lado los cuatro casos «review» que la devolución cerró
   como correctos sin que pasáramos por la publicación: `Mitochondrial cloud`
   → `balbiani_body`, el de mayor volumen con 598 de las 790 proteínas en
