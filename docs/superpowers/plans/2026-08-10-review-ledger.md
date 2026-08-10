@@ -412,7 +412,7 @@ R1-ACT-02,1,devolucion/action_matrix.csv:2,"Colapsar los tags source_db PhaseDB 
 - [ ] **Step 6: Correr los tests**
 
 Run: `python3 -m pytest tests/test_review_ledger.py -v`
-Expected: `10 passed` (1 del libro real + 9 parametrizados).
+Expected: `11 passed` (1 del libro real + 10 parametrizados).
 
 - [ ] **Step 7: Correr el script a mano**
 
@@ -422,7 +422,7 @@ Expected: `1 hallazgos en el libro`, el conteo por estado con `refutado 1`, y la
 - [ ] **Step 8: Confirmar que la suite completa sigue verde**
 
 Run: `python3 -m pytest tests/ api/tests -q`
-Expected: `176 passed` (166 de la Task 1 + 10 nuevos).
+Expected: `177 passed` (166 de la Task 1 + 11 nuevos).
 
 - [ ] **Step 9: Commit**
 
@@ -537,7 +537,7 @@ Expected: `LF ok`.
 - [ ] **Step 6: Correr los tests**
 
 Run: `python3 -m pytest tests/ api/tests -q`
-Expected: `176 passed`.
+Expected: `177 passed`.
 
 - [ ] **Step 7: Commit**
 
@@ -612,7 +612,7 @@ Expected: `57 hallazgos en el libro`, sin violaciones, con: `aplicado 29`, `abie
 - [ ] **Step 5: Correr los tests**
 
 Run: `python3 -m pytest tests/ api/tests -q`
-Expected: `176 passed`.
+Expected: `177 passed`.
 
 - [ ] **Step 6: Commit**
 
@@ -689,7 +689,7 @@ Recorrer la lista de abiertos y confirmar que cada uno aparece ahora en §11.6 o
 - [ ] **Step 6: Correr los tests**
 
 Run: `python3 -m pytest tests/ api/tests -q`
-Expected: `176 passed`.
+Expected: `177 passed`.
 
 - [ ] **Step 7: Commit**
 
