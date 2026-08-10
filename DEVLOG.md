@@ -10,6 +10,75 @@ para una fase posterior.
 Ver [REFACTOR_LOG.md](REFACTOR_LOG.md) para el detalle paso a paso de qué se
 copió, qué se dejó afuera, y por qué.
 
+## 2026-08-10 — libro de hallazgos para el intercambio con Claude Science
+
+El intercambio con la auditoría biológica externa llevaba dos rondas
+(`docs/review/devolucion/`, `docs/review/ultima/`) y el estado de cada
+hallazgo vivía en prosa, repartido entre `mlo_mapping_decisions.md` §11.6 y
+§12.5. Para saber qué seguía pendiente había que leer las dos secciones y
+cruzarlas contra cuatro CSVs de la auditoría, y nada obligaba a que una
+verificación quedara registrada: las tres cifras que la auditoría mandó mal
+(el solapamiento sináptico, un PMID que ninguna fila de CD-CODE lleva, los
+reguladores de `p_body`/`stress_granule`) se detectaron a mano y la evidencia
+de esa verificación quedó solo en la conversación. Además, la auditoría mide
+sobre una copia local: en la ronda 1 midió 54.786 filas cuando la base viva
+tenía 35.971, porque nada en el paquete que le mandamos declaraba de qué
+commit partía.
+
+Cuatro piezas, sin tocar el pipeline, la DB, la API ni el frontend:
+
+- **`docs/review/findings.csv`** — el libro: una fila por ítem que requiere o
+  recibió una decisión nuestra, con `id` estable (`R<ronda>-<clase>-<clave>`),
+  `estado` de un conjunto cerrado, y `verificado_como`/`decision`/
+  `aplicado_en` obligatorios según el estado. Referencia los CSVs de la
+  auditoría en vez de duplicarlos.
+- **`_meta` en `tests/dataset_baseline.json`** — el commit y la fecha con que
+  se generó la huella, para que la próxima devolución declare contra qué
+  versión midió antes de que se le crea una sola cifra absoluta.
+- **`scripts/review_ledger.py --check`** — valida el libro y reporta qué
+  sigue abierto, que es lo que va en el próximo paquete a Claude Science.
+- **`tests/test_review_ledger.py`** — hace no-opcional la regla central: nada
+  llega a `aplicado` sin `verificado_como`.
+
+La carga de las rondas 1 y 2 (57 filas) hizo su propia reconciliación contra
+la prosa y encontró un problema en el propio diseño: §11.6 describe "esta
+revisión" (v5), así que sus viñetas eran ciertas cuando se escribieron
+incluso para los ítems que v6 fue y resolvió (`evidence_type`, los casos
+"review"). Reescribirlas habría borrado esa historia, así que cada viñeta que
+una ronda posterior tocó quedó con una nota que apunta hacia adelante en vez
+de reescribirse, y las que siguen intactas recibieron su cita de `id` del
+libro.
+
+La revisión de rama completa que siguió encontró un problema más serio: la
+carga había asumido que `action_matrix.csv` subsumía a las otras tres listas
+de la auditoría, y no era cierto — `rationale_ref` solo cita 13 de los 24
+hallazgos numerados entre `data_integrity_findings.csv`, `category_findings.csv`
+y `role_model_findings.csv`. La mayoría del resto está cubierta de hecho por
+una acción con fila propia, pero **cinco hallazgos no estaban en ninguna
+lista**, incluido uno que la auditoría calificó `critical` (ROL-02, cobertura
+de rol por MLO). Se agregaron como `R1-INT-02`, `R1-INT-04`, `R1-ROL-02`,
+`R1-ROL-05` y `R1-ROL-07` — la clase `ROL` es nueva, para no mentir sobre que
+vienen de `role_model_findings.csv` y no de `data_integrity_findings.csv`.
+
+La misma revisión encontró seis filas medidas y dejadas en `abierto` en vez
+de `verificado` — entre ellas `R1-ACT-14`, la que sostiene las cifras
+correctas de reguladores que motivan todo este diseño — porque el validador
+nunca exigió `verificado_como` para `abierto`. Se corrigieron las seis y se
+agregó la regla que lo impide, se sumó `verificado` a la lista de pendientes
+del reporte (antes solo miraba `abierto`/`necesita_fuente`, así que diez
+filas medidas quedaban invisibles para el próximo paquete), y se cerraron
+varios huecos más del validador: cuenta de campos exacta (la clase de bug de
+`R1-ACT-19`, una coma sin comillas que desplaza columnas y valida bien si
+nadie cuenta), `bloquea_publicacion` contra el enum, `ronda` como entero
+positivo consistente con el prefijo del id, id con clave vacía, encabezado
+con las nueve columnas exactas, y un chequeo de que `bloquea_publicacion` no
+se desincronice de `blocks_publication` en `action_matrix.csv` — la única
+columna que el libro copia literalmente de un archivo de ellos.
+
+Libro final: 62 filas — `aplicado` 29, `abierto` 13, `verificado` 10,
+`necesita_fuente` 3, `cerrado` 2, `refutado` 2, `rechazado` 2, `superado` 1.
+Suite en 187 tests (10 nuevos, todos sobre `review_ledger.py`).
+
 ## 2026-08-10 — segunda ronda de la auditoría: evidence_type y una reversión
 
 Llegó la segunda devolución (`docs/review/ultima/`), que verifica v5, responde

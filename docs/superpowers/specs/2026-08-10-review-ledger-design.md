@@ -108,11 +108,11 @@ Columnas:
 
 | Columna | Contenido |
 |---|---|
-| `id` | Estable y nuestro. Formato `R<ronda>-<clase>-<clave>`, con `<clase>` de un conjunto cerrado de cinco: `ACT` (acción de su matriz), `INT` (hallazgo de integridad), `EQ` (error de equivalencia), `DEC` (decisión nuestra que ellos revisaron), `ADJ` (caso de revisión adjudicado). Ejemplos: `R1-ACT-03`, `R1-INT-10`, `R2-DEC-synaptic` |
+| `id` | Estable y nuestro. Formato `R<ronda>-<clase>-<clave>`, con `<clase>` de un conjunto cerrado de siete: `ACT` (acción de su matriz), `INT` (hallazgo de integridad), `EQ` (error de equivalencia), `DEC` (decisión nuestra que ellos revisaron), `ADJ` (caso de revisión adjudicado), `OWN` (hallazgo propio, sin origen en ningún documento de ellos), `ROL` (hallazgo del modelo de rol, `role_model_findings.csv`). Ejemplos: `R1-ACT-03`, `R1-INT-10`, `R2-DEC-synaptic`, `R1-ROL-02` |
 | `ronda` | 1, 2, ... |
 | `origen` | `archivo:clave`, con el archivo **relativo a `docs/review/`**: `devolucion/data_integrity_findings.csv:INT-10`. Vale `-` para los ítems de §5.1, que no salen de ningún documento de ellos |
 | `afirmacion` | Una línea: qué sostienen |
-| `estado` | Uno de los siete de §3.3 |
+| `estado` | Uno de los ocho de §3.3 |
 | `verificado_como` | La consulta y su resultado, o `criterio` más fundamento. **Nunca vacío si el estado es `verificado`, `refutado` o `aplicado`** (ver §3.3) |
 | `decision` | Una línea más puntero al razonamiento largo. Obligatoria si el estado es `rechazado` o `superado` |
 | `aplicado_en` | SHA del commit, o `-`. Obligatorio si el estado es `aplicado` |
@@ -122,9 +122,26 @@ Columnas:
 `mlo_mapping.csv` y `mlo_definitions.csv` (CRLF más saltos de línea embebidos en
 campos citados), documentada en `database/CLAUDE.md`.
 
+**Nota de implementación (fix wave del 2026-08-10, `fix/biology-audit-stage2`):**
+la carga real terminó con dos clases más de las cinco previstas acá, y el
+motivo de cada una quedó documentado en el propio script
+(`scripts/review_ledger.py`, comentario sobre `CLASSES`):
+
+- **`OWN`** — hallazgos propios sin origen en ningún documento de la
+  auditoría (§5.1 ya los preveía como "sueltos", pero no como clase separada
+  hasta que se cargaron: `R2-OWN-psd-orphans`,
+  `R2-OWN-annotations-indexes`).
+- **`ROL`** — los tres hallazgos de `role_model_findings.csv` que sobrevivieron
+  a la reconciliación de la revisión de rama completa
+  (`R1-ROL-02`, `R1-ROL-05`, `R1-ROL-07`). Forzarlos a `INT` habría descrito
+  mal su procedencia: `role_model_findings.csv` es un archivo distinto de
+  `data_integrity_findings.csv`, con su propio esquema de columnas.
+
 ### 3.3 Estados
 
-Conjunto cerrado de siete. El script rechaza cualquier otro valor.
+Conjunto cerrado de siete cuando se diseñó; **ocho en la implementación
+final** — ver la nota al pie de esta sección. El script rechaza cualquier
+valor fuera del conjunto que efectivamente implementa.
 
 | Estado | Significa | Exige |
 |---|---|---|
@@ -142,6 +159,14 @@ estado, una de las dos filas tendría que mentir.
 
 `refutado` no se borra del libro. Las tres correcciones de §1.2 son entregables
 para Claude Science, no ruido interno nuestro.
+
+**Octavo estado agregado en la carga: `cerrado`.** Cubre un caso que este
+diseño no había previsto — una decisión nuestra que la ronda siguiente
+confirma sin remedir ninguna cifra (`R2-DEC-xybody`, `R2-DEC-ldcv`). No es
+`aplicado` (no hay commit propio, la acción ya estaba aplicada de antes) ni
+`superado` (no lo reemplaza nada). Exige `decision` diciendo qué lo cierra,
+por la misma razón que el resto de `NEEDS_DECISION`: sin eso no se distingue
+de un ítem que nadie miró. Ver `scripts/review_ledger.py`.
 
 ### 3.4 `_meta` en `tests/dataset_baseline.json`
 

@@ -740,6 +740,36 @@ silencio.
   `transcriptional_condensate`, que tiene 220 en total): INT-09 solo pedía
   mandarla a la revisión de descarte y nunca recibió veredicto; ver §12.3
   (`R1-INT-09`).
+- Marcar en la UI los canónicos de baja evidencia, los que dependen de un
+  solo PMID (5.244 filas llevan más de un PMID, 131 canónicos tienen alguna
+  evidencia). La mitad documental ya está hecha —SCHEMA.md y BIOLOGY.md dicen
+  que `evidence` es procedencia de fila, no prueba del par proteína-MLO—; la
+  marca en la UI es trabajo de frontend (`R1-INT-04`).
+- Reportar cobertura de rol por MLO junto a cualquier estadística de rol, y
+  nunca calcular fracción de drivers sobre filas de recursos sin rol: el
+  42,4% de las aserciones (15.233 de 35.968) no tiene rol y la ausencia está
+  determinada enteramente por el recurso (CDCODE más los Regulator de
+  DrLLPS). `evidence_type` ya hace explícita la causa (`membership_only`),
+  pero eso registra y no reporta (`R1-ROL-02`).
+- Publicar como tabla de QC el conjunto de desacuerdos de rol entre recursos:
+  el desacuerdo PhaSepDB vs. PhasePro (58,6%) fue el que motivó
+  `evidence_type` y quedó citado en SCHEMA.md, pero `evidence_type` se
+  definió desde la tabla `(source_db, source_role)` y no desde el conjunto de
+  desacuerdos mismo (`R1-ROL-05`).
+- Ponderar o marcar, al calcular enriquecimiento de drivers, las aserciones
+  que vienen de recursos que solo dicen driver: 577 de 3.068 (18,8%, LLPSDB
+  380 + PhasePro 197). `evidence_type = in_vitro_llps` ya identifica
+  exactamente esos dos recursos; ponderarlos es decisión de quien calcule el
+  enriquecimiento (`R1-ROL-07`).
+
+**Registrado y rechazado.** La auditoría pide una regla de precedencia
+explícita para las 214 tripletas (proteína, MLO) —sobre 182 proteínas
+distintas— que en PhaSepDB reciben `driver` y `client` a la vez desde sus dos
+exports. Se rechaza a propósito: PhaSepDB publica un dataset curado de
+drivers y otro de componentes por separado, y ser driver es un experimento
+distinto de ser detectado dentro del condensado. Las dos anotaciones se
+conservan con sus PMIDs y el rol es parte de la clave de deduplicación (ver
+"Driver vs. Component" en `BIOLOGY.md`); `R1-INT-02`.
 
 ---
 
