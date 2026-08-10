@@ -24,7 +24,7 @@ SKIP_MLO = {"DISCARD", "NULL", "synthetic_condensate", ""}
 # (spindle_pole_body, chromatoid_body, sex_body, simr_foci, mardo,
 # axonal_tiar2_granule, wnt_destruction_complex) were present in the data under
 # a version label that predated them.
-MAPPING_VERSION = "v5"
+MAPPING_VERSION = "v6"
 
 
 def nullable(value: str | None) -> str | None:
@@ -76,6 +76,11 @@ CREATE TABLE IF NOT EXISTS mlo_annotations (
     unified_mlo      TEXT NOT NULL REFERENCES mlo_vocabulary(unified_mlo),
     source_role      TEXT,
     unified_role     TEXT,
+    -- What kind of claim the row makes, which unified_role cannot express: one of
+    -- in_vitro_llps | cellular_localisation | cellular_requirement |
+    -- curator_assignment | membership_only. See compute_evidence_type() in
+    -- integrate.py for why five values and what each one means.
+    evidence_type    TEXT,
     dataset_active   INTEGER NOT NULL DEFAULT 1,
     evidence         TEXT,
     dataset_version  TEXT DEFAULT 'v2'
@@ -181,7 +186,17 @@ def create_schema(con: sqlite3.Connection, schema: str) -> None:
 
 
 def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
-    """Load mlo_mapping.csv into mlo_vocabulary, one curated row per canonical.
+    """Load the mapping files into mlo_vocabulary, one curated row per canonical.
+
+    Two files declare canonicals, and both have to be read here or the loader
+    drops rows that integrate.py legitimately produced:
+
+    - `mlo_mapping.csv` (`Nombre Sugerido` / `Categoria`) — the bulk of them.
+    - `mlo_organism_scoped.csv` (`unified_mlo` / `categoria`) — the
+      organism-conditional overrides. `plant_mtoc` exists **only** there: no
+      source name maps to it unconditionally, because the label that produces it
+      (`Centrosome/Spindle pole body`) means something else for every other
+      clade.
 
     Several source names collapse into one canonical, so the same canonical
     appears in many rows of the mapping file. Until 2026-08-08 this function
@@ -192,24 +207,33 @@ def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
     (`polarity_condensate`: Citoesqueleto / Neuronal / Procariota). A conflict
     is now a hard failure: the mapping file has to say one thing.
     """
-    path = MAP_DIR / "mlo_mapping.csv"
-    categories: dict[str, dict[str, int]] = {}
-    with open(path, newline="", encoding="utf-8") as f:
-        for line_no, row in enumerate(csv.DictReader(f), start=2):
-            unified = row["Nombre Sugerido"].strip()
-            if unified in SKIP_MLO:
-                continue
-            category = row["Categoria"].strip()
-            categories.setdefault(unified, {}).setdefault(category, line_no)
+    # canonical -> {category: "file:line where it was first seen"}
+    categories: dict[str, dict[str, str]] = {}
+
+    def collect(filename: str, name_col: str, category_col: str) -> None:
+        path = MAP_DIR / filename
+        if not path.exists():
+            return
+        with open(path, newline="", encoding="utf-8") as f:
+            for line_no, row in enumerate(csv.DictReader(f), start=2):
+                unified = row[name_col].strip()
+                if unified in SKIP_MLO:
+                    continue
+                categories.setdefault(unified, {}).setdefault(
+                    row[category_col].strip(), f"{filename}:{line_no}"
+                )
+
+    collect("mlo_mapping.csv", "Nombre Sugerido", "Categoria")
+    collect("mlo_organism_scoped.csv", "unified_mlo", "categoria")
 
     conflicts = {u: c for u, c in categories.items() if len(c) > 1}
     if conflicts:
         detail = "\n".join(
-            f"    {unified}: " + ", ".join(f"{cat!r} (línea {ln})" for cat, ln in sorted(cats.items(), key=lambda kv: kv[1]))
+            f"    {unified}: " + ", ".join(f"{cat!r} ({where})" for cat, where in sorted(cats.items(), key=lambda kv: kv[1]))
             for unified, cats in sorted(conflicts.items())
         )
         raise SystemExit(
-            f"[FATAL] {len(conflicts)} canónicos con Categoria en conflicto en {path.name}.\n"
+            f"[FATAL] {len(conflicts)} canónicos con Categoria en conflicto.\n"
             f"  Cada canónico necesita una sola categoría curada — resolvelas en el archivo:\n{detail}"
         )
 
@@ -235,6 +259,21 @@ def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
     if stale:
         raise SystemExit(f"[FATAL] {stale} filas de mlo_vocabulary quedaron fuera de {MAPPING_VERSION}")
     return len(rows)
+
+
+def migrate_schema(con: sqlite3.Connection) -> None:
+    """Add columns that SCHEMA_MAIN gained after the DB was first created.
+
+    Every CREATE in SCHEMA_MAIN is `IF NOT EXISTS`, so a column added to it
+    never reaches an existing mlosmetadb.db. Without this, a rebuild over the
+    shipped DB fails on the INSERT instead of picking up the new column. Same
+    approach build_summary.py uses for the disorder columns on `proteins`.
+    """
+    existing = {r[1] for r in con.execute("PRAGMA table_info(mlo_annotations)")}
+    if "evidence_type" not in existing:
+        con.execute("ALTER TABLE mlo_annotations ADD COLUMN evidence_type TEXT")
+        con.commit()
+        print("  migración: mlo_annotations.evidence_type agregada")
 
 
 def reset_owned_tables(con: sqlite3.Connection) -> None:
@@ -304,6 +343,7 @@ def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
                 unified,
                 nullable(row.get("source_role")),
                 nullable(row.get("unified_role")),
+                nullable(row.get("evidence_type")),
                 int(row.get("dataset_active", "1").strip() or 1),
                 nullable(row.get("evidence")),
             ))
@@ -314,8 +354,8 @@ def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
     )
     con.executemany(
         """INSERT INTO mlo_annotations
-           (uniprot_id, source_db, source_mlo, unified_mlo, source_role, unified_role, dataset_active, evidence)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+           (uniprot_id, source_db, source_mlo, unified_mlo, source_role, unified_role, evidence_type, dataset_active, evidence)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         annotation_rows,
     )
     con.commit()
@@ -376,6 +416,7 @@ def main() -> None:
     con = sqlite3.connect(DB)
     con.execute("PRAGMA foreign_keys = ON")
     create_schema(con, SCHEMA_MAIN)
+    migrate_schema(con)
     reset_owned_tables(con)
 
     print("Cargando mlo_vocabulary ...")

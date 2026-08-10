@@ -1,9 +1,9 @@
 {
   "table_rows": {
     "proteins": 15879,
-    "mlo_annotations": 35970,
+    "mlo_annotations": 35968,
     "mlo_vocabulary": 177,
-    "mlo_definitions": 405,
+    "mlo_definitions": 404,
     "protein_summary": 15879,
     "sequence_features": 358867,
     "ppi": 917468,
@@ -14,16 +14,23 @@
     "DrLLPS": 10872,
     "LLPSDB": 380,
     "PhaSepDB": 10675,
-    "PhasePro": 199
+    "PhasePro": 197
   },
   "annotations_by_role": {
     "NULL": 15233,
     "client": 17667,
-    "driver": 3070
+    "driver": 3068
   },
   "annotations_by_dataset_active": {
     "0": 1389,
-    "1": 34581
+    "1": 34579
+  },
+  "annotations_by_evidence_type": {
+    "cellular_localisation": 8537,
+    "cellular_requirement": 2138,
+    "curator_assignment": 10872,
+    "in_vitro_llps": 577,
+    "membership_only": 13844
   },
   "source_db_count_histogram": {
     "0": 502,

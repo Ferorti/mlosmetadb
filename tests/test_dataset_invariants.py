@@ -151,6 +151,20 @@ def test_every_protein_has_at_least_one_annotation(db):
                       "WHERE uniprot_id NOT IN (SELECT uniprot_id FROM mlo_annotations)") == 0
 
 
+def test_every_annotation_has_an_evidence_type(db):
+    """A NULL evidence_type means integrate.py met a (source_db, source_role)
+    pair its table does not cover — an upstream change, not a data gap. The
+    eight pairs present today were verified exhaustive, so this must stay 0."""
+    assert _count(db, "SELECT COUNT(*) FROM mlo_annotations WHERE evidence_type IS NULL") == 0
+
+
+def test_evidence_type_values_are_the_five_documented_ones(db):
+    allowed = {"in_vitro_llps", "cellular_localisation", "cellular_requirement",
+               "curator_assignment", "membership_only"}
+    found = {r[0] for r in db.execute("SELECT DISTINCT evidence_type FROM mlo_annotations")}
+    assert found <= allowed, f"evidence_type inesperado: {sorted(found - allowed)}"
+
+
 # ---------------------------------------------------------------------------
 # Witnesses — compared against the committed baseline
 # ---------------------------------------------------------------------------
@@ -168,6 +182,9 @@ def _snapshot(con) -> dict:
             "FROM mlo_annotations GROUP BY 1 ORDER BY 1")),
         "annotations_by_dataset_active": dict(q(
             "SELECT CAST(dataset_active AS TEXT), COUNT(*) "
+            "FROM mlo_annotations GROUP BY 1 ORDER BY 1")),
+        "annotations_by_evidence_type": dict(q(
+            "SELECT COALESCE(evidence_type, 'NULL'), COUNT(*) "
             "FROM mlo_annotations GROUP BY 1 ORDER BY 1")),
         "source_db_count_histogram": dict(q(
             "SELECT CAST(source_db_count AS TEXT), COUNT(*) "
@@ -207,6 +224,7 @@ def snapshot(db):
     "annotations_by_source",
     "annotations_by_role",
     "annotations_by_dataset_active",
+    "annotations_by_evidence_type",
     "source_db_count_histogram",
     "proteins_without_sequence",
     "annotations_with_literal_null_evidence",

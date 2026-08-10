@@ -131,7 +131,7 @@ Pyrenoid matrix,pyrenoid,Plastídico,Matriz del pirenoide; agrupa con pyrenoid
 Receptor cluster,signaling_cluster,Membrana,Agrupamiento de receptores en membrana [PMID:22404929]
 Replication compartment,replication_compartment,Viral/Nuclear,Compartimento de replicación viral intranuclear con propiedades de condensado líquido [PMID:34578359]
 ribonucleoprotein complex,DISCARD,—,Término GO genérico de complejo RNP; no es un MLO específico
-RISC complex,mirisc,Citoplasmático,Complejo RISC/miRISC de silenciamiento
+RISC complex,DISCARD,DISCARD,"Nombre de complejo macromolecular, misma clase que los términos GO de complejo ya descartados. Descarte sin pérdida: verificado que mirisc conserva sus 8 filas restantes y sus mismas 2 proteínas (AGO2, TNRC6B) a través de la etiqueta 'miRISC', que es el nombre del condensado. [segunda devolución 2026-08-10]"
 "RNA polymerase II, holoenzyme",transcriptional_condensate,Nuclear,Holoenzima de Pol II en hubs transcripcionales; agrupa con transcriptional condensate
 robustly E2-activated enhancers (MegaTrans) enhancers,enhancer_condensate,Nuclear,Enhancers MegaTrans activados por E2; condensados de enhancer [PMID:32434105]
 Rosenthal fiber,rosenthal_fiber,Patológico,Inclusiones de GFAP en astrocitos en Alexander disease [PMID:27193225]
@@ -304,7 +304,7 @@ ParABS DNA,parabs_condensate,Procariota,Variante de ParABS; sistema de partició
 PARP1-DNA condensate,dna_damage_foci,Nuclear,Condensado de PARP1 con DNA en respuesta a daño; co-localiza con DNA damage foci
 PARP5A–RNF146 condensate,signaling_condensate,Citoplasmático,Condensado de PARP5A con RNF146; señalización de ubiquitinación
 PB-like Assembly,p_body,Citoplasmático,Ensamblaje P-body-like; variante funcional del P-body
-PCBP2 condensates,signaling_condensate,Citoplasmático,"PCBP2 secuestra proteínas de unión mitocondrial y controla BACE1 mRNA decay relativo a mitocondrias; condensado de regulación de ARNm con función en señalización mitocondrial, no stress granule [CDCODE]"
+PCBP2 condensates,cytoplasmic_rnp_granule,Citoplasmático,"DCP1A y DDX6 son maquinaria de decapping y cuerpo P; TIA1 es marcador de gránulo de estrés. signaling_condensate era el destino equivocado. Se elige el término general y no p_body, porque el conjunto mezcla cuerpo P y gránulo de estrés y afirmar cuerpo P con TIA1 adentro sería más preciso de lo que el dato sostiene. [segunda devolución 2026-08-10]"
 Peri-nucleolar condensate,perinucleolar_compartment,Nuclear,Condensado perinucleolar; equivalente al perinucleolar compartment
 Pericentriolar compartment,centrosome,Citoesqueleto,Compartimento pericentriolar; sinónimo funcional de pericentriolar matrix → centrosome
 PFK-1.1 condensates,glycolytic_body,Citoplasmático,Condensados de fosfofructoquinasa PFK-1.1; componente de glycolytic body en C. elegans
@@ -318,7 +318,7 @@ PolyP granule,polyp_granule,Procariota,Gránulo de polifosfato inorgánico en ba
 PopZ condensate,bacterial_polarity_condensate,Procariota,Matriz polar de Caulobacter que ancla el origen cromosómico; ver PodJ condensates. [auditoría 2026-08-08]
 Pre-replication compartment (PRC),replication_compartment,Viral/Nuclear,Compartimento pre-replicativo viral; precursor del replication compartment
 Presynaptic clusters,presynaptic_active_zone,Neuronal,Clusters presinápticos; equivalente al presynaptic active zone condensate
-Presynaptic clusters and postsynaptic densities,synaptic_compartment,Neuronal,"Etiqueta compuesta de CD-CODE que nombra los dos lados de la sinapsis; 1366 proteínas humanas, una por fila. Mapearla entera a presynaptic_active_zone asignaba todo al lado presináptico y descartaba el postsináptico en silencio. La fuente anota a resolución de sinapsis y no distingue lados: canónico propio en vez de inventar el lado. [auditoría 2026-08-08]"
+Presynaptic clusters and postsynaptic densities,postsynaptic_density,Neuronal,"Etiqueta compuesta de CD-CODE que nombra los dos lados de la sinapsis. v5 le había dado canónico propio (synaptic_compartment) para no inventar un reparto que la fuente no provee; el dato lo resuelve sin necesidad del paper: 1.353 de sus 1.366 proteínas están anotadas como postsynaptic_density por DrLLPS, un recurso independiente, y solo 3 como presynaptic_active_zone. El conjunto es el proteoma de la PSD tal como lo ve otra base, así que la etiqueta se trata como sinónimo de postsynaptic_density y synaptic_compartment se retira. [segunda devolución 2026-08-10]"
 Proteasome condensate,proteasome_foci,Nuclear,Condensado de proteasoma; equivalente al proteasome containing foci
 Rapsn condensate,postsynaptic_density,Neuronal,Condensado de Rapsyn en unión neuromuscular; organiza receptores de acetilcolina
 RBFOX1 RNP granule,neuronal_granule,Neuronal,Gránulo de RNP de RBFOX1; proteína de splicing neuronal; variante del neuronal granule

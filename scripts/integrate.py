@@ -205,6 +205,56 @@ def compute_role_and_active(source_db: str, source_role: str) -> tuple:
     return None, 1
 
 
+EVIDENCE_TYPE = {
+    # (source_db, source_role) -> evidence_type
+    # Verified exhaustive and homogeneous per resource by the external audit
+    # (docs/review/ultima/evidence_type_mapping.csv). Every combination present
+    # in database/interim/*.tsv is listed; a new one raises the NULL count that
+    # tests/test_dataset_invariants.py asserts is zero.
+    ("LLPSDB",   "driver"):      "in_vitro_llps",
+    ("PhasePro", "driver"):      "in_vitro_llps",
+    ("PhaSepDB", "client"):      "cellular_localisation",
+    ("PhaSepDB", "driver"):      "cellular_requirement",
+    ("DrLLPS",   "Scaffold"):    "curator_assignment",
+    ("DrLLPS",   "Client"):      "curator_assignment",
+    ("DrLLPS",   "Regulator"):   "curator_assignment",
+    ("CDCODE",   "NotInformed"): "membership_only",
+}
+
+
+def compute_evidence_type(source_db: str, source_role: str) -> str | None:
+    """What kind of claim the row is making, independent of driver/client.
+
+    `unified_role` collapses five vocabularies into two values, which hides that
+    the underlying assertions are not comparable: a PhaSePro "driver" means a
+    purified protein phase-separates in a buffer, while a PhaSepDB "driver"
+    means perturbing it disrupts the condensate in cells. PhaSepDB and PhaSePro
+    agree on only 58.6% of the annotations they share, and that 41% of
+    disagreement is this difference, not curation noise — many proteins do the
+    first and are clients in the second.
+
+    Five values, not the three the audit first proposed, because PhaSepDB emits
+    two different claims depending on the role:
+
+    - `in_vitro_llps`         — purified protein phase-separates; no cellular claim
+    - `cellular_localisation` — reported present in the condensate in cells
+    - `cellular_requirement`  — perturbing it disrupts the condensate in cells
+    - `curator_assignment`    — curator-assigned, and protein-scoped in DrLLPS:
+                                the same label propagates to every MLO of that
+                                protein, so it is not a per-compartment claim
+    - `membership_only`       — the resource asserts membership and makes no role
+                                claim at all
+
+    `membership_only` is the one that changes how the data reads: it makes
+    explicit that the 42% of rows with no role are CD-CODE's declared scope, not
+    a gap in our ingestion.
+    """
+    evidence_type = EVIDENCE_TYPE.get((source_db, (source_role or "").strip()))
+    if evidence_type is None:
+        print(f"  [WARN] sin evidence_type para (source_db={source_db!r}, source_role={source_role!r})")
+    return evidence_type
+
+
 def main() -> None:
     print("=== Cargando archivos interim ===")
     df = load_interim()
@@ -220,6 +270,11 @@ def main() -> None:
     )
     df["unified_role"] = role_active.map(lambda t: t[0])
     df["dataset_active"] = role_active.map(lambda t: t[1])
+
+    print(f"\n=== Calculando evidence_type (tabla fija, ver compute_evidence_type) ===")
+    df["evidence_type"] = df.apply(
+        lambda r: compute_evidence_type(r["source_db"], r["source_role"]), axis=1
+    )
 
     # ── MLO mapping ───────────────────────────────────────────────────────────
     mlo_map = MAP_DIR / "mlo_mapping.csv"
@@ -240,6 +295,7 @@ def main() -> None:
         "unified_mlo",
         "source_role",
         "unified_role",
+        "evidence_type",
         "dataset_active",
         "evidence",
         "organism",
@@ -260,6 +316,8 @@ def main() -> None:
     print(f"    unmapped:   {unmapped_mlo:>7}  ({100*unmapped_mlo/len(df):.1f}%)")
     print(f"\n  unified_role breakdown (never 'unmapped', never capitalized):")
     print(df["unified_role"].fillna("NULL").value_counts().to_string())
+    print(f"\n  evidence_type breakdown (nunca debe haber NULL):")
+    print(df["evidence_type"].fillna("NULL").value_counts().to_string())
     print(f"\n  dataset_active breakdown:")
     print(df["dataset_active"].value_counts().to_string())
 
