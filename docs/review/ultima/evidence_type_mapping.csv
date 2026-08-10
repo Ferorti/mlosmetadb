@@ -1,0 +1,9 @@
+source_db,source_role,evidence_type,basis,uniform_within_resource
+LLPSDB,driver,in_vitro_llps,Purified protein phase-separates in a defined buffer. No cellular claim.,yes
+PhasePro,driver,in_vitro_llps,"Curated from experiments demonstrating LLPS of the protein itself, largely in vitro.",yes
+PhaSepDB,client,cellular_localisation,Protein reported present in the condensate in cells.,yes
+PhaSepDB,driver,cellular_requirement,Perturbation of the protein disrupts the condensate in cells.,yes
+DrLLPS,Scaffold,curator_assignment,"Curator-assigned scaffold status, protein-scoped: the same label is propagated to every MLO of that protein (verified: no protein carries two different roles).",yes
+DrLLPS,Client,curator_assignment,"Curator-assigned, protein-scoped, same propagation.",yes
+DrLLPS,Regulator,curator_assignment,"Curator-assigned regulator; asserts influence on the condensate, NOT membership.",yes
+CDCODE,NotInformed,membership_only,"Resource asserts the protein belongs to the condensate and makes no role claim. Absence of role is a property of the resource, not of the protein.",yes
