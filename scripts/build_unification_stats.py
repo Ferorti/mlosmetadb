@@ -362,7 +362,7 @@ def write_unification_stats_json(conn: sqlite3.Connection, category_map: dict) -
     data = {
         "meta": {
             "db_commit": _git_commit(ROOT),
-            "build_date": datetime.datetime.utcnow().isoformat() + "Z",
+            "build_date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "n_annotations": n_annotations,
         },
         "summary": {
