@@ -32,3 +32,47 @@ def test_unification_stats_503_when_artifact_missing(tmp_path, monkeypatch):
 
     assert r.status_code == 503
     assert r.json()["error"] == "unification_stats_unavailable"
+
+
+def test_discrepant_pairs_export_happy_path(tmp_path, monkeypatch):
+    monkeypatch.setattr(uq, "EXPORTS_DIR", tmp_path)
+    (tmp_path / "discrepant_pairs.csv").write_text("uniprot_id,unified_mlo\nP1,stress_granule\n")
+
+    with TestClient(app) as client:
+        r = client.get("/unification/discrepant-pairs/export")
+
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("text/csv")
+    assert "P1,stress_granule" in r.text
+
+
+def test_discrepant_pairs_export_503_when_missing(tmp_path, monkeypatch):
+    monkeypatch.setattr(uq, "EXPORTS_DIR", tmp_path)
+
+    with TestClient(app) as client:
+        r = client.get("/unification/discrepant-pairs/export")
+
+    assert r.status_code == 503
+    assert r.json()["error"] == "unification_export_unavailable"
+
+
+def test_mlo_term_mapping_export_happy_path(tmp_path, monkeypatch):
+    monkeypatch.setattr(uq, "EXPORTS_DIR", tmp_path)
+    (tmp_path / "mlo_term_mapping.csv").write_text("unified_mlo,source_db\nstress_granule,PhaSepDB\n")
+
+    with TestClient(app) as client:
+        r = client.get("/unification/mlo-term-mapping/export")
+
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("text/csv")
+    assert "stress_granule,PhaSepDB" in r.text
+
+
+def test_mlo_term_mapping_export_503_when_missing(tmp_path, monkeypatch):
+    monkeypatch.setattr(uq, "EXPORTS_DIR", tmp_path)
+
+    with TestClient(app) as client:
+        r = client.get("/unification/mlo-term-mapping/export")
+
+    assert r.status_code == 503
+    assert r.json()["error"] == "unification_export_unavailable"
