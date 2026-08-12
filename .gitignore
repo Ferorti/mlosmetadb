@@ -270,3 +270,6 @@ OLD/
 
 # Git worktrees for isolated plan execution
 .worktrees/
+
+# Subagent-driven-development scratch workspace (ledgers, briefs, review packages)
+.superpowers/
