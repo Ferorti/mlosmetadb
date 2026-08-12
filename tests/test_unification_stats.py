@@ -45,3 +45,62 @@ def test_f2_protein_source_combos_proteins_sum_to_total_proteins():
         f"SELECT COUNT(DISTINCT ma.uniprot_id) FROM mlo_annotations ma WHERE {bus.policy.active_annotation_clause('ma')}"
     ).fetchone()[0]
     assert sum(row["n_proteins"] for row in f2) == total_proteins
+
+
+def test_pair_data_shared_pairs_and_discordance_match_reference():
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    pair_data = bus.build_pair_data(conn, category_map)
+
+    shared = {k: v for k, v in pair_data.items() if len(v["source_dbs"]) >= 2}
+    concordant = sum(1 for v in shared.values() if len(v["categories"]) == 1)
+    discordant = sum(1 for v in shared.values() if len(v["categories"]) > 1)
+
+    # Reference values from docs/review/unification_section/data/stats.json,
+    # computed against the same commit this DB is at.
+    assert len(shared) == 10617
+    assert concordant == 9299
+    assert discordant == 1318
+
+
+def test_disc_patterns_sum_to_discordant_count():
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    pair_data = bus.build_pair_data(conn, category_map)
+    summary = bus.build_agreement_summary(pair_data)
+
+    assert sum(summary["disc_patterns"].values()) == summary["discordant_pairs"]
+    assert summary["disc_patterns"] == {
+        "component|driver": 713,
+        "component|regulator": 513,
+        "component|driver|regulator": 72,
+        "driver|regulator": 20,
+    }
+
+
+def test_f6_pmid_overlap_matches_reference():
+    conn = bus.connect_db()
+    f6 = bus.build_f6_pmid_overlap_sources(conn)
+    by_pair = {(r["db_a"], r["db_b"]): r for r in f6}
+    assert len(f6) == 6  # C(4,2) -- CD-CODE excluded, it cites no PMIDs
+    assert by_pair[("LLPSDB", "PhaSepDB")]["shared"] == 201
+    assert by_pair[("LLPSDB", "PhaSepDB")]["n_a"] == 289
+    assert by_pair[("LLPSDB", "PhaSepDB")]["n_b"] == 2020
+
+
+def test_pmid_independence_stats_match_reference():
+    conn = bus.connect_db()
+    stats = bus.build_pmid_independence_stats(conn)
+    assert stats["pairs_pmid_comparable"] == 2205
+    assert stats["pairs_shared_pub"] == 893
+    assert stats["pairs_independent_pub"] == 1312
+
+
+def test_cat3_annotations_sum_to_total():
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    f4 = bus.build_f4_role_mapping(conn, category_map)
+    active = policy_total = conn.execute(
+        f"SELECT COUNT(*) FROM mlo_annotations ma WHERE {bus.policy.active_annotation_clause('ma')}"
+    ).fetchone()[0]
+    assert sum(row["annotations"] for row in f4) == policy_total
