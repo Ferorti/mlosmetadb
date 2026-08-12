@@ -152,6 +152,13 @@ CREATE TABLE IF NOT EXISTS ppi (
     source_version      TEXT DEFAULT 'BIOGRID-5.0.257'
 );
 
+-- mlo_annotations no tenía ningún índice, así que toda consulta por proteína o
+-- por MLO recorría las 35.732 filas enteras. Es la tabla que la API consulta en
+-- casi todos sus endpoints (COUNT(DISTINCT uniprot_id) por MLO, anotaciones de
+-- una proteína), y el join contra proteins hacía SCAN del lado grande.
+CREATE INDEX IF NOT EXISTS idx_ann_uniprot          ON mlo_annotations(uniprot_id);
+CREATE INDEX IF NOT EXISTS idx_ann_mlo              ON mlo_annotations(unified_mlo);
+CREATE INDEX IF NOT EXISTS idx_ann_mlo_active       ON mlo_annotations(unified_mlo, dataset_active);
 CREATE INDEX IF NOT EXISTS idx_ortholog_features_id ON ortholog_features(ortholog_id);
 CREATE INDEX IF NOT EXISTS idx_orth_uniprot         ON orthologs(uniprot_id);
 CREATE INDEX IF NOT EXISTS idx_orth_indb            ON orthologs(in_db);
