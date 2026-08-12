@@ -156,3 +156,34 @@ def test_mlo_term_mapping_left_join_keeps_rows_with_no_definition():
     # some combos have no curated definition (verified during design: 111 of 483) --
     # they must still appear, with definition explicitly None, not be dropped.
     assert any(r["definition"] is None for r in rows)
+
+
+def test_cat3_annotations_sum_equals_db_count():
+    """docs/review/unification_section/INFORME_SECCION_UNIFICACION.md §6.3:
+    'el pipeline falla si sum(cat3) != n_annotations'."""
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    data = bus.write_unification_stats_json(conn, category_map)
+    assert sum(data["summary"]["cat3_annotations"].values()) == data["summary"]["n_annotations"]
+
+
+def test_no_unmapped_source_db_source_role_pair():
+    """§6.3: 'el pipeline falla ... si aparece un par (source_db, source_role)
+    sin mapeo en las 3 categorías'."""
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    active = bus.policy.active_annotation_clause("ma")
+    live_pairs = set(conn.execute(
+        f"SELECT DISTINCT ma.source_db, ma.source_role FROM mlo_annotations ma WHERE {active}"
+    ).fetchall())
+    unmapped = live_pairs - set(category_map.keys())
+    assert not unmapped, f"unmapped (source_db, source_role) pairs: {unmapped}"
+
+
+def test_summary_n_annotations_matches_direct_db_count():
+    conn = bus.connect_db()
+    active = bus.policy.active_annotation_clause("ma")
+    direct_count = conn.execute(f"SELECT COUNT(*) FROM mlo_annotations ma WHERE {active}").fetchone()[0]
+    category_map = bus.load_category_map()
+    data = bus.write_unification_stats_json(conn, category_map)
+    assert data["summary"]["n_annotations"] == direct_count
