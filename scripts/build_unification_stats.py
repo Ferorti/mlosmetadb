@@ -254,6 +254,44 @@ def write_discrepant_pairs_csv(conn: sqlite3.Connection, pair_data: dict) -> Non
     print(f"  Wrote {out_path} ({len(rows)} rows)")
 
 
+def build_mlo_term_mapping_rows(conn: sqlite3.Connection) -> list:
+    active = policy.active_annotation_clause("ma")
+    rows = conn.execute(f"""
+        SELECT
+            ma.unified_mlo, ma.source_db, ma.source_mlo,
+            COUNT(*) AS annotations,
+            COUNT(DISTINCT ma.uniprot_id) AS proteins,
+            MAX(md.definition) AS definition
+        FROM mlo_annotations ma
+        LEFT JOIN mlo_definitions md
+          ON md.unified_mlo = ma.unified_mlo
+         AND LOWER(md.source_db) = LOWER(ma.source_db)
+         AND md.source_name = ma.source_mlo
+        WHERE {active}
+        GROUP BY ma.unified_mlo, ma.source_db, ma.source_mlo
+        ORDER BY ma.unified_mlo, ma.source_db, ma.source_mlo
+    """).fetchall()
+    return [
+        {
+            "unified_mlo": r[0], "source_db": r[1], "source_mlo": r[2],
+            "annotations": r[3], "proteins": r[4], "definition": r[5],
+        }
+        for r in rows
+    ]
+
+
+def write_mlo_term_mapping_csv(conn: sqlite3.Connection) -> None:
+    rows = build_mlo_term_mapping_rows(conn)
+    out_path = EXPORT_DIR / "mlo_term_mapping.csv"
+    with open(out_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "unified_mlo", "source_db", "source_mlo", "annotations", "proteins", "definition",
+        ])
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"  Wrote {out_path} ({len(rows)} rows)")
+
+
 def build_agreement_summary(pair_data: dict) -> dict:
     shared = {k: v for k, v in pair_data.items() if len(v["source_dbs"]) >= 2}
     concordant = 0
@@ -470,6 +508,9 @@ def main() -> None:
     print("=== Building discrepant_pairs.csv ===")
     pair_data = build_pair_data(conn, category_map)
     write_discrepant_pairs_csv(conn, pair_data)
+
+    print("=== Building mlo_term_mapping.csv ===")
+    write_mlo_term_mapping_csv(conn)
 
     conn.close()
 

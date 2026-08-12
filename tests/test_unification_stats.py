@@ -133,3 +133,26 @@ def test_discrepant_pairs_row_shape_and_alignment():
     for field in ("uniprot_id", "gene_name", "unified_mlo", "sources", "categories",
                   "source_roles", "evidence_types", "pmids_per_source"):
         assert field in row
+
+
+def test_mlo_term_mapping_rows_cover_every_source_triple():
+    conn = bus.connect_db()
+    rows = bus.build_mlo_term_mapping_rows(conn)
+    active = bus.policy.active_annotation_clause("ma")
+    expected_triples = conn.execute(f"""
+        SELECT COUNT(DISTINCT ma.unified_mlo || '|' || ma.source_db || '|' || ma.source_mlo)
+        FROM mlo_annotations ma WHERE {active}
+    """).fetchone()[0]
+    assert len(rows) == expected_triples
+
+    row = next(r for r in rows if r["unified_mlo"] == "stress_granule" and r["source_db"] == "PhaSepDB")
+    assert row["annotations"] > 0
+    assert row["proteins"] > 0
+
+
+def test_mlo_term_mapping_left_join_keeps_rows_with_no_definition():
+    conn = bus.connect_db()
+    rows = bus.build_mlo_term_mapping_rows(conn)
+    # some combos have no curated definition (verified during design: 111 of 483) --
+    # they must still appear, with definition explicitly None, not be dropped.
+    assert any(r["definition"] is None for r in rows)
