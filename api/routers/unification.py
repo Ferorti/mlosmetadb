@@ -26,13 +26,13 @@ def _export_or_503(path, filename: str):
     return FileResponse(path, media_type="text/csv", filename=filename)
 
 
-@router.get("/unification/discrepant-pairs/export")
+@router.get("/unification/discrepant-pairs/export", response_class=FileResponse)
 async def export_discrepant_pairs():
     path = uq.discrepant_pairs_csv_path()
     return _export_or_503(path, "discrepant_pairs.csv")
 
 
-@router.get("/unification/mlo-term-mapping/export")
+@router.get("/unification/mlo-term-mapping/export", response_class=FileResponse)
 async def export_mlo_term_mapping():
     path = uq.mlo_term_mapping_csv_path()
     return _export_or_503(path, "mlo_term_mapping.csv")

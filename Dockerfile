@@ -19,6 +19,10 @@ COPY api/ /app/api/
 # it is bind-mounted at run time, never baked in.
 ENV MLOSMETADB_PATH=/data/mlosmetadb.db
 
+# database/exports/ (the "Data unification" report's build artifacts) rides the
+# same bind mount as the database above, so it surfaces here as /data/exports.
+ENV MLOSMETADB_EXPORTS_PATH=/data/exports
+
 WORKDIR /app/api
 EXPOSE 8000
 
