@@ -38,6 +38,28 @@ const dedupedAnnotations = computed(() => {
   return hasRealMlo ? deduped.filter(a => a.unified_mlo !== 'NotInformed') : deduped
 })
 
+/**
+ * One badge per organelle, from every annotation this protein has for it.
+ *
+ * - `driver` if any source says so: it is the strongest claim in the set, and one
+ *   resource measuring phase separation is not weakened by another only
+ *   recording presence.
+ * - `regulator` only when **every** annotation for this organelle is a regulator
+ *   call. DrLLPS says those proteins modulate the organelle rather than live in
+ *   it, so the badge would be wrong the moment another resource reports the
+ *   protein as a component — and CD-CODE reporting membership is exactly that.
+ *   Regulator rows reached the frontend for the first time on 2026-08-12
+ *   (R1-ACT-14); `unified_role` is NULL on them, so `source_role` is the only
+ *   field that identifies them.
+ * - no badge otherwise, unchanged: a mixed or role-less group makes no claim
+ *   this table can state in one word.
+ */
+function groupRole(anns) {
+  if (anns.some(a => a.unified_role === 'driver')) return 'driver'
+  if (anns.every(a => a.source_role === 'Regulator')) return 'regulator'
+  return null
+}
+
 const groupedRows = computed(() => {
   if (!dedupedAnnotations.value.length) return []
 
@@ -67,13 +89,12 @@ const groupedRows = computed(() => {
   const rows = []
   let groupIndex = 0
   for (const [, anns] of sortedEntries) {
-    const isDriver = anns.some(a => a.unified_role === 'driver')
     anns.forEach((ann, i) => {
       rows.push({
         isFirstInGroup: i === 0,
         groupIndex,
         unified_mlo:  ann.unified_mlo,
-        displayRole:  i === 0 && isDriver ? 'driver' : null,
+        displayRole:  i === 0 ? groupRole(anns) : null,
         source_db:    ann.source_db,
         source_mlo:   ann.source_mlo,
       })

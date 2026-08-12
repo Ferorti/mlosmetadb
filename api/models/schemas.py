@@ -95,6 +95,15 @@ class MloAnnotation(MloAxes):
     unified_mlo: str
     source_db: str
     source_mlo: str | None
+    # The raw role string the source reported, passed through unmodified (the DB
+    # never rewrites it). Added 2026-08-12: with regulator rows now served
+    # (R1-ACT-14) and `unified_role` NULL on them, this is the only field that
+    # lets a client tell "DrLLPS says this protein regulates the organelle" from
+    # "CD-CODE reports membership and no role at all". Deriving it from
+    # source_db + a NULL role would work today and would rebuild, client-side,
+    # exactly the per-resource inference policy.regulator_annotation_clause()
+    # exists to avoid.
+    source_role: str | None
     unified_role: str | None
     evidence_pmids: list[str]   # parsed from semicolon-separated evidence field
 

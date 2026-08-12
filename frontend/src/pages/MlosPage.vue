@@ -21,13 +21,18 @@
 
       <div class="w-px h-5 bg-gray-200 hidden sm:block"></div>
 
-      <!-- Category dropdown -->
+      <!-- One dropdown per classification axis. They conjoin, which is the point
+           of splitting `category` into four: "nuclear AND stress-induced" was not
+           a question the single column could ask. -->
       <select
-        v-model="categoryFilter"
+        v-for="axis in AXIS_FILTERS"
+        :key="axis.key"
+        v-model="axisFilters[axis.key]"
+        :title="`Filter by ${axis.label.toLowerCase()}`"
         class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1 bg-white focus:outline-none focus:border-[#185FA5]"
       >
-        <option value="">All categories</option>
-        <option v-for="cat in categories" :key="cat" :value="cat">{{ formatCategory(cat) }}</option>
+        <option value="">{{ axis.allLabel }}</option>
+        <option v-for="v in axisOptions[axis.key]" :key="v" :value="v">{{ axis.format(v) }}</option>
       </select>
 
       <div class="w-px h-5 bg-gray-200 hidden sm:block"></div>
@@ -104,7 +109,7 @@
         :title="expandedRows.has(mlo.unified_mlo) ? 'Click to collapse' : 'Click to expand'"
         @click="toggleExpand(mlo.unified_mlo)"
       >
-        <!-- Line 1: name + category badge -->
+        <!-- Line 1: name + axis badges -->
         <div class="flex items-start justify-between gap-4">
           <span class="text-[16px] font-medium text-gray-800">
             {{ formatMlo(mlo.unified_mlo) }}
@@ -116,18 +121,53 @@
             >{{ mlo.matchedNames.slice(0, 3).join(' · ')
               }}<template v-if="mlo.matchedNames.length > 3"> +{{ mlo.matchedNames.length - 3 }}</template></span>
           </span>
-          <span
-            v-if="mlo.category"
-            class="shrink-0 text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200"
-          >
-            {{ formatCategory(mlo.category) }}
-          </span>
+          <!-- Line 1 badges: the axes that are always populated. Location carries
+               a dashed border when its value is the audit's hand assignment
+               rather than a derivation, so a provisional value never reads as
+               settled (R3-OWN-spatial-56). -->
+          <div class="shrink-0 flex items-center gap-1.5 flex-wrap justify-end">
+            <span
+              v-if="mlo.spatial_location"
+              :title="spatialLocationNote(mlo) || `Location: ${spatialLocationLabel(mlo.spatial_location)}`"
+              class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border flex items-center gap-1"
+              :class="isSpatialLocationProvisional(mlo) ? 'border-slate-300 border-dashed' : 'border-slate-200'"
+            >
+              <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="spatialLocationColor(mlo.spatial_location)"></span>
+              {{ spatialLocationLabel(mlo.spatial_location) }}
+              <span v-if="isSpatialLocationProvisional(mlo)" class="text-slate-400">·&nbsp;provisional</span>
+            </span>
+            <span
+              v-if="mlo.physiological_state && mlo.physiological_state !== 'constitutive'"
+              class="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-[#854F0B] border border-amber-200"
+            >
+              {{ physiologicalStateLabel(mlo.physiological_state) }}
+            </span>
+            <span
+              v-if="mlo.cell_type_context"
+              class="text-xs px-2 py-0.5 rounded-full bg-teal-50 text-[#0F6E56] border border-teal-200"
+            >
+              {{ cellTypeContextLabel(mlo.cell_type_context) }}
+            </span>
+          </div>
         </div>
 
-        <!-- Line 2: protein · driver counts -->
-        <div class="mt-1 text-sm text-gray-600">
-          {{ formatCount(mlo.protein_count) }} proteins ·
-          <span class="text-[#185FA5]">{{ formatCount(mlo.driver_count) }} drivers</span>
+        <!-- Line 2: protein · driver counts · taxonomic scope -->
+        <div class="mt-1 text-sm text-gray-600 flex items-baseline flex-wrap gap-x-1.5">
+          <span>
+            {{ formatCount(mlo.protein_count) }} proteins ·
+            <span class="text-[#185FA5]">{{ formatCount(mlo.driver_count) }} drivers</span>
+          </span>
+          <!-- The taxonomic axis is derived from the organisms of the annotated
+               proteins, so it describes the dataset and not the organelle. The
+               support count travels with it, and a thin one is marked: the audit
+               asked for exactly this (63 of 177 terms rest on <=2 proteins). -->
+          <span v-if="mlo.taxonomic_scope" class="text-gray-600" :title="taxonomicScopeNote(mlo)">
+            · {{ taxonomicScopeLabel(mlo.taxonomic_scope) }}
+            <span :class="isTaxonomicScopeThin(mlo) ? 'text-[#854F0B]' : 'text-gray-500'" class="text-xs">
+              ({{ mlo.taxonomic_support_n }}
+              protein{{ mlo.taxonomic_support_n === 1 ? '' : 's' }}<template v-if="isTaxonomicScopeThin(mlo)">, thin</template>)
+            </span>
+          </span>
         </div>
 
         <!-- Line 3: source DBs -->
@@ -174,29 +214,29 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { getMlos } from '@/api/mlos.js'
 import { formatMlo, formatCount } from '@/utils/format.js'
 import { filterMlosByQuery } from '@/utils/mloMatch.js'
+import {
+  AXIS_FILTERS,
+  axisValues,
+  cellTypeContextLabel,
+  isSpatialLocationProvisional,
+  isTaxonomicScopeThin,
+  physiologicalStateLabel,
+  spatialLocationColor,
+  spatialLocationLabel,
+  spatialLocationNote,
+  taxonomicScopeLabel,
+  taxonomicScopeNote,
+} from '@/utils/mloAxes.js'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 
 const router = useRouter()
 
 const SOURCE_DBS = ['PhaSepDB', 'DrLLPS', 'PhasePro', 'LLPSDB', 'CDCODE']
-
-const CATEGORY_LABELS = {
-  cytoplasmic_rnp: 'Cytoplasmic RNP',
-  nuclear_rnp: 'Nuclear RNP',
-  nuclear_body: 'Nuclear body',
-  cytoplasmic_membraneless: 'Cytoplasmic',
-  in_vitro: 'In vitro',
-}
-
-function formatCategory(cat) {
-  if (!cat) return ''
-  return CATEGORY_LABELS[cat] ?? cat.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())
-}
 
 function firstDefinition(mlo) {
   return mlo.definitions?.[0]?.definition ?? ''
@@ -211,7 +251,11 @@ const mlos = ref([])
 const loading = ref(true)
 const error = ref(false)
 const textFilter = ref('')
-const categoryFilter = ref('')
+// One selection per axis, all '' by default. Filtering client-side (the whole
+// vocabulary is 176 rows and already in memory) rather than re-querying /mlos per
+// axis, which is what the API's axis params are for when a caller does not have
+// the list — see api/mlos.js.
+const axisFilters = reactive(Object.fromEntries(AXIS_FILTERS.map(a => [a.key, ''])))
 const selectedSources = ref([])
 const sortBy = ref('drivers')
 const expandedRows = ref(new Set())
@@ -239,11 +283,12 @@ function navigateToMlo(unifiedMlo) {
   router.push({ path: '/results', query: { mlo: unifiedMlo } })
 }
 
-const categories = computed(() => {
-  const cats = new Set()
-  mlos.value.forEach(m => { if (m.category) cats.add(m.category) })
-  return [...cats].sort()
-})
+// Options come from the data, so an axis value added upstream shows up in the
+// dropdown without a frontend change — and an axis nobody uses yet renders as a
+// lone "Any …" option instead of a broken control.
+const axisOptions = computed(() =>
+  Object.fromEntries(AXIS_FILTERS.map(a => [a.key, axisValues(mlos.value, a.key)]))
+)
 
 const totalCount = computed(() => mlos.value.length)
 
@@ -256,8 +301,9 @@ const filtered = computed(() => {
   // missed stress_granule.
   result = filterMlosByQuery(result, textFilter.value)
 
-  if (categoryFilter.value) {
-    result = result.filter(m => m.category === categoryFilter.value)
+  for (const axis of AXIS_FILTERS) {
+    const value = axisFilters[axis.key]
+    if (value) result = result.filter(m => m[axis.key] === value)
   }
 
   if (selectedSources.value.length) {

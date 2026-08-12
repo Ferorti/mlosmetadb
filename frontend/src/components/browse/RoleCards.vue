@@ -15,6 +15,12 @@ const cards = computed(() => {
   // mlo_annotations.by_role (annotation-row based) is NOT used here: a protein with both
   // a driver-role row and a client-role row would count in both buckets there, so
   // driver + component could exceed proteins.total.
+  //
+  // This two-card split is deliberately NOT the same vocabulary as
+  // /mlo/{id}'s stats.by_role, which grew a third `regulator` bucket on
+  // 2026-08-12 (R1-ACT-14). Here a regulator-only protein lands in "components",
+  // because /stats reports has_driver and nothing finer — so the card's copy has
+  // to say so rather than let the reader assume residency was established.
   const r = props.stats.proteins.by_component_role
   const componentCount = r.component ?? 0
   return [
@@ -29,14 +35,14 @@ const cards = computed(() => {
       role: 'component',
       count: componentCount,
       label: 'MLO Components',
-      description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients and proteins with undetermined or unmapped role assignments.',
+      description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients, proteins whose role no source determined, and proteins a curator annotated as regulators of an organelle rather than residents of it.',
       countClass: 'text-gray-500',
     },
     {
       role: 'all',
       count: props.stats.proteins.total,
       label: 'MLO-associated proteins',
-      description: 'All proteins annotated in at least one MLO across source databases. Includes drivers, components, and proteins with undetermined role assignments. The full dataset.',
+      description: 'All proteins annotated in at least one MLO across source databases. Includes drivers, components, regulators, and proteins with undetermined role assignments. The full dataset.',
       countClass: 'text-amber-500 opacity-80',
     },
   ]

@@ -1,8 +1,8 @@
 {
   "database_version": "2.0",
-  "last_updated": "2026-08-08",
+  "last_updated": "2026-08-12",
   "proteins": {
-    "total": 15879,
+    "total": 15694,
     "by_organism": {
       "Homo sapiens": 6802,
       "Mus musculus": 2543,
@@ -29,50 +29,50 @@
     },
     "top_organisms": 10,
     "total_organisms": 207,
-    "other_organisms_count": 1145,
+    "other_organisms_count": 960,
     "by_component_role": {
-      "component": 13850,
+      "component": 13665,
       "driver": 2029
     }
   },
   "mlo_annotations": {
-    "total": 34582,
-    "unique_mlos": 167,
+    "total": 35732,
+    "unique_mlos": 177,
     "by_source": {
-      "CDCODE": 13845,
-      "DrLLPS": 9483,
+      "CDCODE": 13731,
+      "DrLLPS": 10872,
       "LLPSDB": 380,
-      "PhaSepDB": 10675,
-      "PhasePro": 199
+      "PhaSepDB": 10552,
+      "PhasePro": 197
     },
     "unique_proteins_by_source": {
-      "CD-CODE": 10883,
-      "DrLLPS": 8148,
+      "CD-CODE": 10765,
+      "DrLLPS": 9125,
       "LLPSDB": 380,
       "PhaSePro": 116,
-      "PhaSepDB": 7755
+      "PhaSepDB": 7603
     },
     "by_role": {
-      "client": 12347,
+      "client": 12180,
       "driver": 2029,
-      "unknown": 10883
+      "unknown": 11480
     }
   },
   "sequence_features": {
-    "total": 358867,
+    "total": 358789,
     "by_type": {
       "domain": 49105,
       "family": 6040,
-      "idr": 180304,
+      "idr": 180278,
       "idr_curated": 1390,
-      "lcd": 53136,
+      "lcd": 53124,
       "morf": 3256,
-      "plddt_region": 65636
+      "plddt_region": 65596
     },
-    "proteins_with_features": 14841
+    "proteins_with_features": 14833
   },
   "ppi": {
-    "total_interactions": 917468,
-    "proteins_with_ppi": 11025
+    "total_interactions": 917225,
+    "proteins_with_ppi": 11022
   }
 }

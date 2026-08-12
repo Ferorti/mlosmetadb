@@ -17,6 +17,24 @@ def test_get_protein_mlo_annotations_includes_active_row(test_db):
     assert len(rows) == 1
     assert rows[0]["unified_mlo"] == "stress_granule"
     assert rows[0]["unified_role"] == "driver"
+    # The axes replaced mv.category on every annotation object (R1-ACT-06)
+    assert rows[0]["spatial_location"] == "cytoplasm"
+    assert rows[0]["physiological_state"] == "stress_induced"
+
+
+def test_get_protein_mlo_annotations_passes_source_role_through(test_db):
+    """The only field that distinguishes a served regulator row from CD-CODE's
+    roleless one, now that both carry unified_role IS NULL. The UI badges from
+    it; deriving it from source_db would rebuild the per-resource inference the
+    backend deliberately avoids."""
+    rows = asyncio.run(get_protein_mlo_annotations("QREG01"))
+    assert len(rows) == 1
+    assert rows[0]["source_role"] == "Regulator"
+    assert rows[0]["unified_role"] is None
+
+    roleless = asyncio.run(get_protein_mlo_annotations("PNULLROLE"))
+    assert roleless[0]["source_role"] == "NotInformed"
+    assert roleless[0]["unified_role"] is None
 
 
 def test_get_proteins_page_role_filter_excludes_inactive_only_protein(test_db):

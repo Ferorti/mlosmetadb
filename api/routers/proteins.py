@@ -186,6 +186,7 @@ def _build_mlo_annotation(row: dict) -> MloAnnotation:
         cell_type_context=row.get("cell_type_context"),
         source_db=row["source_db"],
         source_mlo=row.get("source_mlo"),
+        source_role=row.get("source_role"),
         unified_role=row.get("unified_role"),
         evidence_pmids=pmids,
     )

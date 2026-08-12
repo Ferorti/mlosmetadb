@@ -1105,9 +1105,16 @@ los ejes conjugan: `?spatial_location=nucleus&physiological_state=stress_induced
 devuelve 5 términos, que es la pregunta que una columna única no podía hacer. No
 se mapea `?category=` a nada: sus valores mezclaban lugares (`Nuclear`) con
 linajes (`Procariota`), tipos celulares (`Neuronal`) y procesos (`Autofagia`), y
-cada uno de esos vive ahora en un eje distinto. El frontend se reconstruye contra
-el contrato nuevo; `MlosPage.vue` y `MloBadges.vue` son los dos archivos que leen
-`mlo.category`.
+cada uno de esos vive ahora en un eje distinto. El frontend se reconstruyó contra el
+contrato nuevo en esta misma rama (`src/utils/mloAxes.js` concentra etiquetas,
+colores y las dos advertencias; ver `frontend/CLAUDE.md`).
+
+Un campo más salió de portar el frontend: `MloAnnotation` ahora pasa `source_role`
+tal como lo reporta la fuente. Sin él el SPA no puede distinguir una fila de
+regulador de una de CD-CODE sin rol, porque las dos llevan `unified_role` NULL, y
+la alternativa —deducirlo de `source_db` más rol nulo— reconstruiría del lado del
+cliente la inferencia por recurso que `regulator_annotation_clause()` evita. Es
+aditivo y es dato crudo que la tabla ya guarda.
 
 ### 13.3 Lo que esta revisión NO hace
 

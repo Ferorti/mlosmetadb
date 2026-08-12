@@ -4,6 +4,11 @@ import { useRouter } from 'vue-router'
 import { getMlos } from '@/api/mlos'
 import { formatMlo, formatCount } from '@/utils/format'
 import { filterMlosByQuery } from '@/utils/mloMatch'
+import {
+  spatialLocationColor,
+  spatialLocationLabel,
+  spatialLocationNote,
+} from '@/utils/mloAxes.js'
 import { PLACEHOLDER_MLOS } from '@/data/mlos.js'
 
 const DISPLAY_LIMIT = 20        // the unfiltered grid: top organelles by drivers
@@ -37,29 +42,11 @@ const mlos = computed(() =>
 const totalCount = computed(() => allMlos.value?.length ?? 0)
 const hiddenCount = computed(() => Math.max(0, matches.value.length - mlos.value.length))
 
-// The DB stores categories in Spanish. Map to display color.
-function categoryColor(category) {
-  const c = (category ?? '').toLowerCase()
-  if (c === 'nuclear')                        return 'bg-blue-500'
-  if (c === 'citoplasmático' || c === 'citoplasma') return 'bg-amber-400'
-  if (c === 'germinal')                       return 'bg-amber-400'
-  if (c === 'neuronal')                       return 'bg-amber-300'
-  if (c === 'in vitro')                       return 'bg-gray-300'
-  // nuclear subtypes
-  if (c.includes('nuclear'))                  return 'bg-blue-400'
-  // cytoplasmic subtypes
-  if (c.includes('cito'))                     return 'bg-amber-300'
-  return 'bg-gray-200'
-}
-
-function compartmentLabel(category) {
-  const c = (category ?? '').toLowerCase()
-  if (c === 'nuclear' || c.includes('nuclear')) return 'Nuclear'
-  if (c === 'citoplasmático' || c === 'citoplasma' || c === 'germinal' || c === 'neuronal') return 'Cytoplasmic'
-  if (c.includes('cito'))                       return 'Cytoplasmic'
-  if (c === 'in vitro')                         return 'In vitro'
-  return 'Other'
-}
+// The compartment line reads `spatial_location` directly (see utils/mloAxes.js).
+// It used to map the DB's Spanish `category` here, which forced every lineage,
+// cell-type and process value — Germinal, Neuronal, Autofagia — into "Cytoplasmic"
+// or "Other". The axis says where the organelle is and nothing else, so no
+// guessing is left to do at this layer.
 
 function browseMlo(unified_mlo) {
   router.push({ path: '/results', query: { mlo: unified_mlo } })
@@ -97,10 +84,10 @@ function browseMlo(unified_mlo) {
           class="flex flex-col justify-between px-3 py-2.5 rounded-lg border border-gray-200 bg-white hover:border-[#2B7CD8] hover:shadow-sm cursor-pointer transition-all min-h-[90px]"
         >
           <div>
-            <div class="flex items-center gap-1 mb-1">
-              <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="categoryColor(mlo.category)"></span>
+            <div class="flex items-center gap-1 mb-1" :title="spatialLocationNote(mlo)">
+              <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="spatialLocationColor(mlo.spatial_location)"></span>
               <span class="text-[9px] uppercase tracking-wide text-gray-500 font-medium">
-                {{ compartmentLabel(mlo.category) }}
+                {{ spatialLocationLabel(mlo.spatial_location) }}
               </span>
             </div>
             <span class="text-xs font-medium text-gray-700 leading-tight">

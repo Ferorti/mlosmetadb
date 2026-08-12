@@ -62,11 +62,25 @@ es un apicomplejo) y `twn_body` deja de ser Vegetal (sus tres proteínas son
 humanas). El tercero, `rho_body`, no se automatiza y queda abierto
 (`R3-OWN-rho-body`).
 
-**El frontend queda roto a propósito.** `MlosPage.vue` y `MloBadges.vue` leen
-`mlo.category`, que ya no existe, y `?category=` no se traduce: sus valores
-mezclaban lugares con linajes, tipos celulares y procesos, y cada uno vive ahora
-en un eje distinto. La advertencia y lo que hay que reconstruir están en
-`frontend/CLAUDE.md`.
+**El frontend se portó en la misma rama.** `?category=` no se traduce —sus valores
+mezclaban lugares con linajes, tipos celulares y procesos, y cada uno vive ahora en
+un eje distinto— así que `getMlos()` pasa a tomar un objeto de ejes y
+`src/utils/mloAxes.js` concentra etiquetas, colores y las dos advertencias de la
+auditoría: la ubicación provisional de 56 términos se dibuja con borde punteado y
+la palabra «provisional», y el eje taxonómico nunca se muestra sin su
+`taxonomic_support_n`. Antes cada componente tenía media tabla de las categorías en
+español y los dos imprimían «Other» para lo que no reconocían.
+
+Mostrar los reguladores obligó a un campo más en la API: `MloAnnotation` no
+exponía `source_role`, así que el SPA no podía distinguir «DrLLPS dice que esta
+proteína regula la organela» de «CD-CODE reporta pertenencia sin rol». Se agrega
+como pasamanos de procedencia —el dato ya está en la tabla y nunca se reescribe— en
+vez de dejar que el frontend lo dedujera de `source_db` más rol nulo, que hoy
+funcionaría y reconstruiría del lado del cliente justo la inferencia por recurso
+que `policy.regulator_annotation_clause()` evita. `ProteinMLOs.vue` pone el badge
+de regulador solo cuando **todas** las anotaciones de esa organela son llamados de
+regulador: 781 pares proteína-organela lo llevan y los 513 mezclados —donde otro
+recurso sí la ubica adentro— siguen sin badge en vez de ganar uno equivocado.
 
 ## 2026-08-10 — libro de hallazgos para el intercambio con Claude Science
 
