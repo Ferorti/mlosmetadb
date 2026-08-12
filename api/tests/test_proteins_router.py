@@ -93,14 +93,16 @@ def test_export_endpoint_json_default_returns_all_proteins(test_db):
         r = client.get("/proteins/export", params={"format": "json"})
     assert r.status_code == 200
     ids = {row["uniprot_id"] for row in r.json()}
-    assert ids == {"P35637", "PCLIENT", "PNULLROLE", "QREG01"}
+    assert ids == {"P35637", "PCLIENT", "PNULLROLE", "QREG01", "QEXCL1"}
 
 
-def test_export_endpoint_source_db_filter_excludes_inactive_regulator(test_db):
+def test_export_endpoint_source_db_filter_serves_regulators_not_excluded_rows(test_db):
+    """Both DrLLPS proteins in the fixture: QREG01's regulator row ships since
+    R1-ACT-14, QEXCL1's dataset_active=0 row does not."""
     with TestClient(app) as client:
         r = client.get("/proteins/export", params={"source_db": ["DrLLPS"], "format": "json"})
     assert r.status_code == 200
-    assert r.json() == []
+    assert {row["uniprot_id"] for row in r.json()} == {"QREG01"}
 
 
 def test_export_endpoint_tsv_has_attachment_header_and_basic_columns(test_db):
@@ -139,7 +141,8 @@ def test_citation_check_reports_canonical_display_names(test_db):
     """
     conn = sqlite3.connect(test_db)
     conn.execute(
-        "INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES ('condensate_y', 'Cytoplasmic')"
+        "INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, physiological_state) "
+        "VALUES ('condensate_y', 'cytoplasm', 'constitutive')"
     )
     conn.execute(
         "INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES "

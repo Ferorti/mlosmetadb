@@ -7,7 +7,7 @@ def test_advanced_search_mlo_filter_excludes_inactive_only_protein(test_db):
     total, rows = asyncio.run(
         advanced_search(
             gene_name=None, uniprot_id=None, organism=None, taxon_id=None,
-            mlo="nucleolus", role=None, source_db=None,
+            mlo="condensate_excluded", role=None, source_db=None,
             feature_type=None, feature_label=None, feature_accession=None,
             page=1, per_page=50,
         )
@@ -24,5 +24,5 @@ def test_advanced_search_facets_mlo_bucket_excludes_inactive_annotation(test_db)
             feature_type=None, feature_label=None, feature_accession=None,
         )
     )
-    assert facets["by_mlo"].get("nucleolus") is None
+    assert facets["by_mlo"].get("condensate_excluded") is None
     assert facets["by_mlo"].get("stress_granule") == 1

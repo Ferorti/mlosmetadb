@@ -363,7 +363,10 @@ async def get_protein_mlo_annotations(uniprot_id: str) -> list[dict]:
         f"""
         SELECT
             ma.unified_mlo,
-            mv.category,
+            mv.spatial_location,
+            mv.taxonomic_scope,
+            mv.physiological_state,
+            mv.cell_type_context,
             ma.source_db,
             ma.source_mlo,
             ma.unified_role,

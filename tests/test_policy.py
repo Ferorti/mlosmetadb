@@ -9,11 +9,12 @@ sys.path.insert(0, str(REFACTOR_ROOT / "database"))
 
 from policy import (
     CANONICAL_SOURCE_NAMES,
-    EXCLUDED_MLO_CATEGORIES,
+    EXCLUDED_MLO_SPATIAL_LOCATIONS,
     active_annotation_clause,
     canonical_source_case_sql,
     component_role_clause,
-    excluded_mlo_category_clause,
+    excluded_mlo_spatial_clause,
+    regulator_annotation_clause,
 )
 from schemas.intermediate import SOURCE_DBS
 
@@ -27,25 +28,53 @@ def test_active_annotation_clause_custom_alias():
     assert active_annotation_clause("ma2") == "ma2.dataset_active = 1"
 
 
-def test_excluded_mlo_categories_excludes_unspecified_by_default():
+def test_excluded_mlo_spatial_locations_excludes_unspecified_by_default():
     # Reversed 2026-08-05 (frontend-phase audit, commit e799f6a, REFACTOR_LOG.md
-    # Entry 14): 'NotInformed' (category='Unspecified') was leaking into the
-    # /mlos browse grid as if it were a real organelle. Was [] through the api/
-    # phase (Entry 11) -- see policy.py's own docstring for the full rationale.
-    assert EXCLUDED_MLO_CATEGORIES == ["Unspecified"]
+    # Entry 14): 'NotInformed' was leaking into the /mlos browse grid as if it
+    # were a real organelle. Was [] through the api/ phase (Entry 11); moved from
+    # the category value 'Unspecified' to spatial_location='unspecified' by the
+    # four-axis migration -- see policy.py's own docstring for the rationale.
+    assert EXCLUDED_MLO_SPATIAL_LOCATIONS == ["unspecified"]
 
 
-def test_excluded_mlo_category_clause_excludes_unspecified_by_default():
-    clause, params = excluded_mlo_category_clause("mv")
-    assert clause == "mv.category NOT IN (?)"
-    assert params == ["Unspecified"]
+def test_excluded_mlo_spatial_clause_excludes_unspecified_by_default():
+    clause, params = excluded_mlo_spatial_clause("mv")
+    assert clause == "(mv.spatial_location IS NULL OR mv.spatial_location NOT IN (?))"
+    assert params == ["unspecified"]
 
 
-def test_excluded_mlo_category_clause_is_noop_when_empty(monkeypatch):
-    monkeypatch.setattr("policy.EXCLUDED_MLO_CATEGORIES", [])
-    clause, params = excluded_mlo_category_clause("mv")
+def test_excluded_mlo_spatial_clause_keeps_terms_with_an_undetermined_axis():
+    """A NULL axis is a gap, a placeholder value is a curated statement.
+
+    `spatial_location NOT IN ('unspecified')` is NULL for a NULL axis, which in a
+    WHERE conjunct silently drops the row -- the same NULL-unsafety that
+    component_role_clause() exists to avoid. Any term whose axis was never
+    determined has to stay browsable.
+    """
+    clause, _ = excluded_mlo_spatial_clause("mv")
+    assert "IS NULL OR" in clause
+
+
+def test_excluded_mlo_spatial_clause_is_noop_when_empty(monkeypatch):
+    monkeypatch.setattr("policy.EXCLUDED_MLO_SPATIAL_LOCATIONS", [])
+    clause, params = excluded_mlo_spatial_clause("mv")
     assert clause is None
     assert params == []
+
+
+def test_regulator_annotation_clause_keys_on_the_kind_of_claim():
+    """Not on source_db: what makes a row a regulator claim is that a curator
+    assigned the label, not that DrLLPS is the one publishing it."""
+    assert regulator_annotation_clause() == (
+        "(ma.evidence_type = 'curator_assignment' AND ma.source_role = 'Regulator')"
+    )
+    assert "source_db" not in regulator_annotation_clause()
+
+
+def test_regulator_annotation_clause_custom_alias():
+    assert regulator_annotation_clause("x") == (
+        "(x.evidence_type = 'curator_assignment' AND x.source_role = 'Regulator')"
+    )
 
 
 def test_component_role_clause_default_alias():

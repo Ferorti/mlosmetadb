@@ -125,11 +125,35 @@ def test_dataset_active_is_zero_or_one(db):
                       "WHERE dataset_active NOT IN (0, 1)") == 0
 
 
-def test_exclusions_are_only_drllps_regulator_rows(db):
-    """policy.py: dataset_active=0 is a deliberate scope exclusion, and today
-    DrLLPS Regulator is the only one. A NULL role is never a reason to exclude."""
-    assert _count(db, "SELECT COUNT(*) FROM mlo_annotations WHERE dataset_active = 0 "
-                      "AND NOT (source_db = 'DrLLPS' AND source_role = 'Regulator')") == 0
+def test_nothing_is_excluded_from_the_served_dataset(db):
+    """policy.py: dataset_active=0 is a deliberate scope exclusion, and there is
+    no longer any. DrLLPS Regulator was the only case and R1-ACT-14 closed it
+    against us: hiding those 1.389 rows removed 501 proteins from the dataset
+    outright, since a regulator annotation was the only one they had.
+
+    Asserted as an equality against the served count rather than as
+    `COUNT(dataset_active = 0) == 0`, because the old shape of this test
+    (dataset_active=0 rows that are not DrLLPS Regulator) now passes for the
+    wrong reason — it is vacuously true over an empty set. If an exclusion is
+    ever argued for again, this fails and sends the reader to policy.py and to
+    docs/review/findings.csv, which is the point."""
+    assert (_count(db, "SELECT COUNT(*) FROM mlo_annotations WHERE dataset_active = 1")
+            == _count(db, "SELECT COUNT(*) FROM mlo_annotations"))
+
+
+def test_regulator_rows_are_served_with_a_null_role(db):
+    """The reinstatement is two facts, and both have to hold: the rows count
+    (dataset_active=1) and 'regulator' never becomes a unified_role value.
+    What identifies them is (evidence_type, source_role) —
+    policy.regulator_annotation_clause(), which the /mlo/{id} by_role CASE reads."""
+    total, active, roles = db.execute(
+        "SELECT COUNT(*), SUM(dataset_active), COUNT(DISTINCT unified_role) "
+        "FROM mlo_annotations "
+        "WHERE evidence_type = 'curator_assignment' AND source_role = 'Regulator'"
+    ).fetchone()
+    assert total > 0, "no quedan filas de regulador: ¿cambió la etiqueta de DrLLPS?"
+    assert active == total
+    assert roles == 0, "unified_role tiene que seguir siendo NULL en toda fila de regulador"
 
 
 def test_source_mlo_is_never_blank(db):
@@ -158,6 +182,36 @@ def test_every_annotation_has_an_evidence_type(db):
     pair its table does not cover — an upstream change, not a data gap. The
     eight pairs present today were verified exhaustive, so this must stay 0."""
     assert _count(db, "SELECT COUNT(*) FROM mlo_annotations WHERE evidence_type IS NULL") == 0
+
+
+def test_every_served_term_carries_the_mandatory_axes(db):
+    """Mirrors build_db.py::assert_axes_complete() against the shipped DB.
+
+    taxonomic_scope and cell_type_context are NULL-able on purpose (rho_body has
+    nothing to derive the first from; the second applies to 34 of 177 terms by
+    design). The other three are not: a NULL there means mlo_axes.csv fell behind
+    the mapping files and a term shipped unclassified."""
+    assert _count(db, "SELECT COUNT(*) FROM mlo_vocabulary WHERE spatial_location IS NULL "
+                      "OR spatial_location_evidence IS NULL OR physiological_state IS NULL") == 0
+
+
+def test_category_is_gone_from_the_vocabulary(db):
+    """R1-ACT-06 replaced it. Re-adding it would give the classification two
+    representations, which is what the four-axis migration exists to end."""
+    cols = {r[1] for r in db.execute("PRAGMA table_info(mlo_vocabulary)")}
+    assert "category" not in cols
+    assert {"spatial_location", "taxonomic_scope", "physiological_state",
+            "cell_type_context"} <= cols
+
+
+def test_spatial_location_evidence_declares_which_values_were_assigned_by_hand(db):
+    """The audit derived 121 spatial values from the curated v6 category and
+    assigned 56 itself from the organelle's biology, asking explicitly that those
+    56 be reviewed. Storing which is which keeps that request queryable instead of
+    leaving it in prose nobody joins against."""
+    found = {r[0] for r in db.execute(
+        "SELECT DISTINCT spatial_location_evidence FROM mlo_vocabulary")}
+    assert found == {"from_category", "hand_assigned"}
 
 
 def test_evidence_type_values_are_the_five_documented_ones(db):
@@ -191,6 +245,14 @@ def _snapshot(con) -> dict:
         "source_db_count_histogram": dict(q(
             "SELECT CAST(source_db_count AS TEXT), COUNT(*) "
             "FROM protein_summary GROUP BY 1 ORDER BY 1")),
+        # The four axes that replaced `category` (R1-ACT-06). spatial_location is
+        # here rather than all four because it is the one a curator will revise:
+        # 56 of its values were assigned by hand and are pending review, so a
+        # change to any of them shows up as a baseline diff instead of silently.
+        "vocabulary_by_spatial_location": dict(q(
+            "SELECT spatial_location, COUNT(*) FROM mlo_vocabulary GROUP BY 1 ORDER BY 1")),
+        "vocabulary_by_spatial_evidence": dict(q(
+            "SELECT spatial_location_evidence, COUNT(*) FROM mlo_vocabulary GROUP BY 1 ORDER BY 1")),
         "proteins_without_sequence": _count(
             con, "SELECT COUNT(*) FROM proteins WHERE sequence IS NULL"),
         "annotations_with_literal_null_evidence": _count(
@@ -228,6 +290,8 @@ COMPARED_SECTIONS = [
     "annotations_by_dataset_active",
     "annotations_by_evidence_type",
     "source_db_count_histogram",
+    "vocabulary_by_spatial_location",
+    "vocabulary_by_spatial_evidence",
     "proteins_without_sequence",
     "annotations_with_literal_null_evidence",
     "distinct_unified_mlos_in_use",

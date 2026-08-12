@@ -8,7 +8,7 @@ from queries.protein_queries import (
 
 
 def test_get_protein_mlo_annotations_excludes_inactive_row(test_db):
-    rows = asyncio.run(get_protein_mlo_annotations("QREG01"))
+    rows = asyncio.run(get_protein_mlo_annotations("QEXCL1"))
     assert rows == []
 
 
@@ -21,7 +21,7 @@ def test_get_protein_mlo_annotations_includes_active_row(test_db):
 
 def test_get_proteins_page_role_filter_excludes_inactive_only_protein(test_db):
     total, rows = asyncio.run(
-        get_proteins_page(None, None, "nucleolus", None, None, None, None, "asc", 1, 50)
+        get_proteins_page(None, None, "condensate_excluded", None, None, None, None, "asc", 1, 50)
     )
     assert total == 0
     assert rows == []
@@ -29,7 +29,7 @@ def test_get_proteins_page_role_filter_excludes_inactive_only_protein(test_db):
 
 def test_get_proteins_facets_mlo_facet_excludes_inactive_annotation(test_db):
     facets = asyncio.run(get_proteins_facets(None, None, None, None, None, None))
-    assert facets["by_mlo"].get("nucleolus") is None
+    assert facets["by_mlo"].get("condensate_excluded") is None
     assert facets["by_mlo"].get("stress_granule") == 1
 
 
@@ -49,12 +49,16 @@ from queries.protein_queries import get_proteins_export
 def test_get_proteins_export_no_filters_returns_all_proteins(test_db):
     rows = asyncio.run(get_proteins_export(None, None, None, None, None))
     ids = {r["uniprot_id"] for r in rows}
-    assert ids == {"P35637", "PCLIENT", "PNULLROLE", "QREG01"}
+    assert ids == {"P35637", "PCLIENT", "PNULLROLE", "QREG01", "QEXCL1"}
 
 
-def test_get_proteins_export_excludes_inactive_regulator_row(test_db):
+def test_get_proteins_export_serves_regulators_and_still_drops_excluded_rows(test_db):
+    """Both DrLLPS proteins in the fixture hang off one resource, and only one of
+    them ships: QREG01's regulator row is served since R1-ACT-14, QEXCL1's
+    dataset_active=0 row is not. Filtering by source_db has to separate them,
+    which a filter that keyed on the resource could not do."""
     rows = asyncio.run(get_proteins_export(None, None, None, None, ["DrLLPS"]))
-    assert rows == []
+    assert {r["uniprot_id"] for r in rows} == {"QREG01"}
 
 
 def test_get_proteins_export_source_db_filter_is_multi_value(test_db):

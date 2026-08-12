@@ -69,55 +69,133 @@ section).
 
 ---
 
-## `GET /protein/{uniprot_id}` — the `dataset_active=0` case
+## `GET /protein/{uniprot_id}` — the regulator-only case (**reversed 2026-08-12**)
 
-`O23702` was picked specifically because its *only* `mlo_annotations` row is
-`dataset_active=0` (a DrLLPS "Regulator" row):
+`O23702` was picked in the api/ phase because its *only* `mlo_annotations` row was
+`dataset_active=0` (a DrLLPS "Regulator" row), and it returned
+`"mlo_annotations": []` — a protein served with nothing in it. `R1-ACT-14` closed
+that against us: 501 proteins were in exactly this state, indistinguishable from
+proteins no resource reports. Regulator rows are now served.
 
 ```sql
-SELECT uniprot_id, source_db, unified_mlo, source_role, unified_role, dataset_active
+SELECT uniprot_id, source_db, unified_mlo, source_role, unified_role, evidence_type, dataset_active
 FROM mlo_annotations WHERE uniprot_id='O23702';
 ```
 ```
-uniprot_id  source_db  unified_mlo     source_role  unified_role  dataset_active
-----------  ---------  --------------  -----------  ------------  --------------
-O23702      DrLLPS     stress_granule  Regulator                  0
+uniprot_id  source_db  unified_mlo     source_role  unified_role  evidence_type       dataset_active
+----------  ---------  --------------  -----------  ------------  ------------------  --------------
+O23702      DrLLPS     stress_granule  Regulator                  curator_assignment  1
 ```
 
 ```bash
-curl "http://127.0.0.1:8010/protein/O23702"
+curl "http://127.0.0.1:8018/protein/O23702"
 ```
 
-Real, full response:
+Real response, `mlo_annotations` and the identifying fields only (re-measured
+2026-08-12 against the regenerated DB):
 
 ```json
 {
     "uniprot_id": "O23702",
-    "gene_name": null,
-    "protein_name": null,
-    "organism": null,
-    "taxon_id": null,
-    "sequence_length": null,
-    "disorder_mobidb_lite_dc": 0.267,
-    "disorder_alphafold_dc": 0.27,
-    "mlo_annotations": [],
-    "sequence_features": {
-        "idrs": [], "domains": [], "lcds": [], "morfs": [], "plddt_regions": []
-    },
-    "ppi": {
-        "total_partners": 0,
-        "partners_in_mlosmetadb": 0,
-        "interactions": null
-    }
+    "gene_name": "AN",
+    "protein_name": "C-terminal binding protein AN",
+    "organism": "Arabidopsis thaliana",
+    "taxon_id": 3702,
+    "sequence_length": 636,
+    "mlo_annotations": [
+        {
+            "spatial_location": "cytoplasm",
+            "taxonomic_scope": "pan_Fungi+Metazoa",
+            "physiological_state": "stress_induced",
+            "cell_type_context": null,
+            "unified_mlo": "stress_granule",
+            "source_db": "DrLLPS",
+            "source_mlo": "Stress granule",
+            "unified_role": null,
+            "evidence_pmids": ["28659951"]
+        }
+    ]
 }
 ```
 
-This is the domain rule made concrete: `O23702`'s regulator-only row has
-`unified_role IS NULL` *and* `dataset_active=0`, and the API correctly
-returns `mlo_annotations: []` — the row is excluded from what's served, but
-it is still present in the raw DB for provenance (confirmed by the SQL
-query above; the API never deletes it, it just doesn't surface it by
-default).
+Two things this shows at once. `unified_role` is still `null` — "regulator" never
+became a stored role value; it is derived at read time from
+`(evidence_type, source_role)`. And the four axis fields have replaced `category`
+on every annotation object (`R1-ACT-06`).
+
+---
+
+## `GET /mlo/{unified_mlo}` — the three `by_role` buckets
+
+```bash
+curl "http://127.0.0.1:8018/mlo/stress_granule?per_page=50"
+```
+
+Real output (`stats` only):
+```json
+"by_role": { "driver": 209, "regulator": 418, "component": 2595 },
+"total_proteins": 2836
+```
+
+Those 418 proteins used to be counted as `component`s of the stress granule,
+which asserts residency DrLLPS never claimed. The buckets do **not** sum to
+`total_proteins`: they bucket annotation rows while the count is distinct
+proteins, so a protein one resource calls a driver and another calls a regulator
+appears in both.
+
+`/mlo/{id}` is the only endpoint with this third bucket. `/stats` still folds
+regulators into `unknown` and `/proteins`' facets into `component` — measured the
+same day:
+
+```
+/stats      .mlo_annotations.by_role  {"client": 12180, "driver": 2029, "unknown": 11480}
+/proteins   .facets.by_role           {"driver": 2029, "component": 13665}
+```
+
+---
+
+## `GET /mlos` — the four axes and their provenance
+
+```bash
+curl "http://127.0.0.1:8018/mlos?spatial_location=nucleus&physiological_state=stress_induced"
+```
+
+Two orthogonal axes conjoin, which the single `category` column could not express:
+that query returns **5** of the 176 listed terms (`NotInformed` is hidden by
+`policy.EXCLUDED_MLO_SPATIAL_LOCATIONS`, exactly as `category='Unspecified'` used
+to be). Real items from `curl "http://127.0.0.1:8018/mlos"`:
+
+```json
+{ "unified_mlo": "p_body", "spatial_location": "cytoplasm",
+  "spatial_location_evidence": "from_category", "taxonomic_scope": "Metazoa",
+  "taxonomic_support_n": 1503, "physiological_state": "constitutive",
+  "cell_type_context": null, "protein_count": 1507, "driver_count": 90 }
+
+{ "unified_mlo": "mast_cell_granule", "spatial_location": "cytoplasm",
+  "spatial_location_evidence": "hand_assigned", "taxonomic_scope": "Metazoa",
+  "taxonomic_support_n": 529, "physiological_state": "constitutive",
+  "cell_type_context": "mast_cell", "protein_count": 533, "driver_count": 0 }
+
+{ "unified_mlo": "aggresome", "spatial_location": "cytoplasm",
+  "spatial_location_evidence": "from_category", "taxonomic_scope": "Bacteria",
+  "taxonomic_support_n": 6, "physiological_state": "stress_induced",
+  "cell_type_context": null, "protein_count": 6, "driver_count": 0 }
+
+{ "unified_mlo": "rho_body", "spatial_location": "cytoplasm",
+  "spatial_location_evidence": "hand_assigned", "taxonomic_scope": null,
+  "taxonomic_support_n": 0, "physiological_state": "constitutive",
+  "cell_type_context": null, "protein_count": 1, "driver_count": 0 }
+```
+
+`aggresome` is why `taxonomic_support_n` ships next to the scope rather than
+nowhere: `Bacteria` is a correct derivation from this dataset's six annotated
+*E. coli* proteins, and a wrong statement about the organelle, which in the
+literature is a microtubule-dependent mammalian structure. `rho_body` shows the
+NULL case — its single protein is deleted in UniProt, so there is nothing to
+derive from (`R3-OWN-rho-body`).
+
+`?category=` is gone with the column. It is not translated, and FastAPI ignores
+unknown query params, so an old client passing it gets the unfiltered list.
 
 ---
 
@@ -148,26 +226,31 @@ Real per-protein `unified_role` distributions, extracted from `/protein/{id}`
 responses across the standard `TEST_PROTEINS` plus the regulator-only
 protein above:
 
+Re-measured 2026-08-12 against the regenerated DB. The api/-phase capture of this
+block predated both the PhaSepDB double-ingestion fix and the accession merge, so
+its per-protein totals were several times too high (FUS read 1036 rows against
+today's 37); these are the current numbers:
+
 ```
 === /protein/P35637 (FUS) ===
-total annotations: 1036
-unified_role distribution: {'driver': 1018, None: 12, 'client': 6}
+total annotations: 37
+unified_role distribution: {None: 12, 'driver': 21, 'client': 4}
 
 === /protein/P09651 (hnRNP A1) ===
-total annotations: 159
-unified_role distribution: {'driver': 137, 'client': 12, None: 10}
+total annotations: 30
+unified_role distribution: {'client': 8, 'driver': 12, None: 10}
 
 === /protein/P38919 (eIF4A3) ===
-total annotations: 23
-unified_role distribution: {'client': 19, None: 4}
+total annotations: 13
+unified_role distribution: {'client': 9, None: 4}
 
 === /protein/Q9NQC3 (RBM14) ===
 total annotations: 2
-unified_role distribution: {'client': 1, None: 1}
+unified_role distribution: {None: 1, 'client': 1}
 
 === /protein/O23702 (regulator-only) ===
-total annotations: 0
-unified_role distribution: {}
+total annotations: 1
+unified_role distribution: {None: 1}
 ```
 
 `None` above is Python's rendering of JSON `null` — every `mlo_annotations[]`

@@ -23,12 +23,17 @@ that inconsistency into two canonical categories:
 - **MLO Component**: annotated presence in/association with an MLO, without evidence
   that the protein drives phase separation.
 
-**Regulators (as labeled by DrLLPS) are excluded entirely** — not mapped to either
-category, not included in the dataset's role field.
+**Regulators (as labeled by DrLLPS) are a third category the role field does not
+model.** They are *not* excluded from the dataset — that was reversed on 2026-08-12,
+see "Driver/Client/Regulator scope" below — they simply carry no driver/client
+verdict, because regulating an organelle's assembly is neither driving phase
+separation nor being detected inside the condensate.
 
 `unified_role` has exactly two valid non-null values: `'driver'` and `'client'`.
-`NULL` is allowed (no role data, e.g. CD-CODE). `'regulator'` must never appear in
-v2 schema or API output.
+`NULL` is allowed (no role data, e.g. CD-CODE; or a regulator call). `'regulator'`
+must never appear as a **stored** value or as a per-row `unified_role` in API output.
+It does appear as an aggregate **bucket name** in `/mlo/{id}`'s `by_role`, computed at
+read time from `(evidence_type, source_role)` — a summary key, not a role value.
 
 "MLO Component" (surfaced to users as "client" in code/API) is acknowledged
 internally as an imprecise label — a protein can be structurally part of an MLO
@@ -47,7 +52,7 @@ The `source_role` → `unified_role` mapping is fixed per source, not inferred p
 | PhaSepDB | `mlo_entries` file | `client` |
 | PhaSepDB | `detail_database` file | `driver` |
 | DrLLPS | `Scaffold` | `driver` |
-| DrLLPS | `Regulator` | excluded (not inserted) |
+| DrLLPS | `Regulator` | `NULL` (served; no driver/client verdict) |
 | LLPSDB | (all rows) | `driver` (default) |
 | PhasePro | (all rows) | `driver` (default) |
 | CD-CODE | (all rows) | `NULL` (no structured role data in source) |
@@ -202,9 +207,22 @@ wrong as a result (silently dropped into a broken `'unmapped'` role string inste
 of a clean exclusion). The corrected rule:
 
 - Regulator rows from DrLLPS **stay in `mlo_annotations`** (full provenance is
-  never discarded at the pipeline stage) with `unified_role = NULL` and
-  `dataset_active = 0` — present in the source-level table, excluded from the
-  served/counted MLOsMetaDB dataset by default. See `SCHEMA.md` for the column.
+  never discarded at the pipeline stage) with `unified_role = NULL`.
+- **They are served (`dataset_active = 1`) since 2026-08-12.** They carried
+  `dataset_active = 0` until then, and the external biological audit closed that
+  against us (`R1-ACT-14`): the exclusion did not just hide a weak claim, it
+  removed **501 proteins** from the served dataset entirely, because a regulator
+  annotation was the only annotation they had. Hiding an assertion is defensible;
+  making the protein that carries it indistinguishable from a protein no source
+  reports is not. There is no `dataset_active = 0` row in the database today —
+  see `SCHEMA.md` and `policy.py`.
+- What identifies a regulator row is `evidence_type = 'curator_assignment'`
+  together with `source_role = 'Regulator'`
+  (`policy.regulator_annotation_clause()`), and the claim it makes is weak in a
+  specific way: DrLLPS assigns the role **per protein**, so the same label
+  propagates to every MLO of that protein and is not a per-compartment assertion.
+  `/mlo/{id}` counts these in their own `by_role` bucket rather than as
+  components, since "component" would assert residency the source never claimed.
 - CD-CODE rows get `unified_role = NULL` and `dataset_active = 1` — no role
   signal, but still part of the served dataset (CD-CODE contributes MLO
   membership, just not role).
@@ -217,7 +235,8 @@ of a clean exclusion). The corrected rule:
 An earlier draft of this file listed `NotInformed` as a value to be excluded when
 building `mlo_vocabulary`. That's wrong — all proteins with `NotInformed` rows must
 stay in the database. `NotInformed` is a deliberate, curated vocabulary entry
-(`category = 'Unspecified'`, see `mlo_definitions.csv`) for sources that gave no
+(`spatial_location = 'unspecified'` since the four-axis migration, `category =
+'Unspecified'` before it — see `mlo_definitions.csv`) for sources that gave no
 specific MLO name. It is **not** in the discard list. The discard list for
 `mlo_vocabulary`/`mlo_annotations` at build time is only:
 `DISCARD`, `NULL` (literal string), `synthetic_condensate`, empty string.

@@ -10,6 +10,64 @@ para una fase posterior.
 Ver [REFACTOR_LOG.md](REFACTOR_LOG.md) para el detalle paso a paso de qué se
 copió, qué se dejó afuera, y por qué.
 
+## 2026-08-12 — reguladores servidos y la categoría en cuatro ejes
+
+Las dos acciones que la ronda 2 había dejado pendientes por «tocan la API»
+(`mlo_mapping_decisions.md` §12.5), hechas en el mismo pase porque comparten ese
+paso. Detalle y cifras en §13; el estado de cada hallazgo, en
+`docs/review/findings.csv`.
+
+**Los reguladores de DrLLPS entran al dataset servido** (`R1-ACT-14`). Estaban en
+`dataset_active = 0` desde el diseño original, y el costo medido no era ocultar
+1.389 anotaciones: **501 de las 977 proteínas con fila de regulador no tenían
+ninguna otra fila**, así que no existían en la base servida. Ocultar una
+afirmación débil se defiende; hacer que la proteína que la sostiene sea
+indistinguible de una que ninguna fuente reporta, no. Anotaciones servidas 34.343
+→ 35.732 y proteínas servidas 15.193 → 15.694, con `unified_role` sin un solo
+cambio (driver 3.068, client 17.544, NULL 15.120), porque regulador sigue sin ser
+un valor de rol: lo identifica `evidence_type = curator_assignment` más
+`source_role = Regulator`. El test de baseline lo corroboró desde un ángulo que no
+había buscado —el bucket `source_db_count = 0` de `protein_summary` pasó de 501 a
+cero, que son las mismas proteínas contadas de otra forma.
+
+De paso quedó fijada la definición que la ronda 3 marcó ambigua
+(`R3-ROL-regulador-definicion`): son **501** y no 502, y la lectura alternativa
+540 y no 541. La diferencia es la fusión de accesiones de `R3-INT-sin-organismo`,
+que corrió entre las dos mediciones.
+
+**`category` se reemplaza por cuatro ejes** (`R1-ACT-06` / `R2-DEC-axes`),
+cargados de un archivo de curación nuevo, `database/mappings/mlo_axes.csv`, con
+las 177 entradas que clasificó la ronda 3. Lo que gana el esquema no es tener
+cuatro columnas en vez de una: la categoría vivía en `mlo_mapping.csv`, indexado
+por **etiqueta fuente**, así que un canónico con cinco nombres fuente podía
+cargar cinco categorías contradictorias —el defecto que §11.5 arregló a mano y que
+el loader vigilaba con un chequeo de conflictos. El archivo nuevo está indexado
+por canónico, así que la contradicción no es expresable y el chequeo se retira
+porque su objeto desapareció.
+
+Dos cosas que agregué a lo que entregó la auditoría, ambas para no perder sus
+propias advertencias: `spatial_location_evidence` distingue los 121 valores
+derivados de la categoría vieja de los **56 que asignaron a mano** y piden que
+revisemos (abierto en `R3-OWN-spatial-56`), y `taxonomic_support_n` se sirve al
+lado del eje taxonómico porque 63 de los 177 términos lo apoyan en dos proteínas o
+menos. El caso que muestra por qué eso último no es opcional es `aggresome`, que
+sale `Bacteria`: correcto como derivación —sus 6 proteínas anotadas son todas de
+*E. coli*— y falso como afirmación sobre el orgánulo, que en la literatura es una
+estructura de mamífero. El eje describe este dataset, no el orgánulo, y sin el
+número al lado se lee como lo segundo.
+
+De arrastre, el eje derivado cierra dos de los tres casos de `R1-ACT-17` sin que
+nadie emita un juicio: `refractile_body` deja de ser Procariota (su única proteína
+es un apicomplejo) y `twn_body` deja de ser Vegetal (sus tres proteínas son
+humanas). El tercero, `rho_body`, no se automatiza y queda abierto
+(`R3-OWN-rho-body`).
+
+**El frontend queda roto a propósito.** `MlosPage.vue` y `MloBadges.vue` leen
+`mlo.category`, que ya no existe, y `?category=` no se traduce: sus valores
+mezclaban lugares con linajes, tipos celulares y procesos, y cada uno vive ahora
+en un eje distinto. La advertencia y lo que hay que reconstruir están en
+`frontend/CLAUDE.md`.
+
 ## 2026-08-10 — libro de hallazgos para el intercambio con Claude Science
 
 El intercambio con la auditoría biológica externa llevaba dos rondas

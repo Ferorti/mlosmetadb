@@ -22,9 +22,20 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 import build_db
 
+# `Categoria` is still in the file (it is the provenance of the spatial axis for
+# 121 of the 177 terms) but load_mlo_vocabulary() no longer reads it: the
+# classification comes from mlo_axes.csv, keyed by canonical instead of by source
+# label. Two source names for one canonical with disagreeing categories used to
+# be a hard failure; here it is simply not expressible.
 MAPPING_CSV = """Nombre Original,Nombre Sugerido,Categoria,Justificacion Biologica
 Nucleolus,nucleolus,Nuclear,test entry
+Nucleoli,nucleolus,Citoplasma,same canonical, contradictory old category
 Stress granule,stress_granule,Citoplasma,test entry
+"""
+
+AXES_CSV = """unified_mlo,spatial_location,spatial_location_evidence,taxonomic_scope,taxonomic_support_n,physiological_state,cell_type_context
+nucleolus,nucleus,from_category,Metazoa,2,constitutive,
+stress_granule,cytoplasm,from_category,,,stress_induced,neuron
 """
 
 DEFINITIONS_CSV = """unified_mlo,source_db,source_name,definition
@@ -49,6 +60,7 @@ def build(tmp_path, monkeypatch):
     (db_dir / "mappings").mkdir(parents=True)
     (db_dir / "final").mkdir()
     (db_dir / "mappings" / "mlo_mapping.csv").write_text(MAPPING_CSV)
+    (db_dir / "mappings" / "mlo_axes.csv").write_text(AXES_CSV)
     (db_dir / "final" / "mlo_definitions.csv").write_text(DEFINITIONS_CSV)
     (db_dir / "mlosmetadb.tsv").write_text(TSV_COLUMNS + TSV_ROWS)
 
@@ -147,3 +159,85 @@ def test_rerun_picks_up_a_changed_dataset(build):
     rows = con.execute("SELECT uniprot_id, source_db, unified_role FROM mlo_annotations").fetchall()
     con.close()
     assert rows == [("P35637", "PhaSepDB", "driver")]
+
+
+# ---------------------------------------------------------------------------
+# The four axes (R1-ACT-06): mlo_axes.csv replaced `Categoria` as the source of
+# the vocabulary's classification, and the loader's refusals moved with it.
+# ---------------------------------------------------------------------------
+
+def test_the_axes_land_on_the_vocabulary(build):
+    build()
+    con = sqlite3.connect(build.db_path)
+    rows = dict((r[0], r[1:]) for r in con.execute(
+        "SELECT unified_mlo, spatial_location, spatial_location_evidence, taxonomic_scope, "
+        "taxonomic_support_n, physiological_state, cell_type_context FROM mlo_vocabulary"))
+    assert "category" not in {c[1] for c in con.execute("PRAGMA table_info(mlo_vocabulary)")}
+    con.close()
+    assert rows["nucleolus"] == ("nucleus", "from_category", "Metazoa", 2, "constitutive", None)
+    # Empty axis fields become NULL, not '': rho_body's taxonomic scope is a real
+    # gap (its only protein is deleted in UniProt) and cell_type_context is absent
+    # by design for the 143 terms where cell type is not part of the definition.
+    assert rows["stress_granule"] == ("cytoplasm", "from_category", None, None, "stress_induced", "neuron")
+
+
+def test_two_mapping_rows_for_one_canonical_no_longer_conflict(build):
+    """MAPPING_CSV gives nucleolus two source names with contradictory Categoria
+    values. Before the migration that aborted the load; now the column is not
+    read and the axes file is one-to-one with the canonical."""
+    build()
+    con = sqlite3.connect(build.db_path)
+    n = con.execute("SELECT COUNT(*) FROM mlo_vocabulary WHERE unified_mlo='nucleolus'").fetchone()[0]
+    con.close()
+    assert n == 1
+
+
+def test_a_duplicated_axes_row_is_fatal(build):
+    (build_db.MAP_DIR / "mlo_axes.csv").write_text(
+        AXES_CSV + "nucleolus,cytoplasm,hand_assigned,Fungi,9,constitutive,\n")
+    with pytest.raises(SystemExit, match="repite 'nucleolus'"):
+        build()
+
+
+def test_axes_for_a_term_no_mapping_produces_is_fatal(build):
+    """A stale axes file is a defect, not a harmless extra row: it means the
+    classification and the mapping disagree about which terms exist."""
+    (build_db.MAP_DIR / "mlo_axes.csv").write_text(
+        AXES_CSV + "retired_body,nucleus,hand_assigned,Metazoa,1,constitutive,\n")
+    with pytest.raises(SystemExit, match="retired_body"):
+        build()
+
+
+def test_a_served_term_without_axes_is_fatal(build):
+    """The inverse gap. A term with no axes row is tolerated while it reaches no
+    annotation (three do, and get pruned), but never once it ships."""
+    (build_db.MAP_DIR / "mlo_axes.csv").write_text(
+        "\n".join(AXES_CSV.splitlines()[:2]) + "\n")   # header + nucleolus only
+    with pytest.raises(SystemExit, match="sin ejes obligatorios"):
+        build()
+
+
+def test_migration_replaces_category_on_an_existing_db(build):
+    """The shipped DB has the old column and 250 MB of fetched data that must not
+    be rebuilt from scratch, so the column change is an ALTER, not a re-CREATE."""
+    build()
+    con = sqlite3.connect(build.db_path)
+    con.executescript("""
+        DROP TABLE mlo_annotations;
+        DROP TABLE mlo_definitions;
+        ALTER TABLE mlo_vocabulary DROP COLUMN spatial_location;
+        ALTER TABLE mlo_vocabulary ADD COLUMN category TEXT;
+        UPDATE mlo_vocabulary SET category = 'Nuclear';
+    """)
+    con.commit()
+    con.close()
+
+    build()
+
+    con = sqlite3.connect(build.db_path)
+    cols = {c[1] for c in con.execute("PRAGMA table_info(mlo_vocabulary)")}
+    spatial = con.execute(
+        "SELECT spatial_location FROM mlo_vocabulary WHERE unified_mlo='nucleolus'").fetchone()[0]
+    con.close()
+    assert "category" not in cols
+    assert spatial == "nucleus"

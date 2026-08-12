@@ -949,3 +949,187 @@ valor fuera de los cinco.
   ningún otro recurso las corrobora, a diferencia de las otras 1.360, y la
   devolución señala que P17152/TMEM11 es mitocondrial (§12.1)
   (`R2-OWN-psd-orphans`).
+
+---
+
+## 13. Revisión v7 — reguladores servidos y categoría en cuatro ejes (2026-08-12)
+
+Las dos acciones que la ronda 2 dejó pendientes por «tocan la API» (§12.5), hechas
+juntas porque comparten ese pase. Tercera devolución en
+`docs/review/ronda3/TERCERA_DEVOLUCION.md`; el estado de cada hallazgo, en
+`docs/review/findings.csv`.
+
+### 13.1 Los reguladores de DrLLPS entran al dataset servido
+
+`compute_role_and_active()` devolvía `(None, 0)` para `DrLLPS` + `Regulator`.
+Ahora devuelve `(None, 1)`: las filas se sirven y se cuentan.
+
+**Por qué se revierte la exclusión.** El costo medido no era ocultar 1.389
+anotaciones sino borrar proteínas enteras: **501 de las 977 proteínas con fila de
+regulador no tenían ninguna otra fila**, así que no aparecían en la base servida
+en absoluto. Excluir una afirmación débil es defendible; hacer desaparecer la
+proteína que la sostiene no lo es, porque la ausencia no se distingue de «esta
+proteína no está en ninguna fuente».
+
+**Corrección de cifra respecto de la ronda 3.** Su medición y el libro decían
+**502**; contra la base viva son **501**, y la lectura alternativa («proteínas sin
+ninguna fila con rol») es **540** y no 541. La diferencia es la fusión de
+accesiones de `R3-INT-sin-organismo`, aplicada entre las dos mediciones: una de
+esas proteínas quedó fusionada con una sucesora que sí tiene filas activas. Se
+fija en el libro la lectura de las **501** (`R3-ROL-regulador-definicion`), que es
+la que mide qué se recupera; las 39 restantes de la otra lectura están servidas y
+sin rol, que es el problema distinto que ya describe `R1-ROL-02`.
+
+**`unified_role` sigue en NULL.** No se agrega `'regulator'` como tercer valor
+almacenado: regulador no es un veredicto driver/client, y meterlo en esa columna
+obligaría a toda consulta de rol a saber que uno de sus tres valores significa
+otra cosa. Lo que identifica la fila es la combinación
+`evidence_type = 'curator_assignment'` + `source_role = 'Regulator'`, expuesta
+como `policy.regulator_annotation_clause()`. La clave es el **tipo de
+afirmación** y no el recurso: si otra fuente empieza a emitir llamados de
+regulador, entra sin editar nada.
+
+**Efecto sobre lo servido**, verificado contra la base regenerada:
+
+| | antes | después |
+|---|---:|---:|
+| anotaciones servidas (`dataset_active = 1`) | 34.343 | **35.732** |
+| proteínas con al menos una anotación servida | 15.193 | **15.694** |
+| filas con `dataset_active = 0` | 1.389 | **0** |
+| `unified_role` (driver / client / NULL) | 3.068 / 17.544 / 15.120 | **sin cambio** |
+| `protein_summary.source_db_count = 0` | 501 | **0** |
+
+La última fila es la misma medición desde otro ángulo: el bucket de proteínas con
+cero recursos en el dataset servido desaparece porque ya no existe la proteína
+servida sin ninguna fila.
+
+**Un tercer bucket en la API, y solo en un endpoint.** El `CASE` de
+`get_mlo_stats()` mandaba a `component` todo lo que no fuera driver, así que las
+1.389 filas se contaban como componentes del orgánulo — exactamente lo que la
+fuente no afirma. Ahora tiene tres ramas: `driver`, `regulator`, `component`.
+`/stats` y las facetas de `/proteins` quedan como estaban por decisión explícita:
+en `/stats` los reguladores caen en `unknown` junto a las filas sin rol de
+CD-CODE, y en las facetas de `/proteins` cuentan como `component` porque esa
+faceta se deriva de `protein_summary.has_driver`. Los tres vocabularios de
+`by_role` ya eran distintos entre sí y siguen documentados en `api/CLAUDE.md`;
+unificarlos es otra tarea, no un efecto colateral de esta.
+
+**`dataset_active` se queda sin ninguna fila en 0.** La columna y
+`policy.active_annotation_clause()` no se retiran: la regla que codifican sigue
+vigente (una exclusión deliberada, argumentada, con fila en el libro), y hoy
+simplemente no hay ninguna. El test que afirmaba «las únicas filas excluidas son
+DrLLPS Regulator» pasaba a ser cierto por vacuidad, así que se reescribió como
+igualdad contra el total servido.
+
+### 13.2 `category` se reemplaza por cuatro ejes
+
+`mlo_vocabulary.category` desaparece. En su lugar, cuatro columnas más dos de
+procedencia, cargadas desde el archivo de curación nuevo
+**`database/mappings/mlo_axes.csv`** (177 filas, una por canónico):
+
+| columna | cubre | valores |
+|---|---:|---|
+| `spatial_location` | 177/177 | `cytoplasm` 87, `nucleus` 51, `plasma_membrane` 18, `cytoskeleton` 11, `extracellular` 3, `mitochondrion` 2, `plastid` 2, y uno cada uno de `nucleus_and_cytoplasm`, `in_vitro`, `unspecified` |
+| `taxonomic_scope` | 176/177 | `Metazoa` 116, `Fungi` 16, `Bacteria` 13, `Viridiplantae` 9, `Protista` 3, `Virus` 2, más las etiquetas `pan_*` 17; NULL solo en `rho_body` |
+| `physiological_state` | 177/177 | `constitutive` 153, `stress_induced` 10, `infection` 7, `pathological` 6, `in_vitro` 1 |
+| `cell_type_context` | 34/177 | `germline` 16, `neuron` 9, y 9 tipos con uno cada uno; NULL en los otros 143 **por diseño** |
+| `spatial_location_evidence` | 177/177 | `from_category` 121, `hand_assigned` 56 |
+| `taxonomic_support_n` | 177/177 | proteínas con organismo conocido detrás del eje taxonómico; 63 términos tienen ≤2 y 42 tienen 1 |
+
+La clasificación es la de `docs/review/ronda3/axes_classification.csv`, adoptada
+como punto de partida según `R2-DEC-axes`. Tres cosas cambian al pasarla al
+archivo de curación, y ninguna es cosmética:
+
+1. **Se agrega `spatial_location_evidence`.** La auditoría derivó 121 valores de
+   la categoría v6 (donde ya era una localización) y **asignó 56 a mano** desde la
+   biología del orgánulo, pidiendo explícitamente que los revisemos. Guardar
+   cuál es cuál convierte ese pedido en algo consultable, en vez de una
+   advertencia en prosa que nadie cruza contra la tabla. Los 56 quedan abiertos
+   en el libro (`R3-OWN-spatial-56`).
+2. **`taxonomic_scope = 'sin_dato'` pasa a NULL.** Es un hueco real —la única
+   proteína de `rho_body`, R7KIR7, está borrada en UniProt— y no un valor curado.
+   `cell_type_context` vacío también es NULL, pero por el motivo opuesto: el eje
+   no aplica. Las dos ausencias son NULL en la DB y la diferencia queda
+   documentada, no codificada.
+3. **`spatial_location = 'unspecified'` NO pasa a NULL.** Es la única fila con ese
+   valor (`NotInformed`) y ahí sí es una afirmación curada: el término nombra una
+   localización ausente. La distinción importa porque
+   `policy.EXCLUDED_MLO_SPATIAL_LOCATIONS` la usa para sacar `NotInformed` de la
+   grilla de `/mlos` —el mismo alcance estrecho que tenía con
+   `category='Unspecified'`— y un término cuyo eje nunca se determinó no debe
+   desaparecer de la grilla por un hueco de curación.
+
+**Qué gana el esquema, más allá de tener cuatro columnas.** La categoría vivía en
+`mlo_mapping.csv`, que está indexado por **etiqueta fuente**: un canónico con
+cinco nombres fuente tenía cinco categorías posibles y podían contradecirse, que
+es el defecto que §11.5 arregló a mano y que el loader vigilaba con un chequeo de
+conflictos. `mlo_axes.csv` está indexado por **canónico**, así que la
+contradicción no es expresable: dos filas para el mismo término son un error
+fatal del loader. El chequeo de conflictos se retira porque su objeto desapareció.
+
+Las columnas `Categoria`/`categoria` **siguen en los archivos de mapeo y ya no se
+leen**: son la procedencia de 121 de los 177 valores espaciales. Repoblar
+`mlo_vocabulary` desde ellas sería reintroducir la representación que esta
+migración termina.
+
+**Dos refusals nuevos en el loader**, en el mismo espíritu que los tres de §11:
+
+- Un término clasificado en `mlo_axes.csv` que ningún archivo de mapeo produce es
+  fatal: significa que el archivo de ejes quedó viejo.
+- Un término **servido** sin `spatial_location`, `spatial_location_evidence` o
+  `physiological_state` es fatal (`assert_axes_complete()`, después de la poda).
+  Declarar un canónico sin fila de ejes no lo es: los tres que hoy no llegan a
+  ninguna anotación (`adhesin_nanodomain`, `npr1_condensate`, `rosenthal_fiber`)
+  se podan en el mismo run y nunca se sirven.
+
+**Lo que el eje taxonómico dice y lo que no.** Está derivado de los organismos de
+las proteínas anotadas, así que es una afirmación sobre **este dataset** y no
+sobre el orgánulo. El caso que lo muestra sin ambigüedad es `aggresome`, que sale
+`Bacteria` porque sus 6 proteínas anotadas son todas de *E. coli*, aunque el
+agresoma de la literatura es una estructura de mamífero dependiente de
+microtúbulos. La derivación es correcta y la lectura ingenua no: por eso
+`taxonomic_support_n` se sirve al lado y no aparte, como pidió la ronda 3.
+
+De arrastre, el eje derivado cierra dos de los tres casos de `R1-ACT-17` sin que
+nadie emita un juicio: `refractile_body` deja de estar en `Procariota` (su única
+proteína es de *Eimeria tenella*, un apicomplejo → `Protista`) y `twn_body` deja
+de estar en `Vegetal` (sus tres proteínas —NRBP1, TSC22D2, WNK1— son humanas →
+`Metazoa`). El tercero, `rho_body`, no se automatiza y queda abierto
+(`R3-OWN-rho-body`): hay que recurar R7KIR7 a mano o retirar el término.
+
+**Contrato de la API.** `category` sale de las respuestas y `?category=` deja de
+existir; entran los cuatro campos en `/mlo/{id}`, `/mlos`, `/search` y las
+anotaciones de `/protein/{id}`, más `spatial_location_evidence` y
+`taxonomic_support_n` en los dos primeros. `/mlos` acepta un filtro por eje, y
+los ejes conjugan: `?spatial_location=nucleus&physiological_state=stress_induced`
+devuelve 5 términos, que es la pregunta que una columna única no podía hacer. No
+se mapea `?category=` a nada: sus valores mezclaban lugares (`Nuclear`) con
+linajes (`Procariota`), tipos celulares (`Neuronal`) y procesos (`Autofagia`), y
+cada uno de esos vive ahora en un eje distinto. El frontend se reconstruye contra
+el contrato nuevo; `MlosPage.vue` y `MloBadges.vue` son los dos archivos que leen
+`mlo.category`.
+
+### 13.3 Lo que esta revisión NO hace
+
+> El inventario completo y su estado vive en `docs/review/findings.csv`
+> (`python3 scripts/review_ledger.py --check`). Esta sección explica el
+> razonamiento; el libro lleva la cuenta.
+
+- **Revisar los 56 valores espaciales asignados a mano** (`R3-OWN-spatial-56`).
+  Se adoptan y se marcan; no se auditan uno por uno.
+- **Recurar o retirar `rho_body`** (`R3-OWN-rho-body`), lo único de `R1-ACT-17`
+  que no cierra la derivación.
+- **Unificar los tres vocabularios de `by_role`.** Solo `/mlo/{id}` distingue
+  reguladores; `/stats` y las facetas de `/proteins` no.
+- **`functional_process` como quinto eje.** La ronda 3 avisa que
+  `mast_cell_granule` (533 filas) recupera el tipo celular vía
+  `cell_type_context` pero pierde el proceso secretor, y que `fip200_puncta`,
+  `midbody_granule` y `liquid_dyrk3_speckle` no los captura ningún eje. Con
+  cuatro ejes eso sigue perdido.
+- **Sacar `NotInformed` e `in_vitro_droplet` del vocabulario** (`R1-ACT-10`,
+  `R1-ACT-11`). `NotInformed` sigue siendo un término del vocabulario, ahora con
+  `spatial_location = 'unspecified'`, oculto solo de la grilla de `/mlos`.
+- Todo lo que §12.5 dejaba pendiente y esta revisión no toca: los 53 casos del
+  lote, los 3 que requieren la fuente, `microtubule_plus_end`, las 3 filas de
+  *Danio*, la tabla de evidencia con clave foránea y las 6 proteínas huérfanas de
+  `postsynaptic_density`.

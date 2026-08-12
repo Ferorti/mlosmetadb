@@ -106,7 +106,10 @@ async def search(
 
     mlo_hits = [SearchMloHit(
         unified_mlo=r["unified_mlo"],
-        category=r.get("category"),
+        spatial_location=r.get("spatial_location"),
+        taxonomic_scope=r.get("taxonomic_scope"),
+        physiological_state=r.get("physiological_state"),
+        cell_type_context=r.get("cell_type_context"),
         match_field=r.get("match_field", "unified_mlo"),
     ) for r in mlos]
 

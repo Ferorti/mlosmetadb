@@ -12,6 +12,45 @@ class ErrorResponse(BaseModel):
     message: str
 
 
+class MloAxes(BaseModel):
+    """The four orthogonal axes that replaced `category` (R1-ACT-06).
+
+    Mixed into every model that used to carry `category`, so the four travel
+    together wherever the one used to. Values come straight from
+    mlo_vocabulary — the API classifies nothing at read time.
+
+    `taxonomic_scope` is NULL only for rho_body (nothing to derive it from) and
+    `cell_type_context` for the 143 terms where cell type is not part of the
+    organelle's definition. Neither absence is an error.
+    """
+    spatial_location: str | None = None
+    taxonomic_scope: str | None = None
+    physiological_state: str | None = None
+    cell_type_context: str | None = None
+
+
+class MloAxesWithProvenance(MloAxes):
+    """The axes plus the two fields that say how much to trust two of them.
+
+    Carried by /mlos and /mlo/{id}, where the axis is the subject of the
+    response, and not by per-annotation objects, where it is a badge.
+
+    - `spatial_location_evidence`: `from_category` for the 121 terms whose value
+      was derived from the curated v6 category, `hand_assigned` for the 56 where
+      the category named a lineage, a process or a cell type instead of a place
+      and the auditor assigned the location from the organelle's biology. Those
+      56 are pending curator review (see docs/review/findings.csv R1-ACT-06).
+    - `taxonomic_support_n`: how many of the term's proteins have a known
+      organism. The axis is derived from those and nothing else, so 63 of the 177
+      terms rest on two proteins or fewer and 42 on a single one. Serve it next
+      to the scope or the scope reads as a claim about the organelle when it is a
+      statement about this dataset's annotations: `aggresome` is `Bacteria` here
+      because its six annotated proteins are all E. coli.
+    """
+    spatial_location_evidence: str | None = None
+    taxonomic_support_n: int | None = None
+
+
 # ── /proteins (list) ─────────────────────────────────────────────────────────
 
 class ProteinSummary(BaseModel):
@@ -52,9 +91,8 @@ class ProteinsResponse(BaseModel):
 
 # ── /protein/{id} ────────────────────────────────────────────────────────────
 
-class MloAnnotation(BaseModel):
+class MloAnnotation(MloAxes):
     unified_mlo: str
-    category: str | None
     source_db: str
     source_mlo: str | None
     unified_role: str | None
@@ -202,9 +240,8 @@ class MloProteins(BaseModel):
     items: list[MloProteinItem]
 
 
-class MloDetail(BaseModel):
+class MloDetail(MloAxesWithProvenance):
     unified_mlo: str
-    category: str | None
     definitions: list[MloDefinition]
     stats: MloStats
     proteins: MloProteins
@@ -212,9 +249,8 @@ class MloDetail(BaseModel):
 
 # ── /mlos ────────────────────────────────────────────────────────────────────
 
-class MloListItem(BaseModel):
+class MloListItem(MloAxesWithProvenance):
     unified_mlo: str
-    category: str | None
     protein_count: int
     driver_count: int = 0
     sources: list[str] = []
@@ -233,9 +269,8 @@ class MlosResponse(BaseModel):
 
 # ── /search ──────────────────────────────────────────────────────────────────
 
-class SearchMloHit(BaseModel):
+class SearchMloHit(MloAxes):
     unified_mlo: str
-    category: str | None
     match_field: str
 
 

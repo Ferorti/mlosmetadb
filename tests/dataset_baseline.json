@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_on_commit": "9d6f672",
+    "generated_on_commit": "a1c1b9e",
     "generated_at": "2026-08-12"
   },
   "table_rows": {
@@ -26,8 +26,7 @@
     "driver": 3068
   },
   "annotations_by_dataset_active": {
-    "0": 1389,
-    "1": 34343
+    "1": 35732
   },
   "annotations_by_evidence_type": {
     "cellular_localisation": 8414,
@@ -37,12 +36,27 @@
     "membership_only": 13731
   },
   "source_db_count_histogram": {
-    "0": 501,
-    "1": 6119,
-    "2": 6528,
-    "3": 2401,
-    "4": 91,
-    "5": 54
+    "1": 6367,
+    "2": 6585,
+    "3": 2573,
+    "4": 112,
+    "5": 57
+  },
+  "vocabulary_by_spatial_location": {
+    "cytoplasm": 87,
+    "cytoskeleton": 11,
+    "extracellular": 3,
+    "in_vitro": 1,
+    "mitochondrion": 2,
+    "nucleus": 51,
+    "nucleus_and_cytoplasm": 1,
+    "plasma_membrane": 18,
+    "plastid": 2,
+    "unspecified": 1
+  },
+  "vocabulary_by_spatial_evidence": {
+    "from_category": 121,
+    "hand_assigned": 56
   },
   "proteins_without_sequence": 289,
   "annotations_with_literal_null_evidence": 0,

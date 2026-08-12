@@ -21,11 +21,16 @@ CREATE TABLE proteins (
     disorder_mobidb_lite_dc REAL, disorder_alphafold_dc REAL,
     sequence TEXT
 );
-CREATE TABLE mlo_vocabulary (unified_mlo TEXT PRIMARY KEY, category TEXT);
+CREATE TABLE mlo_vocabulary (
+    unified_mlo TEXT PRIMARY KEY,
+    spatial_location TEXT, spatial_location_evidence TEXT,
+    taxonomic_scope TEXT, taxonomic_support_n INTEGER,
+    physiological_state TEXT, cell_type_context TEXT
+);
 CREATE TABLE mlo_annotations (
     id INTEGER PRIMARY KEY AUTOINCREMENT, uniprot_id TEXT NOT NULL,
     source_db TEXT NOT NULL, source_mlo TEXT, unified_mlo TEXT NOT NULL,
-    source_role TEXT, unified_role TEXT,
+    source_role TEXT, unified_role TEXT, evidence_type TEXT,
     dataset_active INTEGER NOT NULL DEFAULT 1, evidence TEXT
 );
 CREATE TABLE mlo_definitions (
@@ -51,31 +56,46 @@ CREATE TABLE sequence_features (
 
 # Fixture data, mirroring the project's standard test-protein convention:
 # - P35637 (FUS): one ACTIVE driver annotation in stress_granule via PhaSepDB.
-# - QREG01 (synthetic): ONLY an INACTIVE DrLLPS-Regulator annotation in
-#   nucleolus -- the case that must be invisible everywhere after the fix.
+# - QREG01 (synthetic): ONLY a DrLLPS **Regulator** annotation, in nucleolus.
+#   Until 2026-08-12 that row was dataset_active=0 and this protein modelled the
+#   case that had to be invisible everywhere. R1-ACT-14 reversed it: regulator
+#   rows are served, so QREG01 now models the opposite -- a protein whose only
+#   annotation is a curator-assigned regulator call, which must be visible and
+#   must bucket as 'regulator' rather than as a component of the organelle. The
+#   real dataset has 501 of these.
+# - QEXCL1 (synthetic): the dataset_active=0 case, which no real row occupies
+#   any more. Kept because policy.active_annotation_clause() is still wired into
+#   every query and an unexercised filter is an untested one.
 FIXTURE = """
 -- P35637 carries a sequence, QREG01 does not: the API must serve both, since
--- 474 of the 15879 real proteins have a NULL sequence.
+-- 289 of the 15694 real proteins have a NULL sequence.
 INSERT INTO proteins (uniprot_id, gene_name, organism, length, sequence) VALUES
     ('P35637', 'FUS', 'Homo sapiens', 8, 'MASNDYTQ'),
     ('QREG01', 'REGTEST', 'Homo sapiens', 100, NULL);
 
-INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
-    ('stress_granule', 'Cytoplasmic'),
-    ('nucleolus', 'Nuclear');
+INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
+                            taxonomic_scope, taxonomic_support_n, physiological_state,
+                            cell_type_context) VALUES
+    ('stress_granule', 'cytoplasm', 'from_category', 'Metazoa', 2, 'stress_induced', NULL),
+    ('nucleolus',      'nucleus',   'from_category', 'Metazoa', 1, 'constitutive',   NULL);
 
-INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('P35637', 'PhaSepDB', 'stress_granule', 'driver', 1);
+INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, source_role, unified_role, evidence_type, dataset_active) VALUES
+    ('P35637', 'PhaSepDB', 'stress_granule', 'driver', 'driver', 'cellular_requirement', 1);
 
-INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('QREG01', 'DrLLPS', 'nucleolus', NULL, 0);
+-- unified_role stays NULL and the row is served: what marks it as a regulator
+-- claim is (evidence_type, source_role), which is what
+-- policy.regulator_annotation_clause() reads.
+INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, source_role, unified_role, evidence_type, dataset_active) VALUES
+    ('QREG01', 'DrLLPS', 'nucleolus', 'Regulator', NULL, 'curator_assignment', 1);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('P35637', 1, 0, 1, 1, '["stress_granule"]', 'PhaSepDB'),
-    ('QREG01', 0, 0, 0, 0, NULL, NULL);
+    ('QREG01', 0, 0, 1, 1, '["nucleolus"]', 'DrLLPS');
 
-INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
-    ('p_granule', 'Cytoplasmic');
+INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
+                            taxonomic_scope, taxonomic_support_n, physiological_state,
+                            cell_type_context) VALUES
+    ('p_granule', 'cytoplasm', 'from_category', 'Metazoa', 4, 'constitutive', 'germline');
 
 INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
     ('PCLIENT', 'CLIENTTEST', 'Homo sapiens', 200);
@@ -87,15 +107,35 @@ INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count
 -- PNULLROLE: active mlo_annotations row with unified_role IS NULL (CD-CODE-
 -- style annotation gap), in its own MLO ('condensate_x') to avoid colliding
 -- with any existing test's counts on p_granule/stress_granule/nucleolus.
-INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
-    ('condensate_x', 'Cytoplasmic');
+INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
+                            taxonomic_scope, taxonomic_support_n, physiological_state,
+                            cell_type_context) VALUES
+    ('condensate_x', 'cytoplasm', 'from_category', 'Metazoa', 1, 'constitutive', NULL);
 
 INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
     ('PNULLROLE', 'NULLROLETEST', 'Homo sapiens', 150);
-INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
-    ('PNULLROLE', 'CDCODE', 'condensate_x', NULL, 1);
+INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, source_role, unified_role, evidence_type, dataset_active) VALUES
+    ('PNULLROLE', 'CDCODE', 'condensate_x', 'NotInformed', NULL, 'membership_only', 1);
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('PNULLROLE', 0, 0, 1, 1, '["condensate_x"]', 'CDCODE');
+
+-- QEXCL1: the only dataset_active=0 row in the fixture, and deliberately not a
+-- regulator -- source_role/evidence_type are left NULL so nothing reads it as
+-- one. It stands in for whatever future exclusion policy.py argues for, and
+-- keeps every "inactive rows are filtered" test pointed at a real subject now
+-- that the regulator rows have left that role. Its own MLO, so it cannot shift
+-- another test's counts.
+INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
+                            taxonomic_scope, taxonomic_support_n, physiological_state,
+                            cell_type_context) VALUES
+    ('condensate_excluded', 'cytoplasm', 'hand_assigned', 'Metazoa', 1, 'constitutive', NULL);
+
+INSERT INTO proteins (uniprot_id, gene_name, organism, length) VALUES
+    ('QEXCL1', 'EXCLTEST', 'Homo sapiens', 120);
+INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, source_role, unified_role, evidence_type, dataset_active) VALUES
+    ('QEXCL1', 'DrLLPS', 'condensate_excluded', NULL, NULL, 'curator_assignment', 0);
+INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
+    ('QEXCL1', 0, 0, 0, 0, NULL, NULL);
 """
 
 

@@ -73,7 +73,12 @@ async def get_mlo(
 
     return MloDetail(
         unified_mlo=meta["unified_mlo"],
-        category=meta.get("category"),
+        spatial_location=meta.get("spatial_location"),
+        taxonomic_scope=meta.get("taxonomic_scope"),
+        physiological_state=meta.get("physiological_state"),
+        cell_type_context=meta.get("cell_type_context"),
+        spatial_location_evidence=meta.get("spatial_location_evidence"),
+        taxonomic_support_n=meta.get("taxonomic_support_n"),
         definitions=[MloDefinition(
             source_db=d["source_db"],
             source_name=d.get("source_name"),
@@ -91,13 +96,28 @@ async def get_mlo(
 
 @router.get("/mlos", response_model=MlosResponse)
 async def list_mlos(
-    category: str | None = None,
+    spatial_location: str | None = None,
+    taxonomic_scope: str | None = None,
+    physiological_state: str | None = None,
+    cell_type_context: str | None = None,
     source_db: str | None = None,
     organism: str | None = None,
     q: str | None = None,
 ):
+    """The canonical vocabulary, filterable by any of the four axes.
+
+    `?category=` is gone with the column it filtered (R1-ACT-06) — it is not
+    accepted and not translated, because there is no honest mapping: the old
+    values mixed places (Nuclear) with lineages (Procariota), cell types
+    (Neuronal) and processes (Autofagia), and each of those now lives on a
+    different axis. FastAPI ignores unknown query params, so an old client asking
+    for ?category=Nuclear gets the full unfiltered list rather than an error;
+    that is why the frontend has to be rebuilt against this, not adapted.
+    """
     try:
-        rows = await get_all_mlos(category, source_db, organism, q)
+        rows = await get_all_mlos(spatial_location, taxonomic_scope,
+                                  physiological_state, cell_type_context,
+                                  source_db, organism, q)
         mlo_ids = [r["unified_mlo"] for r in rows]
         defs_by_mlo = await get_definitions_for_mlos(mlo_ids)
         names_by_mlo = await get_source_names_for_mlos(mlo_ids)
@@ -110,7 +130,12 @@ async def list_mlos(
         mlo_defs = defs_by_mlo.get(r["unified_mlo"], [])
         items.append(MloListItem(
             unified_mlo=r["unified_mlo"],
-            category=r.get("category"),
+            spatial_location=r.get("spatial_location"),
+            taxonomic_scope=r.get("taxonomic_scope"),
+            physiological_state=r.get("physiological_state"),
+            cell_type_context=r.get("cell_type_context"),
+            spatial_location_evidence=r.get("spatial_location_evidence"),
+            taxonomic_support_n=r.get("taxonomic_support_n"),
             protein_count=r.get("protein_count", 0),
             driver_count=r.get("driver_count", 0),
             sources=[s for s in sources_raw.split(",") if s],

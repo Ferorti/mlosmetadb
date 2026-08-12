@@ -16,15 +16,16 @@ CACHE_DIR = DB_DIR / "cache"
 
 SKIP_MLO = {"DISCARD", "NULL", "synthetic_condensate", ""}
 
-# Curation revision of database/mappings/mlo_mapping.csv, stamped onto every
-# mlo_vocabulary row. Bump it in the same commit that changes the mapping file,
-# and record what changed in database/mappings/_archive/mlo_mapping_decisions.md.
+# Curation revision of the mapping files (mlo_mapping.csv, mlo_organism_scoped.csv
+# and mlo_axes.csv), stamped onto every mlo_vocabulary row. Bump it in the same
+# commit that changes any of them, and record what changed in
+# database/mappings/_archive/mlo_mapping_decisions.md.
 # Until 2026-08-08 nothing stamped this at all, so all 170 rows carried the
 # column DEFAULT ('v3') while the shipped mapping was already v4 — the v4 splits
 # (spindle_pole_body, chromatoid_body, sex_body, simr_foci, mardo,
 # axonal_tiar2_granule, wnt_destruction_complex) were present in the data under
 # a version label that predated them.
-MAPPING_VERSION = "v6"
+MAPPING_VERSION = "v7"
 
 
 def nullable(value: str | None) -> str | None:
@@ -42,9 +43,17 @@ def nullable(value: str | None) -> str | None:
 
 SCHEMA_MAIN = """
 CREATE TABLE IF NOT EXISTS mlo_vocabulary (
-    unified_mlo      TEXT PRIMARY KEY,
-    category         TEXT,
-    mapping_version  TEXT DEFAULT 'v3'
+    unified_mlo               TEXT PRIMARY KEY,
+    -- Four orthogonal axes, replacing the single `category` column (R1-ACT-06).
+    -- Loaded from database/mappings/mlo_axes.csv; see SCHEMA.md for the value
+    -- vocabularies and load_mlo_vocabulary() for what the loader refuses to do.
+    spatial_location          TEXT,
+    spatial_location_evidence TEXT,
+    taxonomic_scope           TEXT,
+    taxonomic_support_n       INTEGER,
+    physiological_state       TEXT,
+    cell_type_context         TEXT,
+    mapping_version           TEXT DEFAULT 'v3'
 );
 
 CREATE TABLE IF NOT EXISTS mlo_definitions (
@@ -192,32 +201,81 @@ def create_schema(con: sqlite3.Connection, schema: str) -> None:
     con.commit()
 
 
+AXIS_COLUMNS = ["spatial_location", "spatial_location_evidence", "taxonomic_scope",
+                "taxonomic_support_n", "physiological_state", "cell_type_context"]
+
+
+def load_axes() -> dict[str, dict[str, str | int | None]]:
+    """Read database/mappings/mlo_axes.csv — one row per canonical, keyed by it.
+
+    This file replaced `Categoria` as the source of the vocabulary's
+    classification (R1-ACT-06 / R2-DEC-axes). Being keyed by canonical is the
+    point, not a convenience: `Categoria` lived in `mlo_mapping.csv`, which is
+    keyed by *source label*, so the same canonical carried as many category
+    values as it had source names and a conflict between them was possible at
+    all. Here it isn't expressible — a duplicate key is a hard failure.
+
+    `taxonomic_scope` and `cell_type_context` come back as None when the field is
+    empty, and those two absences mean different things: rho_body has no
+    taxonomic scope because its only protein is deleted in UniProt (a gap), while
+    143 terms have no cell-type context because the axis only applies where the
+    cell type is part of the organelle's definition (by design). Both are NULL in
+    the DB; the difference is documented, not encoded.
+    """
+    path = MAP_DIR / "mlo_axes.csv"
+    axes: dict[str, dict[str, str | int | None]] = {}
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        missing_cols = [c for c in ["unified_mlo", *AXIS_COLUMNS] if c not in (reader.fieldnames or [])]
+        if missing_cols:
+            raise SystemExit(f"[FATAL] mlo_axes.csv sin las columnas {missing_cols}")
+        for line_no, row in enumerate(reader, start=2):
+            unified = row["unified_mlo"].strip()
+            if not unified:
+                raise SystemExit(f"[FATAL] mlo_axes.csv:{line_no} sin unified_mlo")
+            if unified in axes:
+                raise SystemExit(
+                    f"[FATAL] mlo_axes.csv:{line_no} repite {unified!r}: el archivo es "
+                    f"uno-a-uno con el canónico y no admite dos filas para el mismo término"
+                )
+            support = (row["taxonomic_support_n"] or "").strip()
+            axes[unified] = {
+                **{c: ((row[c] or "").strip() or None) for c in AXIS_COLUMNS},
+                "taxonomic_support_n": int(support) if support else None,
+            }
+    return axes
+
+
 def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
     """Load the mapping files into mlo_vocabulary, one curated row per canonical.
 
-    Two files declare canonicals, and both have to be read here or the loader
-    drops rows that integrate.py legitimately produced:
+    Two files declare which canonicals exist, and both have to be read here or
+    the loader drops rows that integrate.py legitimately produced:
 
-    - `mlo_mapping.csv` (`Nombre Sugerido` / `Categoria`) — the bulk of them.
-    - `mlo_organism_scoped.csv` (`unified_mlo` / `categoria`) — the
-      organism-conditional overrides. `plant_mtoc` exists **only** there: no
-      source name maps to it unconditionally, because the label that produces it
+    - `mlo_mapping.csv` (`Nombre Sugerido`) — the bulk of them.
+    - `mlo_organism_scoped.csv` (`unified_mlo`) — the organism-conditional
+      overrides. `plant_mtoc` exists **only** there: no source name maps to it
+      unconditionally, because the label that produces it
       (`Centrosome/Spindle pole body`) means something else for every other
       clade.
 
-    Several source names collapse into one canonical, so the same canonical
-    appears in many rows of the mapping file. Until 2026-08-08 this function
-    kept whichever row it read first and inserted with OR IGNORE, which meant
-    that when those rows disagreed on `Categoria` the stored category was
-    decided by file order rather than by a curator — arbitrary for 24 of the
-    170 terms, including cases with real biological content
-    (`polarity_condensate`: Citoesqueleto / Neuronal / Procariota). A conflict
-    is now a hard failure: the mapping file has to say one thing.
-    """
-    # canonical -> {category: "file:line where it was first seen"}
-    categories: dict[str, dict[str, str]] = {}
+    Their `Categoria`/`categoria` columns are no longer read: the classification
+    comes from `mlo_axes.csv` (see load_axes()). The columns stay in those files
+    as the provenance of the spatial axis — 121 of the 177 spatial values were
+    derived from them — and must not be resurrected as a served field. The
+    conflict check they needed is gone with them, replaced by a stricter
+    property: a canonical cannot hold two classifications because the axes file
+    cannot hold two rows for it.
 
-    def collect(filename: str, name_col: str, category_col: str) -> None:
+    Declaring a canonical with no axes row is allowed here and reported, not
+    fatal: three of the 180 declared terms reach no annotation and
+    prune_unsupported_vocabulary() removes them later in the run. What must never
+    happen is *serving* a term with no axes, which assert_axes_complete() checks
+    after the prune.
+    """
+    canonicals: dict[str, str] = {}   # canonical -> "file:line" first seen
+
+    def collect(filename: str, name_col: str) -> None:
         path = MAP_DIR / filename
         if not path.exists():
             return
@@ -226,35 +284,42 @@ def load_mlo_vocabulary(con: sqlite3.Connection) -> int:
                 unified = row[name_col].strip()
                 if unified in SKIP_MLO:
                     continue
-                categories.setdefault(unified, {}).setdefault(
-                    row[category_col].strip(), f"{filename}:{line_no}"
-                )
+                canonicals.setdefault(unified, f"{filename}:{line_no}")
 
-    collect("mlo_mapping.csv", "Nombre Sugerido", "Categoria")
-    collect("mlo_organism_scoped.csv", "unified_mlo", "categoria")
+    collect("mlo_mapping.csv", "Nombre Sugerido")
+    collect("mlo_organism_scoped.csv", "unified_mlo")
 
-    conflicts = {u: c for u, c in categories.items() if len(c) > 1}
-    if conflicts:
-        detail = "\n".join(
-            f"    {unified}: " + ", ".join(f"{cat!r} ({where})" for cat, where in sorted(cats.items(), key=lambda kv: kv[1]))
-            for unified, cats in sorted(conflicts.items())
-        )
+    axes = load_axes()
+
+    orphan_axes = sorted(set(axes) - set(canonicals))
+    if orphan_axes:
         raise SystemExit(
-            f"[FATAL] {len(conflicts)} canónicos con Categoria en conflicto.\n"
-            f"  Cada canónico necesita una sola categoría curada — resolvelas en el archivo:\n{detail}"
+            f"[FATAL] mlo_axes.csv clasifica {len(orphan_axes)} términos que ningún "
+            f"archivo de mapeo produce — el archivo quedó viejo:\n"
+            + "\n".join(f"    {t}" for t in orphan_axes)
         )
 
-    rows = [(unified, next(iter(cats)), MAPPING_VERSION) for unified, cats in categories.items()]
+    sin_ejes = sorted(set(canonicals) - set(axes))
+    if sin_ejes:
+        print(f"  [INFO] {len(sin_ejes)} canónicos declarados sin fila en mlo_axes.csv "
+              f"(deberían quedar sin anotaciones y podarse): {', '.join(sin_ejes)}")
+
+    rows = [
+        (unified, *(axes.get(unified, {}).get(c) for c in AXIS_COLUMNS), MAPPING_VERSION)
+        for unified in canonicals
+    ]
 
     # Terms the current mapping no longer produces have to leave the table, or
     # the vocabulary keeps accumulating entries from older revisions. Safe here
     # because reset_owned_tables() has already cleared mlo_annotations and
     # mlo_definitions, the only tables holding a FK into it.
     con.execute("DELETE FROM mlo_vocabulary")
-    # INSERT OR REPLACE, not OR IGNORE: a recurated category has to land on a
-    # term that already exists instead of being silently dropped.
+    # INSERT OR REPLACE, not OR IGNORE: a recurated axis has to land on a term
+    # that already exists instead of being silently dropped.
+    placeholders = ", ".join("?" * (len(AXIS_COLUMNS) + 2))
     con.executemany(
-        "INSERT OR REPLACE INTO mlo_vocabulary (unified_mlo, category, mapping_version) VALUES (?, ?, ?)",
+        f"INSERT OR REPLACE INTO mlo_vocabulary "
+        f"(unified_mlo, {', '.join(AXIS_COLUMNS)}, mapping_version) VALUES ({placeholders})",
         rows,
     )
     con.commit()
@@ -281,6 +346,23 @@ def migrate_schema(con: sqlite3.Connection) -> None:
         con.execute("ALTER TABLE mlo_annotations ADD COLUMN evidence_type TEXT")
         con.commit()
         print("  migración: mlo_annotations.evidence_type agregada")
+
+    # mlo_vocabulary: `category` → los cuatro ejes (R1-ACT-06). Se migra en vez
+    # de recrear la tabla porque mlo_annotations y mlo_definitions tienen una FK
+    # hacia ella y esto corre antes de reset_owned_tables(), o sea con las hijas
+    # todavía cargadas: un DROP TABLE con foreign_keys=ON fallaría acá.
+    vocab_cols = {r[1] for r in con.execute("PRAGMA table_info(mlo_vocabulary)")}
+    for col in AXIS_COLUMNS:
+        if col not in vocab_cols:
+            col_type = "INTEGER" if col == "taxonomic_support_n" else "TEXT"
+            con.execute(f"ALTER TABLE mlo_vocabulary ADD COLUMN {col} {col_type}")
+            print(f"  migración: mlo_vocabulary.{col} agregada")
+    if "category" in vocab_cols:
+        # Requiere SQLite 3.35+; el DROP es seguro porque load_mlo_vocabulary()
+        # reescribe la tabla entera desde los archivos de mapeo en este mismo run.
+        con.execute("ALTER TABLE mlo_vocabulary DROP COLUMN category")
+        print("  migración: mlo_vocabulary.category eliminada (reemplazada por los cuatro ejes)")
+    con.commit()
 
 
 def reset_owned_tables(con: sqlite3.Connection) -> None:
@@ -440,6 +522,32 @@ def prune_unsupported_vocabulary(con: sqlite3.Connection) -> list[str]:
     return orphans
 
 
+def assert_axes_complete(con: sqlite3.Connection) -> None:
+    """Every served term must carry the three axes that apply to all of them.
+
+    Runs after prune_unsupported_vocabulary(), so it asks about the terms that
+    actually ship. `cell_type_context` is deliberately absent from the check —
+    it applies to 34 of the 177 terms by design — and `taxonomic_scope` is
+    absent because rho_body genuinely has nothing to derive it from
+    (R1-ACT-17): its only protein, R7KIR7, is deleted in UniProt. Those two are
+    NULL-able; a served term with no spatial_location, no physiological_state or
+    no spatial_location_evidence means the axes file fell behind the mapping.
+    """
+    required = ["spatial_location", "spatial_location_evidence", "physiological_state"]
+    missing = con.execute(
+        f"""SELECT unified_mlo, {', '.join(required)} FROM mlo_vocabulary
+            WHERE {' OR '.join(f'{c} IS NULL' for c in required)}
+            ORDER BY unified_mlo"""
+    ).fetchall()
+    if missing:
+        detail = "\n".join(f"    {r[0]}: " + ", ".join(
+            f"{c}={v!r}" for c, v in zip(required, r[1:])) for r in missing)
+        raise SystemExit(
+            f"[FATAL] {len(missing)} términos servidos sin ejes obligatorios — "
+            f"agregalos a database/mappings/mlo_axes.csv:\n{detail}"
+        )
+
+
 def init_cache(name: str) -> None:
     path = CACHE_DIR / name
     con = sqlite3.connect(path)
@@ -488,6 +596,8 @@ def main() -> None:
         print(f"Vocabulario sin soporte ({len(orphans)} términos, 0 anotaciones) — removidos:")
         for term in orphans:
             print(f"  - {term}")
+
+    assert_axes_complete(con)
 
     print("Inicializando caches ...")
     for name in ("uniprot_cache.db", "interpro_cache.db", "mobidb_cache.db"):

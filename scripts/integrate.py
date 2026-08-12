@@ -217,10 +217,18 @@ def compute_role_and_active(source_db: str, source_role: str) -> tuple:
     """
     role = (source_role or "").strip()
 
-    # DrLLPS Regulator: stays in mlo_annotations (never dropped), but excluded
-    # from the served/counted dataset by default.
+    # DrLLPS Regulator: served like any other annotation since 2026-08-12
+    # (R1-ACT-14). It used to return dataset_active=0, which hid 1.389 rows and
+    # made 501 proteins vanish from the dataset entirely — they had no other
+    # active annotation. unified_role stays NULL because regulator is not a
+    # driver/client claim; what identifies these rows is
+    # evidence_type='curator_assignment' together with source_role='Regulator',
+    # which is how the API buckets them (policy.regulator_annotation_clause).
+    # Kept as an explicit branch rather than falling through to the [WARN]
+    # default: the pair is recognized, and the reason it has no unified_role is
+    # biological, not an unhandled case.
     if source_db == "DrLLPS" and role == "Regulator":
-        return None, 0
+        return None, 1
 
     # CD-CODE has no structured role data at all — always NULL, still active.
     if source_db == "CDCODE":

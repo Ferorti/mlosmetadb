@@ -61,7 +61,9 @@ async def search_proteins_like(q: str) -> list[dict]:
 async def search_mlos_fts(q: str) -> list[dict]:
     return await fetchall(
         """
-        SELECT mv.unified_mlo, mv.category, 'unified_mlo' AS match_field
+        SELECT mv.unified_mlo, mv.spatial_location, mv.taxonomic_scope,
+               mv.physiological_state, mv.cell_type_context,
+               'unified_mlo' AS match_field
         FROM fts_mlos ft
         JOIN mlo_vocabulary mv ON mv.rowid = ft.rowid
         WHERE fts_mlos MATCH ?
@@ -80,7 +82,9 @@ async def search_mlos_like(q: str) -> list[dict]:
     pattern = like_contains(q)
     return await fetchall(
         """
-        SELECT unified_mlo, category, 'unified_mlo' AS match_field
+        SELECT unified_mlo, spatial_location, taxonomic_scope,
+               physiological_state, cell_type_context,
+               'unified_mlo' AS match_field
         FROM mlo_vocabulary
         WHERE LOWER(unified_mlo) LIKE LOWER(?) ESCAPE '\\'
            OR LOWER(REPLACE(unified_mlo, '_', ' ')) LIKE LOWER(?) ESCAPE '\\'

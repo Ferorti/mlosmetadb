@@ -52,10 +52,12 @@ INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count
     ('P00009', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaSepDB');
 
-INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES
-    ('stress_granule', 'Cytoplasmic'),
-    ('nucleolus',      'Nuclear'),
-    ('p_granule',      'Cytoplasmic');
+INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
+                            taxonomic_scope, taxonomic_support_n, physiological_state,
+                            cell_type_context) VALUES
+    ('stress_granule', 'cytoplasm', 'from_category', 'Metazoa', 3, 'stress_induced', NULL),
+    ('nucleolus',      'nucleus',   'from_category', 'Metazoa', 2, 'constitutive',   NULL),
+    ('p_granule',      'cytoplasm', 'from_category', 'Metazoa', 1, 'constitutive',   'germline');
 
 INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) VALUES
     ('P00001', 'PhaSepDB', 'stress_granule', 'driver', 1),

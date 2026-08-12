@@ -180,7 +180,10 @@ def _build_mlo_annotation(row: dict) -> MloAnnotation:
     pmids = [p.strip() for p in raw.split(";") if p.strip() and p.strip().upper() != "NULL"]
     return MloAnnotation(
         unified_mlo=row["unified_mlo"],
-        category=row.get("category"),
+        spatial_location=row.get("spatial_location"),
+        taxonomic_scope=row.get("taxonomic_scope"),
+        physiological_state=row.get("physiological_state"),
+        cell_type_context=row.get("cell_type_context"),
         source_db=row["source_db"],
         source_mlo=row.get("source_mlo"),
         unified_role=row.get("unified_role"),

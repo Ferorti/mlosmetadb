@@ -1,10 +1,23 @@
 import policy
 from database import fetchone, fetchall, fetchval, like_contains
 
+# The four axes that replaced mlo_vocabulary.category (R1-ACT-06), plus the two
+# provenance fields /mlos and /mlo/{id} serve next to them. Spelled out once
+# here so the SELECT lists can't drift from models/schemas.py's MloAxes.
+AXIS_COLUMNS = ("spatial_location", "taxonomic_scope",
+                "physiological_state", "cell_type_context")
+AXIS_PROVENANCE_COLUMNS = ("spatial_location_evidence", "taxonomic_support_n")
+
+
+def _axis_select(alias: str = "mv", provenance: bool = False) -> str:
+    cols = AXIS_COLUMNS + (AXIS_PROVENANCE_COLUMNS if provenance else ())
+    return ", ".join(f"{alias}.{c}" for c in cols)
+
 
 async def get_mlo_meta(unified_mlo: str) -> dict | None:
     return await fetchone(
-        "SELECT unified_mlo, category FROM mlo_vocabulary WHERE unified_mlo = ?",
+        f"SELECT mv.unified_mlo, {_axis_select('mv', provenance=True)} "
+        f"FROM mlo_vocabulary mv WHERE mv.unified_mlo = ?",
         (unified_mlo,),
     )
 
@@ -35,10 +48,29 @@ async def get_mlo_stats(unified_mlo: str) -> dict:
     )
     by_source = {r["source_db"]: r["cnt"] for r in source_rows}
 
+    # Three buckets, not two. Regulator rows carry unified_role IS NULL, so the
+    # old two-branch CASE folded DrLLPS's 1.389 curator-assigned regulator
+    # annotations into 'component' — the one thing the source says they are not
+    # (R1-ACT-14). The branches are mutually exclusive by construction (a
+    # regulator row never has unified_role='driver'), so their order is
+    # defensive, not load-bearing.
+    #
+    # Buckets are per annotation ROW while the count is DISTINCT proteins, so a
+    # protein annotated as a driver of this organelle by one resource and as its
+    # regulator by another counts in both — the buckets do not sum to
+    # total_proteins and never did. That is the honest shape here: collapsing to
+    # one bucket per protein would need a precedence rule between a measurement
+    # and a curator's assignment, which is exactly the judgement this project
+    # leaves to whoever queries it.
+    regulator = policy.regulator_annotation_clause("ma")
     role_rows = await fetchall(
         f"""
         SELECT
-            CASE WHEN LOWER(ma.unified_role) = 'driver' THEN 'driver' ELSE 'component' END AS role,
+            CASE
+                WHEN LOWER(ma.unified_role) = 'driver' THEN 'driver'
+                WHEN {regulator} THEN 'regulator'
+                ELSE 'component'
+            END AS role,
             COUNT(DISTINCT ma.uniprot_id) AS cnt
         FROM mlo_annotations ma
         WHERE ma.unified_mlo = ? AND {active}
@@ -129,14 +161,17 @@ async def get_mlo_proteins_page(
 
 
 async def get_all_mlos(
-    category: str | None,
+    spatial_location: str | None = None,
+    taxonomic_scope: str | None = None,
+    physiological_state: str | None = None,
+    cell_type_context: str | None = None,
     source_db: str | None = None,
     organism: str | None = None,
     q: str | None = None,
 ) -> list[dict]:
     active_ma = policy.active_annotation_clause("ma")
     active_x = policy.active_annotation_clause("x")
-    excluded_clause, excluded_params = policy.excluded_mlo_category_clause("mv")
+    excluded_clause, excluded_params = policy.excluded_mlo_spatial_clause("mv")
 
     conditions: list[str] = []
     params: list = []
@@ -144,9 +179,16 @@ async def get_all_mlos(
     if excluded_clause:
         conditions.append(excluded_clause)
         params.extend(excluded_params)
-    if category:
-        conditions.append("mv.category = ?")
-        params.append(category)
+    # One filter per axis, and they conjoin — the axes are orthogonal, so
+    # ?spatial_location=nucleus&physiological_state=stress_induced is a
+    # meaningful question that the single `category` column could not ask.
+    for column, value in (("spatial_location", spatial_location),
+                          ("taxonomic_scope", taxonomic_scope),
+                          ("physiological_state", physiological_state),
+                          ("cell_type_context", cell_type_context)):
+        if value:
+            conditions.append(f"mv.{column} = ?")
+            params.append(value)
     if q:
         conditions.append("LOWER(mv.unified_mlo) LIKE LOWER(?) ESCAPE '\\'")
         params.append(like_contains(q))
@@ -167,16 +209,17 @@ async def get_all_mlos(
 
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
+    axis_cols = _axis_select("mv", provenance=True)
     return await fetchall(
         f"""
-        SELECT mv.unified_mlo, mv.category,
+        SELECT mv.unified_mlo, {axis_cols},
                COUNT(DISTINCT ma.uniprot_id) AS protein_count,
                COUNT(DISTINCT CASE WHEN LOWER(ma.unified_role) = 'driver' THEN ma.uniprot_id END) AS driver_count,
                GROUP_CONCAT(DISTINCT ma.source_db) AS sources_concat
         FROM mlo_vocabulary mv
         LEFT JOIN mlo_annotations ma ON mv.unified_mlo = ma.unified_mlo AND {active_ma}
         {where}
-        GROUP BY mv.unified_mlo, mv.category
+        GROUP BY mv.unified_mlo, {axis_cols}
         ORDER BY mv.unified_mlo
         """,
         tuple(params),

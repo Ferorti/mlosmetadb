@@ -51,18 +51,24 @@ CREATE TABLE mlo_annotations (
                                             -- no driver/client signal" — true both for DrLLPS-Regulator (a real
                                             -- third category the project chooses not to model as a role) and
                                             -- for CD-CODE (source provides no role data at all). Never a
-                                            -- placeholder string like 'unmapped', never 'Driver'/'Client' cased.
+                                            -- placeholder string like 'unmapped', never 'Driver'/'Client' cased,
+                                            -- and never 'regulator': those rows are identified at read time by
+                                            -- (evidence_type='curator_assignment', source_role='Regulator') —
+                                            -- policy.regulator_annotation_clause() — so a query that groups by
+                                            -- this column keeps having exactly three cases to handle.
     evidence_type    TEXT,                 -- what kind of claim the row makes, which unified_role cannot
                                             -- express: 'in_vitro_llps' | 'cellular_localisation' |
                                             -- 'cellular_requirement' | 'curator_assignment' |
                                             -- 'membership_only'. Assigned from (source_db, source_role) by
                                             -- compute_evidence_type() in integrate.py; never NULL.
     dataset_active   INTEGER NOT NULL DEFAULT 1,  -- 0 = retained for full provenance but excluded from the
-                                            -- served/counted MLOsMetaDB dataset by default (currently: DrLLPS
-                                            -- Regulator rows). This is a presentation-layer decision, not data
-                                            -- loss — the row stays in the table. API queries should filter on
-                                            -- this explicitly (WHERE dataset_active = 1) rather than relying on
-                                            -- rows having been excluded at build time.
+                                            -- served/counted MLOsMetaDB dataset by default. **No row is 0 today**:
+                                            -- DrLLPS Regulator was the only case and it was reinstated on
+                                            -- 2026-08-12 (R1-ACT-14), because excluding it made 501 proteins
+                                            -- vanish from the dataset entirely. The column stays: it is a
+                                            -- presentation-layer decision, not data loss, and API queries must
+                                            -- keep filtering on it explicitly (WHERE dataset_active = 1) rather
+                                            -- than assuming nothing is ever excluded.
     evidence         TEXT,                 -- PMIDs, semicolon-separated, or NULL
     dataset_version  TEXT DEFAULT 'v2'
 );
@@ -120,39 +126,69 @@ experimental observations (see `BIOLOGY.md`).
 
 ```sql
 CREATE TABLE mlo_vocabulary (
-    unified_mlo      TEXT PRIMARY KEY,
-    category         TEXT,
-    mapping_version  TEXT DEFAULT 'v3'
+    unified_mlo               TEXT PRIMARY KEY,
+    spatial_location          TEXT,     -- cytoplasm | nucleus | plasma_membrane | cytoskeleton | extracellular
+                                         -- | mitochondrion | plastid | nucleus_and_cytoplasm | in_vitro
+                                         -- | unspecified. Never NULL on a served term (the loader refuses).
+    spatial_location_evidence TEXT,     -- 'from_category' (121 terms, derived from the curated v6 category)
+                                         -- | 'hand_assigned' (56, assigned by the auditor from the organelle's
+                                         -- biology and PENDING curator review — R3-OWN-spatial-56)
+    taxonomic_scope           TEXT,     -- Metazoa | Fungi | Bacteria | Viridiplantae | Protista | Virus, or a
+                                         -- pan_* label when no kingdom reaches 80% of the term's proteins.
+                                         -- Derived from the organisms of the ANNOTATED proteins, so it describes
+                                         -- this dataset and not the organelle concept. NULL only for rho_body.
+    taxonomic_support_n       INTEGER,  -- proteins with a known organism behind that derivation. 63 terms rest
+                                         -- on <=2 and 42 on a single one: serve it next to the scope.
+    physiological_state       TEXT,     -- constitutive | stress_induced | infection | pathological | in_vitro
+    cell_type_context         TEXT,     -- germline | neuron | mast_cell | ... NULL for 143 of 177 BY DESIGN:
+                                         -- the axis applies only where cell type is part of the definition.
+    mapping_version           TEXT DEFAULT 'v3'
 );
 ```
 
+**Four orthogonal axes, not one category.** `category` was replaced on 2026-08-12
+(`R1-ACT-06` / `R2-DEC-axes`); see `database/mappings/_archive/mlo_mapping_decisions.md`
+§13.2. Its values mixed places (`Nuclear`) with lineages (`Procariota`), cell types
+(`Neuronal`) and processes (`Autofagia`), so no single column could answer any of
+those questions cleanly and no mapping from it to one axis exists. The axes come from
+**`database/mappings/mlo_axes.csv`**, keyed by canonical — which is the point: the old
+`Categoria` lived in `mlo_mapping.csv`, keyed by *source label*, so one canonical could
+carry contradictory categories (arbitrary for 23 terms until §11.5 fixed them by hand).
+Two rows for one term is now a fatal loader error, so the contradiction is not
+expressible. `Categoria` stays in the mapping files, unread, as the provenance of the
+121 derived spatial values.
+
 **`mapping_version` is stamped explicitly, not left to the column DEFAULT.**
-`build_db.py` writes `MAPPING_VERSION` (currently `'v6'`) onto every row and
+`build_db.py` writes `MAPPING_VERSION` (currently `'v7'`) onto every row and
 fails the load if any row ends up on a different value. Until 2026-08-08
 nothing stamped it at all, so all rows carried the DEFAULT `'v3'` while the
 shipped mapping was already v4 — bump the constant in the same commit that
-changes `mlo_mapping.csv`.
+changes any of `mlo_mapping.csv`, `mlo_organism_scoped.csv` or `mlo_axes.csv`.
 
-**One curated category per canonical.** Many source names collapse into one
-canonical, so the same canonical appears in many mapping rows. When those rows
-disagreed on `Categoria` the loader used to keep whichever it read first, which
-made the stored category arbitrary for 23 of the terms. It now raises instead —
-resolve the conflict in `mlo_mapping.csv`.
+**A served term cannot be unclassified.** `assert_axes_complete()` runs after the
+prune and fails the load if any surviving term lacks `spatial_location`,
+`spatial_location_evidence` or `physiological_state`. `taxonomic_scope` and
+`cell_type_context` are NULL-able, for opposite reasons documented in the schema
+comments above — one is a gap, the other is by design.
 
 **Terms with zero annotations do not survive the load.** `build_db.py` prunes
 them after loading `mlo_annotations` and reports which ones, enforcing the
 project rule that data coverage gates granularity. Their rows stay in
-`mlo_mapping.csv`: the curation record is not what was wrong.
+`mlo_mapping.csv`: the curation record is not what was wrong. Those terms are
+also allowed to have no row in `mlo_axes.csv` — three do today
+(`adhesin_nanodomain`, `npr1_condensate`, `rosenthal_fiber`).
 
 **`NotInformed` stays in this table (fixed 2026, do not exclude at build time)**:
 rows where a source gave no specific MLO name map to `unified_mlo = 'NotInformed'`,
-`category = 'Unspecified'` — a real, deliberately curated entry (see
+`spatial_location = 'unspecified'` — a real, deliberately curated entry (see
 `mlo_definitions.csv` for the hand-written definition), not something to drop from
-`mlo_vocabulary` or from `mlo_annotations`. `category = 'Unspecified'` is the
+`mlo_vocabulary` or from `mlo_annotations`. `spatial_location = 'unspecified'` is the
 mechanism for filtering it out of default "real MLO" views at the API/frontend
-layer, without removing the underlying rows (~3,027 in `mlo_annotations`). Same
-principle as `dataset_active` above: filtering is presentation logic, not a reason
-to lose data at the pipeline stage.
+layer (`policy.EXCLUDED_MLO_SPATIAL_LOCATIONS`), without removing the underlying rows
+(~930 in `mlo_annotations`). It is a curated value and not a gap, which is why the
+exclusion clause is written to keep NULL-axis terms visible. Same principle as
+`dataset_active` above: filtering is presentation logic, not a reason to lose data at
+the pipeline stage.
 
 ## mlo_definitions
 

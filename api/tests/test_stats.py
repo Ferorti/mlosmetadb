@@ -5,17 +5,30 @@ from main import _compute_stats
 
 
 def test_compute_stats_mlo_annotations_excludes_inactive_row(test_db):
+    """QEXCL1's dataset_active=0 row is the one left out. QREG01's regulator row
+    is counted since R1-ACT-14, which is why DrLLPS appears here at all."""
     stats = asyncio.run(_compute_stats())
-    assert stats["mlo_annotations"]["total"] == 3
-    assert stats["mlo_annotations"]["by_source"] == {"PhaSepDB": 2, "CDCODE": 1}
-    assert stats["mlo_annotations"]["unique_mlos"] == 3
+    assert stats["mlo_annotations"]["total"] == 4
+    assert stats["mlo_annotations"]["by_source"] == {"PhaSepDB": 2, "CDCODE": 1, "DrLLPS": 1}
+    assert stats["mlo_annotations"]["unique_mlos"] == 4
+
+
+def test_compute_stats_buckets_regulators_as_unknown_not_as_a_third_role(test_db):
+    """/stats keys by_role off the raw unified_role value, so a regulator lands in
+    'unknown' together with CD-CODE's roleless rows. That is deliberate and
+    documented in api/CLAUDE.md: only /mlo/{id} grew a 'regulator' bucket. If this
+    endpoint should distinguish them too, the fix is a third branch here, not a
+    'regulator' string written into unified_role."""
+    stats = asyncio.run(_compute_stats())
+    assert stats["mlo_annotations"]["by_role"] == {"driver": 1, "client": 1, "unknown": 2}
 
 
 def test_compute_stats_unique_proteins_by_source_dedupes_multiple_annotations(test_db):
     async def _setup_and_run():
         conn = await database.get_db()
         await conn.execute(
-            "INSERT INTO mlo_vocabulary (unified_mlo, category) VALUES ('extra_mlo', 'Cytoplasmic')"
+            "INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, physiological_state) "
+            "VALUES ('extra_mlo', 'cytoplasm', 'constitutive')"
         )
         await conn.execute(
             "INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, dataset_active) "
