@@ -11,7 +11,7 @@ import database
 from config import CORS_ORIGINS
 import policy
 from queries import unification_queries
-from routers import mlos, organisms, proteins, search, stats
+from routers import mlos, organisms, proteins, search, stats, unification
 
 logging.basicConfig(
     level=logging.INFO,
@@ -188,3 +188,4 @@ app.include_router(mlos.router)
 app.include_router(search.router)
 app.include_router(stats.router)
 app.include_router(organisms.router)
+app.include_router(unification.router)
