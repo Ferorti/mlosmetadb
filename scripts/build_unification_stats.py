@@ -147,7 +147,13 @@ def build_f4_role_mapping(conn: sqlite3.Connection, category_map: dict) -> list:
     """).fetchall()
     result = []
     for source_db, source_role, annotations, proteins in rows:
-        mapping = category_map[(source_db, source_role)]
+        try:
+            mapping = category_map[(source_db, source_role)]
+        except KeyError:
+            raise KeyError(
+                f"unmapped (source_db, source_role) pair: ({source_db!r}, {source_role!r}) "
+                f"— add it to database/mappings/role_harmonisation.csv"
+            ) from None
         result.append({
             "source_db": source_db,
             "source_role": source_role,
@@ -184,7 +190,13 @@ def build_pair_data(conn: sqlite3.Connection, category_map: dict) -> dict:
     pair_data = defaultdict(lambda: {"source_dbs": set(), "categories": set(), "rows": []})
     for uniprot_id, unified_mlo, source_db, source_role, evidence_type, evidence in rows:
         key = (uniprot_id, unified_mlo)
-        category = category_map[(source_db, source_role)]["category"]
+        try:
+            category = category_map[(source_db, source_role)]["category"]
+        except KeyError:
+            raise KeyError(
+                f"unmapped (source_db, source_role) pair: ({source_db!r}, {source_role!r}) "
+                f"— add it to database/mappings/role_harmonisation.csv"
+            ) from None
         pair_data[key]["source_dbs"].add(source_db)
         pair_data[key]["categories"].add(category)
         pair_data[key]["rows"].append({
@@ -242,6 +254,7 @@ def build_discrepant_pairs_rows(conn: sqlite3.Connection, pair_data: dict) -> li
 
 
 def write_discrepant_pairs_csv(conn: sqlite3.Connection, pair_data: dict) -> None:
+    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     rows = build_discrepant_pairs_rows(conn, pair_data)
     out_path = EXPORT_DIR / "discrepant_pairs.csv"
     with open(out_path, "w", newline="", encoding="utf-8") as f:
@@ -281,6 +294,7 @@ def build_mlo_term_mapping_rows(conn: sqlite3.Connection) -> list:
 
 
 def write_mlo_term_mapping_csv(conn: sqlite3.Connection) -> None:
+    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     rows = build_mlo_term_mapping_rows(conn)
     out_path = EXPORT_DIR / "mlo_term_mapping.csv"
     with open(out_path, "w", newline="", encoding="utf-8") as f:
@@ -414,6 +428,7 @@ def _git_commit(root: Path) -> str:
 def write_unification_stats_json(conn: sqlite3.Connection, category_map: dict) -> dict:
     import datetime
 
+    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     active = policy.active_annotation_clause("ma")
     n_annotations = conn.execute(f"SELECT COUNT(*) FROM mlo_annotations ma WHERE {active}").fetchone()[0]
     n_proteins = conn.execute(f"SELECT COUNT(DISTINCT ma.uniprot_id) FROM mlo_annotations ma WHERE {active}").fetchone()[0]
@@ -456,7 +471,7 @@ def write_unification_stats_json(conn: sqlite3.Connection, category_map: dict) -
 
     data = {
         "meta": {
-            "db_commit": _git_commit(ROOT),
+            "code_commit": _git_commit(ROOT),
             "build_date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "n_annotations": n_annotations,
         },

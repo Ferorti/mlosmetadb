@@ -235,6 +235,8 @@ database/mlosmetadb.db
 database/*.db
 # API fetch caches — regenerate with the fetch_*.py scripts
 database/cache/
+# Build-script output (JSON/CSV) — regenerate with: python3 scripts/build_unification_stats.py
+database/exports/
 # External crossref / ortholog bulk downloads (~14 GB, download separately)
 database/crossref/
 # Raw source-database downloads — can be re-downloaded or obtained from databases_input_data/

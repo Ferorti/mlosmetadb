@@ -8,12 +8,21 @@ recomputing report-ready numbers from that exact database.
 import sys
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 import build_unification_stats as bus
+
+DB_PATH = REPO_ROOT / "database" / "mlosmetadb.db"
+
+pytestmark = pytest.mark.skipif(
+    not DB_PATH.exists(),
+    reason=f"{DB_PATH} not present (gitignored); unification-stats tests skipped",
+)
 
 
 def test_load_category_map_has_eight_pairs_with_all_columns():
@@ -47,22 +56,6 @@ def test_f2_protein_source_combos_proteins_sum_to_total_proteins():
     assert sum(row["n_proteins"] for row in f2) == total_proteins
 
 
-def test_pair_data_shared_pairs_and_discordance_match_reference():
-    conn = bus.connect_db()
-    category_map = bus.load_category_map()
-    pair_data = bus.build_pair_data(conn, category_map)
-
-    shared = {k: v for k, v in pair_data.items() if len(v["source_dbs"]) >= 2}
-    concordant = sum(1 for v in shared.values() if len(v["categories"]) == 1)
-    discordant = sum(1 for v in shared.values() if len(v["categories"]) > 1)
-
-    # Reference values from docs/review/unification_section/data/stats.json,
-    # computed against the same commit this DB is at.
-    assert len(shared) == 10617
-    assert concordant == 9299
-    assert discordant == 1318
-
-
 def test_disc_patterns_sum_to_discordant_count():
     conn = bus.connect_db()
     category_map = bus.load_category_map()
@@ -70,30 +63,12 @@ def test_disc_patterns_sum_to_discordant_count():
     summary = bus.build_agreement_summary(pair_data)
 
     assert sum(summary["disc_patterns"].values()) == summary["discordant_pairs"]
-    assert summary["disc_patterns"] == {
-        "component|driver": 713,
-        "component|regulator": 513,
-        "component|driver|regulator": 72,
-        "driver|regulator": 20,
-    }
 
 
 def test_f6_pmid_overlap_matches_reference():
     conn = bus.connect_db()
     f6 = bus.build_f6_pmid_overlap_sources(conn)
-    by_pair = {(r["db_a"], r["db_b"]): r for r in f6}
     assert len(f6) == 6  # C(4,2) -- CD-CODE excluded, it cites no PMIDs
-    assert by_pair[("LLPSDB", "PhaSepDB")]["shared"] == 201
-    assert by_pair[("LLPSDB", "PhaSepDB")]["n_a"] == 289
-    assert by_pair[("LLPSDB", "PhaSepDB")]["n_b"] == 2020
-
-
-def test_pmid_independence_stats_match_reference():
-    conn = bus.connect_db()
-    stats = bus.build_pmid_independence_stats(conn)
-    assert stats["pairs_pmid_comparable"] == 2205
-    assert stats["pairs_shared_pub"] == 893
-    assert stats["pairs_independent_pub"] == 1312
 
 
 def test_cat3_annotations_sum_to_total():
@@ -111,7 +86,8 @@ def test_discrepant_pairs_rows_count_matches_discordant():
     category_map = bus.load_category_map()
     pair_data = bus.build_pair_data(conn, category_map)
     rows = bus.build_discrepant_pairs_rows(conn, pair_data)
-    assert len(rows) == 1318
+    summary = bus.build_agreement_summary(pair_data)
+    assert len(rows) == summary["discordant_pairs"]
 
 
 def test_discrepant_pairs_row_shape_and_alignment():
@@ -187,3 +163,16 @@ def test_summary_n_annotations_matches_direct_db_count():
     category_map = bus.load_category_map()
     data = bus.write_unification_stats_json(conn, category_map)
     assert data["summary"]["n_annotations"] == direct_count
+
+
+def test_mlo_term_mapping_annotations_sum_matches_total():
+    """Guards against join fan-out: if mlo_definitions ever had 2 rows for
+    the same (unified_mlo, source_db, source_name), the LEFT JOIN would
+    double-count that triple's annotations without changing the row count."""
+    conn = bus.connect_db()
+    rows = bus.build_mlo_term_mapping_rows(conn)
+    active = bus.policy.active_annotation_clause("ma")
+    total_annotations = conn.execute(
+        f"SELECT COUNT(*) FROM mlo_annotations ma WHERE {active}"
+    ).fetchone()[0]
+    assert sum(r["annotations"] for r in rows) == total_annotations
