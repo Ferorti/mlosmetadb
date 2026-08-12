@@ -1,0 +1,9 @@
+source_db,source_role,unified_role,category,evidence_type,note
+CDCODE,NotInformed,NULL,component,membership_only,"CD-CODE asserts membership only, no role claim"
+DrLLPS,Client,client,component,curator_assignment,"Curator-assigned; protein-scoped (propagates to every MLO of the protein)"
+DrLLPS,Regulator,NULL,regulator,curator_assignment,"Curator-assigned; served with unified_role=NULL per R1-ACT-14"
+DrLLPS,Scaffold,driver,driver,curator_assignment,Curator-assigned
+LLPSDB,driver,driver,driver,in_vitro_llps,"Purified protein phase-separates in vitro; no cellular claim"
+PhaSepDB,client,client,component,cellular_localisation,Reported present in the condensate in cells
+PhaSepDB,driver,driver,driver,cellular_requirement,Perturbing it disrupts the condensate in cells
+PhasePro,driver,driver,driver,in_vitro_llps,"Purified protein phase-separates in vitro; no cellular claim"

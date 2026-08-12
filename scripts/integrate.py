@@ -209,8 +209,14 @@ def compute_role_and_active(source_db: str, source_role: str) -> tuple:
     database" / "Driver/Client/Regulator scope"), not a generic lookup file
     — dataset_active depends on the (source_db, source_role) *combination*
     (e.g. DrLLPS+Regulator vs. DrLLPS+Client), which a flat source_role-only
-    mapping (role_mapping.tsv) cannot express. role_mapping.tsv is kept in
-    database/mappings/ for historical reference but is no longer read here.
+    mapping cannot express.
+
+    database/mappings/role_harmonisation.csv carries the same 8 pairs plus a
+    `category` column (driver/regulator/component) for
+    scripts/build_unification_stats.py, and is cross-checked against this
+    function by tests/test_role_harmonisation.py — but this function is the
+    source of truth for unified_role/dataset_active, not that file. Do not
+    make this function read from it.
 
     Returns unified_role as exactly 'driver', 'client', or None — never
     capitalized, never 'unmapped'.
