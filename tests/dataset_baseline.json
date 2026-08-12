@@ -1,50 +1,50 @@
 {
   "_meta": {
-    "generated_on_commit": "dfc00f2",
-    "generated_at": "2026-08-10"
+    "generated_on_commit": "9d6f672",
+    "generated_at": "2026-08-12"
   },
   "table_rows": {
-    "proteins": 15879,
-    "mlo_annotations": 35968,
+    "proteins": 15694,
+    "mlo_annotations": 35732,
     "mlo_vocabulary": 177,
     "mlo_definitions": 404,
-    "protein_summary": 15879,
-    "sequence_features": 358867,
-    "ppi": 917468,
-    "orthologs": 19289
+    "protein_summary": 15694,
+    "sequence_features": 358789,
+    "ppi": 917225,
+    "orthologs": 19263
   },
   "annotations_by_source": {
-    "CDCODE": 13844,
+    "CDCODE": 13731,
     "DrLLPS": 10872,
     "LLPSDB": 380,
-    "PhaSepDB": 10675,
+    "PhaSepDB": 10552,
     "PhasePro": 197
   },
   "annotations_by_role": {
-    "NULL": 15233,
-    "client": 17667,
+    "NULL": 15120,
+    "client": 17544,
     "driver": 3068
   },
   "annotations_by_dataset_active": {
     "0": 1389,
-    "1": 34579
+    "1": 34343
   },
   "annotations_by_evidence_type": {
-    "cellular_localisation": 8537,
+    "cellular_localisation": 8414,
     "cellular_requirement": 2138,
     "curator_assignment": 10872,
     "in_vitro_llps": 577,
-    "membership_only": 13844
+    "membership_only": 13731
   },
   "source_db_count_histogram": {
-    "0": 502,
-    "1": 6201,
-    "2": 6646,
-    "3": 2385,
+    "0": 501,
+    "1": 6119,
+    "2": 6528,
+    "3": 2401,
     "4": 91,
     "5": 54
   },
-  "proteins_without_sequence": 474,
+  "proteins_without_sequence": 289,
   "annotations_with_literal_null_evidence": 0,
   "distinct_unified_mlos_in_use": 177,
   "fus_p35637": {

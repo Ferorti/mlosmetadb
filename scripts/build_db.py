@@ -362,6 +362,47 @@ def load_annotations(con: sqlite3.Connection) -> tuple[int, int]:
     return len(protein_stubs), len(annotation_rows)
 
 
+def prune_merged_accessions(con: sqlite3.Connection) -> int:
+    """Elimina las accesiones que UniProt fusionó y cuya sucesora ya está acá.
+
+    integrate.py reasigna las anotaciones a la accesión vigente, así que la
+    obsoleta queda en `proteins` sin ninguna anotación — huérfana, y rompiendo
+    el invariante de que toda proteína tiene al menos una. Esta poda cierra eso.
+
+    Es la única parte de build_db.py que borra de `proteins`, y el motivo es
+    estrecho: la fila obsoleta describe la misma proteína que su sucesora, que
+    ya está en la tabla con datos propios. No se pierde una proteína, se deja de
+    contarla dos veces. Se borran también sus filas dependientes; medido antes
+    de aplicarlo, eso cuesta ortólogos en 4 accesiones y PPI en 1, todo
+    refetcheable con los scripts de siempre.
+    """
+    path = MAP_DIR / "uniprot_merged.csv"
+    if not path.exists():
+        return 0
+    with open(path, newline="", encoding="utf-8") as f:
+        obsoletas = [r["accesion_obsoleta"].strip() for r in csv.DictReader(f)]
+    if not obsoletas:
+        return 0
+
+    marks = ",".join("?" * len(obsoletas))
+    presentes = [r[0] for r in con.execute(
+        f"SELECT uniprot_id FROM proteins WHERE uniprot_id IN ({marks})", obsoletas)]
+    if not presentes:
+        return 0
+
+    marks = ",".join("?" * len(presentes))
+    for tabla, col in (("sequence_features", "uniprot_id"), ("orthologs", "uniprot_id"),
+                       ("ppi", "uniprot_id_a"), ("ppi", "uniprot_id_b"),
+                       ("protein_summary", "uniprot_id")):
+        try:
+            con.execute(f"DELETE FROM {tabla} WHERE {col} IN ({marks})", presentes)
+        except sqlite3.OperationalError:
+            pass  # la tabla puede no existir todavía en una DB recién creada
+    con.execute(f"DELETE FROM proteins WHERE uniprot_id IN ({marks})", presentes)
+    con.commit()
+    return len(presentes)
+
+
 def prune_unsupported_vocabulary(con: sqlite3.Connection) -> list[str]:
     """Drop vocabulary terms that no annotation reaches.
 
@@ -430,6 +471,10 @@ def main() -> None:
     print("Cargando mlosmetadb.tsv ...")
     n_proteins, n_annotations = load_annotations(con)
     print(f"  {n_proteins} proteinas stub, {n_annotations} anotaciones")
+
+    merged = prune_merged_accessions(con)
+    if merged:
+        print(f"Accesiones fusionadas podadas de proteins: {merged}")
 
     orphans = prune_unsupported_vocabulary(con)
     if orphans:

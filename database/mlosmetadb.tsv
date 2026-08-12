@@ -4941,7 +4941,7 @@ Q66J56	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	N
 Q641I6	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
 Q6DKM0	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
 Q6B4U5	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
-B7ZPG0	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
+Q7T3U0	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
 Q6NRC5	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
 Q0IHG1	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
 Q6GPS6	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
@@ -10735,7 +10735,7 @@ P51116	CDCODE	FXR-driven SARS-CoV-2 condensate	sars_cov2_n_condensate	NotInforme
 P0DTC1	CDCODE	FXR-driven SARS-CoV-2 condensate	sars_cov2_n_condensate	NotInformed		membership_only	1	NULL	NULL
 Q04955	CDCODE	PodJ condensates	bacterial_polarity_condensate	NotInformed		membership_only	1	NULL	NULL
 Q9GZV5	CDCODE	TAZ Condensate	hippo_condensate	NotInformed		membership_only	1	NULL	NULL
-A0A0B4KH25	CDCODE	Insulator body	insulator_body	NotInformed		membership_only	1	NULL	NULL
+P08985	CDCODE	Insulator body	insulator_body	NotInformed		membership_only	1	NULL	NULL
 P37894	CDCODE	PodJ condensates	bacterial_polarity_condensate	NotInformed		membership_only	1	NULL	NULL
 P31483	CDCODE	DHX9 Stress Granules	stress_granule	NotInformed		membership_only	1	NULL	NULL
 P06730	CDCODE	inclusion body-associated granule (IBAG)	viral_factory	NotInformed		membership_only	1	NULL	NULL
@@ -11304,7 +11304,7 @@ H0Y4W2	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 P32780	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q92783	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q14258	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
-A0A087X0M4	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
+Q9BWU0	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 P19338	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q9NQZ2	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 P54727	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
@@ -11435,10 +11435,10 @@ G5EA31	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q96T76	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q16513	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 E9PMC9	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
-G3V1C3	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
+Q9BZZ5	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 E7EX29	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 F5H2F4	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
-X6RAL5	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
+O00422	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 P27348	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 P51610	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 E9PB61	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
@@ -11499,7 +11499,7 @@ E9PLK3	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 P62304	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q6IAA8	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q04760	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
-G8JLD5	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
+O00429	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q86X55	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 Q92733	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
 E7EVE9	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
@@ -13340,11 +13340,8 @@ P24928	CDCODE	Synthetic Condensate 000124	synthetic_condensate	NotInformed		memb
 P45973	CDCODE	Synthetic Condensate 000069	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
 Q2M389	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 Q60953	CDCODE	PML body	pml_nuclear_body	NotInformed		membership_only	1	NULL	NULL
-O02916	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9UJY0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q05D60	CDCODE	Synthetic Condensate 000371	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
 P47985	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
-O75992	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q8TF09	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 P42025	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 Q9UEW8	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
@@ -13426,24 +13423,9 @@ P17152	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_densi
 Q14DG7	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 M3WVY3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 I3L5T3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96FJ1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 F7AMP1	CDCODE	Nuclear pore complex	nuclear_pore_complex	NotInformed		membership_only	1	NULL	NULL
 A0A7D9NKX0	CDCODE	Nuclear pore complex	nuclear_pore_complex	NotInformed		membership_only	1	NULL	NULL
-Q9H3H4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q86VM3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q14281	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96J95	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q14981	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96FD2	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-O15441	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96FT1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NVL3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q86T58	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8WUZ1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H9V5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9P2R9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9GZW3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96PK5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
+Q14980	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 P22509	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 P37802	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 Q925J9	CDCODE	Transcriptional condensate	transcriptional_condensate	NotInformed		membership_only	1	NULL	NULL
@@ -13473,103 +13455,18 @@ O14744	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_densi
 Q5I0H3	CDCODE	Cajal body	cajal_body	NotInformed		membership_only	1	NULL	NULL
 P62873	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 O94986	CDCODE	Synthetic Condensate 000371	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
-Q9NYH0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 O60832-2	CDCODE	Stress granule	stress_granule	NotInformed		membership_only	1	NULL	NULL
-P29043	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q22053	CDCODE	Synthetic Condensate 000051	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
-Q8TBR6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H3L4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9UG39	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8WVB8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9Y6Y3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H855	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H027	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IYI9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96E91	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96B52	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IVL9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BPY6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96E87	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H5M6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96CL3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8WV53	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NV36	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BVP6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BPV9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BRF6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9UP86	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9Y4S3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8TDY0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H9F8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8TCV6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8TEZ1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8TB66	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96TA6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q12803	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96A52	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BRC9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BUT3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8N935	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H8U9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BWL9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IVR9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8N0W8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q7Z481	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IYH0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96G92	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BXK4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IU69	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IW16	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96J10	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8NCD9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96JD3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BZQ1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H381	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q12987	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IY12	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9P1V2	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8WXZ8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H2G1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8WUY5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H7U0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9UHY0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8N417	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9Y321	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H245	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NW67	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H586	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96AT5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NXK4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96SS3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9UG18	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96DK2	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96JY7	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q86UC4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9Y658	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8NHS8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q16051	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q7Z638	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8IWG8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H830	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96QJ8	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96A78	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8N9E5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NSP6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8NB06	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H9J6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q96BY2	CDCODE	P62 body	p62_body	NotInformed		membership_only	1	NULL	NULL
 Q38951	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 O60885	CDCODE	Synthetic Condensate 000182	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
 Q9P2E3	CDCODE	Stress granule	stress_granule	NotInformed		membership_only	1	NULL	NULL
 P25159	CDCODE	Mimi granules	neuronal_granule	NotInformed		membership_only	1	NULL	NULL
-Q96JN4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q9NFU0	CDCODE	Pericentriolar material	centrosome	NotInformed		membership_only	1	NULL	NULL
 P35637	CDCODE	Synthetic Condensate 000031	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
 Q92QJ4	CDCODE	BR-body	bacterial_rnp_body	NotInformed		membership_only	1	NULL	NULL
-Q96LC1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 P97432	CDCODE	P62 cluster	p62_body	NotInformed		membership_only	1	NULL	NULL
 G1SWD1	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NVY2	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q9A749	CDCODE	BR-body	bacterial_rnp_body	NotInformed		membership_only	1	NULL	NULL
 O22812	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 G5EBV6	CDCODE	Synthetic Condensate 000067	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
@@ -13667,7 +13564,6 @@ O43615	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 P61964	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 O60264	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q8NE71	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q14980	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 O43684	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q6P2Q9	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 O60293	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
@@ -13679,14 +13575,6 @@ Q96B01	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q32NC0	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q86VY4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q9BU19	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9H5L4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-O14547	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NVW5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q7Z5E3	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q96I08	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q8NBE6	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-O43328	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9BW93	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q9NSU2	CDCODE	cGAS foci	cgas_dna_complex	NotInformed		membership_only	1	NULL	NULL
 Q93YU5	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 Q68FJ1	CDCODE	Mitochondrial cloud	balbiani_body	NotInformed		membership_only	1	NULL	NULL
@@ -13897,7 +13785,6 @@ Q08AE8	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_densi
 Q9Y6C9	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 P62891	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 P61313	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
-Q9NXH4	CDCODE	Nucleolus	nucleolus	NotInformed		membership_only	1	NULL	NULL
 P19659	CDCODE	Synthetic Condensate 000194	synthetic_condensate	NotInformed		membership_only	1	NULL	NULL
 O43526	CDCODE	Presynaptic clusters and postsynaptic densities	postsynaptic_density	NotInformed		membership_only	1	NULL	NULL
 Q84XR8	CDCODE	Pyrenoid	pyrenoid	NotInformed		membership_only	1	NULL	NULL
@@ -14410,7 +14297,7 @@ Q80VQ1	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInfo
 Q78ZJ8	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
 Q542X7	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
 P24369	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
-Q8K3G7	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
+Q99P72	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
 A0A7N9VR94	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
 Q921S5	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
 Q497D7	CDCODE	Mast cell extracellular granules (MCEGs)	mast_cell_granule	NotInformed		membership_only	1	NULL	NULL
@@ -15517,8 +15404,8 @@ P46821	DrLLPS	Postsynaptic density	postsynaptic_density	Regulator		curator_assig
 O43379	DrLLPS	Centrosome/Spindle pole body	centrosome	Regulator		curator_assignment	0	20890278;22899712;24228726;29373831;19910486	Homo sapiens
 O43379	DrLLPS	Stress granule	stress_granule	Regulator		curator_assignment	0	20890278;22899712;24228726;29373831;19910486	Homo sapiens
 P55010	DrLLPS	Stress granule	stress_granule	Regulator		curator_assignment	0	29373831;18794846	Homo sapiens
-P35544	DrLLPS	P-body	p_body	Regulator		curator_assignment	0	18794846	Homo sapiens
-P35544	DrLLPS	Stress granule	stress_granule	Regulator		curator_assignment	0	18794846	Homo sapiens
+P62861	DrLLPS	P-body	p_body	Regulator		curator_assignment	0	18794846	Homo sapiens
+P62861	DrLLPS	Stress granule	stress_granule	Regulator		curator_assignment	0	18794846	Homo sapiens
 Q14145	DrLLPS	Stress granule	stress_granule	Regulator		curator_assignment	0	29373831;30126895	Homo sapiens
 Q14145	DrLLPS	Others	NULL	Regulator		curator_assignment	0	29373831;30126895	Homo sapiens
 Q14157	DrLLPS	P-body	p_body	Regulator		curator_assignment	0	29395067;26777405	Homo sapiens
@@ -16591,7 +16478,7 @@ P34788	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	29104584;26
 Q9SGZ5	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 F4I420	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q9LUK6	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
-B3H5K3	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
+B6EUB3	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q3ECP0	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q9LUJ5	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300;29104584	Arabidopsis thaliana
 Q42384	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
@@ -17179,7 +17066,7 @@ Q7XJN0	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Ar
 P43299	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q9LS97	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 P10795	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300;29104584	Arabidopsis thaliana
-Q9T0J7	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
+Q8H1F0	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 P38418	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	29104584	Arabidopsis thaliana
 Q38906	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 F4K3A9	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
@@ -17881,7 +17768,7 @@ P19366	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Ar
 Q8RXU5	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q9LD57	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	29104584;26980300	Arabidopsis thaliana
 Q8RY25	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
-Q9FFQ8	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
+Q84JB7	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q42479	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q9FL54	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
 Q9SRI1	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Arabidopsis thaliana
@@ -20665,7 +20552,7 @@ Q9NS23	DrLLPS	Centrosome/Spindle pole body	centrosome	Client	client	curator_assi
 Q92665	DrLLPS	Mitochondrial RNA granule	mitochondrial_rna_granule	Client	client	curator_assignment	1	25683715	Homo sapiens
 O95416	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	29373831	Homo sapiens
 Q6VVB1	DrLLPS	Centrosome/Spindle pole body	centrosome	Client	client	curator_assignment	1	17337485	Homo sapiens
-Q9UPP5	DrLLPS	Centrosome/Spindle pole body	centrosome	Client	client	curator_assignment	1	20540739	Homo sapiens
+Q5XKL5	DrLLPS	Centrosome/Spindle pole body	centrosome	Client	client	curator_assignment	1	20540739	Homo sapiens
 Q14674	DrLLPS	Centrosome/Spindle pole body	centrosome	Client	client	curator_assignment	1	12672959	Homo sapiens
 Q9Y4C1	DrLLPS	Nucleolus	nucleolus	Client	client	curator_assignment	1	26980300	Homo sapiens
 Q13162	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	29373831	Homo sapiens
@@ -23169,7 +23056,7 @@ A7VJC2	DrLLPS	Neuronal granule	neuronal_granule	Client	client	curator_assignment
 Q5RKI1	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	27836976	Rattus norvegicus
 P04642	DrLLPS	Chromatoid body	chromatoid_body	Client	client	curator_assignment	1	18787638	Rattus norvegicus
 Q4G061	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	27240544	Rattus norvegicus
-F1LN59	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	27836976	Rattus norvegicus
+Q5BJU2	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	27836976	Rattus norvegicus
 P63074	DrLLPS	Neuronal granule	neuronal_granule	Client	client	curator_assignment	1	11719208;27836976	Rattus norvegicus
 P63074	DrLLPS	Stress granule	stress_granule	Client	client	curator_assignment	1	11719208;27836976	Rattus norvegicus
 F1LN29	DrLLPS	Neuronal granule	neuronal_granule	Client	client	curator_assignment	1	12592035	Rattus norvegicus
@@ -24841,7 +24728,7 @@ P0DP58	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_as
 Q9H9H5	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
 Q14160	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
 Q8N9N7	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
-Q8NEP4	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
+O43236	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
 Q9Y241	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
 Q9Y678	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
 O14514	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Homo sapiens
@@ -24998,7 +24885,7 @@ P97798	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_as
 Q8R3Z5	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
 P46096	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
 Q3TDK6	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
-E9QAS7	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
+Q7TNC9	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
 Q6PD28	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
 P62482	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
 Q8BW75	DrLLPS	Postsynaptic density	postsynaptic_density	Client	client	curator_assignment	1	23071613	Mus musculus
@@ -29001,7 +28888,7 @@ P35241	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisatio
 P35249	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750;33939924	Homo sapiens
 P35250	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 P35251	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
-P35544	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
+P62861	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 P35611	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Homo sapiens
 P35637	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Homo sapiens
 P35658	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
@@ -29193,7 +29080,6 @@ P62753	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisatio
 P62820	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Homo sapiens
 P62826	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Homo sapiens
 P62847	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750;33939924	Homo sapiens
-P62861	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 P62879	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Homo sapiens
 P62910	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 P62913	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
@@ -29529,7 +29415,7 @@ Q659C4	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisatio
 Q66HP4	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Rattus norvegicus
 Q66K74	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 Q68CZ2	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
-Q68D10	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	37385249;32744794	Homo sapiens
+Q68D10	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	37385249;32744794;15635413	Homo sapiens
 Q68D10	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	37385249	Homo sapiens
 Q68SB1	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Rattus norvegicus
 Q69YQ0	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750;33939924	Homo sapiens
@@ -29679,7 +29565,7 @@ Q8NDV7	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisatio
 Q8NE71	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750;33939924	Homo sapiens
 Q8NE86	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 Q8NEF9	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924;37385249	Homo sapiens
-Q8NEF9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	37385249;32744794	Homo sapiens
+Q8NEF9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	37385249;32744794;15635413	Homo sapiens
 Q8NFH4	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 Q8NFN8	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	33939924	Homo sapiens
 Q8NHU6	PhaSepDB	Stress granule	stress_granule	client	client	cellular_localisation	1	31626750	Homo sapiens
@@ -30252,7 +30138,7 @@ H3BS89	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 I0J062	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	22094112	Homo sapiens
 O00124	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O00139	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;39738032	Homo sapiens
-O00148	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
+O00148	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;15635413	Homo sapiens
 O00168	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O00221	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O00264	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -30269,11 +30155,11 @@ O00567	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 O00571	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
 O00629	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O00712	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-O02916	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BWF3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O14511	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14513	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14523	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-O14547	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q6P2Q9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O14548	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14558	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14562	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -30289,7 +30175,7 @@ O14787	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 O14818	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O14841	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14893	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-O14897	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q8NE71	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
 O14907	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14924	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O14950	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -30314,7 +30200,7 @@ O15287	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 O15347	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O15381	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;22226966	Homo sapiens
 O15439	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-O15441	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BZZ5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O15446	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	9426281;15635413;32744794	Homo sapiens
 O15479	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 O15488	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -30326,7 +30212,7 @@ O43159	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 O43172	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O43252	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O43298	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-O43328	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q1ED39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 O43390	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O43395	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;30503769	Homo sapiens
 O43447	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;30503769	Homo sapiens
@@ -30397,7 +30283,7 @@ O75626	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 O75643	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O75683	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
 O75688	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-O75691	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+O75691	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 O75817	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 O75818	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O75907	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -30406,8 +30292,8 @@ O75918	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 O75935	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O75937	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O75940	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-O75992	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-O76021	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;22419112;24127217	Homo sapiens
+Q68CQ4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+O76021	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;22419112;24127217;15635413	Homo sapiens
 O76075	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 O76094	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 O94760	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -30657,7 +30543,7 @@ P28356	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 P28370	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 P28562	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 P29034	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-P29043	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+P50454	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 P29084	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 P29316	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 P29323	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
@@ -30691,7 +30577,7 @@ P35251	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 P35268	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 P35269	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 P35520	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-P35544	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+P62861	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 P35579	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 P35637	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 P35659	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -30736,7 +30622,7 @@ P42694	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 P42695	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 P42696	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;24127217;32744794	Homo sapiens
 P42766	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-P42771	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+P42771	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 P43003	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 P43243	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 P43246	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
@@ -30871,7 +30757,6 @@ P62841	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	397380
 P62847	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 P62851	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;24127217	Homo sapiens
 P62854	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-P62861	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 P62899	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 P62906	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 P62910	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
@@ -30887,10 +30772,10 @@ P63244	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	397380
 P67809	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 P68104	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 P68402	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-P78316	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+P78316	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 P78317	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 P78337	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-P78345	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+P78345	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 P78346	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 P78347	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
 P78371	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -30969,10 +30854,9 @@ Q0VGE8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q0WX57	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	17109758	Homo sapiens
 Q10570	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q12766	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q12788	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q12788	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q12789	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;39738032	Homo sapiens
 Q12796	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q12803	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q12816	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q12824	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q12830	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
@@ -30983,7 +30867,7 @@ Q12905	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	397380
 Q12906	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	26240280;15635413;24127217;32744794	Homo sapiens
 Q12923	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q12951	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q12987	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q5QJE6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q13085	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;39738032	Homo sapiens
 Q13106	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q13129	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31016,7 +30900,7 @@ Q13547	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q13555	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q13573	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q13595	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q13601	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
+Q13601	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;15635413	Homo sapiens
 Q13610	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;29065309	Homo sapiens
 Q13616	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q13627	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31042,7 +30926,7 @@ Q14191	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q14204	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
 Q14241	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;24127217	Homo sapiens
 Q14259	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q14281	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q7L1Q6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q14331	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;21699900	Homo sapiens
 Q14493	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q14498	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
@@ -31058,7 +30942,7 @@ Q14690	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q14692	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q14839	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
 Q14978	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;7657714;30017905	Homo sapiens
-Q14981	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q14980	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q14D04	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q15013	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q15019	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -31104,7 +30988,7 @@ Q15796	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q15815	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q15935	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q15937	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
-Q16051	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q14527	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q16181	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q16288	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q16384	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31119,7 +31003,7 @@ Q16576	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q16584	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q16629	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q16630	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q16666	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q16666	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q16670	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q16695	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q16778	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -31129,7 +31013,6 @@ Q16836	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q16850	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q16877	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769;32744794	Homo sapiens
 Q17RN3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q1ED39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q2I0M4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q2NKX9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q2Q1W2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
@@ -31155,7 +31038,7 @@ Q53GL7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q53GS7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q53H47	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q53HC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q53HL2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;18946085	Homo sapiens
+Q53HL2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;18946085;15635413	Homo sapiens
 Q53HV7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q53S58	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q53T59	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31163,8 +31046,8 @@ Q53T94	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q569K4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q56A73	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q58FF7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
-Q5BKY9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q5C9Z4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;17965019	Homo sapiens
+Q5BKY9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
+Q5C9Z4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;17965019;15635413	Homo sapiens
 Q5DJT8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5EBN2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5EE01	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	22002061	Homo sapiens
@@ -31176,7 +31059,7 @@ Q5HYK3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q5HYN5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5JSL3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5JST6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q5JTH9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q5JTH9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q5JVF3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5JVS0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	19523114	Homo sapiens
 Q5JXX7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31186,18 +31069,17 @@ Q5M7Z0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q5MJ09	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5MJ10	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5QJ38	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q5QJE6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5QP82	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5SGD2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q5SQQ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5SRE5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5SXM1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q5SY16	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;21063389	Homo sapiens
+Q5SY16	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;21063389;15635413	Homo sapiens
 Q5T0B9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5T124	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5T1M5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5T280	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
-Q5T3I0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
+Q5T3I0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217;15635413	Homo sapiens
 Q5T481	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5T4B2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5T5X7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	26100909;39738032	Homo sapiens
@@ -31211,7 +31093,7 @@ Q5TB30	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q5TC79	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5TEA3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5UAW9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q5UIP0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
+Q5UIP0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;15635413	Homo sapiens
 Q5VT25	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q5VT97	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q5VUJ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31224,7 +31106,7 @@ Q63HK3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q641Q2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q658P3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q66K14	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q66PJ3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	19582790	Homo sapiens
+Q66PJ3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	19582790;15635413	Homo sapiens
 Q67FW5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q68DC2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q68DE3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31249,7 +31131,7 @@ Q6IS24	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q6NSI8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6NSZ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6NUM9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q6NW34	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
+Q6NW34	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;15635413	Homo sapiens
 Q6P050	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6P0N0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6P158	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31275,7 +31157,7 @@ Q6PK04	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q6PK81	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6QHC5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6R2W3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q6RFH5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;26456651	Homo sapiens
+Q6RFH5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;26456651;15635413	Homo sapiens
 Q6T311	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6TCH4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q6TFL3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31317,8 +31199,8 @@ Q719H9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q71RC2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q71UM5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q75WM6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
-Q76FK4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;16963496	Homo sapiens
-Q7L014	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
+Q76FK4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;16963496;15635413	Homo sapiens
+Q7L014	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;15635413	Homo sapiens
 Q7L190	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7L3S4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7L3T8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31333,31 +31215,31 @@ Q7L9L4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q7RTT5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7RTV0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q7Z2E3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;16777843	Homo sapiens
-Q7Z2T5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
+Q7Z2T5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;15635413	Homo sapiens
 Q7Z3U7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z3V5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z401	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z419	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z429	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q7Z481	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9Y2L1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q7Z4B0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q7Z4F1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z4H3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z4W1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q7Z5E3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q7Z638	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+O75367	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q5BKZ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q7Z692	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q7Z7M9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86SE8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86SE9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q86T58	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9H2Y7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q86T82	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86TI0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86TJ5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86TM3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86U38	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q86UA6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q86UC4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BXY0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q86UD0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86UK0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86UP3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31365,7 +31247,7 @@ Q86UP6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q86US8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86V81	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q86VI3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q86VM3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BQG0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;39738032	Homo sapiens
 Q86VQ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86VZ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86WB0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
@@ -31378,9 +31260,8 @@ Q86XR5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q86YP4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q86YV6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q86YW9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IU69	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q8IUF8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;15819408;12091391	Homo sapiens
 Q8IUC6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IUF8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15819408;12091391	Homo sapiens
 Q8IUY3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IV03	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IV42	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31388,12 +31269,11 @@ Q8IV48	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	169120
 Q8IVF5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IVF6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IVL6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IVL9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q8IVR9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9P258	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9Y3A4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q8IVW6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q8IVY1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IW16	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q8IWG8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q96MG7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8IWS0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q8IX15	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IXJ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31401,29 +31281,28 @@ Q8IXJ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q8IXN7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IXQ4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IXW5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IY12	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q96SB4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;30503769	Homo sapiens
 Q8IY37	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8IY47	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IY50	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IY57	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q8IY81	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;22195017	Homo sapiens
 Q8IYF1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
-Q8IYH0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q8NHQ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q8IYH5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IYI9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q05D32	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8IYJ2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IYL9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IZ81	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IZA0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IZD0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8IZL8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;21326211;39738032	Homo sapiens
+Q8IZL8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;21326211;39738032;15635413	Homo sapiens
 Q8IZN3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IZQ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8IZQ5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;39738032	Homo sapiens
 Q8IZU0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q8IZU1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	12213195	Homo sapiens
 Q8N0T1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q8N0W8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8N0Y2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N140	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N163	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
@@ -31438,7 +31317,6 @@ Q8N220	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q8N2H9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N319	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N3Z6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;21855801	Homo sapiens
-Q8N417	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8N474	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N4C6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769;32744794	Homo sapiens
 Q8N4L1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31446,7 +31324,7 @@ Q8N4L8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q8N4N8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N4P3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q8N554	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8N567	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;18721783	Homo sapiens
+Q8N567	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;18721783;15635413	Homo sapiens
 Q8N594	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N5B7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N5C7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31466,18 +31344,15 @@ Q8N859	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q8N8A6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q8N8D1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N8J6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8N935	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q52LJ0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8N9E0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8N9E5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8N9I9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8N9Q2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8N9T8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q8N9T8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q8N9V3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NAA5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8NB06	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8NB16	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8NBB4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8NBE6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8NBI2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NBP5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NBQ7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
@@ -31486,16 +31361,15 @@ Q8NBU5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q8NBZ0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NC69	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NCD3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8NCD9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q969X6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24219289	Homo sapiens
 Q8NCQ7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q8NCS4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NCW0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8ND82	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8ND90	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	10050892	Homo sapiens
 Q8NDD1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;24127217	Homo sapiens
-Q8NDF8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	23376078	Homo sapiens
+Q8NDF8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	23376078;15635413	Homo sapiens
 Q8NDZ2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8NE71	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q8NEA4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NEJ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;18547334	Homo sapiens
 Q8NEM7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31510,56 +31384,52 @@ Q8NG27	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q8NG50	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;17905820	Homo sapiens
 Q8NG66	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15161910	Homo sapiens
 Q8NHM5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	17994099	Homo sapiens
-Q8NHQ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NHR7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NHS4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8NHS8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8NHU0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NHX9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8NI36	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;21051332	Homo sapiens
 Q8TAF7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TAU0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8TB66	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BYG3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
 Q8TB69	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TB73	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q8TBB5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TBK6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8TBR6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8TBZ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24204302	Homo sapiens
 Q8TC21	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TC57	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TCN5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8TCV6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+P23527	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8TDD1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
 Q8TDD5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TDN6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q8TDY0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NXF1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;21326211;39738032	Homo sapiens
 Q8TE49	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TE82	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TEA7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8TEA8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8TED0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q8TED0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q8TEQ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8TEZ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9H6R4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q8TF05	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q8TF39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WTP8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
 Q8WTS6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8WTT2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q8WTT2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q8WTV1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WUJ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WUP2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WUT4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8WUY5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q8WUZ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q2NL82	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8WV22	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q8WV24	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;11369516	Homo sapiens
 Q8WV44	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8WV53	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NUQ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;30503769	Homo sapiens
 Q8WV74	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WV99	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WVB3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8WVB8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NRX1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;15497447	Homo sapiens
 Q8WVC0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WVF1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WVI7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31571,11 +31441,11 @@ Q8WW01	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q8WWN9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WWY3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q8WXE9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8WXF1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q8WXF1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q8WXF8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	11965497	Homo sapiens
 Q8WXG1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WXS4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q8WXZ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9H9Y2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q8WY54	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WYA1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q8WYA6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -31606,7 +31476,7 @@ Q92796	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q92804	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q92841	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032;17226766	Homo sapiens
 Q92844	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q92878	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
+Q92878	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;15635413	Homo sapiens
 Q92890	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q92915	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q92922	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
@@ -31623,20 +31493,15 @@ Q969H6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q969K3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	12118383	Homo sapiens
 Q969K4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q969S3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q969X6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24219289	Homo sapiens
 Q96A00	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q96A52	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96A61	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96A65	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96A78	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96AN5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96AQ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96AT5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96AY2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	14617801	Homo sapiens
 Q96AY4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96B02	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96B26	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q96B52	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96B54	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96B70	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96BF6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31646,38 +31511,34 @@ Q96BT1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	241272
 Q96C57	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;15635413	Homo sapiens
 Q96C61	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96CG3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96CL3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q8WXE1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96CS4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96CX3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q96D46	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q96DB6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96DE0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96DK2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96DU3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q96E11	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96E39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q96E87	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q96E91	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9H8H2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;23019224;32744794	Homo sapiens
 Q96EG3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96EK2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96EQ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96ES7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96EU6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;20038530	Homo sapiens
+Q96EU6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;20038530;15635413	Homo sapiens
 Q96EY4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q96F25	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96FA3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96FB5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96FC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;26089203	Homo sapiens
-Q96FD2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9Y314	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96FI4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
-Q96FJ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BXS6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
 Q96FK6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96FQ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;17030513	Homo sapiens
 Q96FS4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96FT1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96G21	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;12655004	Homo sapiens
 Q96G74	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96G92	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96GC6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	10777669	Homo sapiens
 Q96GC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96GD4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -31693,27 +31554,26 @@ Q96HQ0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q96HW7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96HY6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96HZ4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96I08	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96IC2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96IU4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96IZ2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96J10	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q96J95	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q8IWA0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q15020	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96JB5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96JD3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q5VTR2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96JF0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96JI7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96JM2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q96JM7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96JN2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96JN4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q96JY7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q14004	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NV06	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24754225	Homo sapiens
 Q96K12	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96K58	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96KR1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96L03	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96LA8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;30017905	Homo sapiens
-Q96LC1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+O60506	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96LT7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	25081482	Homo sapiens
 Q96LU7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96LW9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
@@ -31734,7 +31594,7 @@ Q96NY9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	158052
 Q96P11	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q96PE7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96PF2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q96PK5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q96PK6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96PM9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15527981	Homo sapiens
 Q96PN7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96PN8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31744,17 +31604,16 @@ Q96Q27	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q96Q89	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	11470801	Homo sapiens
 Q96QA6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15556292	Homo sapiens
 Q96QD5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96QJ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NWT1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q96QU8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96RE9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96RQ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96RY5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q96S53	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q96SB4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q96SS3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q96C01	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96ST3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	16820529	Homo sapiens
-Q96T60	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q96TA6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q96T60	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
+Q8TBF4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q96TG8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q99547	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q99558	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31780,8 +31639,8 @@ Q99941	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q99959	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q99983	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q99986	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9BPV9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9BPY6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9UKD2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;20083226	Homo sapiens
+Q9Y4C8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;16027046	Homo sapiens
 Q9BQ02	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BQ39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;30503769;32744794;24127217	Homo sapiens
 Q9BQ67	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
@@ -31790,9 +31649,6 @@ Q9BQA1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	397380
 Q9BQA5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9BQD3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BQE6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9BQG0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;39738032	Homo sapiens
-Q9BRC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9BRF6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BRJ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;24127217;32744794	Homo sapiens
 Q9BRJ7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BRJ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31803,7 +31659,7 @@ Q9BRS2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9BRT6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9BRU9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9BRX2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413;39738032	Homo sapiens
-Q9BSC4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q9BSC4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9BSE2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BSE4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BSF8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31824,7 +31680,7 @@ Q9BUA3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	397380
 Q9BUL9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BUP0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BUQ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q9BUT3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q6IBW4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BUU2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BV20	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BV38	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032;21326211	Homo sapiens
@@ -31833,30 +31689,25 @@ Q9BV47	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	305037
 Q9BVG4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BVI4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9BVJ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
-Q9BVP2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;12464630	Homo sapiens
-Q9BVP6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BVP2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;12464630;15635413	Homo sapiens
 Q9BVQ7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BW11	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BW30	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BW60	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q9BW61	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9BW93	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q7LBC6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BWC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q9BWD4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BWF2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24553286	Homo sapiens
-Q9BWF3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9BWL9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BWV7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BX40	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BXA6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q9BXK4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9BXS6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
+Q13535	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9BXT2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BXV9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BXW9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BXX2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BXX3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9BXY0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BXY5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BY42	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9BY44	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -31864,7 +31715,6 @@ Q9BY66	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9BYC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q9BYE0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BYG0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9BYG3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
 Q9BYJ4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BYT3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BZ67	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31872,7 +31722,6 @@ Q9BZE4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q9BZI1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9BZI7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9BZL4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q9BZQ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9C086	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;15556297	Homo sapiens
 Q9C0A1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9C0B9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31883,12 +31732,10 @@ Q9C0K0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9C0K7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9GZL7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;16043514	Homo sapiens
 Q9GZM8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q9GZR2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q9GZR2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9GZR7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9GZS1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9GZV4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9GZW3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9H027	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H063	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H093	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H0A0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;30017905;18804466;25653167	Homo sapiens
@@ -31905,18 +31752,16 @@ Q9H1E3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9H1H1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H1V8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H213	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H245	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q6P1J9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H254	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H2G1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q14966	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H2J7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H2L5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H2V7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H2X8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H2Y7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H381	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q53GS9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H3H3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H3H4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9H3L4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9P016	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9H3N1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H3R5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H3T2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -31930,43 +31775,32 @@ Q9H4X1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9H501	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9H579	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H583	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;17699751	Homo sapiens
-Q9H586	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H5J8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H5L4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9H5M6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H5V9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H633	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	11497433	Homo sapiens
 Q9H6F5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
 Q9H6P5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H6R0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q9H6R4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H6R7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H6U6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H6W3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
-Q9H6Y2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q9H6Y2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9H7B2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;19170763	Homo sapiens
 Q9H7F0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H7U0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H7X3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H814	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15574332	Homo sapiens
-Q9H830	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9H855	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H869	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;27939641	Homo sapiens
 Q9H898	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217	Homo sapiens
-Q9H8H0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;22916032	Homo sapiens
-Q9H8H2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	23019224;32744794	Homo sapiens
+Q9H8H0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;22916032;15635413	Homo sapiens
 Q9H8S9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H8U9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NWH9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H8W3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H8Y1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q9H967	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H9A6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H9F8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9H9J6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9H9L3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;18065403	Homo sapiens
 Q9H9Q4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9H9V5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9H9Y2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q9Y4W2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032;20647540	Homo sapiens
 Q9H9Y6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9H9Z2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9HA38	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	11571644	Homo sapiens
@@ -32014,7 +31848,6 @@ Q9NRR3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	305037
 Q9NRR4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	10948199	Homo sapiens
 Q9NRR6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9NRS6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NRX1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15497447	Homo sapiens
 Q9NRZ5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NRZ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q9NS39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -32026,46 +31859,38 @@ Q9NSD5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9NSD9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NSI2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NSI6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NSP6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9BY77	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NST1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NT12	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NT68	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NTJ3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;39738032	Homo sapiens
 Q9NTK5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;20053727	Homo sapiens
-Q9NTM9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
+Q9NTM9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9NU02	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NU22	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;39738032	Homo sapiens
 Q9NU53	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NUL7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NUQ6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;30503769	Homo sapiens
 Q9NUQ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NUU6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NUZ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NV06	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24754225	Homo sapiens
 Q9NV31	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	12655004;15635413;32744794	Homo sapiens
-Q9NV36	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NV66	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NVA2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NVC2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NVG8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NVI1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9NVL3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9Y383	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NVM4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;30017905	Homo sapiens
 Q9NVN8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	17034816;15635413;32744794	Homo sapiens
-Q9NVP0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NQW6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NVP1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;39738032;16963496	Homo sapiens
 Q9NVP4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NVU7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;14976432	Homo sapiens
-Q9NVW5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NVX2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
-Q9NVY2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NVY6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NW13	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;17081119	Homo sapiens
-Q9NW67	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NW75	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q9NWB1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NWH9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9NWT1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9NWW5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NWZ3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NX04	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -32073,10 +31898,7 @@ Q9NX18	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9NX24	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;24127217	Homo sapiens
 Q9NX31	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NX58	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;24495227	Homo sapiens
-Q9NXF1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	21326211;39738032	Homo sapiens
-Q9NXH4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NXJ0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NXK4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NXP7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NXT0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NY12	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
@@ -32084,7 +31906,7 @@ Q9NY35	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9NY61	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9NY93	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9NYG5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9NYH0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q9NXV6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9NYH9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;30017905	Homo sapiens
 Q9NYJ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NYL2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
@@ -32101,7 +31923,6 @@ Q9NZI6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9NZJ0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9NZM5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;27829214	Homo sapiens
 Q9NZR1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9P016	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P021	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P031	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217;15635413;32744794	Homo sapiens
 Q9P0K8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -32111,7 +31932,6 @@ Q9P0R6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9P0U4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9P1T7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	16260749 10671520 12944466	Homo sapiens
 Q9P1U0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9P1V2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9P1V8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P219	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P275	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;19208757	Homo sapiens
@@ -32122,7 +31942,6 @@ Q9P2D1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9P2D3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P2H5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P2N5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9P2R9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9P2T1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9P2W1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9UBE8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -32134,8 +31953,7 @@ Q9UBX2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9UBZ4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UDY8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UFC0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9UG18	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9UG39	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+A6NHR9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9UGN5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UGP9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9UGY1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
@@ -32147,7 +31965,7 @@ Q9UHK0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9UHP6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UHQ1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UHQ9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9UHY0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q5SSJ5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9UHY8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UI14	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UI30	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -32164,7 +31982,6 @@ Q9UJQ4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	397380
 Q9UJV8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UJV9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9UJW9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9UJY0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9UK32	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UK45	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UK76	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -32172,7 +31989,6 @@ Q9UKA4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9UKA8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UKB1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UKC9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9UKD2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;20083226	Homo sapiens
 Q9UKI9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UKL6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UKS6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
@@ -32199,7 +32015,6 @@ Q9UNX3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q9UNX4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794	Homo sapiens
 Q9UNX9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UNZ5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217	Homo sapiens
-Q9UP86	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9UPM6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UPQ8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9UPW5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -32219,7 +32034,6 @@ Q9Y265	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q9Y279	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y2H2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9Y2K7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9Y2L1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y2L9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y2P8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y2R4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;24127217;15635413	Homo sapiens
@@ -32231,13 +32045,11 @@ Q9Y2W2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	156354
 Q9Y2X0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y2X3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794;15635413	Homo sapiens
 Q9Y303	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9Y321	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y324	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y333	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9Y376	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y388	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y3A2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	24127217;15635413	Homo sapiens
-Q9Y3A4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y3A5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y3B2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;11812149	Homo sapiens
 Q9Y3B4	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -32255,14 +32067,12 @@ Q9Y484	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9Y485	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y4A5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032	Homo sapiens
 Q9Y4B6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9Y4C8	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413;32744794;24127217;16027046	Homo sapiens
 Q9Y4D7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9Y4E1	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y4G2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y4K3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y4L5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
-Q9Y4S3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
-Q9Y4W2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;20647540	Homo sapiens
+Q8NC51	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y530	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y561	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y5A7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
@@ -32279,7 +32089,6 @@ Q9Y5R2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9Y5S9	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y5X0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y657	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	39738032;21960006	Homo sapiens
-Q9Y658	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 Q9Y693	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y6E0	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y6E2	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
@@ -32290,7 +32099,7 @@ Q9Y6P5	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	327447
 Q9Y6U7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y6V7	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	32744794	Homo sapiens
 Q9Y6W6	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	30503769	Homo sapiens
-Q9Y6Y3	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
+Q6KC79	PhaSepDB	Nucleolus	nucleolus	client	client	cellular_localisation	1	15635413	Homo sapiens
 A0A0U1RRE5	PhaSepDB	P-body	p_body	client	client	cellular_localisation	1	31626750;27918561	Homo sapiens
 A1L020	PhaSepDB	P-body	p_body	client	client	cellular_localisation	1	17267406;31626750	Homo sapiens
 A2A288	PhaSepDB	P-body	p_body	client	client	cellular_localisation	1	26134560	Homo sapiens
@@ -33817,7 +33626,7 @@ Q9Y6D9	PhaSepDB	Nuclear body	nuclear_body	client	client	cellular_localisation	1	
 Q9Y6K9	PhaSepDB	Nuclear body	nuclear_body	client	client	cellular_localisation	1	24127217	Homo sapiens
 Q9Y6S9	PhaSepDB	PML nuclear body	pml_nuclear_body	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q9Y6X2	PhaSepDB	PML nuclear body	pml_nuclear_body	client	client	cellular_localisation	1	35194189	Homo sapiens
-A0A023T4K3	PhaSepDB	P granule	p_granule	client	client	cellular_localisation	1	39354132	Caenorhabditis elegans
+P49029	PhaSepDB	P granule	p_granule	client	client	cellular_localisation	1	39354132	Caenorhabditis elegans
 A0A0K3AS36	PhaSepDB	P granule	p_granule	client	client	cellular_localisation	1	39354132	Caenorhabditis elegans
 A0A0K3ASM8	PhaSepDB	P granule	p_granule	client	client	cellular_localisation	1	39354132	Caenorhabditis elegans
 A0A0K3AUJ9	PhaSepDB	P granule	p_granule	client	client	cellular_localisation	1	39354132	Caenorhabditis elegans
@@ -35555,18 +35364,18 @@ Q9NSB8	PhaSepDB	Postsynaptic density	postsynaptic_density	client	client	cellular
 Q9Z2U2	PhaSepDB	Postsynaptic density	postsynaptic_density	client	client	cellular_localisation	1	38452102	Mus musculus
 Q99996	PhaSepDB	Centrosome	centrosome	client	client	cellular_localisation	1	28377034,11792541	Homo sapiens
 A1Z7A8	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	27715441,19158395	Drosophila melanogaster
-A3KFL4	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+Q13868	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 A6NCZ6	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 A8MTG3	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 A8MX10	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-A8MZ62	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-B4DJP7	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-B4DK30	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-B4DT35	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-B4DYV2	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+P40937	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+P62318	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+Q15029	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+Q7Z3B4	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+Q9NXF1	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 B4E0X8	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-B7Z1R5	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-B7ZKM0	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+P38606	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
+Q15020	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297;12578909;30017905	Homo sapiens
 C9J2Y9	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 C9JW41	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 C9JXB8	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
@@ -35674,7 +35483,6 @@ Q14671	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	3050
 Q14978	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q14978-2	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 Q14980-2	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
-Q15020	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	12578909;30017905	Homo sapiens
 Q15070-2	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	39602297	Homo sapiens
 Q15256	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	30503769	Homo sapiens
 Q15257	PhaSepDB	Cajal body	cajal_body	client	client	cellular_localisation	1	30503769	Homo sapiens
@@ -36151,52 +35959,51 @@ P32810	PhaSepDB	Glycolytic body	glycolytic_body	client	client	cellular_localisat
 P54216	PhaSepDB	Glycolytic body	glycolytic_body	client	client	cellular_localisation	1	35208686,27068791	Caenorhabditis elegans
 Q9TZL8	PhaSepDB	Glycolytic body	glycolytic_body	client	client	cellular_localisation	1	35208686,27068791	Caenorhabditis elegans
 A4D1W8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-A6NIT8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P14866	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 A6NKL6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 A6NLJ7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-A6NN01	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-A6NNR3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-A8CZ64	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q71UI9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P62136	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P28482	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 A8K8G0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-A8MWI8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q99832	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 A8MXP9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-A8MY67	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P30154	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B0YJC4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B2R603	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B3KR49	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B3KRS5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q92769	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B3KX72	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DDD6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DDE4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DDF7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DDM6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DDP6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q9UJU6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DDU5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DEM2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DER1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DEV8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DFF1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DGB4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P13797	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DH44	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DHE5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DHN0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DHY1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DJ10	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DLA9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DN45	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DNT0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DP75	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DQW2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q9P2J5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q5QNW6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P31153	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P30740	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q99623	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q08J23	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DR52	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DSU6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DUT7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DV12	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DVV9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q96GC9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DW05	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DW52	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DX68	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q96KB5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4DY08	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B4DY47	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P35232	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4E335	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B4E3A8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B5MCP9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36205,12 +36012,9 @@ B7WNR0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 B7Z1C9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z2D6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z2F4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B7Z3X6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B7Z4T9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+O94875	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z4V2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B7Z4Z7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z525	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-B7Z6M1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z6Q6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z7M6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 B7Z972	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36223,18 +36027,17 @@ C9IZU3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 C9J0D1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9J2Q4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9J5V9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-C9J7P1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9J8B8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9J8T6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9J938	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9J9S3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9JB25	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-C9JGC4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q8NBT2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9JKR2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9JP48	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-C9JT33	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q9NZI8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9JW96	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-C9JYS3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q9UM22	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 C9JZ20	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 D6R956	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 D6R974	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36255,19 +36058,18 @@ E5RIP5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 E5RIU6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E5RJ25	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E5RJ48	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-E7EPK6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P62847	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E7ESE2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E7ESH4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E7ETD8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E7ETK0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E7EU71	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-E9PAS5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PBK7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PCW0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PD53	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PEI0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-E9PFU1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-E9PH29	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q8WUM4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P30048	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PH38	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PHS0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 E9PHT9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36303,14 +36105,14 @@ F5GX11	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 F5GX23	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5GXK7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5GY37	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F5GY65	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q02978	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5GYU3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F5GYZ3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q15233	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5GZ39	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H041	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H0C5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H169	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F5H1S2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P26373	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H265	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H2D2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H2T0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36320,7 +36122,7 @@ F5H388	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 F5H3X6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H5A1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H5V4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F5H5W3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P50991	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H6Q2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H747	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F5H755	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36328,7 +36130,7 @@ F5H7X1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 F6U211	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8VR82	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8VRV5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F8VTJ5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+Q8TAQ2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8VXC8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8VXL2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8VYE8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36337,13 +36139,11 @@ F8VZ49	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 F8W0W8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8W646	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8W6I7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F8W720	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F8W7P3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-F8W8G1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P49915	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
+P35030	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8WAY1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 F8WBR5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 G3V1A9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-G3V1R4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 G3V251	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 G3V2Q1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 G3V3K6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36397,7 +36197,6 @@ O75342	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 O75533	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 O75608	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 O75608-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-O94875	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 O95163	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 O95336	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 O95347	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36431,9 +36230,7 @@ P0CG47	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 P0CG48	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P10809	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P13489	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P13797	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P14174	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P14866	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P14923	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P15104	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P16104	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36448,18 +36245,12 @@ P23246	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 P23246-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P25786	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P25786-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P26373	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P27361	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P27361-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P27361-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P28482	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P29966	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P30048	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P30153	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P30154	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P30154-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P30740	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P31153	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P31942	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P31942-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P31942-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36469,11 +36260,9 @@ P31942-6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular
 P33076	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P33316	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P33316-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P35030	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P35030-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P35030-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P35030-4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P35232	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P35237	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P35520	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P35520-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36500,10 +36289,8 @@ P49321	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 P49321-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P49321-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P49411	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P49915	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P50225	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P50226	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P50991	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P51858	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P51991	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P51991-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36523,7 +36310,6 @@ P61978	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 P61978-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P61978-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62081	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P62136	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62140	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62158	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62241	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36531,7 +36317,6 @@ P62714	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 P62805	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62807	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62841	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-P62847	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62847-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62847-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 P62979	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36545,14 +36330,11 @@ Q00610-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular
 Q00839	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q00839-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q02878	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q02978	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q07065	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q07161	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q07666	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q07666-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q07666-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q08211	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q08J23	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q09028	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q09028-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q09666	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36580,13 +36362,11 @@ Q14BN4-7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular
 Q15019	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q15019-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q15181	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q15233	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q15643	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q16777	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q16891	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q16891-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q16891-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q2TU79	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q3KQU3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q3KQU3-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q3KQU3-4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36598,14 +36378,11 @@ Q59F66	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 Q5JR95	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5JY01	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5JY02	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q5QNW6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5QPL9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5QPM0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5QPM1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5QPM2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5SQT6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q5SZ07	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q5SZ08	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5SZC9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5T6W2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q5TEE2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36620,24 +36397,19 @@ Q86U12	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 Q86XI2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q86XI2-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8IUH3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	32586379	Homo sapiens
-Q8IUK7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8IYS1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8N4N8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q8NBT2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8NC51	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8NC51-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8NC51-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8NC51-4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q8TAQ2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8TAQ2-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8TDI0	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8TEX9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8TEX9-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q8WUM4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8WX94	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8WX94-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q8WX94-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q92769	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q92841	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q92841-1	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q92841-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36655,19 +36427,16 @@ Q96BW5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 Q96BW5-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q96C32	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q96E39	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q96KB5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q96KK5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q96MU7	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	34184765	Homo sapiens
 Q96QV6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99598	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q99623	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99661	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99661-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99729	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99729-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99729-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99729-4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q99832	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99877	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99878	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q99879	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36679,7 +36448,6 @@ Q9BV57-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular
 Q9BVM4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9BYB4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9BYB4-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q9BYG9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9BZG8-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9H0W9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9H0W9-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
@@ -36697,22 +36465,18 @@ Q9NQ39	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_l
 Q9NS69	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9NTJ3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9NTJ3-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q9NZI8	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9NZL9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9NZL9-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9NZL9-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9NZL9-4	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9P1F3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q9P2J5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UF33	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q9UJU6	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UJU6-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UJU6-3	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UK59	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UKM9	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UKM9-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UL25	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
-Q9UM22	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UM22-2	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UPU5	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens
 Q9UQ35	PhaSepDB	Nuclear stress body	nuclear_stress_body	client	client	cellular_localisation	1	33134894	Homo sapiens

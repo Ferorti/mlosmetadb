@@ -55,6 +55,39 @@ NULL = "NULL"
 DEDUP_KEY = ["uniprot_id", "source_db", "source_mlo", "source_role"]
 
 
+def apply_uniprot_merges(df: pd.DataFrame, map_file: Path) -> pd.DataFrame:
+    """Reescribe accesiones que UniProt fusionó hacia su accesión vigente.
+
+    Las fuentes citan accesiones de distintas épocas, así que la misma proteína
+    entra dos veces cuando una de ellas quedó obsoleta: 185 proteínas estaban en
+    la base bajo una accesión fusionada *y* bajo su sucesora, con 301 filas
+    colgando de la vieja y 171 pares (proteína, MLO) contados dos veces. Eso
+    infla `COUNT(DISTINCT uniprot_id)`, que es exactamente lo que la API sirve
+    por MLO.
+
+    Corre ANTES de collapse_duplicates() a propósito: así las filas que quedan
+    idénticas colapsan solas y sus PMIDs se unen, en vez de necesitar un paso
+    de deduplicación aparte.
+
+    El archivo se derivó de `inactiveReason.mergeDemergeTo` en
+    uniprot_cache.db, no de una consulta nueva a la API.
+    """
+    if not map_file.exists():
+        print(f"\n[INFO] {map_file.name} no encontrado — sin fusión de accesiones")
+        return df
+
+    print(f"\n=== Aplicando {map_file.name} ===")
+    with open(map_file, newline="", encoding="utf-8") as f:
+        merges = {r["accesion_obsoleta"].strip(): r["accesion_vigente"].strip()
+                  for r in _csv.DictReader(f)}
+
+    afectadas = df["uniprot_id"].isin(merges)
+    n = int(afectadas.sum())
+    df.loc[afectadas, "uniprot_id"] = df.loc[afectadas, "uniprot_id"].map(merges)
+    print(f"  {len(merges)} accesiones obsoletas, {n} filas reasignadas a su accesión vigente")
+    return df
+
+
 def _merge_evidence(values) -> str:
     """Union of PMIDs across duplicate rows, order preserved, NULL if none.
 
@@ -258,6 +291,10 @@ def compute_evidence_type(source_db: str, source_role: str) -> str | None:
 def main() -> None:
     print("=== Cargando archivos interim ===")
     df = load_interim()
+
+    # ── Accesiones fusionadas ─────────────────────────────────────────────────
+    # Antes del colapso: así las filas que quedan idénticas se unen solas.
+    df = apply_uniprot_merges(df, MAP_DIR / "uniprot_merged.csv")
 
     # ── Deduplicación ─────────────────────────────────────────────────────────
     print("\n=== Colapsando filas duplicadas (uniprot_id, source_db, source_mlo, source_role) ===")
