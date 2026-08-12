@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 import database
 from config import CORS_ORIGINS
 import policy
+from queries import unification_queries
 from routers import mlos, organisms, proteins, search, stats
 
 logging.basicConfig(
@@ -115,6 +116,9 @@ async def lifespan(app: FastAPI):
     await database.open_db()
     await database.setup_fts5()
     app.state.stats = await _compute_stats()
+    app.state.unification_stats = unification_queries.load_unification_stats()
+    if app.state.unification_stats is None:
+        logger.warning("unification_stats.json unavailable -- /unification/stats will return 503")
     logger.info("Startup complete — FTS5=%s", database.fts5_available)
     yield
     await database.close_db()

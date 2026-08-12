@@ -9,6 +9,9 @@ if str(_REFACTOR_ROOT) not in sys.path:
 _default_db = Path(__file__).parent.parent / "database" / "mlosmetadb.db"
 DB_PATH = Path(os.environ["MLOSMETADB_PATH"]) if "MLOSMETADB_PATH" in os.environ else _default_db
 
+_default_exports_dir = Path(__file__).parent.parent / "database" / "exports"
+EXPORTS_DIR = Path(os.environ["MLOSMETADB_EXPORTS_PATH"]) if "MLOSMETADB_EXPORTS_PATH" in os.environ else _default_exports_dir
+
 CORS_ORIGINS = [
     "https://mlos.leloir.org.ar",
     "http://localhost:3000",
