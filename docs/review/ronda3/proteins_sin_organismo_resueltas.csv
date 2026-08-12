@@ -1,0 +1,475 @@
+uniprot_id,organism_uniprot,estado,remapea_a,reino
+A0A023T4K3,Caenorhabditis elegans,Active,,Metazoa
+A0A024R3V0,,DELETED,,
+A0A087WTS8,,DELETED,,
+A0A087X0M4,Homo sapiens,Active,,Metazoa
+A0A087X211,,DELETED,,
+A0A0A0MSQ0,,DELETED,,
+A0A0A0MTH9,,DELETED,,
+A0A0B4KH25,Drosophila melanogaster,Active,,Metazoa
+A0A0C4DGZ1,,DELETED,,
+A0A0G2JMS6,,DELETED,,
+A0A0J9YYL3,,DELETED,,
+A0A140T862,,DELETED,,
+A0A1L8EP22,,DELETED,,
+A0A1L8EW14,,DELETED,,
+A0A1L8EXC4,,DELETED,,
+A0A1L8F2W4,,DELETED,,
+A0A1L8FTL8,,DELETED,,
+A0A1L8GET6,,DELETED,,
+A0A1L8GLL5,,DELETED,,
+A0A1L8GT79,,DELETED,,
+A0A1L8GYF2,,DELETED,,
+A0A1L8H195,,DELETED,,
+A0A1L8H4N6,,DELETED,,
+A0A1L8HNA9,,DELETED,,
+A0A1L8HSF1,,DELETED,,
+A0A1L8HSG7,,DELETED,,
+A0A2R8QD37,,DELETED,,
+A0A7I9BV08,,DELETED,,
+A0A7J6KGH8,Toxoplasma gondii,Active,,Protista
+A0A8M1RQR9,,DELETED,,
+A0A8M2B1S0,,DELETED,,
+A0A8M3AP85,,DELETED,,
+A0A8M6Z3G7,,DELETED,,
+A0A8M9PD17,,DELETED,,
+A0A8M9Q2Y2,,DELETED,,
+A0A8N7USV6,,DELETED,,
+A0AB32TN67,,DELETED,,
+A0AB32TQ06,,DELETED,,
+A3KFL4,Homo sapiens,Active,,Metazoa
+A6NCZ6,,DELETED,,
+A6NIT8,Homo sapiens,Active,,Metazoa
+A6NN01,Homo sapiens,Active,,Metazoa
+A6NNR3,Homo sapiens,Active,,Metazoa
+A8CZ64,Homo sapiens,Active,,Metazoa
+A8HPG1,,DELETED,,
+A8HPL8,,DELETED,,
+A8HPW9,,DELETED,,
+A8HQA6,,DELETED,,
+A8HQC3,,DELETED,,
+A8HRT8,,DELETED,,
+A8HS95,,DELETED,,
+A8HSE5,,DELETED,,
+A8HTK2,,DELETED,,
+A8HW52,,DELETED,,
+A8HXC5,,DELETED,,
+A8HXC7,,DELETED,,
+A8HXX4,,DELETED,,
+A8I114,,DELETED,,
+A8I268,,DELETED,,
+A8I3X1,,DELETED,,
+A8I5Q6,,DELETED,,
+A8I5S7,,DELETED,,
+A8I620,,DELETED,,
+A8I6T5,,DELETED,,
+A8I835,,DELETED,,
+A8I9A9,,DELETED,,
+A8IBG5,,DELETED,,
+A8ICN2,,DELETED,,
+A8IFJ3,,DELETED,,
+A8IGD9,,DELETED,,
+A8IGN6,,DELETED,,
+A8IGV8,,DELETED,,
+A8IHX1,,DELETED,,
+A8IQR3,,DELETED,,
+A8IRA5,,DELETED,,
+A8IRW2,,DELETED,,
+A8ISN3,,DELETED,,
+A8ISW0,,DELETED,,
+A8ISW1,,DELETED,,
+A8IT78,,DELETED,,
+A8ITP1,,DELETED,,
+A8ITW0,,DELETED,,
+A8IU49,,DELETED,,
+A8IUB0,,DELETED,,
+A8IUC8,,DELETED,,
+A8IUJ4,,DELETED,,
+A8IV59,,DELETED,,
+A8IVV4,,DELETED,,
+A8IVV9,,DELETED,,
+A8IVZ3,,DELETED,,
+A8IWK9,,DELETED,,
+A8IYC3,,DELETED,,
+A8IYI3,,DELETED,,
+A8IZ00,,DELETED,,
+A8IZ70,,DELETED,,
+A8IZ94,,DELETED,,
+A8IZH4,,DELETED,,
+A8IZL1,,DELETED,,
+A8J0B2,,DELETED,,
+A8J0B3,,DELETED,,
+A8J0B5,,DELETED,,
+A8J0D8,,DELETED,,
+A8J1C4,,DELETED,,
+A8J1E4,,DELETED,,
+A8J1Z2,,DELETED,,
+A8J255,,DELETED,,
+A8J290,,DELETED,,
+A8J2H1,,DELETED,,
+A8J3N6,,DELETED,,
+A8J3Z4,,DELETED,,
+A8J431,,DEMERGED,"P0DO18,P0DO19",
+A8J496,,DELETED,,
+A8J4Z5,,DELETED,,
+A8J526,,DELETED,,
+A8J6F5,,DELETED,,
+A8J7F6,,DELETED,,
+A8J7H2,,DELETED,,
+A8J7U0,,DELETED,,
+A8J8F3,,DELETED,,
+A8J8H5,,DELETED,,
+A8J8V6,,DELETED,,
+A8J9E9,,DELETED,,
+A8J9W7,,DELETED,,
+A8JAH5,,DELETED,,
+A8JAM2,,DELETED,,
+A8JBG5,,DELETED,,
+A8JBM7,,DELETED,,
+A8JBY7,,DELETED,,
+A8JD18,,DELETED,,
+A8JDZ6,,DELETED,,
+A8JEY8,,DELETED,,
+A8JFJ7,,DELETED,,
+A8JG35,,DELETED,,
+A8JG54,,DELETED,,
+A8JGM0,,DELETED,,
+A8JGP5,,DELETED,,
+A8JH81,,DELETED,,
+A8JI10,,DELETED,,
+A8JIC4,,DELETED,,
+A8JIJ0,,DELETED,,
+A8JJ91,,DELETED,,
+A8JJD2,,DELETED,,
+A8MTG3,,DELETED,,
+A8MWI8,Homo sapiens,Active,,Metazoa
+A8MX10,,DELETED,,
+A8MY67,Homo sapiens,Active,,Metazoa
+A8MZ62,Homo sapiens,Active,,Metazoa
+A9C3Q4,,DELETED,,
+B0S564,,DELETED,,
+B3H5K3,Arabidopsis thaliana,Active,,Viridiplantae
+B3KR49,,DELETED,,
+B3KRS5,Homo sapiens,Active,,Metazoa
+B4DDP6,Homo sapiens,Active,,Metazoa
+B4DEM2,Homo sapiens,Active,,Metazoa
+B4DGB4,Homo sapiens,Active,,Metazoa
+B4DJ10,Homo sapiens,Active,,Metazoa
+B4DJP7,Homo sapiens,Active,,Metazoa
+B4DK30,Homo sapiens,Active,,Metazoa
+B4DLA9,Homo sapiens,Active,,Metazoa
+B4DN45,Homo sapiens,Active,,Metazoa
+B4DNT0,Homo sapiens,Active,,Metazoa
+B4DP75,Homo sapiens,Active,,Metazoa
+B4DQW2,Homo sapiens,Active,,Metazoa
+B4DT35,Homo sapiens,Active,,Metazoa
+B4DVV9,Homo sapiens,Active,,Metazoa
+B4DX68,Homo sapiens,Active,,Metazoa
+B4DY47,Homo sapiens,Active,,Metazoa
+B4DYV2,Homo sapiens,Active,,Metazoa
+B7Z1R5,Homo sapiens,Active,,Metazoa
+B7Z3X6,Homo sapiens,Active,,Metazoa
+B7Z4T9,Homo sapiens,Active,,Metazoa
+B7Z4Z7,Homo sapiens,Active,,Metazoa
+B7Z6M1,Homo sapiens,Active,,Metazoa
+B7ZKM0,Homo sapiens,Active,,Metazoa
+B7ZPG0,Xenopus laevis,Active,,Metazoa
+B8JKN6,,DELETED,,
+C5MKY7,,DELETED,,
+C9J442,,DELETED,,
+C9J7P1,Homo sapiens,Active,,Metazoa
+C9JGC4,Homo sapiens,Active,,Metazoa
+C9JT33,Homo sapiens,Active,,Metazoa
+C9JW41,,DELETED,,
+C9JYS3,Homo sapiens,Active,,Metazoa
+E1BEW6,,DELETED,,
+E1P5S2,,DELETED,,
+E7EPK6,Homo sapiens,Active,,Metazoa
+E7ET21,,DELETED,,
+E7ETD8,Homo sapiens,Active,,Metazoa
+E7EVD1,,DELETED,,
+E7EVW0,,DELETED,,
+E7EZ16,,DELETED,,
+E7EZA2,,DELETED,,
+E7FAG5,,DELETED,,
+E7FH34,,DELETED,,
+E9PAS5,Homo sapiens,Active,,Metazoa
+E9PDK5,,DELETED,,
+E9PFP2,,DELETED,,
+E9PFU1,Homo sapiens,Active,,Metazoa
+E9PH29,Homo sapiens,Active,,Metazoa
+E9QAS7,Mus musculus,Active,,Metazoa
+F1LN59,Rattus norvegicus,Active,,Metazoa
+F1MBQ8,,DELETED,,
+F1MFN1,,DELETED,,
+F1MGC9,,DELETED,,
+F1N5H8,,DELETED,,
+F1Q743,,DELETED,,
+F1QDH4,,DELETED,,
+F1QFC0,,DELETED,,
+F1QHI2,,DELETED,,
+F1QQ28,,DELETED,,
+F1QQW9,,DELETED,,
+F1R6L3,,DELETED,,
+F1R810,,DELETED,,
+F1RA35,,DELETED,,
+F2Z4J7,,DELETED,,
+F5GWZ7,,DELETED,,
+F5GY65,Homo sapiens,Active,,Metazoa
+F5GYZ3,Homo sapiens,Active,,Metazoa
+F5H041,Homo sapiens,Active,,Metazoa
+F5H1S2,Homo sapiens,Active,,Metazoa
+F5H5W3,Homo sapiens,Active,,Metazoa
+F6Q5P0,Sus scrofa,Active,,Metazoa
+F8VTJ5,Homo sapiens,Active,,Metazoa
+F8W720,Homo sapiens,Active,,Metazoa
+F8W7P3,Homo sapiens,Active,,Metazoa
+F8W8G1,Homo sapiens,Active,,Metazoa
+G3N361,,DELETED,,
+G3V1C3,Homo sapiens,Active,,Metazoa
+G3V1R4,Homo sapiens,Active,,Metazoa
+G3V1S1,,DELETED,,
+G5EEF8,Caenorhabditis elegans,Active,,Metazoa
+G5EGE0,Caenorhabditis elegans,Active,,Metazoa
+G8JLD5,Homo sapiens,Active,,Metazoa
+H0Y7A7,Homo sapiens,Active,,Metazoa
+H0Y8A4,,DELETED,,
+H2L075,Caenorhabditis elegans,Active,,Metazoa
+H9KV28,,DELETED,,
+J3QMG3,,DELETED,,
+J3QNM3,,DELETED,,
+J3QPW1,,DELETED,,
+M3WVY3,,DELETED,,
+O02916,Homo sapiens,Active,,Metazoa
+O14547,Homo sapiens,Active,,Metazoa
+O14897,Homo sapiens,Active,,Metazoa
+O15142,,DEMERGED,"P61160,P61161",
+O15441,Homo sapiens,Active,,Metazoa
+O17244,,DELETED,,
+O43328,Homo sapiens,Active,,Metazoa
+O60361,,DELETED,,
+O75918,,DEMERGED,"P84101,P84102",
+O75992,Homo sapiens,Active,,Metazoa
+P00001,,DEMERGED,"P99999,P99998",
+P02278,,DEMERGED,"P62807,P62808",
+P02304,,DEMERGED,"P62799,P62798,P62797,P62796,P62795,P62794,P62800,P62801,P62802,P62803,P62804,P62805,P62806",
+P02403,,DEMERGED,"P61927,P61928",
+P02404,,DEMERGED,"P62891,P62892,P62893",
+P02433,,DEMERGED,"P62912,P62911,P62910",
+P02570,,DEMERGED,"P60713,P60712,P60711,P60710,P60709,P60708,P60707,P60706",
+P02571,,DEMERGED,"P63260,P63259,P63258,P63257,P63256,P63261",
+P04643,,DEMERGED,"P62280,P62281,P62282",
+P04645,,DEMERGED,"P62888,P62889,P62890",
+P04720,,DEMERGED,"P68105,P68103,P68104",
+P04765,,DEMERGED,"P60842,P60843",
+P05217,,DEMERGED,"P68372,P68371",
+P06351,,DEMERGED,"P84248,P84249,P84250,P84247,P84245,P84244,P84243,P84246",
+P06366,,DEMERGED,"P62263,P62265,P62264",
+P08107,,DEMERGED,"P0DMV8,P0DMV9",
+P08129,,DEMERGED,"P62136,P62137,P62138,P62139",
+P08526,,DEMERGED,"P61353,P61355,P61354",
+P08578,,DEMERGED,"P62303,P62305,P62304",
+P09058,,DEMERGED,"P62241,P62242,P62243",
+P09896,,DEMERGED,"P83883,P83881,P83882,P83884",
+P0DN79,,DELETED,,
+P10660,,DEMERGED,"P62755,P62754,P62753",
+P11518,,DEMERGED,"P62424,P62425",
+P12750,,DEMERGED,"P62701,P62702,P62703,P62704,P62705",
+P12751,,DEMERGED,"P61515,P61514,P61513",
+P12947,,DEMERGED,"P62900,P62899,P62901,P62902",
+P13641,,DEMERGED,"P62314,P62315",
+P13862,,DEMERGED,"P67874,P67873,P67870,P67871,P67872,P67869,P67868",
+P14118,,DEMERGED,"P84098,P84099,P84100",
+P14798,,DEMERGED,"P62979,P62978",
+P16475,,DEMERGED,"P60661,P60662,P60660",
+P16632,,DEMERGED,"P62847,P62848,P62849,P62850",
+P17008,,DEMERGED,"P62249,P62250",
+P17080,,DEMERGED,"P62825,P62826,P62827,P62828",
+P19138,,DEMERGED,"P68399,P68400",
+P20670,,DEMERGED,"Q6FI13,Q6GSS7",
+P23131,,DEMERGED,"P62832,P62830,P62831,P62829",
+P23152,,DEMERGED,"P84104,P84103",
+P23197,,DEMERGED,"P83917,P83916",
+P23411,,DEMERGED,"P63173,P63174",
+P23821,,DEMERGED,"P62081,P62082,P62083",
+P25111,,DEMERGED,"P62852,P62851,P62853",
+P25112,,DEMERGED,"P62857,P62858,P62859",
+P25120,,DEMERGED,"P62917,P62918,P62919",
+P25232,,DEMERGED,"P62269,P62271,P62272,P62270",
+P25388,,DEMERGED,"P63244,P63245,P63243,P63246,P68040,P63247",
+P29043,Homo sapiens,Active,,Metazoa
+P29316,,DEMERGED,"P62752,P62751,P62750",
+P32391,,DEMERGED,"P61157,P61158",
+P34331,Caenorhabditis elegans,Active,,Metazoa
+P34991,,DEMERGED,"P63208,P63209",
+P35544,Homo sapiens,Active,,Metazoa
+P35545,Mus musculus,Active,,Metazoa
+P37140,,DEMERGED,"P62142,P62141,P62140,P62143,P62207",
+P38663,,DEMERGED,"Q8BP67,Q862I1,P83732,P83731",
+P39026,,DEMERGED,"P62914,P62913",
+P39027,,DEMERGED,"P62245,P62246,P62244",
+P39028,,DEMERGED,"P62266,P62268,P62267",
+P39030,,DEMERGED,"P61313,P61314",
+P42655,,DEMERGED,"P62261,P62258,P62262,P62260,P62259",
+P43330,,DEMERGED,"P62316,P62317",
+P43331,,DEMERGED,"P62318,P62320",
+P46055,,DEMERGED,"P62496,P62495,P62497",
+P49241,,DEMERGED,"P61246,P61247",
+P50550,,DEMERGED,"P63281,P63280,P63279,P63282,P63283",
+P52433,,DEMERGED,"P62487,P62488,P62489",
+P52436,,DEMERGED,"P62875,P62876",
+P53025,,DEMERGED,"P62906,P62907",
+P62158,,DEMERGED,"P0DP25,P0DP23,P0DP24",
+Q02546,,DEMERGED,"P62277,P62278,P62279",
+Q02877,,DEMERGED,"P61254,P61255",
+Q04984,,DEMERGED,"P61603,P61604",
+Q05472,,DEMERGED,"P62860,P62861,P62864,P62863,P62862",
+Q07161,Homo sapiens,Active,,Metazoa
+Q07244,,DEMERGED,"P61978,P61979,P61980",
+Q12803,Homo sapiens,Active,,Metazoa
+Q12987,Homo sapiens,Active,,Metazoa
+Q13748,,DEMERGED,"P0DPH8,P0DPH7",
+Q14259,,DEMERGED,"P84089,P84090",
+Q14281,Homo sapiens,Active,,Metazoa
+Q14981,Homo sapiens,Active,,Metazoa
+Q15357,,DEMERGED,"P62308,P62309",
+Q15815,,DEMERGED,"P62995,P62996,P62997",
+Q16051,Homo sapiens,Active,,Metazoa
+Q2TU79,Homo sapiens,Active,,Metazoa
+Q3SXR2,,DELETED,,
+Q3SY89,,DELETED,,
+Q5RHE2,,DELETED,,
+Q5SQP8,,DELETED,,
+Q5SZ07,Homo sapiens,Active,,Metazoa
+Q5SZ08,Homo sapiens,Active,,Metazoa
+Q66J40,Xenopus laevis,Active,,Metazoa
+Q66KY6,Xenopus laevis,Active,,Metazoa
+Q6IE36,,DELETED,,
+Q6IQJ2,,DELETED,,
+Q6P3L3,,DELETED,,
+Q6TGY6,,DELETED,,
+Q6TLG8,,DELETED,,
+Q7Z481,Homo sapiens,Active,,Metazoa
+Q7Z5E3,Homo sapiens,Active,,Metazoa
+Q7Z638,Homo sapiens,Active,,Metazoa
+Q7ZXW4,Xenopus laevis,Active,,Metazoa
+Q86T58,Homo sapiens,Active,,Metazoa
+Q86UC4,Homo sapiens,Active,,Metazoa
+Q86VM3,Homo sapiens,Active,,Metazoa
+Q8IGP5,Drosophila melanogaster,Active,,Metazoa
+Q8IU69,Homo sapiens,Active,,Metazoa
+Q8IUK7,Homo sapiens,Active,,Metazoa
+Q8IVL9,Homo sapiens,Active,,Metazoa
+Q8IVR9,Homo sapiens,Active,,Metazoa
+Q8IW16,Homo sapiens,Active,,Metazoa
+Q8IWG8,Homo sapiens,Active,,Metazoa
+Q8IY12,Homo sapiens,Active,,Metazoa
+Q8IYH0,Homo sapiens,Active,,Metazoa
+Q8IYI9,Homo sapiens,Active,,Metazoa
+Q8K3G7,Mus musculus,Active,,Metazoa
+Q8N0W8,Homo sapiens,Active,,Metazoa
+Q8N417,Homo sapiens,Active,,Metazoa
+Q8N6Z8,,DEMERGED,"P62878,P62877",
+Q8N935,Homo sapiens,Active,,Metazoa
+Q8N9E5,Homo sapiens,Active,,Metazoa
+Q8NB06,Homo sapiens,Active,,Metazoa
+Q8NBE6,Homo sapiens,Active,,Metazoa
+Q8NCD9,Homo sapiens,Active,,Metazoa
+Q8NEP4,Homo sapiens,Active,,Metazoa
+Q8NHS8,Homo sapiens,Active,,Metazoa
+Q8TB66,Homo sapiens,Active,,Metazoa
+Q8TBR6,Homo sapiens,Active,,Metazoa
+Q8TCV6,Homo sapiens,Active,,Metazoa
+Q8TDY0,Homo sapiens,Active,,Metazoa
+Q8TEZ1,Homo sapiens,Active,,Metazoa
+Q8WUY5,Homo sapiens,Active,,Metazoa
+Q8WUZ1,Homo sapiens,Active,,Metazoa
+Q8WV53,Homo sapiens,Active,,Metazoa
+Q8WVB8,Homo sapiens,Active,,Metazoa
+Q8WXZ8,Homo sapiens,Active,,Metazoa
+Q92945,Homo sapiens,Active,,Metazoa
+Q93068,,DEMERGED,"P63166,P63165",
+Q96A52,Homo sapiens,Active,,Metazoa
+Q96A78,Homo sapiens,Active,,Metazoa
+Q96AT5,Homo sapiens,Active,,Metazoa
+Q96B52,Homo sapiens,Active,,Metazoa
+Q96CL3,Homo sapiens,Active,,Metazoa
+Q96DK2,Homo sapiens,Active,,Metazoa
+Q96E87,Homo sapiens,Active,,Metazoa
+Q96E91,Homo sapiens,Active,,Metazoa
+Q96FD2,Homo sapiens,Active,,Metazoa
+Q96FJ1,Homo sapiens,Active,,Metazoa
+Q96FT1,Homo sapiens,Active,,Metazoa
+Q96G92,Homo sapiens,Active,,Metazoa
+Q96I08,Homo sapiens,Active,,Metazoa
+Q96J10,Homo sapiens,Active,,Metazoa
+Q96J95,Homo sapiens,Active,,Metazoa
+Q96JD3,Homo sapiens,Active,,Metazoa
+Q96JN4,Homo sapiens,Active,,Metazoa
+Q96JY7,Homo sapiens,Active,,Metazoa
+Q96LC1,Homo sapiens,Active,,Metazoa
+Q96PK5,Homo sapiens,Active,,Metazoa
+Q96QJ8,Homo sapiens,Active,,Metazoa
+Q96SS3,Homo sapiens,Active,,Metazoa
+Q96TA6,Homo sapiens,Active,,Metazoa
+Q96TG8,,DEMERGED,"P61765,Q64320,P61763,P61764",
+Q9BPV9,Homo sapiens,Active,,Metazoa
+Q9BPY6,Homo sapiens,Active,,Metazoa
+Q9BRC9,Homo sapiens,Active,,Metazoa
+Q9BRF6,Homo sapiens,Active,,Metazoa
+Q9BUT3,Homo sapiens,Active,,Metazoa
+Q9BVP6,Homo sapiens,Active,,Metazoa
+Q9BW93,Homo sapiens,Active,,Metazoa
+Q9BWD4,,DEMERGED,"Q12905,Q7L7R3",
+Q9BWL9,Homo sapiens,Active,,Metazoa
+Q9BXK4,Homo sapiens,Active,,Metazoa
+Q9BYG9,Homo sapiens,Active,,Metazoa
+Q9BZG8,Homo sapiens,Active,,Metazoa
+Q9BZQ1,Homo sapiens,Active,,Metazoa
+Q9FFQ8,Arabidopsis thaliana,Active,,Viridiplantae
+Q9GZW3,Homo sapiens,Active,,Metazoa
+Q9H027,Homo sapiens,Active,,Metazoa
+Q9H245,Homo sapiens,Active,,Metazoa
+Q9H2G1,Homo sapiens,Active,,Metazoa
+Q9H381,Homo sapiens,Active,,Metazoa
+Q9H3H4,Homo sapiens,Active,,Metazoa
+Q9H3L4,Homo sapiens,Active,,Metazoa
+Q9H586,Homo sapiens,Active,,Metazoa
+Q9H5L4,Homo sapiens,Active,,Metazoa
+Q9H5M6,Homo sapiens,Active,,Metazoa
+Q9H7U0,Homo sapiens,Active,,Metazoa
+Q9H830,Homo sapiens,Active,,Metazoa
+Q9H855,Homo sapiens,Active,,Metazoa
+Q9H8U9,Homo sapiens,Active,,Metazoa
+Q9H9F8,Homo sapiens,Active,,Metazoa
+Q9H9J6,Homo sapiens,Active,,Metazoa
+Q9H9V5,Homo sapiens,Active,,Metazoa
+Q9NSP6,Homo sapiens,Active,,Metazoa
+Q9NV36,Homo sapiens,Active,,Metazoa
+Q9NVL3,Homo sapiens,Active,,Metazoa
+Q9NVP0,Homo sapiens,Active,,Metazoa
+Q9NVW5,Homo sapiens,Active,,Metazoa
+Q9NVY2,Homo sapiens,Active,,Metazoa
+Q9NW67,Homo sapiens,Active,,Metazoa
+Q9NXH4,Homo sapiens,Active,,Metazoa
+Q9NXK4,Homo sapiens,Active,,Metazoa
+Q9NYH0,Homo sapiens,Active,,Metazoa
+Q9P1V2,Homo sapiens,Active,,Metazoa
+Q9P2R9,Homo sapiens,Active,,Metazoa
+Q9SN96,,DEMERGED,"P0DO44,P0DO45",
+Q9T0J7,Arabidopsis thaliana,Active,,Viridiplantae
+Q9UG18,Homo sapiens,Active,,Metazoa
+Q9UG39,Homo sapiens,Active,,Metazoa
+Q9UGP9,,DEMERGED,"P61964,P61965",
+Q9UHY0,Homo sapiens,Active,,Metazoa
+Q9UJY0,Homo sapiens,Active,,Metazoa
+Q9UP86,Homo sapiens,Active,,Metazoa
+Q9UPP5,Homo sapiens,Active,,Metazoa
+Q9Y2S0,,DEMERGED,"P0DPB6,P0DPB5",
+Q9Y321,Homo sapiens,Active,,Metazoa
+Q9Y4S3,Homo sapiens,Active,,Metazoa
+Q9Y658,Homo sapiens,Active,,Metazoa
+Q9Y6Y3,Homo sapiens,Active,,Metazoa
+R7KIR7,,DELETED,,
+X5DSL3,,DELETED,,
+X6RAL5,Homo sapiens,Active,,Metazoa

@@ -1,0 +1,7 @@
+recurso_a,recurso_b,evidence_type_a,evidence_type_b,pares,acuerdos,desacuerdos,tasa_acuerdo
+DrLLPS,PhaSepDB,curator_assignment,cellular_localisation,1530,1434,96,0.937
+DrLLPS,PhaSepDB,curator_assignment,cellular_requirement,208,80,128,0.385
+DrLLPS,LLPSDB,curator_assignment,in_vitro_llps,98,98,0,1.0
+PhaSepDB,PhasePro,cellular_requirement,in_vitro_llps,79,79,0,1.0
+DrLLPS,PhasePro,curator_assignment,in_vitro_llps,47,38,9,0.809
+PhaSepDB,PhasePro,cellular_localisation,in_vitro_llps,35,0,35,0.0

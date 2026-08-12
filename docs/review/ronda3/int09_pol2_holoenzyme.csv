@@ -1,0 +1,12 @@
+campo,valor
+canonico afectado,transcriptional_condensate
+filas del canonico,220
+proteinas del canonico,163
+filas de la etiqueta en disputa,2
+proteinas,"P24928 (POLR2A, Homo sapiens); P04050 (RPO21, S. cerevisiae)"
+evidencia de esas filas,"PMID 30127355, evidence_type=in_vitro_llps, unified_role=driver, dataset_active=1"
+que es 30127355,"Boehning et al. 2018, Nat Struct Mol Biol: RNA polymerase II clustering through carboxy-terminal domain phase separation"
+etiqueta hermana del mismo recurso,"PhasePro 'POLII clusters', mismas 2 proteinas, mismo PMID, mismo rol, mismo canonico"
+clase general,"119 triples (proteina, canonico, recurso) llevan >1 etiqueta fuente; 241 filas implicadas"
+duplicados estrictos,"121 grupos (proteina,canonico,recurso,evidence) con mas de una fila; 123 filas eliminables sin perder informacion"
+veredicto,no descartar el canonico ni el mapeo: deduplicar la fila
