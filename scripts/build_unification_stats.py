@@ -197,6 +197,63 @@ def build_pair_data(conn: sqlite3.Connection, category_map: dict) -> dict:
     return dict(pair_data)
 
 
+def _load_gene_names(conn: sqlite3.Connection) -> dict:
+    return dict(conn.execute("SELECT uniprot_id, gene_name FROM proteins").fetchall())
+
+
+def build_discrepant_pairs_rows(conn: sqlite3.Connection, pair_data: dict) -> list:
+    gene_names = _load_gene_names(conn)
+    result = []
+    for (uniprot_id, unified_mlo), v in pair_data.items():
+        if len(v["source_dbs"]) < 2 or len(v["categories"]) <= 1:
+            continue
+
+        by_source = defaultdict(list)
+        for row in v["rows"]:
+            by_source[row["source_db"]].append(row)
+
+        sources = sorted(by_source)
+        categories, source_roles, evidence_types, pmids_per_source = [], [], [], []
+        for source_db in sources:
+            entries = by_source[source_db]
+            categories.append("/".join(sorted({e["category"] for e in entries})))
+            source_roles.append("/".join(sorted({e["source_role"] for e in entries})))
+            evidence_types.append("/".join(sorted({e["evidence_type"] for e in entries if e["evidence_type"]})))
+
+            pmids = set()
+            for e in entries:
+                if e["evidence"] and e["evidence"] != "NULL":
+                    pmids.update(p.strip() for p in e["evidence"].split(";") if p.strip())
+            pmids_per_source.append(f"{source_db}=" + ",".join(sorted(pmids)))
+
+        result.append({
+            "uniprot_id": uniprot_id,
+            "gene_name": gene_names.get(uniprot_id) or "",
+            "unified_mlo": unified_mlo,
+            "sources": ";".join(sources),
+            "categories": ";".join(categories),
+            "source_roles": ";".join(source_roles),
+            "evidence_types": ";".join(evidence_types),
+            "pmids_per_source": ";".join(pmids_per_source),
+        })
+
+    result.sort(key=lambda r: (-len(r["sources"].split(";")), r["uniprot_id"], r["unified_mlo"]))
+    return result
+
+
+def write_discrepant_pairs_csv(conn: sqlite3.Connection, pair_data: dict) -> None:
+    rows = build_discrepant_pairs_rows(conn, pair_data)
+    out_path = EXPORT_DIR / "discrepant_pairs.csv"
+    with open(out_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "uniprot_id", "gene_name", "unified_mlo", "sources", "categories",
+            "source_roles", "evidence_types", "pmids_per_source",
+        ])
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"  Wrote {out_path} ({len(rows)} rows)")
+
+
 def build_agreement_summary(pair_data: dict) -> dict:
     shared = {k: v for k, v in pair_data.items() if len(v["source_dbs"]) >= 2}
     concordant = 0
@@ -409,6 +466,10 @@ def main() -> None:
     print(f"  shared_pairs={data['summary']['shared_pairs']} "
           f"concordant={data['summary']['concordant_pairs']} "
           f"discordant={data['summary']['discordant_pairs']}")
+
+    print("=== Building discrepant_pairs.csv ===")
+    pair_data = build_pair_data(conn, category_map)
+    write_discrepant_pairs_csv(conn, pair_data)
 
     conn.close()
 

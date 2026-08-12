@@ -104,3 +104,32 @@ def test_cat3_annotations_sum_to_total():
         f"SELECT COUNT(*) FROM mlo_annotations ma WHERE {bus.policy.active_annotation_clause('ma')}"
     ).fetchone()[0]
     assert sum(row["annotations"] for row in f4) == policy_total
+
+
+def test_discrepant_pairs_rows_count_matches_discordant():
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    pair_data = bus.build_pair_data(conn, category_map)
+    rows = bus.build_discrepant_pairs_rows(conn, pair_data)
+    assert len(rows) == 1318
+
+
+def test_discrepant_pairs_row_shape_and_alignment():
+    conn = bus.connect_db()
+    category_map = bus.load_category_map()
+    pair_data = bus.build_pair_data(conn, category_map)
+    rows = bus.build_discrepant_pairs_rows(conn, pair_data)
+
+    # Q7Z3E1/nuclear_body is a real discordant pair verified during design
+    # (CDCODE=component, PhaSepDB=driver) -- do not swap in a pair from
+    # f5_role_discrepancy_pairs.csv without checking its n_cats first, that
+    # file lists all 10,617 shared pairs, not just the 1,318 discordant ones.
+    row = next(r for r in rows if r["uniprot_id"] == "Q7Z3E1" and r["unified_mlo"] == "nuclear_body")
+    assert row["categories"] == "component;driver"
+    sources = row["sources"].split(";")
+    categories = row["categories"].split(";")
+    assert len(sources) == len(categories)
+    assert sources == sorted(sources)
+    for field in ("uniprot_id", "gene_name", "unified_mlo", "sources", "categories",
+                  "source_roles", "evidence_types", "pmids_per_source"):
+        assert field in row
