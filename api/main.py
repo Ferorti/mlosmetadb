@@ -136,12 +136,11 @@ async def _compute_stats() -> dict:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await database.open_db()
-    await database.setup_fts5()
     app.state.stats = await _compute_stats()
     app.state.unification_stats = unification_queries.load_unification_stats()
     if app.state.unification_stats is None:
         logger.warning("unification_stats.json unavailable -- /unification/stats will return 503")
-    logger.info("Startup complete — FTS5=%s", database.fts5_available)
+    logger.info("Startup complete")
     yield
     await database.close_db()
     logger.info("Shutdown complete")

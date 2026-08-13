@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 
 _db: aiosqlite.Connection | None = None
 _mem_hold: sqlite3.Connection | None = None  # keeps named in-memory DB alive
-fts5_available: bool = False
 
 _MEM_URI = "file:mlosmetadb_api?mode=memory&cache=shared"
 
@@ -87,14 +86,6 @@ async def close_db() -> None:
         _mem_hold = None
 
 
-async def check_fts5() -> bool:
-    try:
-        await _db.execute("SELECT fts5(?1)", ("test",))
-        return True
-    except Exception:
-        return False
-
-
 async def fetchall(sql: str, params: tuple = ()) -> list[dict]:
     try:
         async with _db.execute(sql, params) as cur:
@@ -121,26 +112,3 @@ async def fetchval(sql: str, params: tuple = ()) -> Any:
         return None
     return next(iter(row.values()))
 
-
-async def setup_fts5() -> None:
-    global fts5_available
-    fts5_available = await check_fts5()
-    if not fts5_available:
-        logger.warning("FTS5 not available — fuzzy search will fall back to LIKE")
-        return
-
-    await _db.executescript("""
-        CREATE VIRTUAL TABLE IF NOT EXISTS fts_proteins USING fts5(
-            uniprot_id, gene_name, protein_name,
-            content='proteins', content_rowid='rowid'
-        );
-        CREATE VIRTUAL TABLE IF NOT EXISTS fts_mlos USING fts5(
-            unified_mlo,
-            content='mlo_vocabulary', content_rowid='rowid'
-        );
-    """)
-
-    await _db.execute("INSERT INTO fts_proteins(fts_proteins) VALUES('rebuild')")
-    await _db.execute("INSERT INTO fts_mlos(fts_mlos) VALUES('rebuild')")
-
-    await _db.commit()
