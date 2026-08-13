@@ -8,6 +8,7 @@ import VocabularySection from '@/components/unification/VocabularySection.vue'
 import RoleHarmonisationSection from '@/components/unification/RoleHarmonisationSection.vue'
 import AgreementSection from '@/components/unification/AgreementSection.vue'
 import DiscrepantPairsTable from '@/components/unification/DiscrepantPairsTable.vue'
+import MloTermMappingTable from '@/components/unification/MloTermMappingTable.vue'
 
 const stats = ref(null)
 const loading = ref(true)
@@ -51,7 +52,7 @@ onMounted(async () => {
       <RoleHarmonisationSection :roles="stats.f4_role_mapping" :summary="stats.summary" />
       <AgreementSection :by-mlo="stats.f5b_discrepancy_by_mlo" :pmid-overlap="stats.f6_pmid_overlap_sources" :summary="stats.summary" />
       <DiscrepantPairsTable />
-      <!-- TASK 6: <MloTermMappingTable /> -->
+      <MloTermMappingTable />
 
       <p class="text-xs text-gray-400 text-right">
         db commit {{ stats.meta.code_commit?.slice(0, 7) }} · built {{ stats.meta.build_date?.slice(0, 10) }}
