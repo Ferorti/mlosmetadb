@@ -1,3 +1,5 @@
+import csv
+import io
 import sqlite3
 
 from fastapi.testclient import TestClient
@@ -103,19 +105,32 @@ def test_flatten_predictor_hits_returns_empty_string_for_null_or_empty():
     assert _flatten_predictor_hits("{}") == ""
 
 
-def test_records_to_tsv_joins_lists_with_semicolon():
+def test_records_to_tsv_joins_lists_with_semicolon_space():
     records = [{"uniprot_id": "P1", "mlos": ["a", "b"], "source_dbs": ["PhaSepDB", "CDCODE"]}]
     tsv = _records_to_tsv(records, ["uniprot_id", "mlos", "source_dbs"])
     lines = tsv.strip().split("\n")
     assert lines[0] == "uniprot_id\tmlos\tsource_dbs"
-    assert lines[1] == "P1\ta;b\tPhaSepDB;CDCODE"
+    assert lines[1] == "P1\ta; b\tPhaSepDB; CDCODE"
 
 
-def test_records_to_tsv_passes_through_raw_json_text_unmodified():
-    records = [{"uniprot_id": "P1", "idr_regions": '[{"start": 1, "end": 20}]'}]
-    tsv = _records_to_tsv(records, ["uniprot_id", "idr_regions"])
+def test_records_to_tsv_flattens_domains_lcr_regions_and_idr_regions():
+    records = [{
+        "uniprot_id": "P1",
+        "domains": '{"pfam": [{"label": "Zinc finger"}]}',
+        "lcr_regions": '{"mobidb_lite": [{"label": "Pos_rich"}]}',
+        "idr_regions": '{"mobidb_lite": [[1, 20]], "alphafold": []}',
+    }]
+    tsv = _records_to_tsv(records, ["uniprot_id", "domains", "lcr_regions", "idr_regions"])
     lines = tsv.strip().split("\n")
-    assert lines[1] == 'P1\t[{"start": 1, "end": 20}]'
+    assert lines[1] == "P1\tZinc finger\tPos_rich\tmobidb_lite"
+
+
+def test_records_to_tsv_quotes_values_containing_tab_or_comma():
+    records = [{"uniprot_id": "P1", "gene_name": 'weird\tname, "quoted"'}]
+    tsv = _records_to_tsv(records, ["uniprot_id", "gene_name"])
+    reader = csv.reader(io.StringIO(tsv), delimiter="\t")
+    rows = list(reader)
+    assert rows[1] == ["P1", 'weird\tname, "quoted"']
 
 
 def test_records_to_tsv_none_becomes_empty_string():

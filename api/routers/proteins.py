@@ -1,3 +1,5 @@
+import csv
+import io
 import json
 import logging
 
@@ -142,23 +144,30 @@ def _build_export_record(row: dict, fields: str) -> dict:
     return record
 
 
+_FLATTENED_LABEL_COLUMNS = {"domains", "lcr_regions"}
+_FLATTENED_PREDICTOR_COLUMNS = {"idr_regions"}
+
+
 def _records_to_tsv(records: list[dict], columns: list[str]) -> str:
-    lines = ["\t".join(columns)]
+    output = io.StringIO()
+    writer = csv.writer(output, delimiter="\t", quoting=csv.QUOTE_MINIMAL, lineterminator="\n")
+    writer.writerow(columns)
     for record in records:
-        values = []
+        row = []
         for col in columns:
             v = record.get(col)
-            if isinstance(v, list):
-                values.append(";".join(v))
+            if col in _FLATTENED_LABEL_COLUMNS:
+                row.append(_flatten_labeled_regions(v))
+            elif col in _FLATTENED_PREDICTOR_COLUMNS:
+                row.append(_flatten_predictor_hits(v))
+            elif isinstance(v, list):
+                row.append("; ".join(v))
             elif v is None:
-                values.append("")
+                row.append("")
             else:
-                values.append(str(v))
-        # Build the row, preserving trailing tabs for empty values
-        row = "\t".join(values)
-        lines.append(row)
-    # Add a trailing newline to the whole TSV, but preserve internal structure
-    return "\n".join(lines) + "\n"
+                row.append(str(v))
+        writer.writerow(row)
+    return output.getvalue()
 
 
 def _plddt_category(score: float) -> str:
