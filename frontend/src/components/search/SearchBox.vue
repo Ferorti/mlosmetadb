@@ -110,19 +110,22 @@ const chipClass = (on) => on
 
     <!-- Search input row -->
     <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-      <div class="flex items-stretch">
+      <!-- With chips (home page): input alone on row 1, chips + Search
+           together on row 2 on narrow screens; single row on sm+, unchanged
+           from before. Kept as its own branch so the no-chips variant below
+           (ResultsPage) is untouched, byte-for-byte, by this fix. -->
+      <div v-if="showSearchOptions" class="flex flex-col sm:flex-row items-stretch">
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Search by UniProt accession, gene or protein name"
-          class="flex-1 px-4 py-3 text-sm text-gray-800 placeholder:text-xs placeholder-gray-400 focus:outline-none min-w-0"
+          class="flex-1 min-w-0 px-4 py-3 text-sm text-gray-800 placeholder:text-xs placeholder-gray-400 focus:outline-none"
           @keydown="handleKeydown"
           @blur="closeDropdown"
         />
 
-        <!-- Search option chips — home page only -->
-        <template v-if="showSearchOptions">
-          <div class="flex items-center gap-1.5 px-2 border-l border-gray-100 flex-shrink-0">
+        <div class="flex items-stretch border-t sm:border-t-0 border-gray-100">
+          <div class="flex items-center justify-center gap-1.5 px-2 flex-1 sm:flex-initial">
             <button
               :class="chipClass(driversOnly)"
               title="Restrict search to LLPS driver proteins"
@@ -143,8 +146,25 @@ const chipClass = (on) => on
             </button>
           </div>
           <div class="border-l border-gray-200 self-stretch"></div>
-        </template>
+          <button
+            class="bg-[#1B3D6F] hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
+            @click="handleSearch"
+          >
+            Search
+          </button>
+        </div>
+      </div>
 
+      <!-- No chips (ResultsPage): unchanged from before this fix. -->
+      <div v-else class="flex items-stretch">
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search by UniProt accession, gene or protein name"
+          class="flex-1 min-w-0 px-4 py-3 text-sm text-gray-800 placeholder:text-xs placeholder-gray-400 focus:outline-none"
+          @keydown="handleKeydown"
+          @blur="closeDropdown"
+        />
         <button
           class="bg-[#1B3D6F] hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
           @click="handleSearch"
