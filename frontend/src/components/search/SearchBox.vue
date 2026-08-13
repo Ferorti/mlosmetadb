@@ -4,15 +4,15 @@ import { useRouter } from 'vue-router'
 import { searchBasic } from '@/api/search'
 
 /**
- * One input, one corpus: UniProt accession, gene name and protein name at
- * once. No field select and no target tabs.
+ * One input, one corpus: UniProt accession and gene name. No field select
+ * and no target tabs.
  *
- * The select was removed because narrowing to one column is what broke the
- * search — "kinase" matches 50 proteins by protein_name and none by gene_name.
- * The MLO tab that briefly replaced it was removed for a different reason:
- * both of its tabs searched proteins, so the split named the wrong thing.
- * Organelles are now browsed, not searched — the filterable card grid on the
- * home page and /mlos, which land on ?mlo=<slug>.
+ * protein_name is deliberately not searched: the corpus is identifiers
+ * (gene_name, uniprot_id) only, not free text over the protein's full name.
+ * The MLO tab that once sat next to this input was removed for a different
+ * reason: both of its tabs searched proteins, so the split named the wrong
+ * thing. Organelles are now browsed, not searched — the filterable card grid
+ * on the home page and /mlos, which land on ?mlo=<slug>.
  */
 
 const props = defineProps({
@@ -137,7 +137,7 @@ const chipClass = (on) => on
             </button>
             <button
               :class="chipClass(exactMatch)"
-              title="Search for exact term only (e.g. FUS but not FUSED)"
+              title="Match the gene name or UniProt accession exactly (e.g. FUS, not FUSED)"
               @click="exactMatch = !exactMatch"
             >
               <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
@@ -192,7 +192,7 @@ const chipClass = (on) => on
         @mousedown.prevent="selectProtein(protein)"
       >
         <span class="text-sm font-medium text-[#185FA5] truncate">
-          {{ protein.protein_name || protein.gene_name || protein.uniprot_id }}
+          {{ protein.gene_name || protein.uniprot_id }}
         </span>
         <span class="font-mono text-[11px] text-gray-500 flex-shrink-0">{{ protein.uniprot_id }}</span>
         <span class="text-[11px] text-gray-500 italic truncate flex-shrink-0">{{ protein.organism }}</span>
