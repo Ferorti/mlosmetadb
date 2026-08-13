@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
-import { searchOrganisms, buildExportUrl, getProteins } from '@/api/proteins'
+import { ref, onMounted } from 'vue'
+import { buildExportUrl } from '@/api/proteins'
 import { getUnificationStats } from '@/api/unification'
+import { formatCount } from '@/utils/format'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import SourcesSection from '@/components/unification/SourcesSection.vue'
 import ProteinOverviewSection from '@/components/unification/ProteinOverviewSection.vue'
@@ -13,100 +14,9 @@ import MloTermMappingTable from '@/components/unification/MloTermMappingTable.vu
 // yet -- hidden pending manual review, per explicit request. Do not remove the
 // file, just don't import/render it here until that review happens.
 
-// ── Download form (moved here from the retired /download page) ───────────────
-const MODEL_ORGANISMS = [
-  'Homo sapiens',
-  'Mus musculus',
-  'Arabidopsis thaliana',
-  'Caenorhabditis elegans',
-  'Saccharomyces cerevisiae',
-  'Xenopus laevis',
-  'Bos taurus',
-  'Drosophila melanogaster',
-  'Rattus norvegicus',
-]
-
-const organism = ref('')
-const organismEditing = ref(false)
-const orgSearch = ref('')
-const orgSearchResults = ref([])
-const role = ref('')
-const fields = ref('full')
-const format = ref('tsv')
-
-const matchCount = ref(null)
-const countLoading = ref(false)
-
-const showAllOrganismsOption = computed(() => {
-  const q = orgSearch.value.trim().toLowerCase()
-  return !q || 'all organisms'.includes(q)
-})
-
-const filteredModelOrganisms = computed(() => {
-  const q = orgSearch.value.trim().toLowerCase()
-  if (!q) return MODEL_ORGANISMS
-  return MODEL_ORGANISMS.filter(name => name.toLowerCase().includes(q))
-})
-
-async function onOrganismSearch() {
-  if (orgSearch.value.length < 3) {
-    orgSearchResults.value = []
-    return
-  }
-  try {
-    const res = await searchOrganisms(orgSearch.value)
-    orgSearchResults.value = res.data.results ?? []
-  } catch {
-    orgSearchResults.value = []
-  }
-}
-
-function openOrganismEditor() {
-  organismEditing.value = true
-}
-
-function closeOrganismEditor() {
-  organismEditing.value = false
-  orgSearch.value = ''
-  orgSearchResults.value = []
-}
-
-function selectOrganism(name) {
-  organism.value = name
-  closeOrganismEditor()
-}
-
-function selectAllOrganisms() {
-  organism.value = ''
-  closeOrganismEditor()
-}
-
-async function refreshCount() {
-  countLoading.value = true
-  try {
-    const params = { per_page: 1 }
-    if (organism.value) params.organism = organism.value
-    if (role.value) params.role = role.value
-    const res = await getProteins(params)
-    matchCount.value = res.data.total
-  } catch {
-    matchCount.value = null
-  } finally {
-    countLoading.value = false
-  }
-}
-
-watch([organism, role], refreshCount, { immediate: true })
-
-const downloadUrl = computed(() => buildExportUrl({
-  organism: organism.value || null,
-  role: role.value || null,
-  fields: fields.value,
-  format: format.value,
-}))
-
-function download() {
-  window.location.href = downloadUrl.value
+// ── Download (simplified to a one-click full-dataset export -- no filters) ───
+function fullDatasetUrl(fmt) {
+  return buildExportUrl({ fields: 'full', format: fmt })
 }
 
 // ── Data sources (moved here from the retired /unification page) ─────────────
@@ -132,137 +42,47 @@ onMounted(async () => {
 
 <template>
   <div class="max-w-6xl mx-auto px-6 py-8">
-    <div class="mb-8">
-      <h1 class="text-2xl font-semibold text-gray-800">Data</h1>
-      <p class="text-sm text-gray-600 mt-1">Download the dataset, and see how it was assembled from five source databases.</p>
-    </div>
+
 
     <!-- ── Download ──────────────────────────────────────────────────────── -->
     <section class="mb-12">
-      <h2 class="text-lg font-semibold text-gray-800 mb-1">Download</h2>
-      <p class="text-sm text-gray-600 mb-4">Export a filtered slice of the protein dataset.</p>
-
-      <div class="bg-white border border-gray-200 rounded-lg px-4 py-4 space-y-5 max-w-2xl">
-        <!-- Organism filter -->
-        <div>
-          <label class="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1.5">Organism</label>
-
-          <button
-            v-if="!organismEditing"
-            @click="openOrganismEditor"
-            class="w-full flex items-center justify-between text-sm border border-gray-200 rounded px-2 py-1.5 bg-white hover:border-[#185FA5] transition-colors text-left"
+      <div class="flex items-center justify-between flex-wrap gap-3 mb-1">
+        <h2 class="text-lg font-semibold text-gray-800">Download MLOsMetaDB full dataset</h2>
+        <div class="flex gap-2">
+          <a
+            :href="fullDatasetUrl('json')"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
           >
-            <span :class="organism ? 'text-gray-800' : 'text-gray-500'">{{ organism || 'All organisms' }}</span>
-            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-          </button>
-
-          <div v-else class="border border-gray-200 rounded">
-            <div class="px-2.5 pt-1.5 pb-1">
-              <input
-                v-model="orgSearch"
-                type="text"
-                placeholder="Search organisms…"
-                class="w-full text-sm border border-gray-200 rounded px-2 py-1 focus:outline-none focus:border-[#185FA5]"
-                @input="onOrganismSearch"
-                autofocus
-              />
-            </div>
-            <div class="max-h-64 overflow-y-auto pb-1">
-              <div
-                v-if="showAllOrganismsOption"
-                class="px-2.5 py-1.5 cursor-pointer hover:bg-[#EBF3FB] text-sm font-medium text-gray-700"
-                @click="selectAllOrganisms"
-              >
-                All organisms
-              </div>
-
-              <template v-if="filteredModelOrganisms.length">
-                <div class="px-2.5 pt-1.5 pb-1 text-[10px] font-semibold text-gray-400 uppercase tracking-wide border-t border-gray-100 mt-1">
-                  Model organisms
-                </div>
-                <div
-                  v-for="name in filteredModelOrganisms"
-                  :key="name"
-                  class="px-2.5 py-1.5 cursor-pointer hover:bg-[#EBF3FB] text-sm text-gray-600"
-                  @click="selectOrganism(name)"
-                >
-                  <em>{{ name }}</em>
-                </div>
-              </template>
-
-              <template v-if="orgSearch.length >= 3">
-                <div
-                  v-for="result in orgSearchResults"
-                  :key="result.organism"
-                  class="flex items-center justify-between px-2.5 py-1.5 cursor-pointer hover:bg-[#EBF3FB] text-sm text-gray-600"
-                  @click="selectOrganism(result.organism)"
-                >
-                  <span>{{ result.organism }}</span>
-                  <span class="text-xs text-gray-500">{{ result.protein_count }}</span>
-                </div>
-                <div v-if="orgSearchResults.length === 0" class="text-xs text-gray-500 px-2.5 py-1">No organisms found.</div>
-              </template>
-            </div>
-            <div class="border-t border-gray-100 px-2.5 py-1 text-right">
-              <button @click="closeOrganismEditor" class="text-xs text-gray-500 hover:text-gray-700">Close</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Role filter -->
-        <div>
-          <label class="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1.5">LLPS role</label>
-          <select v-model="role" class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1.5 bg-white focus:outline-none focus:border-[#185FA5]">
-            <option value="">All roles</option>
-            <option value="driver">Drivers only</option>
-            <option value="component">Non-drivers</option>
-          </select>
-        </div>
-
-        <!-- Fields -->
-        <div>
-          <label class="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1.5">Fields</label>
-          <div class="flex gap-4 text-sm text-gray-700">
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" value="basic" v-model="fields" class="accent-[#185FA5]" />
-              Standard (identity, MLOs, LLPS role, source)
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" value="full" v-model="fields" class="accent-[#185FA5]" />
-              Extended annotations (+ IDRs, domains, LCRs)
-            </label>
-          </div>
-        </div>
-
-        <!-- Format -->
-        <div>
-          <label class="text-xs font-semibold text-gray-700 uppercase tracking-wide block mb-1.5">Format</label>
-          <div class="flex gap-4 text-sm text-gray-700">
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" value="tsv" v-model="format" class="accent-[#185FA5]" />
-              TSV
-            </label>
-            <label class="flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" value="json" v-model="format" class="accent-[#185FA5]" />
-              JSON
-            </label>
-          </div>
-        </div>
-
-        <!-- Download button -->
-        <div class="pt-2 flex items-center justify-end gap-3">
-          <p class="text-xs text-gray-500">
-            <span v-if="countLoading">Counting…</span>
-            <span v-else-if="matchCount != null">{{ matchCount.toLocaleString() }} proteins match these filters</span>
-          </p>
-          <button
-            @click="download"
-            class="inline-flex items-center px-4 py-2 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
+            JSON
+          </a>
+          <a
+            :href="fullDatasetUrl('tsv')"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
           >
-            Download
-          </button>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            TSV
+          </a>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600 mb-3">Every protein in MLOsMetaDB, with full annotations — no filters applied.</p>
+
+      <div class="flex divide-x divide-gray-200 border border-gray-200 rounded-lg max-w-md text-center">
+        <div class="flex-1 px-4 py-2">
+          <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_proteins) : '—' }}</div>
+          <div class="text-xs text-gray-500">Proteins</div>
+        </div>
+        <div class="flex-1 px-4 py-2">
+          <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_annotations) : '—' }}</div>
+          <div class="text-xs text-gray-500">Annotations</div>
+        </div>
+        <div class="flex-1 px-4 py-2">
+          <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_unified_mlo_terms) : '—' }}</div>
+          <div class="text-xs text-gray-500">MLOs</div>
         </div>
       </div>
     </section>

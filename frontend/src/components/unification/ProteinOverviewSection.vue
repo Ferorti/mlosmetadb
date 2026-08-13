@@ -48,7 +48,7 @@ function render(width) {
   const rows = displayCombos.value
   const labelW = 90
   const plotW = Math.max(20, width - labelW - 10)
-  const barAreaH = 170
+  const barAreaH = 210
   const barBottomY = barAreaH - 20
   // Dot-matrix rows kept tight (18px) rather than the more generous spacing a
   // default UpSet layout would use -- "hacerlo menos alto" per user feedback.
@@ -159,7 +159,7 @@ watch(displayCombos, () => render(currentWidth), { deep: true })
     <p class="text-sm text-gray-600 mb-4">
       {{ formatCount(summary.proteins_multi_source) }} proteins ({{ pctMultiSource }}%)
       are reported by two or more sources; {{ formatCount(summary.proteins_single_source) }}
-      by a single one. Overlap is not redundancy to be discarded — it is corroboration,
+      by a single one. Overlap is not redundancy to be discarded, it is corroboration,
       and it is quantified here.
     </p>
     <div ref="containerRef" class="w-full">
