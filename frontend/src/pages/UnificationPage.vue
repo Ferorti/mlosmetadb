@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { getUnificationStats } from '@/api/unification'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
+import SourcesSection from '@/components/unification/SourcesSection.vue'
+import ProteinOverviewSection from '@/components/unification/ProteinOverviewSection.vue'
 
 const stats = ref(null)
 const loading = ref(true)
@@ -39,8 +41,8 @@ onMounted(async () => {
     </div>
 
     <div v-else class="space-y-10">
-      <!-- TASK 2: <SourcesSection :stats="stats.f1_source_contribution" :summary="stats.summary" /> -->
-      <!-- TASK 2: <ProteinOverviewSection :combos="stats.f2_protein_source_combos" :summary="stats.summary" /> -->
+      <SourcesSection :stats="stats.f1_source_contribution" :summary="stats.summary" />
+      <ProteinOverviewSection :combos="stats.f2_protein_source_combos" :summary="stats.summary" />
       <!-- TASK 3: <VocabularySection :terms="stats.f3_vocab_collapse" :summary="stats.summary" /> -->
       <!-- TASK 3: <RoleHarmonisationSection :roles="stats.f4_role_mapping" :summary="stats.summary" /> -->
       <!-- TASK 4: <AgreementSection :by-mlo="stats.f5b_discrepancy_by_mlo" :pmid-overlap="stats.f6_pmid_overlap_sources" :summary="stats.summary" /> -->
