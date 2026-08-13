@@ -19,7 +19,7 @@ const expandedRows = ref(new Set())
 onMounted(async () => {
   try {
     const { data } = await client.get('/unification/mlo-term-mapping/export', { responseType: 'text' })
-    rows.value = d3.csvParse(data)
+    rows.value = d3.csvParse(data).map((r, idx) => ({ ...r, _idx: idx }))
   } catch {
     error.value = true
   } finally {
@@ -53,8 +53,8 @@ function toggleSort(key) {
   page.value = 1
 }
 
-function rowKey(row, i) {
-  return `${row.unified_mlo}-${row.source_db}-${i}`
+function rowKey(row) {
+  return `${row.unified_mlo}-${row.source_db}-${row._idx}`
 }
 
 function toggleExpand(key) {
@@ -105,20 +105,20 @@ function definitionDisplay(row, key) {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, i) in pageRows" :key="rowKey(row, i)" class="border-t border-gray-100 align-top">
+          <tr v-for="row in pageRows" :key="rowKey(row)" class="border-t border-gray-100 align-top">
             <td class="px-3 py-2">{{ row.unified_mlo.replace(/_/g, ' ') }}</td>
             <td class="px-3 py-2">{{ row.source_db }}</td>
             <td class="px-3 py-2">{{ row.source_mlo }}</td>
             <td class="px-3 py-2 text-right">{{ Number(row.annotations).toLocaleString() }}</td>
             <td class="px-3 py-2 text-right">{{ Number(row.proteins).toLocaleString() }}</td>
             <td class="px-3 py-2 text-xs text-gray-600">
-              {{ definitionDisplay(row, rowKey(row, i)) }}
+              {{ definitionDisplay(row, rowKey(row)) }}
               <button
                 v-if="row.definition && row.definition.length > DEFINITION_TRUNCATE"
-                @click="toggleExpand(rowKey(row, i))"
+                @click="toggleExpand(rowKey(row))"
                 class="text-[#185FA5] hover:underline ml-1"
               >
-                {{ expandedRows.has(rowKey(row, i)) ? 'show less' : 'show more' }}
+                {{ expandedRows.has(rowKey(row)) ? 'show less' : 'show more' }}
               </button>
             </td>
           </tr>
