@@ -90,6 +90,15 @@ def test_flatten_labeled_regions_returns_empty_string_for_null_or_empty():
     assert _flatten_labeled_regions("{}") == ""
 
 
+def test_flatten_labeled_regions_falls_back_to_source_name_when_label_is_null():
+    # Real shape of protein_summary.lcr_regions: mobidb_lite entries always
+    # carry label=null (unlike domains' pfam/smart labels, which are always
+    # populated) -- falling back to the source name keeps the annotation
+    # visible instead of silently dropping it.
+    val = '{"mobidb_lite": [{"start": 308, "end": 320, "label": null}]}'
+    assert _flatten_labeled_regions(val) == "mobidb_lite"
+
+
 def test_flatten_predictor_hits_lists_predictors_with_at_least_one_region():
     val = '{"mobidb_lite": [[1, 20], [30, 40]], "alphafold": [[5, 15]]}'
     assert _flatten_predictor_hits(val) == "mobidb_lite; alphafold"

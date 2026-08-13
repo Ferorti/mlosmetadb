@@ -84,13 +84,18 @@ def _flatten_labeled_regions(val: str | None) -> str:
     if not parsed:
         return ""
     seen: list[str] = []
-    for entries in parsed.values():
+    for source, entries in parsed.items():
         if not isinstance(entries, list):
             continue
         for entry in entries:
             label = entry.get("label") if isinstance(entry, dict) else None
-            if label and label not in seen:
-                seen.append(label)
+            # mobidb_lite's lcr_regions entries always carry label=null in
+            # the real dataset (unlike domains' pfam/smart labels, which are
+            # always populated) -- fall back to the source name so an
+            # annotated-but-unlabeled region isn't silently dropped.
+            name = label or source
+            if name not in seen:
+                seen.append(name)
     return "; ".join(seen)
 
 
