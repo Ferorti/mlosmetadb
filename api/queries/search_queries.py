@@ -1,5 +1,5 @@
 import policy
-from database import escape_like, fetchall, like_contains
+from database import fetchall, like_contains
 from queries.protein_queries import _SORT_NEEDS_PS, _build_sort, _has_regulator_select, _scoped_role_counts
 
 
@@ -29,7 +29,6 @@ async def search_proteins_exact_identifier(q: str) -> list[dict]:
 
 async def search_proteins_like(q: str) -> list[dict]:
     sub = like_contains(q)
-    word = f"% {escape_like(q)} %"
     return await fetchall(
         f"""
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
@@ -42,18 +41,16 @@ async def search_proteins_like(q: str) -> list[dict]:
                {_has_regulator_select("p")},
                CASE
                    WHEN LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\' THEN 'uniprot_id'
-                   WHEN LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\' THEN 'gene_name'
-                   ELSE 'protein_name'
+                   ELSE 'gene_name'
                END AS match_field
         FROM proteins p
         LEFT JOIN protein_summary ps ON ps.uniprot_id = p.uniprot_id
         WHERE LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\'
            OR LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\'
-           OR LOWER(' ' || p.protein_name || ' ') LIKE LOWER(?) ESCAPE '\\'
         ORDER BY p.uniprot_id
         LIMIT 50
         """,
-        (sub, sub, sub, sub, word),
+        (sub, sub, sub),
     )
 
 
@@ -95,19 +92,19 @@ def _build_advanced_clauses(
     conditions: list[str] = []
     params: list = []
 
-    # Free text over the same three columns search_proteins_like uses, with the
-    # same whole-word rule on protein_name. Keeping the two identical is the
-    # point: `gene_name` used to be the only text parameter here, so applying
-    # any filter silently narrowed the corpus from three columns to one and
-    # "kinase" — 50 hits by protein_name, none by gene_name — went to zero.
+    # Free text over the same two columns search_proteins_like uses. Keeping
+    # the two identical is the point: `gene_name` used to be the only text
+    # parameter here, so applying any filter silently narrowed the corpus
+    # from what /search matched to a single column, and a query that matched
+    # by gene_name via /search returned nothing the moment a filter was
+    # touched via /search/advanced.
     if q:
         conditions.append(
             "(LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\'"
-            " OR LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\'"
-            " OR LOWER(' ' || p.protein_name || ' ') LIKE LOWER(?) ESCAPE '\\')"
+            " OR LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\')"
         )
         sub = like_contains(q)
-        params.extend([sub, sub, f"% {escape_like(q)} %"])
+        params.extend([sub, sub])
 
     need_mlo = any(x is not None for x in [mlo, role, source_db])
     need_feat = any(x is not None for x in [feature_type, feature_label, feature_accession])

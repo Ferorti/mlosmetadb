@@ -28,11 +28,12 @@ def test_matches_through_gene_name(search_db):
         assert "P00001" in ids(hits(c, q="kinase"))
 
 
-def test_matches_through_protein_name(search_db):
-    """The case that made the field select dangerous: on the real database all
-    50 hits for "kinase" exist only because of protein_name."""
+def test_protein_name_no_longer_matches(search_db):
+    """P00002's only lexical connection to "kinase" is protein_name --
+    matching it was the case that made the old field select dangerous; now
+    protein_name isn't searched at all, so it must not be found."""
     with TestClient(app) as c:
-        assert "P00002" in ids(hits(c, q="kinase"))
+        assert "P00002" not in ids(hits(c, q="kinase"))
 
 
 def test_matches_through_uniprot_id(search_db):
@@ -40,10 +41,10 @@ def test_matches_through_uniprot_id(search_db):
         assert "KINASE9" in ids(hits(c, q="kinase"))
 
 
-def test_all_three_fields_answer_one_query(search_db):
+def test_both_fields_answer_one_query(search_db):
     with TestClient(app) as c:
         found = ids(hits(c, q="kinase"))
-    assert {"P00001", "P00002", "KINASE9"} <= found
+    assert {"P00001", "KINASE9"} <= found
 
 
 def test_matching_is_case_insensitive(search_db):
@@ -59,17 +60,7 @@ def test_null_gene_and_protein_name_do_not_break_the_query(search_db):
     assert "P00008" not in found
 
 
-# ── whole-word vs substring, which differs per field ─────────────────────────
-
-def test_protein_name_matches_whole_words_only(search_db):
-    """protein_name is matched with '% q %', so "kinase" does not hit
-    "Phosphokinaselike". gene_name and uniprot_id are plain substrings. The
-    asymmetry is deliberate — it keeps protein_name from matching everything —
-    but it is invisible from the UI, so it is pinned down here."""
-    with TestClient(app) as c:
-        found = ids(hits(c, q="kinase"))
-    assert "P00009" not in found
-
+# ── substring matching ────────────────────────────────────────────────────────
 
 def test_gene_name_matches_substrings(search_db):
     with TestClient(app) as c:

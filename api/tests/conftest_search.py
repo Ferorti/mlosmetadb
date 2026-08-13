@@ -16,7 +16,8 @@ import pytest
 import database as db_module
 from tests.conftest import SCHEMA
 
-# Each row isolates exactly one matching path for the query "kinase", plus the
+# Each row isolates exactly one matching path for the query "kinase" -- via
+# gene_name or uniprot_id, the only two columns search matches on -- plus the
 # edge cases that no realistic corpus would contain often enough to notice.
 SEARCH_FIXTURE = """
 INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, length, reviewed) VALUES
@@ -34,11 +35,6 @@ INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, l
     ('P00007', 'C%D',     'Percent gene protein',               'Homo sapiens', 9606, 700, 1),
     -- NULL gene_name and protein_name: must not crash, must not match
     ('P00008', NULL,      NULL,                                 'Homo sapiens', 9606, 800, 1),
-    -- "kinase" as a substring of a larger word, never as a standalone word
-    ('P00009', 'ZZZ9',    'Phosphokinaselike domain protein',   'Homo sapiens', 9606, 900, 1),
-    -- a DRIVER reachable only through protein_name: the exact shape that
-    -- "kinase" + role=driver returned nothing for, since gene_name is 'ZZZ10'
-    ('P00010', 'ZZZ10',   'Casein kinase II subunit alpha',     'Homo sapiens', 9606, 950, 1),
     -- exact mode must be able to return more than one row: same gene_name,
     -- different organism, neither one deduplicated away
     ('P00011', 'DUPGENE', 'Duplicate gene protein one',         'Homo sapiens', 9606, 100, 1),
@@ -53,8 +49,6 @@ INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count
     ('P00006', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00007', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00008', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
-    ('P00009', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
-    ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaSepDB'),
     ('P00011', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00012', 0, 0, 1, 0, NULL,                             'PhaSepDB');
 
@@ -70,7 +64,6 @@ INSERT INTO mlo_annotations (uniprot_id, source_db, unified_mlo, unified_role, d
     ('P00001', 'DrLLPS',  'nucleolus',      'driver', 1),
     ('P00002', 'PhaSepDB', 'stress_granule', 'client', 1),
     ('P00004', 'PhaSepDB', 'nucleolus',      'driver', 1),
-    ('P00010', 'PhaSepDB', 'stress_granule', 'driver', 1),
     -- inactive dataset: must be invisible through every endpoint
     ('P00006', 'PhaSepDB', 'p_granule',      'driver', 0);
 """

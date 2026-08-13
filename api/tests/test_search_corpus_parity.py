@@ -37,20 +37,9 @@ def test_free_text_matches_the_same_proteins_on_both_paths(search_db):
             assert advanced(c, q=q) == basic(c, q), q
 
 
-def test_advanced_free_text_reaches_protein_name(search_db):
-    """gene_name-only matching is exactly what could not do this."""
-    with TestClient(app) as c:
-        assert "P00002" in advanced(c, q="kinase")
-
-
 def test_advanced_free_text_reaches_uniprot_id(search_db):
     with TestClient(app) as c:
         assert "KINASE9" in advanced(c, q="kinase")
-
-
-def test_advanced_keeps_the_whole_word_rule_for_protein_name(search_db):
-    with TestClient(app) as c:
-        assert "P00009" not in advanced(c, q="kinase")
 
 
 def test_advanced_free_text_escapes_like_metacharacters(search_db):
@@ -62,18 +51,18 @@ def test_advanced_free_text_escapes_like_metacharacters(search_db):
 # ── the regression itself ────────────────────────────────────────────────────
 
 def test_a_filter_narrows_the_result_set_without_changing_the_corpus(search_db):
-    """P00010 is a driver whose only "kinase" match is its protein_name."""
+    """P00001 is a driver whose only "kinase" match is its gene_name."""
     with TestClient(app) as c:
         unfiltered = advanced(c, q="kinase")
         drivers = advanced(c, q="kinase", role="driver")
-    assert "P00010" in unfiltered
-    assert "P00010" in drivers, "a protein_name match vanished as soon as a filter was applied"
+    assert "P00001" in unfiltered
+    assert "P00001" in drivers, "a gene_name match vanished as soon as a filter was applied"
     assert drivers <= unfiltered, "filtering must be a subset, not a different search"
 
 
-def test_filtering_by_organelle_keeps_protein_name_matches(search_db):
+def test_filtering_by_organelle_keeps_gene_name_matches(search_db):
     with TestClient(app) as c:
-        assert "P00010" in advanced(c, q="kinase", mlo="stress_granule")
+        assert "P00001" in advanced(c, q="kinase", mlo="stress_granule")
 
 
 # ── q counts as a filter, and paginates ──────────────────────────────────────
