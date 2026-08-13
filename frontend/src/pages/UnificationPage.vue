@@ -7,6 +7,7 @@ import ProteinOverviewSection from '@/components/unification/ProteinOverviewSect
 import VocabularySection from '@/components/unification/VocabularySection.vue'
 import RoleHarmonisationSection from '@/components/unification/RoleHarmonisationSection.vue'
 import AgreementSection from '@/components/unification/AgreementSection.vue'
+import DiscrepantPairsTable from '@/components/unification/DiscrepantPairsTable.vue'
 
 const stats = ref(null)
 const loading = ref(true)
@@ -49,7 +50,7 @@ onMounted(async () => {
       <VocabularySection :terms="stats.f3_vocab_collapse" :summary="stats.summary" />
       <RoleHarmonisationSection :roles="stats.f4_role_mapping" :summary="stats.summary" />
       <AgreementSection :by-mlo="stats.f5b_discrepancy_by_mlo" :pmid-overlap="stats.f6_pmid_overlap_sources" :summary="stats.summary" />
-      <!-- TASK 5: <DiscrepantPairsTable /> -->
+      <DiscrepantPairsTable />
       <!-- TASK 6: <MloTermMappingTable /> -->
 
       <p class="text-xs text-gray-400 text-right">
