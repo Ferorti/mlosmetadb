@@ -29,8 +29,22 @@ const discPatterns = computed(() => {
 })
 
 const containerRef = ref(null)
+const tooltipRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
+
+function showTooltip(event, label, value) {
+  const tip = tooltipRef.value
+  if (!tip) return
+  tip.style.display = 'block'
+  tip.style.left = (event.clientX + 14) + 'px'
+  tip.style.top = (event.clientY - 28) + 'px'
+  tip.innerHTML = `<div style="font-weight:600">${label}</div><div>${value.toLocaleString()}</div>`
+}
+
+function hideTooltip() {
+  if (tooltipRef.value) tooltipRef.value.style.display = 'none'
+}
 
 function render(width) {
   if (!containerRef.value || width < 10) return
@@ -52,7 +66,13 @@ function render(width) {
   const xStack = d3.scaleLinear().domain([0, total]).range([0, width])
   const concW = xStack(props.summary.concordant_pairs)
   svg.append('rect').attr('x', 0).attr('y', 0).attr('width', concW).attr('height', 24).attr('fill', CONCORDANT_COLOR)
+    .style('cursor', 'default')
+    .on('mousemove', (event) => showTooltip(event, 'Concordant', props.summary.concordant_pairs))
+    .on('mouseleave', hideTooltip)
   svg.append('rect').attr('x', concW).attr('y', 0).attr('width', width - concW).attr('height', 24).attr('fill', DISCORDANT_COLOR)
+    .style('cursor', 'default')
+    .on('mousemove', (event) => showTooltip(event, 'Discordant', props.summary.discordant_pairs))
+    .on('mouseleave', hideTooltip)
   svg.append('text').attr('x', 4).attr('y', 40).attr('font-size', 11).attr('fill', '#374151')
     .text(`Concordant: ${formatCount(props.summary.concordant_pairs)} (${pctConcordant.value}%)`)
   svg.append('text').attr('x', width - 4).attr('y', 40).attr('font-size', 11).attr('fill', '#374151').attr('text-anchor', 'end')
@@ -70,6 +90,9 @@ function render(width) {
       .text(m.unified_mlo.replace(/_/g, ' '))
     svg.append('rect').attr('x', labelW).attr('y', y).attr('width', Math.max(1, xTop(m.n_discordant))).attr('height', barH)
       .attr('rx', 3).attr('fill', DISCORDANT_COLOR)
+      .style('cursor', 'default')
+      .on('mousemove', (event) => showTooltip(event, m.unified_mlo.replace(/_/g, ' '), m.n_discordant))
+      .on('mouseleave', hideTooltip)
     svg.append('text').attr('x', labelW + Math.max(1, xTop(m.n_discordant)) + 6).attr('y', y + barH - 5)
       .attr('font-size', 10).attr('fill', '#374151').text(m.n_discordant)
   })
@@ -85,7 +108,10 @@ onMounted(() => {
   render(containerRef.value.clientWidth)
 })
 
-onUnmounted(() => resizeObserver?.disconnect())
+onUnmounted(() => {
+  resizeObserver?.disconnect()
+  hideTooltip()
+})
 
 watch(() => [props.byMlo, props.summary], () => render(currentWidth), { deep: true })
 </script>
@@ -98,9 +124,7 @@ watch(() => [props.byMlo, props.summary], () => render(currentWidth), { deep: tr
       than one source, {{ pctConcordant }}% receive the same category from all of
       them and {{ formatCount(summary.discordant_pairs) }} ({{ pctDiscordant }}%) do
       not. Discrepancies concentrate in the best-studied MLOs, where more sources
-      have an opinion. All discordant pairs are listed below, with the role each
-      source assigns and its evidence type. MLOsMetaDB does not arbitrate: it shows
-      both claims.
+      have an opinion. MLOsMetaDB does not arbitrate: it shows both claims.
     </p>
     <div ref="containerRef" class="w-full mb-6">
       <svg style="display:block"></svg>
@@ -146,5 +170,12 @@ watch(() => [props.byMlo, props.summary], () => render(currentWidth), { deep: tr
         </tbody>
       </table>
     </div>
+
+    <teleport to="body">
+      <div
+        ref="tooltipRef"
+        style="display:none;position:fixed;pointer-events:none;z-index:9999;background:#1e293b;color:#f1f5f9;font-size:11px;padding:5px 8px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.25);white-space:nowrap;line-height:1.5;"
+      ></div>
+    </teleport>
   </section>
 </template>

@@ -29,8 +29,22 @@ const topTerms = computed(() => {
 })
 
 const containerRef = ref(null)
+const tooltipRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
+
+function showTooltip(event, label, value) {
+  const tip = tooltipRef.value
+  if (!tip) return
+  tip.style.display = 'block'
+  tip.style.left = (event.clientX + 14) + 'px'
+  tip.style.top = (event.clientY - 28) + 'px'
+  tip.innerHTML = `<div style="font-weight:600">${label}</div><div>${value.toLocaleString()}</div>`
+}
+
+function hideTooltip() {
+  if (tooltipRef.value) tooltipRef.value.style.display = 'none'
+}
 
 function render(width) {
   if (!containerRef.value || width < 10) return
@@ -59,6 +73,9 @@ function render(width) {
     left.append('text').attr('x', 0).attr('y', y + barH - 5).attr('font-size', 11).attr('fill', '#374151').text(h.label)
     left.append('rect').attr('x', leftLabelW).attr('y', y).attr('width', Math.max(1, xHisto(h.count))).attr('height', barH)
       .attr('rx', 3).attr('fill', '#2a78d6')
+      .style('cursor', 'default')
+      .on('mousemove', (event) => showTooltip(event, `${h.label} source name(s)`, h.count))
+      .on('mouseleave', hideTooltip)
     left.append('text').attr('x', leftLabelW + Math.max(1, xHisto(h.count)) + 6).attr('y', y + barH - 5)
       .attr('font-size', 11).attr('fill', '#374151').text(h.count)
   })
@@ -76,6 +93,9 @@ function render(width) {
       .text(t.unified_mlo.replace(/_/g, ' '))
     right.append('rect').attr('x', rightLabelW).attr('y', y).attr('width', Math.max(1, xTop(t.n_source_names))).attr('height', barH)
       .attr('rx', 3).attr('fill', '#1baf7a')
+      .style('cursor', 'default')
+      .on('mousemove', (event) => showTooltip(event, t.unified_mlo.replace(/_/g, ' '), t.n_source_names))
+      .on('mouseleave', hideTooltip)
     right.append('text').attr('x', rightLabelW + Math.max(1, xTop(t.n_source_names)) + 6).attr('y', y + barH - 5)
       .attr('font-size', 10).attr('fill', '#374151').text(t.n_source_names)
   })
@@ -91,7 +111,10 @@ onMounted(() => {
   render(containerRef.value.clientWidth)
 })
 
-onUnmounted(() => resizeObserver?.disconnect())
+onUnmounted(() => {
+  resizeObserver?.disconnect()
+  hideTooltip()
+})
 
 watch(() => props.terms, () => render(currentWidth), { deep: true })
 </script>
@@ -107,5 +130,12 @@ watch(() => props.terms, () => render(currentWidth), { deep: true })
     <div ref="containerRef" class="w-full">
       <svg style="display:block"></svg>
     </div>
+
+    <teleport to="body">
+      <div
+        ref="tooltipRef"
+        style="display:none;position:fixed;pointer-events:none;z-index:9999;background:#1e293b;color:#f1f5f9;font-size:11px;padding:5px 8px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.25);white-space:nowrap;line-height:1.5;"
+      ></div>
+    </teleport>
   </section>
 </template>

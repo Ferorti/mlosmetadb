@@ -18,8 +18,22 @@ const grouped = computed(() => {
 })
 
 const containerRef = ref(null)
+const tooltipRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
+
+function showTooltip(event, category, label, value) {
+  const tip = tooltipRef.value
+  if (!tip) return
+  tip.style.display = 'block'
+  tip.style.left = (event.clientX + 14) + 'px'
+  tip.style.top = (event.clientY - 28) + 'px'
+  tip.innerHTML = `<div style="font-weight:600">${category}</div><div>${label}</div><div>${value.toLocaleString()} annotations</div>`
+}
+
+function hideTooltip() {
+  if (tooltipRef.value) tooltipRef.value.style.display = 'none'
+}
 
 function render(width) {
   if (!containerRef.value || width < 10) return
@@ -60,6 +74,9 @@ function render(width) {
       svg.append('text').attr('x', 0).attr('y', ry + barH - 5).attr('font-size', 10).attr('fill', '#374151').text(label)
       svg.append('rect').attr('x', labelW).attr('y', ry).attr('width', Math.max(1, x(row.annotations))).attr('height', barH)
         .attr('rx', 3).attr('fill', CATEGORY_COLOR[g.category])
+        .style('cursor', 'default')
+        .on('mousemove', (event) => showTooltip(event, g.category, `${row.source_db} · ${row.source_role}`, row.annotations))
+        .on('mouseleave', hideTooltip)
       svg.append('text').attr('x', labelW + Math.max(1, x(row.annotations)) + 6).attr('y', ry + barH - 5)
         .attr('font-size', 10).attr('fill', '#374151').text(row.annotations.toLocaleString())
     })
@@ -76,7 +93,10 @@ onMounted(() => {
   render(containerRef.value.clientWidth)
 })
 
-onUnmounted(() => resizeObserver?.disconnect())
+onUnmounted(() => {
+  resizeObserver?.disconnect()
+  hideTooltip()
+})
 
 watch(() => props.roles, () => render(currentWidth), { deep: true })
 </script>
@@ -98,5 +118,12 @@ watch(() => props.roles, () => render(currentWidth), { deep: true })
     <div ref="containerRef" class="w-full">
       <svg style="display:block"></svg>
     </div>
+
+    <teleport to="body">
+      <div
+        ref="tooltipRef"
+        style="display:none;position:fixed;pointer-events:none;z-index:9999;background:#1e293b;color:#f1f5f9;font-size:11px;padding:5px 8px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.25);white-space:nowrap;line-height:1.5;"
+      ></div>
+    </teleport>
   </section>
 </template>

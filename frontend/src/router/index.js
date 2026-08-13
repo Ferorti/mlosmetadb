@@ -8,8 +8,7 @@ const routes = [
   { path: '/mlo/:mlo',    component: () => import('@/pages/MlosPage.vue') },
   { path: '/mlos',        component: () => import('@/pages/MlosPage.vue') },
   { path: '/api',         component: () => import('@/pages/ApiPage.vue') },
-  { path: '/download',    component: () => import('@/pages/DownloadPage.vue') },
-  { path: '/unification', component: () => import('@/pages/UnificationPage.vue') },
+  { path: '/data',        component: () => import('@/pages/DataPage.vue') },
   { path: '/about',       component: () => import('@/pages/AboutPage.vue') },
 ]
 

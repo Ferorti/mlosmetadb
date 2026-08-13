@@ -23,8 +23,22 @@ const pctMultiSource = computed(() => {
 })
 
 const containerRef = ref(null)
+const tooltipRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
+
+function showTooltip(event, label, value) {
+  const tip = tooltipRef.value
+  if (!tip) return
+  tip.style.display = 'block'
+  tip.style.left = (event.clientX + 14) + 'px'
+  tip.style.top = (event.clientY - 28) + 'px'
+  tip.innerHTML = `<div style="font-weight:600">${label}</div><div>${value.toLocaleString()} proteins</div>`
+}
+
+function hideTooltip() {
+  if (tooltipRef.value) tooltipRef.value.style.display = 'none'
+}
 
 function render(width) {
   if (!containerRef.value || width < 10) return
@@ -55,6 +69,9 @@ function render(width) {
       .attr('width', Math.max(1, x(row.n_proteins))).attr('height', barH)
       .attr('rx', 3)
       .attr('fill', isMulti ? '#eb6834' : '#9ca3af')
+      .style('cursor', 'default')
+      .on('mousemove', (event) => showTooltip(event, row.combo_label, row.n_proteins))
+      .on('mouseleave', hideTooltip)
     svg.append('text')
       .attr('x', labelW + Math.max(1, x(row.n_proteins)) + 6).attr('y', y + barH - 5)
       .attr('font-size', 11).attr('fill', '#374151')
@@ -72,7 +89,10 @@ onMounted(() => {
   render(containerRef.value.clientWidth)
 })
 
-onUnmounted(() => resizeObserver?.disconnect())
+onUnmounted(() => {
+  resizeObserver?.disconnect()
+  hideTooltip()
+})
 
 watch(displayCombos, () => render(currentWidth), { deep: true })
 </script>
@@ -93,5 +113,12 @@ watch(displayCombos, () => render(currentWidth), { deep: true })
       Top 12 source combinations by protein count; the remaining combinations are summed into "other".
       Orange bars are multi-source combinations, gray is single-source.
     </p>
+
+    <teleport to="body">
+      <div
+        ref="tooltipRef"
+        style="display:none;position:fixed;pointer-events:none;z-index:9999;background:#1e293b;color:#f1f5f9;font-size:11px;padding:5px 8px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.25);white-space:nowrap;line-height:1.5;"
+      ></div>
+    </teleport>
   </section>
 </template>
