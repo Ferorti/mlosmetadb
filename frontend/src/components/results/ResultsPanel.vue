@@ -201,9 +201,16 @@ const columns = [
     cell: info => h('span', { class: 'italic' }, info.getValue()) }),
   col.accessor('has_driver', {
     id: 'role', header: 'Role', enableSorting: false,
-    cell: info => info.getValue()
-      ? h(RoleBadge, { role: 'driver' })
-      : h('span', { class: 'text-gray-400 text-xs' }, '—'),
+    cell: info => {
+      const protein = info.row.original
+      const parts = []
+      if (protein.has_driver) parts.push(h(RoleBadge, { role: 'driver' }))
+      if (protein.has_regulator) {
+        parts.push(h('span', { class: 'text-[10px] font-medium text-[#854F0B]' }, 'Regulator'))
+      }
+      if (!parts.length) return h('span', { class: 'text-gray-400 text-xs' }, '—')
+      return h('div', { class: 'flex items-center gap-1.5' }, parts)
+    },
   }),
   col.accessor(row => filterMlos(row.mlos).length, {
     id: 'mlos', header: 'MLOs', enableSorting: true,
@@ -383,6 +390,11 @@ const table = useVueTable({
                   {{ protein.gene_name || protein.uniprot_id }}
                 </span>
                 <RoleBadge v-if="protein.has_driver" role="driver" />
+                <span
+                  v-if="protein.has_regulator"
+                  class="text-[10px] font-medium text-[#854F0B] whitespace-nowrap shrink-0"
+                  title="Annotated as a regulator of an organelle, not as a resident of it -- a curator assignment that applies to the whole protein"
+                >Regulator</span>
               </div>
               <span class="font-mono text-[12px] text-gray-400 mt-0.5">
                 {{ protein.uniprot_id }}
