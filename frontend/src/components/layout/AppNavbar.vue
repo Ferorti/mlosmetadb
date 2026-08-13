@@ -20,6 +20,7 @@ import { RouterLink } from 'vue-router'
         <RouterLink to="/mlos"     active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">MLOs</RouterLink>
         <RouterLink to="/api"      active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">API</RouterLink>
         <RouterLink to="/download" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Download</RouterLink>
+        <RouterLink to="/unification" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Data unification</RouterLink>
         <RouterLink to="/about"    active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">About</RouterLink>
       </div>
 

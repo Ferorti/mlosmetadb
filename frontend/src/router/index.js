@@ -9,6 +9,7 @@ const routes = [
   { path: '/mlos',        component: () => import('@/pages/MlosPage.vue') },
   { path: '/api',         component: () => import('@/pages/ApiPage.vue') },
   { path: '/download',    component: () => import('@/pages/DownloadPage.vue') },
+  { path: '/unification', component: () => import('@/pages/UnificationPage.vue') },
   { path: '/about',       component: () => import('@/pages/AboutPage.vue') },
 ]
 
