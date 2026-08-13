@@ -77,6 +77,28 @@ def _parse_source_dbs(val: str | None) -> list[str]:
     return [s for s in val.split(",") if s]
 
 
+def _flatten_labeled_regions(val: str | None) -> str:
+    parsed = _parse_json(val)
+    if not parsed:
+        return ""
+    seen: list[str] = []
+    for entries in parsed.values():
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            label = entry.get("label") if isinstance(entry, dict) else None
+            if label and label not in seen:
+                seen.append(label)
+    return "; ".join(seen)
+
+
+def _flatten_predictor_hits(val: str | None) -> str:
+    parsed = _parse_json(val)
+    if not parsed:
+        return ""
+    return "; ".join(predictor for predictor, entries in parsed.items() if entries)
+
+
 _EXPORT_BASIC_FIELDS = [
     "uniprot_id", "gene_name", "protein_name", "organism", "sequence_length", "reviewed",
     "mlos", "role", "source_dbs",

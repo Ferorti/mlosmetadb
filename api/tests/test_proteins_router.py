@@ -3,7 +3,14 @@ import sqlite3
 from fastapi.testclient import TestClient
 
 from main import app
-from routers.proteins import _build_export_record, _records_to_tsv, _EXPORT_BASIC_FIELDS, _EXPORT_FULL_FIELDS
+from routers.proteins import (
+    _build_export_record,
+    _flatten_labeled_regions,
+    _flatten_predictor_hits,
+    _records_to_tsv,
+    _EXPORT_BASIC_FIELDS,
+    _EXPORT_FULL_FIELDS,
+)
 
 
 def test_protein_detail_shows_raw_driver_role(test_db):
@@ -60,6 +67,40 @@ def test_build_export_record_full_keeps_sequence_features_as_raw_json_text():
     assert record["lcr_regions"] is None
     assert record["domains"] == '[{"label": "KH domain"}]'
     assert record["role"] == "driver"
+
+
+def test_flatten_labeled_regions_extracts_unique_labels_in_order():
+    val = (
+        '{"pfam": [{"start": 10, "end": 50, "label": "Zinc finger, C3HC4 RING-type", '
+        '"accession": "PF00097"}], "smart": [{"start": 80, "end": 120, "label": "SH3 domain"}]}'
+    )
+    assert _flatten_labeled_regions(val) == "Zinc finger, C3HC4 RING-type; SH3 domain"
+
+
+def test_flatten_labeled_regions_deduplicates_labels_across_sources():
+    val = '{"pfam": [{"label": "Zinc finger"}], "smart": [{"label": "Zinc finger"}]}'
+    assert _flatten_labeled_regions(val) == "Zinc finger"
+
+
+def test_flatten_labeled_regions_returns_empty_string_for_null_or_empty():
+    assert _flatten_labeled_regions(None) == ""
+    assert _flatten_labeled_regions("") == ""
+    assert _flatten_labeled_regions("{}") == ""
+
+
+def test_flatten_predictor_hits_lists_predictors_with_at_least_one_region():
+    val = '{"mobidb_lite": [[1, 20], [30, 40]], "alphafold": [[5, 15]]}'
+    assert _flatten_predictor_hits(val) == "mobidb_lite; alphafold"
+
+
+def test_flatten_predictor_hits_skips_predictors_with_no_regions():
+    val = '{"mobidb_lite": [], "alphafold": [[5, 15]]}'
+    assert _flatten_predictor_hits(val) == "alphafold"
+
+
+def test_flatten_predictor_hits_returns_empty_string_for_null_or_empty():
+    assert _flatten_predictor_hits(None) == ""
+    assert _flatten_predictor_hits("{}") == ""
 
 
 def test_records_to_tsv_joins_lists_with_semicolon():
