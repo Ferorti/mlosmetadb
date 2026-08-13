@@ -38,7 +38,11 @@ INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, l
     ('P00009', 'ZZZ9',    'Phosphokinaselike domain protein',   'Homo sapiens', 9606, 900, 1),
     -- a DRIVER reachable only through protein_name: the exact shape that
     -- "kinase" + role=driver returned nothing for, since gene_name is 'ZZZ10'
-    ('P00010', 'ZZZ10',   'Casein kinase II subunit alpha',     'Homo sapiens', 9606, 950, 1);
+    ('P00010', 'ZZZ10',   'Casein kinase II subunit alpha',     'Homo sapiens', 9606, 950, 1),
+    -- exact mode must be able to return more than one row: same gene_name,
+    -- different organism, neither one deduplicated away
+    ('P00011', 'DUPGENE', 'Duplicate gene protein one',         'Homo sapiens', 9606, 100, 1),
+    ('P00012', 'DUPGENE', 'Duplicate gene protein two',         'Mus musculus', 10090, 100, 1);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('P00001', 1, 0, 2, 2, '["stress_granule","nucleolus"]', 'PhaSepDB,DrLLPS'),
@@ -50,7 +54,9 @@ INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count
     ('P00007', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00008', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00009', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
-    ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaSepDB');
+    ('P00010', 1, 0, 1, 1, '["stress_granule"]',             'PhaSepDB'),
+    ('P00011', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00012', 0, 0, 1, 0, NULL,                             'PhaSepDB');
 
 INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
                             taxonomic_scope, taxonomic_support_n, physiological_state,

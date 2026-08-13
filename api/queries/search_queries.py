@@ -1,9 +1,9 @@
 import policy
-from database import escape_like, fetchall, fts5_available, like_contains
+from database import escape_like, fetchall, like_contains
 from queries.protein_queries import _SORT_NEEDS_PS, _build_sort, _has_regulator_select, _scoped_role_counts
 
 
-async def search_proteins_fts(q: str) -> list[dict]:
+async def search_proteins_exact_identifier(q: str) -> list[dict]:
     return await fetchall(
         f"""
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
@@ -16,14 +16,11 @@ async def search_proteins_fts(q: str) -> list[dict]:
                {_has_regulator_select("p")},
                CASE
                    WHEN LOWER(p.uniprot_id) = LOWER(?) THEN 'uniprot_id'
-                   WHEN LOWER(p.gene_name) = LOWER(?) THEN 'gene_name'
-                   ELSE 'protein_name'
+                   ELSE 'gene_name'
                END AS match_field
-        FROM fts_proteins ft
-        JOIN proteins p ON p.rowid = ft.rowid
+        FROM proteins p
         LEFT JOIN protein_summary ps ON ps.uniprot_id = p.uniprot_id
-        WHERE fts_proteins MATCH ?
-        ORDER BY rank
+        WHERE LOWER(p.uniprot_id) = LOWER(?) OR LOWER(p.gene_name) = LOWER(?)
         LIMIT 50
         """,
         (q, q, q),
@@ -57,22 +54,6 @@ async def search_proteins_like(q: str) -> list[dict]:
         LIMIT 50
         """,
         (sub, sub, sub, sub, word),
-    )
-
-
-async def search_mlos_fts(q: str) -> list[dict]:
-    return await fetchall(
-        """
-        SELECT mv.unified_mlo, mv.spatial_location, mv.taxonomic_scope,
-               mv.physiological_state, mv.cell_type_context,
-               'unified_mlo' AS match_field
-        FROM fts_mlos ft
-        JOIN mlo_vocabulary mv ON mv.rowid = ft.rowid
-        WHERE fts_mlos MATCH ?
-        ORDER BY rank
-        LIMIT 20
-        """,
-        (q,),
     )
 
 

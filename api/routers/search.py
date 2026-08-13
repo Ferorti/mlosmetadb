@@ -4,7 +4,6 @@ import logging
 import aiosqlite
 from fastapi import APIRouter, HTTPException, Query
 
-import database
 from config import DEFAULT_PAGE, DEFAULT_PER_PAGE, MAX_PER_PAGE
 from models.schemas import (
     ProteinsResponse,
@@ -16,9 +15,8 @@ from models.schemas import (
 from queries.search_queries import (
     advanced_search,
     get_advanced_search_facets,
-    search_mlos_fts,
     search_mlos_like,
-    search_proteins_fts,
+    search_proteins_exact_identifier,
     search_proteins_like,
 )
 
@@ -57,9 +55,9 @@ _VALID_SORT_BY = {"gene_name", "mlo_count", "source_db_count", "disorder_mobidb_
 @router.get("/search", response_model=SearchResponse)
 async def search(
     # One character is a legitimate broad search, not a malformed request: the
-    # LIKE and FTS5 paths below both cap themselves at 50 rows, so the old
-    # two-character floor only produced an error where results were expected.
-    # Empty is still rejected — '%%' would match the whole corpus.
+    # LIKE path below caps itself at 50 rows, so the old two-character floor
+    # only produced an error where results were expected. Empty is still
+    # rejected — '%%' would match the whole corpus.
     q: str = Query(min_length=1),
     mode: str = Query(default="fuzzy", pattern="^(exact|fuzzy)$"),
 ):
@@ -70,13 +68,10 @@ async def search(
     if not q:
         raise HTTPException(422, {"error": "invalid_parameter", "message": "q: search term cannot be blank"})
 
-    if mode == "exact" and not database.fts5_available:
-        raise HTTPException(501, {"error": "fts5_unavailable", "message": "FTS5 not available; use mode=fuzzy"})
-
     try:
         if mode == "exact":
-            proteins = await search_proteins_fts(q)
-            mlos = await search_mlos_fts(q)
+            proteins = await search_proteins_exact_identifier(q)
+            mlos = []
         else:
             proteins = await search_proteins_like(q)
             mlos = await search_mlos_like(q)

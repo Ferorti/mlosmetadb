@@ -134,12 +134,49 @@ def test_whitespace_only_query_is_rejected(search_db):
     assert r.status_code == 422, f"returned {r.status_code} with {len(r.json().get('proteins', []))} proteins"
 
 
-def test_exact_mode_without_fts5_is_a_clean_501(search_db):
+# ── exact mode is identifier-only, and never depends on FTS5 ────────────────
+
+def test_exact_mode_always_returns_200(search_db):
     with TestClient(app) as c:
         r = c.get("/search", params={"q": "kinase", "mode": "exact"})
-    assert r.status_code in (200, 501)
-    if r.status_code == 501:
-        assert r.json()["error"] == "fts5_unavailable"
+    assert r.status_code == 200
+
+
+def test_exact_mode_matches_gene_name_case_insensitively(search_db):
+    with TestClient(app) as c:
+        assert "P00001" in ids(hits(c, q="kinase1", mode="exact"))
+        assert "P00001" in ids(hits(c, q="KINASE1", mode="exact"))
+
+
+def test_exact_mode_matches_uniprot_id_case_insensitively(search_db):
+    with TestClient(app) as c:
+        assert "KINASE9" in ids(hits(c, q="kinase9", mode="exact"))
+
+
+def test_exact_mode_rejects_a_substring_of_gene_name_or_uniprot_id(search_db):
+    with TestClient(app) as c:
+        found = ids(hits(c, q="kinase", mode="exact"))
+    assert found == set()
+
+
+def test_exact_mode_never_matches_protein_name(search_db):
+    """P00002's gene_name is 'STK33' -- its only lexical connection to
+    "kinase" is protein_name, which exact mode never touches."""
+    with TestClient(app) as c:
+        found = ids(hits(c, q="kinase", mode="exact"))
+    assert "P00002" not in found
+
+
+def test_exact_mode_never_returns_mlos(search_db):
+    with TestClient(app) as c:
+        payload = hits(c, q="kinase1", mode="exact")
+    assert payload["mlos"] == []
+
+
+def test_exact_mode_can_return_more_than_one_row(search_db):
+    with TestClient(app) as c:
+        found = ids(hits(c, q="DUPGENE", mode="exact"))
+    assert {"P00011", "P00012"} <= found
 
 
 def test_an_invalid_mode_is_rejected(search_db):
