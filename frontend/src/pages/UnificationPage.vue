@@ -13,6 +13,7 @@ import MloTermMappingTable from '@/components/unification/MloTermMappingTable.vu
 const stats = ref(null)
 const loading = ref(true)
 const unavailable = ref(false)
+const error = ref(false)
 
 onMounted(async () => {
   try {
@@ -21,7 +22,7 @@ onMounted(async () => {
     if (err.response?.status === 503) {
       unavailable.value = true
     } else {
-      throw err
+      error.value = true
     }
   } finally {
     loading.value = false
@@ -43,6 +44,10 @@ onMounted(async () => {
 
     <div v-else-if="unavailable" class="bg-white border border-gray-200 rounded-lg p-8 text-center text-gray-600">
       This section isn't available yet.
+    </div>
+
+    <div v-else-if="error" class="bg-white border border-gray-200 rounded-lg p-8 text-center text-gray-600">
+      Something went wrong loading this section. Try refreshing the page.
     </div>
 
     <div v-else class="space-y-10">

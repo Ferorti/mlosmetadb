@@ -28,7 +28,7 @@ function render(width) {
   const barH = 18
   const gap = 6
   const groupGap = 20
-  const labelW = 260
+  const labelW = Math.min(260, Math.max(100, width * 0.4))
   let y = 10
   const groupYStarts = []
   grouped.value.forEach(g => {
@@ -46,9 +46,13 @@ function render(width) {
 
   grouped.value.forEach((g, gi) => {
     const gy = groupYStarts[gi]
-    svg.append('text')
-      .attr('x', 0).attr('y', gy).attr('font-size', 12).attr('font-weight', 700)
+    svg.append('rect')
+      .attr('x', 0).attr('y', gy - 10).attr('width', 8).attr('height', 8)
+      .attr('rx', 2)
       .attr('fill', CATEGORY_COLOR[g.category])
+    svg.append('text')
+      .attr('x', 14).attr('y', gy).attr('font-size', 12).attr('font-weight', 700)
+      .attr('fill', '#1f2937')
       .text(g.category)
     g.rows.forEach((row, i) => {
       const ry = gy + 14 + i * (barH + gap)
@@ -81,8 +85,8 @@ watch(() => props.roles, () => render(currentWidth), { deep: true })
   <section id="role-harmonisation">
     <h2 class="text-lg font-semibold text-gray-800 mb-1">Role harmonisation</h2>
     <p class="text-sm text-gray-600 mb-4">
-      Sources use eight different role labels backed by different kinds of evidence,
-      mapped onto three categories: <strong>driver</strong> (drives phase separation),
+      Sources use {{ roles.length }} source-specific role mappings backed by different
+      kinds of evidence, mapped onto three categories: <strong>driver</strong> (drives phase separation),
       <strong>regulator</strong> (modulates it without being a constituent driver),
       <strong>component</strong> (present in the MLO, with no driver or regulator
       evidence assigned by any source). "Component" is used in the restricted sense

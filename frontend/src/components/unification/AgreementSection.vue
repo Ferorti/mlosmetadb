@@ -24,6 +24,10 @@ const pctIndependent = computed(() => {
 
 const topMlos = computed(() => [...props.byMlo].sort((a, b) => b.n_discordant - a.n_discordant).slice(0, 15))
 
+const discPatterns = computed(() => {
+  return Object.entries(props.summary.disc_patterns ?? {}).sort((a, b) => b[1] - a[1])
+})
+
 const containerRef = ref(null)
 let resizeObserver = null
 let currentWidth = 0
@@ -102,13 +106,20 @@ watch(() => [props.byMlo, props.summary], () => render(currentWidth), { deep: tr
       <svg style="display:block"></svg>
     </div>
 
+    <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-600 mb-6">
+      <span v-for="[pattern, count] in discPatterns" :key="pattern">
+        {{ pattern.split('|').join(' vs. ') }}: {{ formatCount(count) }}
+      </span>
+    </div>
+
     <p class="text-sm text-gray-600 mb-3">
       <strong>Evidence.</strong> {{ formatCount(summary.unique_pmids) }} unique PMIDs
       back the annotations. Where two sources annotate the same protein–MLO pair and
       both cite literature, {{ pctIndependent }}% cite different publications — the
       agreement is mostly independent, not the same paper propagated across
       databases. CD-CODE is excluded from this comparison: it records condensate
-      membership without a per-annotation citation.
+      membership without a per-annotation citation. {{ formatCount(summary.pairs_shared_pub) }}
+      pairs share at least one publication.
     </p>
 
     <div class="overflow-x-auto">

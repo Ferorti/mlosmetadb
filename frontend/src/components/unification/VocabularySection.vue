@@ -51,14 +51,15 @@ function render(width) {
   const left = svg.append('g')
   left.append('text').attr('x', 0).attr('y', 12).attr('font-size', 11).attr('font-weight', 600).attr('fill', '#374151')
     .text('Source names collapsed per unified term')
+  const leftLabelW = Math.min(30, Math.max(18, halfW * 0.1))
   const maxHisto = d3.max(histogram.value, h => h.count) || 1
-  const xHisto = d3.scaleLinear().domain([0, maxHisto]).range([0, halfW - 60])
+  const xHisto = d3.scaleLinear().domain([0, maxHisto]).range([0, halfW - leftLabelW - 30])
   histogram.value.forEach((h, i) => {
     const y = 22 + i * (barH + gap)
     left.append('text').attr('x', 0).attr('y', y + barH - 5).attr('font-size', 11).attr('fill', '#374151').text(h.label)
-    left.append('rect').attr('x', 30).attr('y', y).attr('width', Math.max(1, xHisto(h.count))).attr('height', barH)
+    left.append('rect').attr('x', leftLabelW).attr('y', y).attr('width', Math.max(1, xHisto(h.count))).attr('height', barH)
       .attr('rx', 3).attr('fill', '#2a78d6')
-    left.append('text').attr('x', 30 + Math.max(1, xHisto(h.count)) + 6).attr('y', y + barH - 5)
+    left.append('text').attr('x', leftLabelW + Math.max(1, xHisto(h.count)) + 6).attr('y', y + barH - 5)
       .attr('font-size', 11).attr('fill', '#374151').text(h.count)
   })
 
@@ -66,16 +67,16 @@ function render(width) {
   const right = svg.append('g').attr('transform', `translate(${halfW + 24}, 0)`)
   right.append('text').attr('x', 0).attr('y', 12).attr('font-size', 11).attr('font-weight', 600).attr('fill', '#374151')
     .text('Top 10 terms by source names absorbed')
-  const labelW = 140
+  const rightLabelW = Math.min(140, Math.max(60, halfW * 0.4))
   const maxTop = d3.max(topTerms.value, t => t.n_source_names) || 1
-  const xTop = d3.scaleLinear().domain([0, maxTop]).range([0, halfW - labelW - 40])
+  const xTop = d3.scaleLinear().domain([0, maxTop]).range([0, halfW - rightLabelW - 40])
   topTerms.value.forEach((t, i) => {
     const y = 22 + i * (barH + gap)
     right.append('text').attr('x', 0).attr('y', y + barH - 5).attr('font-size', 10).attr('fill', '#374151')
       .text(t.unified_mlo.replace(/_/g, ' '))
-    right.append('rect').attr('x', labelW).attr('y', y).attr('width', Math.max(1, xTop(t.n_source_names))).attr('height', barH)
+    right.append('rect').attr('x', rightLabelW).attr('y', y).attr('width', Math.max(1, xTop(t.n_source_names))).attr('height', barH)
       .attr('rx', 3).attr('fill', '#1baf7a')
-    right.append('text').attr('x', labelW + Math.max(1, xTop(t.n_source_names)) + 6).attr('y', y + barH - 5)
+    right.append('text').attr('x', rightLabelW + Math.max(1, xTop(t.n_source_names)) + 6).attr('y', y + barH - 5)
       .attr('font-size', 10).attr('fill', '#374151').text(t.n_source_names)
   })
 }
