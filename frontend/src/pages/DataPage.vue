@@ -46,12 +46,29 @@ onMounted(async () => {
 
     <!-- ── Download ──────────────────────────────────────────────────────── -->
     <section class="mb-12">
-      <div class="flex items-center justify-between flex-wrap gap-3 mb-1">
-        <h2 class="text-lg font-semibold text-gray-800">Download MLOsMetaDB full dataset</h2>
-        <div class="flex gap-2">
+      <h2 class="text-lg font-semibold text-gray-800 mb-1">Download dataset</h2>
+      <p class="text-sm text-gray-600 mb-3">Download the dataset of MLOsMetaDB, with full annotations.</p>
+
+      <div class="flex items-center gap-4">
+        <div class="flex divide-x divide-gray-200 border border-gray-200 rounded-lg text-center">
+          <div class="flex-1 px-4 py-2">
+            <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_proteins) : '...' }}</div>
+            <div class="text-xs text-gray-500">Proteins</div>
+          </div>
+          <div class="flex-1 px-4 py-2">
+            <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_annotations) : '...' }}</div>
+            <div class="text-xs text-gray-500">Annotations</div>
+          </div>
+          <div class="flex-1 px-4 py-2">
+            <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_unified_mlo_terms) : '...' }}</div>
+            <div class="text-xs text-gray-500">MLOs</div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
           <a
             :href="fullDatasetUrl('json')"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
+            class="w-28 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
           >
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -60,29 +77,13 @@ onMounted(async () => {
           </a>
           <a
             :href="fullDatasetUrl('tsv')"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
+            class="w-28 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-[#185FA5] text-white text-sm font-medium hover:bg-[#0F4A87] transition-colors"
           >
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
             TSV
           </a>
-        </div>
-      </div>
-      <p class="text-sm text-gray-600 mb-3">Every protein in MLOsMetaDB, with full annotations — no filters applied.</p>
-
-      <div class="flex divide-x divide-gray-200 border border-gray-200 rounded-lg max-w-md text-center">
-        <div class="flex-1 px-4 py-2">
-          <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_proteins) : '—' }}</div>
-          <div class="text-xs text-gray-500">Proteins</div>
-        </div>
-        <div class="flex-1 px-4 py-2">
-          <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_annotations) : '—' }}</div>
-          <div class="text-xs text-gray-500">Annotations</div>
-        </div>
-        <div class="flex-1 px-4 py-2">
-          <div class="text-lg font-semibold text-gray-800">{{ stats ? formatCount(stats.summary.n_unified_mlo_terms) : '—' }}</div>
-          <div class="text-xs text-gray-500">MLOs</div>
         </div>
       </div>
     </section>
