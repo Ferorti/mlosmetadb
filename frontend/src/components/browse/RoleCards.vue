@@ -11,18 +11,13 @@ const router = useRouter()
 
 const cards = computed(() => {
   if (!props.stats) return []
-  // Mutually-exclusive protein-level split (has_driver=1 -> driver, else -> component).
-  // mlo_annotations.by_role (annotation-row based) is NOT used here: a protein with both
-  // a driver-role row and a client-role row would count in both buckets there, so
-  // driver + component could exceed proteins.total.
-  //
-  // This two-card split is deliberately NOT the same vocabulary as
-  // /mlo/{id}'s stats.by_role, which grew a third `regulator` bucket on
-  // 2026-08-12 (R1-ACT-14). Here a regulator-only protein lands in "components",
-  // because /stats reports has_driver and nothing finer — so the card's copy has
-  // to say so rather than let the reader assume residency was established.
+  // Mutually-exclusive protein-level split: driver (has_driver=1), regulator
+  // (no driver, but a curator-assigned regulator claim), component (neither).
+  // mlo_annotations.by_role (annotation-row based) is NOT used here: a protein
+  // with both a driver-role row and a client-role row would count in both
+  // buckets there, so driver + component could exceed proteins.total.
+  // driver + component + regulator always sums to proteins.total.
   const r = props.stats.proteins.by_component_role
-  const componentCount = r.component ?? 0
   return [
     {
       role: 'driver',
@@ -33,49 +28,45 @@ const cards = computed(() => {
     },
     {
       role: 'component',
-      count: componentCount,
+      count: r.component ?? 0,
       label: 'MLO Components',
-      description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients, proteins whose role no source determined, and proteins a curator annotated as regulators of an organelle rather than residents of it.',
+      description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients and proteins whose role no source determined.',
       countClass: 'text-gray-500',
     },
     {
-      role: 'all',
-      count: props.stats.proteins.total,
-      label: 'MLO-associated proteins',
-      description: 'All proteins annotated in at least one MLO across source databases. Includes drivers, components, regulators, and proteins with undetermined role assignments. The full dataset.',
-      countClass: 'text-amber-500 opacity-80',
+      role: 'regulator',
+      count: r.regulator ?? 0,
+      label: 'MLO Regulators',
+      description: 'Proteins a curator annotated as regulating an organelle rather than driving or residing in it. Curator-assigned in at least one source database.',
+      countClass: 'text-amber-600',
     },
   ]
 })
 
 function navigate(role) {
-  if (role === 'all') {
-    router.push({ path: '/results' })
-  } else {
-    router.push({ path: '/results', query: { role } })
-  }
+  router.push({ path: '/results', query: { role } })
 }
 </script>
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch">
     <template v-if="stats">
       <button
         v-for="card in cards"
         :key="card.role"
-        class="text-left bg-white border border-gray-200 rounded-lg p-5 overflow-hidden transition-all hover:border-gray-300 hover:shadow-sm focus:outline-none cursor-pointer"
+        class="h-full flex flex-col text-left bg-white border border-gray-200 rounded-lg p-5 overflow-hidden transition-all hover:border-gray-300 hover:shadow-sm focus:outline-none cursor-pointer"
         @click="navigate(card.role)"
       >
         <div :class="[
           'h-[3px] -mx-5 -mt-5 mb-4',
           card.role === 'driver' ? 'bg-brand-blue' :
-          card.role === 'component' ? 'bg-gray-300' : 'bg-amber-400 opacity-60'
+          card.role === 'component' ? 'bg-gray-300' : 'bg-amber-500'
         ]"></div>
         <div :class="['text-3xl font-bold tabular-nums', card.countClass]">
           {{ formatCount(card.count) }}
         </div>
         <div class="text-sm font-semibold text-gray-700 mt-1">{{ card.label }}</div>
-        <div class="text-xs text-gray-600 mt-2 leading-relaxed">{{ card.description }}</div>
+        <div class="text-xs text-gray-600 mt-2 leading-relaxed flex-1">{{ card.description }}</div>
       </button>
     </template>
 
@@ -83,7 +74,7 @@ function navigate(role) {
       <div
         v-for="i in 3"
         :key="i"
-        class="border border-gray-200 rounded-lg p-5 space-y-2 overflow-hidden"
+        class="h-full border border-gray-200 rounded-lg p-5 space-y-2 overflow-hidden"
       >
         <div class="h-[3px] -mx-5 -mt-5 mb-4 bg-gray-100"></div>
         <div class="h-9 w-24 bg-gray-200 rounded animate-pulse"></div>

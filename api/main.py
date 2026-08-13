@@ -71,14 +71,32 @@ async def _compute_stats() -> dict:
     # exactly to prot_total, instead of silently summing to less than it.
     other_organisms_count = prot_total - sum(r["cnt"] for r in org_rows)
 
-    # Mutually-exclusive protein-level driver/component split (has_driver=1 -> driver,
-    # else -> component) — distinct from mlo_annotations.by_role below, which buckets by
-    # annotation ROW and lets one protein count in more than one bucket (e.g. a driver with
-    # some client-role rows too), so it can't be used as a "the rest of the dataset" figure.
+    # Mutually-exclusive protein-level driver/component/regulator split (has_driver=1
+    # -> driver, else -> component). Distinct from mlo_annotations.by_role below, which
+    # buckets by annotation ROW and lets one protein count in more than one bucket (e.g.
+    # a driver with some client-role rows too), so it can't be used as a "the rest of the
+    # dataset" figure.
     component_role_rows = await database.fetchall(
         "SELECT CASE WHEN has_driver = 1 THEN 'driver' ELSE 'component' END AS role, "
         "COUNT(*) AS cnt FROM protein_summary GROUP BY role"
     )
+    component_role_map = {r["role"]: r["cnt"] for r in component_role_rows}
+
+    # Regulator-only proteins were previously folded silently into "component" here
+    # (a curator-assigned regulator call is not driver evidence, so has_driver stays 0
+    # for them). Carve them into their own bucket instead: any non-driver protein with
+    # at least one curator-assigned regulator annotation, per
+    # policy.regulator_annotation_clause() -- the same predicate /mlo/{id}'s by_role
+    # uses for its third bucket. driver + component + regulator still sums to
+    # proteins.total, since this only re-splits the existing "component" count.
+    regulator_count = await database.fetchval(
+        f"""
+        SELECT COUNT(DISTINCT ma.uniprot_id)
+        FROM mlo_annotations ma
+        JOIN protein_summary ps ON ps.uniprot_id = ma.uniprot_id
+        WHERE ps.has_driver = 0 AND {policy.regulator_annotation_clause('ma')}
+        """
+    ) or 0
 
     return {
         "database_version": "2.0",
@@ -90,7 +108,11 @@ async def _compute_stats() -> dict:
             "top_organisms": 10,
             "total_organisms": total_organisms,
             "other_organisms_count": other_organisms_count,
-            "by_component_role": {r["role"]: r["cnt"] for r in component_role_rows},
+            "by_component_role": {
+                "driver": component_role_map.get("driver", 0),
+                "component": component_role_map.get("component", 0) - regulator_count,
+                "regulator": regulator_count,
+            },
         },
         "mlo_annotations": {
             "total": ann_total,
