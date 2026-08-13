@@ -285,32 +285,33 @@ onMounted(async () => {
         Something went wrong loading this section. Try refreshing the page.
       </div>
 
-      <div v-else class="space-y-6">
-        <div class="bg-white border border-gray-200 rounded-lg p-4">
+      <div v-else class="divide-y divide-gray-200">
+        <div class="py-6 first:pt-0">
           <SourcesSection :stats="stats.f1_source_contribution" :summary="stats.summary" />
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white border border-gray-200 rounded-lg p-4">
-            <ProteinOverviewSection :combos="stats.f2_protein_source_combos" :summary="stats.summary" />
-          </div>
-          <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="py-6">
+          <ProteinOverviewSection :combos="stats.f2_protein_source_combos" :summary="stats.summary" />
+        </div>
+
+        <div class="py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+          <div>
             <VocabularySection :terms="stats.f3_vocab_collapse" :summary="stats.summary" />
           </div>
-          <div class="bg-white border border-gray-200 rounded-lg p-4">
+          <div>
             <RoleHarmonisationSection :roles="stats.f4_role_mapping" :summary="stats.summary" />
           </div>
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="py-6">
           <AgreementSection :by-mlo="stats.f5b_discrepancy_by_mlo" :pmid-overlap="stats.f6_pmid_overlap_sources" :summary="stats.summary" />
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-lg p-4">
+        <div class="py-6">
           <MloTermMappingTable />
         </div>
 
-        <p class="text-xs text-gray-400 text-right">
+        <p class="text-xs text-gray-400 text-right pt-4">
           db commit {{ stats.meta.code_commit?.slice(0, 7) }} · built {{ stats.meta.build_date?.slice(0, 10) }}
         </p>
       </div>
