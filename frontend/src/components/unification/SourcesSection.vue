@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { RouterLink } from 'vue-router'
 import * as d3 from 'd3'
 import { formatCount } from '@/utils/format'
 
@@ -8,8 +9,8 @@ const props = defineProps({
   summary: { type: Object, required: true },
 })
 
-// Fixed per-source_db color, reused across all three metric charts below —
-// a bar for CDCODE is the same color in every one of the three panels.
+// Fixed per-source_db color, reused across all three metric charts below.
+// A bar for CDCODE is the same color in every one of the three panels.
 const SOURCE_COLORS = {
   CDCODE: '#2a78d6',
   DrLLPS: '#eb6834',
@@ -17,6 +18,17 @@ const SOURCE_COLORS = {
   PhaSepDB: '#eda100',
   PhasePro: '#e87ba4',
 }
+
+// One-line context per source so the chart is legible without leaving the
+// page. Full descriptions and citations live on the About page instead of
+// being duplicated here in full.
+const SOURCE_BLURBS = [
+  { key: 'CDCODE', name: 'CD-CODE', blurb: 'Community-editable database of biomolecular condensates.' },
+  { key: 'DrLLPS', name: 'DrLLPS', blurb: 'Scaffold, regulator, and client proteins involved in LLPS.' },
+  { key: 'LLPSDB', name: 'LLPSDB', blurb: 'Proteins with LLPS behavior observed in vitro, with experimental conditions.' },
+  { key: 'PhaSepDB', name: 'PhaSepDB', blurb: 'Manually curated database of proteins linked to LLPS.' },
+  { key: 'PhasePro', name: 'PhasePro', blurb: 'Proteins and regions experimentally validated as LLPS drivers.' },
+]
 
 const METRICS = [
   { key: 'annotations', label: 'Annotations' },
@@ -116,6 +128,19 @@ watch(() => props.stats, renderAll, { deep: true })
       PhasePro and LLPSDB few but with in vitro evidence.
     </p>
 
+    <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-4 text-xs">
+      <div v-for="src in SOURCE_BLURBS" :key="src.key">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full inline-block" :style="{ backgroundColor: SOURCE_COLORS[src.key] }"></span>
+          <span class="font-semibold text-gray-800">{{ src.name }}</span>
+        </div>
+        <p class="text-gray-500 mt-0.5">{{ src.blurb }}</p>
+      </div>
+    </div>
+    <p class="text-xs text-gray-500 mb-4">
+      Full descriptions and citations: <RouterLink to="/about#data-sources" class="text-[#185FA5] hover:underline">About page</RouterLink>.
+    </p>
+
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <div>
         <p class="text-xs font-medium text-gray-500 mb-1">Annotations</p>
@@ -132,7 +157,7 @@ watch(() => props.stats, renderAll, { deep: true })
     </div>
 
     <p class="text-xs text-gray-500 mt-2">
-      CD-CODE contributes 0 PMIDs — its evidence is condensate membership, not a per-annotation citation.
+      CD-CODE contributes 0 PMIDs: its evidence is condensate membership, not a per-annotation citation.
     </p>
 
     <teleport to="body">
