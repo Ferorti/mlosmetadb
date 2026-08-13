@@ -60,6 +60,31 @@ def regulator_annotation_clause(alias: str = "ma") -> str:
     return f"({alias}.evidence_type = 'curator_assignment' AND {alias}.source_role = 'Regulator')"
 
 
+def regulator_only_role_clause(alias: str = "ma") -> str:
+    """SQL boolean expression, true iff {alias}'s protein has no
+    unified_role='driver' annotation ANYWHERE in the dataset, not just on the
+    currently-joined row.
+
+    Pair with regulator_annotation_clause(alias) for the `role=regulator`
+    query-param filter: a protein can be a curator-assigned regulator for one
+    MLO via one source and a driver for a different MLO via a different
+    source, and the two clauses together are what make that protein NOT match
+    (it already has a driver claim, so it isn't in the mutually-exclusive
+    "regulator, never a driver" bucket the home page's regulator card counts
+    -- see api/main.py's _compute_stats(), which computes that same 827-
+    protein bucket via protein_summary.has_driver = 0). Without this second
+    clause, `role=regulator` matches any protein with at least one regulator
+    row (977 proteins today) regardless of whether they're also a driver
+    elsewhere, which reads as wrong when every result on the page carries an
+    "LLPS Driver" badge for a filter named "Regulator" -- confirmed a real,
+    reported UX bug, not a hypothetical."""
+    return (
+        f"NOT EXISTS (SELECT 1 FROM mlo_annotations d "
+        f"WHERE d.uniprot_id = {alias}.uniprot_id AND {active_annotation_clause('d')} "
+        f"AND LOWER(d.unified_role) = 'driver')"
+    )
+
+
 EXCLUDED_MLO_SPATIAL_LOCATIONS: list[str] = ["unspecified"]
 """mlo_vocabulary.spatial_location values excluded from /mlos listings by default.
 

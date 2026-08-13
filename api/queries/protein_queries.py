@@ -105,6 +105,7 @@ async def get_proteins_page(
             conditions.append(policy.component_role_clause("ma"))
         elif role.lower() == "regulator":
             conditions.append(policy.regulator_annotation_clause("ma"))
+            conditions.append(policy.regulator_only_role_clause("ma"))
         else:
             conditions.append("LOWER(ma.unified_role) = LOWER(?)")
             params.append(role)
@@ -216,6 +217,7 @@ def _build_proteins_conditions(
             conditions.append(policy.component_role_clause("ma"))
         elif role.lower() == "regulator":
             conditions.append(policy.regulator_annotation_clause("ma"))
+            conditions.append(policy.regulator_only_role_clause("ma"))
         else:
             conditions.append("LOWER(ma.unified_role) = LOWER(?)")
             params.append(role)
@@ -319,6 +321,7 @@ async def get_proteins_export(
             conditions.append(policy.component_role_clause("ma"))
         elif role.lower() == "regulator":
             conditions.append(policy.regulator_annotation_clause("ma"))
+            conditions.append(policy.regulator_only_role_clause("ma"))
         else:
             conditions.append("LOWER(ma.unified_role) = LOWER(?)")
             params.append(role)
