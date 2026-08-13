@@ -450,6 +450,7 @@ async def list_proteins(
             domains=_parse_json(r.get("domains")),
             has_driver=bool(r.get("has_driver", 0)),
             has_client=bool(r.get("has_client", 0)),
+            has_regulator=bool(r.get("has_regulator", 0)),
             source_db_count=r.get("source_db_count", 0),
             source_dbs=_parse_source_dbs(r.get("source_dbs")),
             mlo_count=r.get("mlo_count", 0),

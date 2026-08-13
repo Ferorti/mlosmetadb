@@ -7,6 +7,25 @@ from database import fetchone, fetchall, fetchval
 _SORT_NEEDS_PS = {"mlo_count", "source_db_count", "role"}
 
 
+def _has_regulator_select(alias: str = "p") -> str:
+    """Correlated EXISTS, computed at query time rather than stored: true iff
+    {alias}'s protein has at least one curator-assigned regulator annotation
+    anywhere in the dataset. Not mutually exclusive with has_driver -- a
+    protein can be a regulator for one MLO via one source and a driver for a
+    different MLO via a different source, and this reports both facts rather
+    than picking one (see policy.regulator_only_role_clause()'s docstring for
+    the deliberately-separate "regulator, never a driver" bucket that clause
+    encodes for the /results role=regulator filter and the home page's
+    regulator card -- this column is not that; it's "has any regulator claim
+    at all," matching how has_driver/has_client already work)."""
+    active = policy.active_annotation_clause("mar")
+    regulator = policy.regulator_annotation_clause("mar")
+    return (
+        f"EXISTS (SELECT 1 FROM mlo_annotations mar "
+        f"WHERE mar.uniprot_id = {alias}.uniprot_id AND {active} AND {regulator}) AS has_regulator"
+    )
+
+
 def _build_sort(sort_by: str | None, sort_order: str) -> tuple[str, str, str]:
     """Return (cte_extra_select, cte_order_by, outer_order_by).
 
@@ -137,7 +156,8 @@ async def get_proteins_page(
                p.reviewed,
                ps.idr_regions, ps.lcr_regions, ps.domains,
                ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
-               ps.source_dbs
+               ps.source_dbs,
+               {_has_regulator_select("p")}
         FROM filtered f
         JOIN proteins p          ON p.uniprot_id  = f.uniprot_id
         JOIN protein_summary ps  ON ps.uniprot_id = f.uniprot_id

@@ -67,6 +67,7 @@ class ProteinSummary(BaseModel):
     domains: dict | None = None
     has_driver: bool = False
     has_client: bool = False
+    has_regulator: bool = False
     source_db_count: int = 0
     source_dbs: list[str] = []
     mlo_count: int = 0

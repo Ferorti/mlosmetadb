@@ -1,11 +1,11 @@
 import policy
 from database import escape_like, fetchall, fts5_available, like_contains
-from queries.protein_queries import _SORT_NEEDS_PS, _build_sort, _scoped_role_counts
+from queries.protein_queries import _SORT_NEEDS_PS, _build_sort, _has_regulator_select, _scoped_role_counts
 
 
 async def search_proteins_fts(q: str) -> list[dict]:
     return await fetchall(
-        """
+        f"""
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
                p.length AS sequence_length,
                p.disorder_mobidb_lite_dc, p.disorder_alphafold_dc,
@@ -13,6 +13,7 @@ async def search_proteins_fts(q: str) -> list[dict]:
                ps.idr_regions, ps.lcr_regions, ps.domains,
                ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
                ps.source_dbs,
+               {_has_regulator_select("p")},
                CASE
                    WHEN LOWER(p.uniprot_id) = LOWER(?) THEN 'uniprot_id'
                    WHEN LOWER(p.gene_name) = LOWER(?) THEN 'gene_name'
@@ -33,7 +34,7 @@ async def search_proteins_like(q: str) -> list[dict]:
     sub = like_contains(q)
     word = f"% {escape_like(q)} %"
     return await fetchall(
-        """
+        f"""
         SELECT p.uniprot_id, p.gene_name, p.protein_name, p.organism,
                p.length AS sequence_length,
                p.disorder_mobidb_lite_dc, p.disorder_alphafold_dc,
@@ -41,6 +42,7 @@ async def search_proteins_like(q: str) -> list[dict]:
                ps.idr_regions, ps.lcr_regions, ps.domains,
                ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
                ps.source_dbs,
+               {_has_regulator_select("p")},
                CASE
                    WHEN LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\' THEN 'uniprot_id'
                    WHEN LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\' THEN 'gene_name'
@@ -295,7 +297,8 @@ async def advanced_search(
             p.reviewed,
             ps.idr_regions, ps.lcr_regions, ps.domains,
             ps.has_driver, ps.has_client, ps.source_db_count, ps.mlo_count, ps.mlos,
-            ps.source_dbs
+            ps.source_dbs,
+            {_has_regulator_select("p")}
         FROM filtered f
         JOIN proteins p ON p.uniprot_id = f.uniprot_id
         LEFT JOIN protein_summary ps ON ps.uniprot_id = f.uniprot_id
