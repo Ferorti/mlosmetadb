@@ -61,7 +61,7 @@ function onImageError(event) {
     <h2 class="text-lg font-semibold text-gray-800 mb-3">How to Use</h2>
 
     <div class="bg-white border border-gray-200 rounded-lg p-4">
-      <div class="h-[420px] relative">
+      <div class="relative md:h-[420px]">
         <div
           v-for="(slide, i) in SLIDES"
           v-show="activeSlide === i"
@@ -69,11 +69,11 @@ function onImageError(event) {
         >
           <template v-if="mountedSlides.has(i)">
             <h3 class="text-base font-semibold text-gray-800 mb-3">{{ slide.title }}</h3>
-            <div class="flex gap-6">
-              <ul class="flex-1 space-y-2 text-sm text-gray-600 list-disc list-inside">
+            <div class="flex flex-col md:flex-row gap-6">
+              <ul class="order-2 md:order-none flex-1 space-y-2 text-sm text-gray-600 list-disc list-inside">
                 <li v-for="(b, bi) in slide.bullets" :key="bi">{{ b }}</li>
               </ul>
-              <div class="w-[420px] flex-shrink-0">
+              <div class="order-1 md:order-none w-full md:w-[420px] md:flex-shrink-0">
                 <div class="aspect-video rounded border border-gray-200 overflow-hidden relative">
                   <img
                     :src="slide.image"

@@ -52,6 +52,7 @@ function closeMobileMenu() {
 
     <!-- Mobile dropdown menu -->
     <div v-if="mobileOpen" class="md:hidden bg-[#1B4F8A] border-t border-white/10 px-6 py-3 flex flex-col gap-3">
+      <RouterLink to="/"        @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Home</RouterLink>
       <RouterLink to="/results" @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Search</RouterLink>
       <RouterLink to="/mlos"    @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">MLOs</RouterLink>
       <RouterLink to="/api"     @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">API</RouterLink>

@@ -375,31 +375,37 @@ const table = useVueTable({
           :key="protein.uniprot_id"
           class="py-4 px-6 border-b border-gray-200 hover:bg-slate-50/70 transition-colors last:border-b-0"
         >
-          <!-- Two-column layout -->
-          <div class="flex gap-8">
+          <!-- Two-column layout on desktop, stacked on mobile -->
+          <div class="flex flex-col gap-3 md:flex-row md:gap-0">
 
-            <!-- Column 1: Identity (~150px) -->
-            <div class="w-[150px] flex-shrink-0 flex flex-col gap-0.5">
-              <!-- Gene name + role badge inline -->
-              <div class="flex items-center gap-2 min-w-0">
+            <!-- Column 1: Identity (~160px on desktop, sized for ~10-char gene names, full width on mobile) -->
+            <!-- Mobile: items share one wrapping row. Desktop: stacked, one per line. -->
+            <div class="w-full md:w-[160px] md:flex-shrink-0 flex flex-row flex-wrap items-baseline gap-x-2 gap-y-0.5 md:flex-col md:items-stretch md:gap-0.5">
+              <span
+                class="md:block md:w-full text-[18px] font-semibold cursor-pointer hover:underline leading-snug truncate min-w-0"
+                :class="titleColor(protein)"
+                @click.stop="goToProtein(protein.uniprot_id)"
+              >
+                {{ protein.gene_name || protein.uniprot_id }}
+              </span>
+              <span class="text-gray-300 text-[12px] md:hidden">·</span>
+              <span class="font-mono text-[16px] text-gray-600 md:mt-0.5">
+                {{ protein.uniprot_id }}
+              </span>
+              <!-- Role labels: plain colored text, no pill, always below the UniProt acc -->
+              <template v-if="protein.has_driver">
+                <span class="text-gray-300 text-[12px] md:hidden">·</span>
+                <span class="text-[11px] font-medium text-[#185FA5] whitespace-nowrap shrink-0">LLPS Driver</span>
+              </template>
+              <template v-if="protein.has_regulator">
+                <span class="text-gray-300 text-[12px] md:hidden">·</span>
                 <span
-                  class="text-[18px] font-semibold cursor-pointer hover:underline leading-snug truncate min-w-0"
-                  :class="titleColor(protein)"
-                  @click.stop="goToProtein(protein.uniprot_id)"
-                >
-                  {{ protein.gene_name || protein.uniprot_id }}
-                </span>
-                <RoleBadge v-if="protein.has_driver" role="driver" />
-                <span
-                  v-if="protein.has_regulator"
                   class="text-[10px] font-medium text-[#854F0B] whitespace-nowrap shrink-0"
                   title="Annotated as a regulator of an organelle, not as a resident of it -- a curator assignment that applies to the whole protein"
                 >Regulator</span>
-              </div>
-              <span class="font-mono text-[12px] text-gray-400 mt-0.5">
-                {{ protein.uniprot_id }}
-              </span>
-              <span class="text-[12px] italic text-[#484E59] mt-0.5">
+              </template>
+              <span class="text-gray-300 text-[12px] md:hidden">·</span>
+              <span class="text-[12px] italic text-[#484E59] md:mt-0.5 break-words">
                 {{ shortOrganism(protein.organism) }}
               </span>
             </div>
@@ -407,7 +413,7 @@ const table = useVueTable({
             <!-- Column 2: Annotations (flex-1) -->
             <div class="flex-1 min-w-0 flex flex-col gap-1.5 justify-center">
               <!-- MLOs row -->
-              <div v-if="displayMlos(protein).length" class="flex items-baseline gap-2" title="List of MLOs present">
+              <div v-if="displayMlos(protein).length" class="flex items-baseline gap-0" title="List of MLOs present">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">MLOs</span>
                 <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 leading-snug">
                   <template v-for="mlo in visibleMlos(protein)" :key="mlo">
@@ -424,17 +430,17 @@ const table = useVueTable({
                 </div>
               </div>
               <!-- Sources row -->
-              <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-2" title="Databases with protein annotation source">
+              <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-0" title="Databases with protein annotation source">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Sources</span>
                 <span class="text-[11px] text-gray-500">{{ protein.source_dbs.join(' · ') }}</span>
               </div>
               <!-- Features row -->
-              <div v-if="featureStats" class="flex items-baseline gap-2">
+              <div v-if="featureStats" class="flex items-baseline gap-0">
                 <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Features</span>
                 <span class="text-[12px] text-gray-700">{{ featureStats }}</span>
               </div>
               <!-- Compact D3 track — aligned with value column, max 75% of column width -->
-              <div v-if="hasFeatures && protein.sequence_length" class="flex items-center gap-2">
+              <div v-if="hasFeatures && protein.sequence_length" class="flex items-center gap-0">
                 <span class="flex-shrink-0 w-14"></span>
                 <div class="flex-1 min-w-0 max-w-[80%]">
                   <SequenceFeatureViewer

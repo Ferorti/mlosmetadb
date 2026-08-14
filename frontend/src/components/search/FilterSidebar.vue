@@ -6,15 +6,16 @@ import statsData from '@/data/stats.json'
 import { searchOrganisms } from '@/api/proteins'
 
 const props = defineProps({
-  filters: { type: Object, default: () => ({}) },
-  facets:  { type: Object, default: null },
+  filters:    { type: Object,  default: () => ({}) },
+  facets:     { type: Object,  default: null },
+  mobileOpen: { type: Boolean, default: false },
 })
 
 // TODO: facets require API extension — GET /search/facets endpoint
 // with same params as /search/advanced, returning per-value counts.
 // Until then, facets prop is null and counts are not shown.
 
-const emit = defineEmits(['update:filters', 'reset-filters'])
+const emit = defineEmits(['update:filters', 'reset-filters', 'close'])
 
 const open = ref({ role: true, organelle: true, organism: true, features: false })
 
@@ -147,8 +148,30 @@ function applyPfam() {
 </script>
 
 <template>
-  <aside class="filter-sidebar w-[220px] flex-shrink-0 border-r border-gray-200 bg-white overflow-y-auto">
+  <!-- Mobile backdrop, dismisses the drawer -->
+  <div
+    v-if="mobileOpen"
+    class="fixed inset-0 bg-black/40 z-40 md:hidden"
+    @click="$emit('close')"
+  ></div>
+
+  <aside
+    class="filter-sidebar bg-white overflow-y-auto border-gray-200 md:static md:z-auto md:block md:w-[220px] md:max-w-none md:flex-shrink-0 md:border-r md:shadow-none"
+    :class="mobileOpen
+      ? 'fixed inset-y-0 left-0 z-50 w-[85%] max-w-xs border-r shadow-xl'
+      : 'hidden'"
+  >
     <div class="px-4 py-3 space-y-1">
+
+      <!-- Mobile drawer header -->
+      <div class="flex items-center justify-between mb-2 md:hidden">
+        <span class="text-sm font-semibold text-gray-800">Filters</span>
+        <button
+          @click="$emit('close')"
+          class="text-gray-400 hover:text-gray-600 p-1 -mr-1"
+          aria-label="Close filters"
+        >✕</button>
+      </div>
 
       <!-- Header + Reset filters -->
       <div class="flex items-center justify-between mb-3">

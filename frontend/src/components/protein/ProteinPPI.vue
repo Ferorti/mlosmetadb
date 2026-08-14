@@ -404,11 +404,11 @@ function shortSystems(systems) {
       This protein has {{ formatCount(protein.ppi?.total_partners) }} known interaction partner(s), but none are currently in MLOsMetaDB.
     </div>
 
-    <!-- Two-column: table + graph -->
-    <div v-else-if="allPartners.length" class="flex gap-4" style="min-height:500px">
+    <!-- Two-column: table + graph (graph first on mobile, table first on desktop) -->
+    <div v-else-if="allPartners.length" class="flex flex-col md:flex-row gap-4" style="min-height:500px">
 
       <!-- LEFT: Table -->
-      <div class="w-[52%] flex flex-col min-w-0">
+      <div class="order-2 md:order-none w-full md:w-[52%] flex flex-col min-w-0">
         <div class="flex-1 overflow-auto border border-gray-200 rounded text-xs">
           <table class="w-full">
             <thead class="bg-gray-50 sticky top-0 z-10">
@@ -496,7 +496,7 @@ function shortSystems(systems) {
       </div>
 
       <!-- RIGHT: Graph -->
-      <div class="w-[48%] flex flex-col">
+      <div class="order-1 md:order-none w-full md:w-[48%] flex flex-col">
 
         <!-- Legend -->
         <div class="flex flex-wrap gap-3 mb-2 text-[10px] text-gray-500">

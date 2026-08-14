@@ -18,6 +18,7 @@ const facets          = ref(null)
 const loading         = ref(false)
 const error           = ref(null)
 const downloadLoading = ref(false)
+const sidebarOpen     = ref(false)
 
 // Fallback facets. Every endpoint runSearch() can reach now returns a `facets`
 // object, so in practice this no longer runs — it is kept only so a response
@@ -41,6 +42,11 @@ function computeFacetsFromProteins(proteins) {
 }
 
 const activeFilters = computed(() => ({ ...route.query }))
+
+const SKIP_FILTER_COUNT_KEYS = new Set(['page', 'per_page', 'mode', 'q', 'field', 'sort_by', 'sort_order'])
+const activeFilterCount = computed(() =>
+  Object.entries(activeFilters.value).filter(([k, v]) => !SKIP_FILTER_COUNT_KEYS.has(k) && v).length
+)
 
 
 function hasAnyFilter(f) {
@@ -244,13 +250,29 @@ function onResetFilters() {
       </div>
     </div>
 
+    <!-- Mobile filters toggle -->
+    <div class="max-w-6xl mx-auto px-6 w-full mt-4 md:hidden">
+      <button
+        @click="sidebarOpen = true"
+        class="inline-flex items-center gap-1.5 text-sm border border-gray-200 rounded px-3 py-1.5 text-gray-700 hover:border-gray-400 transition-colors"
+      >
+        Filters
+        <span
+          v-if="activeFilterCount"
+          class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-[#185FA5] text-white text-[11px] leading-none"
+        >{{ activeFilterCount }}</span>
+      </button>
+    </div>
+
     <!-- Sidebar + results: centered -->
     <div class="max-w-6xl mx-auto px-6 w-full flex flex-1 gap-0 mt-6">
       <FilterSidebar
         :filters="activeFilters"
         :facets="facets"
+        :mobile-open="sidebarOpen"
         @update:filters="onFiltersUpdate"
         @reset-filters="onResetFilters"
+        @close="sidebarOpen = false"
       />
       <ResultsPanel
         :results="results"

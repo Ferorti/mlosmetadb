@@ -140,8 +140,8 @@ watch(() => props.protein.uniprot_id, () => {
     </div>
 
     <!-- Band 3 — structure and feature table -->
-    <div class="flex gap-6 items-start mt-6">
-      <div class="w-[520px] flex-shrink-0">
+    <div class="flex flex-col md:flex-row gap-6 items-start mt-6">
+      <div class="w-full md:w-[520px] md:flex-shrink-0">
         <div class="text-sm font-medium text-gray-700 mb-2">AlphaFold structure</div>
         <div class="h-[420px] rounded border border-slate-200 overflow-hidden">
           <MolStarViewer
