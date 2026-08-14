@@ -134,6 +134,7 @@ def _build_advanced_clauses(
     if role:
         if role.lower() == "component":
             conditions.append(policy.component_role_clause("ma"))
+            conditions.append(policy.component_only_role_clause("ma"))
         elif role.lower() == "regulator":
             conditions.append(policy.regulator_annotation_clause("ma"))
             conditions.append(policy.regulator_only_role_clause("ma"))

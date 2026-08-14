@@ -41,6 +41,29 @@ def component_role_clause(alias: str = "ma") -> str:
     return f"({alias}.unified_role IS NULL OR LOWER({alias}.unified_role) != 'driver')"
 
 
+def component_only_role_clause(alias: str = "ma") -> str:
+    """SQL boolean expression, true iff {alias}'s protein has no
+    unified_role='driver' annotation ANYWHERE in the dataset, not just on
+    the currently-joined row.
+
+    Pair with component_role_clause(alias) for the `role=component` query
+    param filter: a protein can be a driver of one MLO via one source and a
+    plain member (client, or a NULL-role row like CD-CODE's) of a different
+    MLO via a different source -- e.g. mouse Fus (P56959), a PhaSepDB driver
+    for stress_granule that also carries CD-CODE/DrLLPS rows with no driver
+    evidence. Without this guard, `component_role_clause()` alone matches as
+    soon as ANY joined row isn't a driver, so a protein like that shows up
+    under `role=component` still carrying its "LLPS Driver" badge -- reported
+    as a real bug, not a hypothetical, and the same shape as the
+    `role=regulator` bug regulator_only_role_clause() fixes (see that
+    docstring for the general pattern this mirrors)."""
+    return (
+        f"NOT EXISTS (SELECT 1 FROM mlo_annotations d "
+        f"WHERE d.uniprot_id = {alias}.uniprot_id AND {active_annotation_clause('d')} "
+        f"AND LOWER(d.unified_role) = 'driver')"
+    )
+
+
 def regulator_annotation_clause(alias: str = "ma") -> str:
     """SQL boolean expression, true iff a row is a curator-assigned regulator
     annotation -- DrLLPS's third role, which the project does not model as a
