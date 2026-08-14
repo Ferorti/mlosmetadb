@@ -9,6 +9,7 @@ import OrganismGrid from '@/components/browse/OrganismGrid.vue'
 import SearchBox from '@/components/search/SearchBox.vue'
 const router = useRouter()
 const stats = ref(null)
+const BASE_URL = import.meta.env.BASE_URL
 
 onMounted(async () => {
   const res = await getStats()
@@ -42,7 +43,7 @@ function searchExample(term) {
         <div class="flex justify-center mb-1">
           <!-- Sized larger than the 22px dots it replaced, with the gap to the
                title tightened to match. -->
-          <img src="/loguito_horizontal.svg" alt="MLOsMetaDB" class="h-[28px] w-auto">
+          <img :src="`${BASE_URL}loguito_horizontal.svg`" alt="MLOsMetaDB" class="h-[28px] w-auto">
         </div>
 
         <h1 class="text-3xl font-bold text-[#1B3D6F] tracking-tight">

@@ -4,6 +4,7 @@ import { formatCount, formatOrganism } from '@/utils/format'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const BASE_URL = import.meta.env.BASE_URL
 
 // key -> icon slug only. Counts come live from props.stats (GET /stats), never hardcoded --
 // by_organism keys can carry a "(strain ...)" suffix (e.g. S. cerevisiae), so lookups match
@@ -53,7 +54,7 @@ const organisms = computed(() => {
         @click="router.push({ path: '/results', query: { organism: org.name } })"
       >
         <img
-          :src="`/organisms/${org.key}.svg`"
+          :src="`${BASE_URL}organisms/${org.key}.svg`"
           :alt="org.name"
           class="w-9 h-9 object-contain opacity-70"
           style="filter: invert(20%) sepia(80%) saturate(600%) hue-rotate(195deg) brightness(80%);"

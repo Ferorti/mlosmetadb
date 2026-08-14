@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const mobileOpen = ref(false)
+const BASE_URL = import.meta.env.BASE_URL
 
 function closeMobileMenu() {
   mobileOpen.value = false
@@ -17,7 +18,7 @@ function closeMobileMenu() {
         <RouterLink to="/" class="flex items-center leading-none no-underline" @click="closeMobileMenu">
           <span class="flex items-center gap-1">
 
-            <img src="/loguito_horizontal.svg" alt="MLOsMetaDB" class="h-[18px] w-auto relative -top-[2px]">
+            <img :src="`${BASE_URL}loguito_horizontal.svg`" alt="MLOsMetaDB" class="h-[18px] w-auto relative -top-[2px]">
           </span>
           <span class="text-white font-semibold text-lg ml-2">MLOsMetaDB</span>
           <span class="text-blue-200 text-xs ml-1">v2</span>
