@@ -76,9 +76,9 @@ const displayedOrgs = computed(() => {
   if (props.facets?.by_organism) {
     return Object.entries(props.facets.by_organism)
       .sort((a, b) => b[1] - a[1])
-      .map(([name]) => ({ value: name, label: formatOrganism(name) }))
+      .map(([name, count]) => ({ value: name, label: formatOrganism(name), count }))
   }
-  return allOrganisms.slice(0, 9).map(name => ({ value: name, label: formatOrganism(name) }))
+  return allOrganisms.slice(0, 9).map(name => ({ value: name, label: formatOrganism(name), count: null }))
 })
 
 async function onOrganismSearch() {
@@ -334,6 +334,7 @@ function applyPfam() {
                   @click="applyFilter('organism', org.value)"
                 >
                   <span>{{ org.label }}</span>
+                  <span v-if="org.count != null" class="text-xs text-gray-500">({{ org.count.toLocaleString() }})</span>
                 </div>
               </div>
             </div>
