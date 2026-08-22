@@ -14,36 +14,19 @@ const props = defineProps({
 // ─── Visual constants ────────────────────────────────────────────────────────
 const TRACK = {
   height:   34,
-  baseline: { y: 16, color: '#e2e8f0', width: 1.5 },
-  IDR:    { color: '#f4d3d3', h: 10, y: 12, textColor: '#7F1D1D' },
-  LCD:    { color: '#FAC775', h: 18, y: 8,  textColor: '#7C2D12' },
-  DOMAIN: { color: '#acc7ff', h: 18, y: 8,  textColor: '#ffffff' },
+  baseline: { y: 16, color: '#DFE4EC', width: 1.5 },
+  IDR:    { color: '#B8362B', h: 10, y: 12 },
+  LCD:    { color: '#98A2B3', h: 18, y: 8 },
+  DOMAIN: { color: '#2C7A6B', h: 18, y: 8 },
   LLPS:   { color: '#60A5FA', h: 4,  y: 30 },
 }
 
 const COMPACT = {
   height:   20,
-  baseline: { y: 10, color: '#e2e8f0', width: 1.5 },
-  IDR:    { color: '#f4d3d3', h: 7,  y: 6, textColor: '#7F1D1D' },
-  LCD:    { color: '#FAC775', h: 7, y: 4, textColor: '#7C2D12' },
-  DOMAIN: { color: '#bed1f9', h: 7, y: 6, textColor: '#ffffff' },
-}
-
-const CHAR_WIDTH = 6.5
-const MIN_CHARS  = 4
-
-function fitLabel(label, availableWidth) {
-  if (!label) return null
-  const fullWidth = label.length * CHAR_WIDTH + 8
-  if (fullWidth <= availableWidth) return label
-
-  for (let len = label.length - 1; len >= MIN_CHARS; len--) {
-    const truncated  = label.slice(0, len) + '…'
-    const truncWidth = truncated.length * CHAR_WIDTH + 8
-    if (truncWidth <= availableWidth) return truncated
-  }
-
-  return null
+  baseline: { y: 10, color: '#DFE4EC', width: 1.5 },
+  IDR:    { color: '#B8362B', h: 7, y: 6 },
+  LCD:    { color: '#98A2B3', h: 7, y: 4 },
+  DOMAIN: { color: '#2C7A6B', h: 7, y: 6 },
 }
 
 const containerRef = ref(null)
@@ -71,14 +54,14 @@ function render(width) {
     .attr('stroke', t.baseline.color)
     .attr('stroke-width', t.baseline.width)
 
-  // IDR regions (bottom layer) — never show labels
-  props.idrRegions.forEach(r => drawRegion(svg, x, r, t.IDR, null))
+  // IDR regions (bottom layer)
+  props.idrRegions.forEach(r => drawRegion(svg, x, r, t.IDR))
 
   // LCD regions — disabled for now, data not yet populated
-  // props.lcdRegions.forEach(r => drawRegion(svg, x, r, t.LCD, r.label ?? 'LCD'))
+  // props.lcdRegions.forEach(r => drawRegion(svg, x, r, t.LCD))
 
-  // Domain regions — labels only in full mode
-  props.domains.forEach(r => drawRegion(svg, x, r, t.DOMAIN, props.compact ? null : r.label))
+  // Domain regions
+  props.domains.forEach(r => drawRegion(svg, x, r, t.DOMAIN))
 
   // LLPS — disabled until data is available
   // props.llpsRegions.forEach(r => { ... })
@@ -91,7 +74,7 @@ function render(width) {
     .on('mouseleave', hideTooltip)
 }
 
-function drawRegion(svg, x, region, style, label) {
+function drawRegion(svg, x, region, style) {
   const rx = x(region.start)
   const rw = Math.max(2, x(region.end) - rx)
   const g  = svg.append('g')
@@ -101,18 +84,9 @@ function drawRegion(svg, x, region, style, label) {
     .attr('width', rw).attr('height', style.h)
     .attr('fill', style.color).attr('rx', 3)
 
-  if (label) {
-    const fitted = fitLabel(label, rw)
-    if (fitted) {
-      g.append('text')
-        .attr('x', rx + rw / 2).attr('y', style.y + style.h / 2)
-        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
-        .attr('fill', style.textColor)
-        .attr('font-size', '10.5px').attr('font-weight', '600')
-        .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
-        .text(fitted)
-    }
-  }
+  // No in-bar text label -- see Task 2's rationale (LCD's fill fails
+  // WCAG AA for overlaid text). Name/range is still available on hover
+  // via the tooltip built in onMouseMove().
 }
 
 function onMouseMove(event, x) {

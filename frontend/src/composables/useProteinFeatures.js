@@ -18,10 +18,10 @@ import {
  */
 
 export const FEATURE_COLORS = {
-  IDR:    '#F5A0A0',
-  LCD:    '#FAC775',
-  Domain: '#86C865',
-  MoRF:   '#C4B5FD',
+  IDR:    '#B8362B',
+  LCD:    '#98A2B3',
+  Domain: '#2C7A6B',
+  MoRF:   '#6B4E8F',
 }
 
 export const FEATURE_TYPE_LABELS = {

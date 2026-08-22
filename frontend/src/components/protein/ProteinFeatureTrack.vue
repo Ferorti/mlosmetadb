@@ -23,33 +23,10 @@ const BG_Y = CENTER_Y - 11         // 29
 const BG_H = 22
 
 const LAYERS = {
-  IDR:    { y: CENTER_Y - 10, h: 20, textFill: '#7F1D1D' },
-  LCD:    { y: CENTER_Y - 6,  h: 12, textFill: '#7C2D12' },
-  Domain: { y: CENTER_Y - 14, h: 28, textFill: '#ffffff' },
-  MoRF:   { y: CENTER_Y - 21, h: 7,  textFill: '#6B21A8' },
-}
-
-const LABEL_SIZE = 12
-// Truncation budget for the in-track labels. Keep it proportional to
-// LABEL_SIZE — undersizing it lets labels overflow their rectangle.
-const CHAR_W = LABEL_SIZE * 0.65
-const MIN_CHARS = 3
-
-function fitLabel(label, avail) {
-  if (!label) return null
-  if (label.length * CHAR_W + 8 <= avail) return label
-  for (let len = label.length - 1; len >= MIN_CHARS; len--) {
-    const t = label.slice(0, len) + '…'
-    if (t.length * CHAR_W + 8 <= avail) return t
-  }
-  return null
-}
-
-// Only domains carry an in-track label, and only when the rect is wide enough.
-function spanLabel(span, widthPx) {
-  if (span.type === 'Domain' && widthPx > 40) return span.label
-  if (span.type === 'LCD') return 'Low complexity region'
-  return null
+  IDR:    { y: CENTER_Y - 10, h: 20 },
+  LCD:    { y: CENTER_Y - 6,  h: 12 },
+  Domain: { y: CENTER_Y - 14, h: 28 },
+  MoRF:   { y: CENTER_Y - 21, h: 7 },
 }
 
 // ─── D3 rendering ────────────────────────────────────────────────────────────
@@ -76,8 +53,8 @@ function render(width) {
   svg.append('rect')
     .attr('x', 0).attr('y', BG_Y)
     .attr('width', width).attr('height', BG_H)
-    .attr('fill', '#F8FAFC')
-    .attr('stroke', '#E2E8F0')
+    .attr('fill', '#F7F9FC')
+    .attr('stroke', '#DFE4EC')
     .attr('stroke-width', 1)
     .attr('rx', 2)
 
@@ -99,24 +76,16 @@ function render(width) {
       .attr('stroke', 'none')
       .attr('stroke-width', 2)
 
-    const fitted = fitLabel(spanLabel(span, rw), rw)
-    if (fitted) {
-      g.append('text')
-        .attr('x', rx + rw / 2).attr('y', layer.y + layer.h / 2)
-        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
-        .attr('fill', layer.textFill)
-        .attr('font-size', `${LABEL_SIZE}px`).attr('font-weight', '600')
-        .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
-        .attr('pointer-events', 'none')
-        .text(fitted)
-    }
+    // No in-track text label -- see Task 2's rationale (LCD's fill fails
+    // WCAG AA for overlaid text). Type/label/range/source is still
+    // available on hover via showTooltip().
   }
 
   // Residue marker, hidden until the sequence reports a position
   svg.append('line')
     .attr('class', 'residue-marker')
     .attr('y1', 4).attr('y2', TRACK_HEIGHT - 16)
-    .attr('stroke', '#185FA5').attr('stroke-width', 1)
+    .attr('stroke', '#1560A8').attr('stroke-width', 1)
     .attr('pointer-events', 'none')
     .style('display', 'none')
 
@@ -124,7 +93,7 @@ function render(width) {
   svg.append('text')
     .attr('x', width - 2).attr('y', TRACK_HEIGHT - 6)
     .attr('text-anchor', 'end')
-    .attr('fill', '#484E59')
+    .attr('fill', '#4E5762')
     .attr('font-size', '11px')
     .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
     .text(`${props.sequenceLength} aa`)
@@ -202,9 +171,9 @@ function applyActive() {
     const id = this.getAttribute('data-feature-id')
     const rect = d3.select(this).select('rect')
     if (props.pinnedId && id === props.pinnedId) {
-      rect.attr('stroke', '#185FA5')
+      rect.attr('stroke', '#1560A8')
     } else if (props.hoveredId && id === props.hoveredId) {
-      rect.attr('stroke', '#1e293b')
+      rect.attr('stroke', '#16181C')
     } else {
       rect.attr('stroke', 'none')
     }

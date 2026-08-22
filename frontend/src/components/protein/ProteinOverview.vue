@@ -117,6 +117,17 @@ watch(() => props.protein.uniprot_id, () => {
         @select="onSelect"
       />
       <div v-if="stats" class="text-xs text-center text-[#484E59] mt-1">{{ stats }}</div>
+
+      <div v-if="hasFeatures" class="flex flex-wrap gap-6 mt-4 pt-3 border-t border-border-soft">
+        <div
+          v-for="group in groups"
+          :key="group.type"
+          class="flex items-center gap-2 font-mono text-[11px] text-ink2"
+        >
+          <span class="w-[9px] h-[9px]" :style="{ background: group.color }"></span>
+          {{ group.label }}
+        </div>
+      </div>
     </div>
     <div v-else class="text-sm text-[#484E59]">No sequence features available.</div>
 
