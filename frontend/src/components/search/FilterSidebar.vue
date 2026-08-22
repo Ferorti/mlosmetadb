@@ -186,12 +186,12 @@ function applyPfam() {
       </div>
 
       <!-- LLPS role -->
-      <div class="border-b border-gray-100 pb-3">
+      <div class="border-b border-border-soft pb-3">
         <button
-          class="flex items-center justify-between w-full text-xs font-semibold text-gray-700 uppercase tracking-wide py-2"
+          class="flex items-center justify-between w-full font-mono text-[10.5px] text-ink3 tracking-[0.07em] py-2 border-b border-border pb-[9px]"
           @click="open.role = !open.role"
         >
-          LLPS role
+          LLPS ROLE
           <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.role ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
@@ -199,7 +199,7 @@ function applyPfam() {
         <div v-if="open.role">
           <!-- Active chip — only when filter is set -->
           <div v-if="filters.role" class="mb-1">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5] font-medium">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E8F1FB] border border-[#BFD7F0] text-brand font-medium">
               {{ filters.role === 'component' ? 'MLO component' : filters.role.charAt(0).toUpperCase() + filters.role.slice(1) }}
               <button @click="removeFilter('role')" class="opacity-60 hover:opacity-100 transition-opacity" aria-label="Remove filter">×</button>
             </span>
@@ -207,29 +207,28 @@ function applyPfam() {
           <!-- Options — fully hidden when filter active -->
           <Transition name="fade">
             <div v-if="!filters.role">
-              <div
+              <label
                 v-for="opt in roleOptions"
                 :key="opt.v"
-                class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-xs text-gray-600"
-                @click="applyFilter('role', opt.v)"
+                class="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-ink3 hover:text-ink"
               >
-                <span>{{ opt.l }}</span>
-                <span v-if="facets?.by_role?.[opt.v] != null" class="text-xs text-gray-500">
-                  ({{ facets.by_role[opt.v].toLocaleString() }})
-                </span>
-              </div>
+                <input type="checkbox" :checked="false" @change="applyFilter('role', opt.v)"
+                       class="accent-brand w-[13px] h-[13px] m-0 flex-shrink-0" />
+                <span class="flex-1">{{ opt.l }}</span>
+                <span v-if="facets?.by_role?.[opt.v] != null" class="font-mono text-[11px] text-muted">{{ facets.by_role[opt.v].toLocaleString() }}</span>
+              </label>
             </div>
           </Transition>
         </div>
       </div>
 
       <!-- Organelle (MLO) -->
-      <div class="border-b border-gray-100 pb-3">
+      <div class="border-b border-border-soft pb-3">
         <button
-          class="flex items-center justify-between w-full text-xs font-semibold text-gray-700 uppercase tracking-wide py-2"
+          class="flex items-center justify-between w-full font-mono text-[10.5px] text-ink3 tracking-[0.07em] py-2 border-b border-border pb-[9px]"
           @click="open.organelle = !open.organelle"
         >
-          Organelle
+          ORGANELLE
           <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.organelle ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
@@ -237,7 +236,7 @@ function applyPfam() {
         <div v-if="open.organelle" class="mt-1">
           <!-- Active chip -->
           <div v-if="filters.mlo" class="mb-1">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5] font-medium">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E8F1FB] border border-[#BFD7F0] text-brand font-medium">
               {{ formatMlo(filters.mlo) }}
               <button @click="removeFilter('mlo')" class="opacity-60 hover:opacity-100 transition-opacity" aria-label="Remove filter">×</button>
             </span>
@@ -249,18 +248,19 @@ function applyPfam() {
                 v-model="mloSearch"
                 type="text"
                 placeholder="Filter organelles…"
-                class="w-full text-xs border border-gray-200 rounded px-2 py-1 mb-1.5 focus:outline-none focus:border-[#185FA5]"
+                class="w-full text-xs border border-border rounded px-2 py-1 mb-1.5 focus:outline-none focus:border-brand"
               />
               <div>
-                <div
+                <label
                   v-for="mlo in displayedMlos"
                   :key="mlo.value"
-                  class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-xs text-gray-600"
-                  @click="applyFilter('mlo', mlo.value)"
+                  class="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-ink3 hover:text-ink"
                 >
-                  <span>{{ mlo.label }}</span>
-                  <span v-if="mlo.count != null" class="text-xs text-gray-500">({{ mlo.count.toLocaleString() }})</span>
-                </div>
+                  <input type="checkbox" :checked="false" @change="applyFilter('mlo', mlo.value)"
+                         class="accent-brand w-[13px] h-[13px] m-0 flex-shrink-0" />
+                  <span class="flex-1">{{ mlo.label }}</span>
+                  <span v-if="mlo.count != null" class="font-mono text-[11px] text-muted">{{ mlo.count.toLocaleString() }}</span>
+                </label>
               </div>
               <button
                 v-if="!mloShowAll && mloHiddenCount > 0"
@@ -282,12 +282,12 @@ function applyPfam() {
       </div>
 
       <!-- Organism -->
-      <div class="border-b border-gray-100 pb-3">
+      <div class="border-b border-border-soft pb-3">
         <button
-          class="flex items-center justify-between w-full text-xs font-semibold text-gray-700 uppercase tracking-wide py-2"
+          class="flex items-center justify-between w-full font-mono text-[10.5px] text-ink3 tracking-[0.07em] py-2 border-b border-border pb-[9px]"
           @click="open.organism = !open.organism"
         >
-          Organism
+          ORGANISM
           <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.organism ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
@@ -295,7 +295,7 @@ function applyPfam() {
         <div v-if="open.organism" class="mt-1">
           <!-- Active chip -->
           <div v-if="filters.organism" class="mb-1">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5] font-medium">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-[#E8F1FB] border border-[#BFD7F0] text-brand font-medium">
               <em>{{ formatOrganism(filters.organism) }}</em>
               <button @click="removeFilter('organism')" class="opacity-60 hover:opacity-100 transition-opacity" aria-label="Remove filter">×</button>
             </span>
@@ -307,35 +307,37 @@ function applyPfam() {
                 v-model="orgSearch"
                 type="text"
                 placeholder="Search organisms..."
-                class="w-full text-xs border border-gray-200 rounded px-2 py-1 mb-1.5 focus:outline-none focus:border-[#185FA5]"
+                class="w-full text-xs border border-border rounded px-2 py-1 mb-1.5 focus:outline-none focus:border-brand"
                 @input="onOrganismSearch"
               />
               <!-- API results when query >= 3 chars -->
               <div v-if="orgSearch.length >= 3">
-                <div
+                <label
                   v-for="result in orgSearchResults"
                   :key="result.organism"
-                  class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-[13px] text-gray-600"
-                  @click="applyFilter('organism', result.organism)"
+                  class="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-ink3 hover:text-ink"
                 >
-                  <span>{{ result.organism }}</span>
-                  <span class="text-xs text-gray-500">{{ formatCount(result.protein_count) }}</span>
-                </div>
+                  <input type="checkbox" :checked="false" @change="applyFilter('organism', result.organism)"
+                         class="accent-brand w-[13px] h-[13px] m-0 flex-shrink-0" />
+                  <span class="flex-1">{{ result.organism }}</span>
+                  <span class="font-mono text-[11px] text-muted">{{ formatCount(result.protein_count) }}</span>
+                </label>
                 <div v-if="orgSearchResults.length === 0" class="text-[11px] text-gray-500 py-1">
                   No organisms found.
                 </div>
               </div>
               <!-- Static top-9 when query is empty or < 3 chars -->
               <div v-else>
-                <div
+                <label
                   v-for="org in displayedOrgs"
                   :key="org.value"
-                  class="flex items-center justify-between py-1 cursor-pointer hover:text-[#185FA5] text-[13px] text-gray-600"
-                  @click="applyFilter('organism', org.value)"
+                  class="flex items-center gap-2 py-1 cursor-pointer text-[13px] text-ink3 hover:text-ink"
                 >
-                  <span>{{ org.label }}</span>
-                  <span v-if="org.count != null" class="text-xs text-gray-500">({{ org.count.toLocaleString() }})</span>
-                </div>
+                  <input type="checkbox" :checked="false" @change="applyFilter('organism', org.value)"
+                         class="accent-brand w-[13px] h-[13px] m-0 flex-shrink-0" />
+                  <span class="flex-1">{{ org.label }}</span>
+                  <span v-if="org.count != null" class="font-mono text-[11px] text-muted">{{ org.count.toLocaleString() }}</span>
+                </label>
               </div>
             </div>
           </Transition>
@@ -343,12 +345,12 @@ function applyPfam() {
       </div>
 
       <!-- Molecular features (collapsed by default) -->
-      <div class="border-b border-gray-100 pb-3">
+      <div class="border-b border-border-soft pb-3">
         <button
-          class="flex items-center justify-between w-full text-xs font-semibold text-gray-700 uppercase tracking-wide py-2"
+          class="flex items-center justify-between w-full font-mono text-[10.5px] text-ink3 tracking-[0.07em] py-2 border-b border-border pb-[9px]"
           @click="open.features = !open.features"
         >
-          Molecular features
+          MOLECULAR FEATURES
           <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.features ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
           </svg>
@@ -377,7 +379,7 @@ function applyPfam() {
                 v-model="pfamInput"
                 type="text"
                 placeholder="e.g. PF00076 or RRM_1"
-                class="flex-1 text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:border-[#185FA5]"
+                class="flex-1 text-xs border border-border rounded px-2 py-1 focus:outline-none focus:border-brand"
                 @keyup.enter="applyPfam"
               />
               <button
@@ -389,7 +391,7 @@ function applyPfam() {
               </button>
             </div>
             <div v-if="isFilterActive('feature_accession')" class="flex items-center gap-1 mt-1.5">
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-[#E6F1FB] border border-[#B5D4F4] text-[#185FA5]">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-[#E8F1FB] border border-[#BFD7F0] text-brand">
                 {{ filters.feature_accession }}
                 <button @click="removeFilter('feature_accession'); pfamInput = ''" class="ml-1 hover:text-[#0C447C] leading-none" aria-label="Remove Pfam filter">×</button>
               </span>
@@ -413,9 +415,6 @@ function applyPfam() {
 <style scoped>
 .filter-sidebar {
   font-family: 'IBM Plex Sans', sans-serif;
-}
-.filter-sidebar :deep(.text-xs.font-semibold) {
-  font-weight: 500;
 }
 .fade-enter-active,
 .fade-leave-active {
