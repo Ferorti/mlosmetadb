@@ -88,13 +88,13 @@ watch(() => route.params.id, async (id) => {
       <div class="max-w-6xl mx-auto px-6 pb-6">
 
       <!-- Nav: click jumps to a section like a tab, or just scroll past all of them -->
-      <div class="sticky top-14 z-10 bg-white border-b border-slate-200 mb-6">
-        <nav class="flex">
+      <div class="sticky top-14 z-10 bg-surface border-b border-border mb-6">
+        <nav class="flex gap-7">
           <a
             v-for="tab in TABS"
             :key="tab.id"
             :href="`#${tab.id}`"
-            class="px-4 py-3 text-sm font-medium text-[#484E59] border-b-2 border-transparent hover:text-[#185FA5] hover:border-[#185FA5] transition-colors"
+            class="pb-3 text-[14px] font-medium tracking-[-0.005em] text-ink3 border-b-2 border-transparent hover:text-ink transition-colors"
           >
             {{ tab.label }}
           </a>

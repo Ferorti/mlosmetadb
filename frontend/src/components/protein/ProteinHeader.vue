@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import RoleBadge from '@/components/ui/RoleBadge.vue'
 import SourceDbBadge from '@/components/ui/SourceDbBadge.vue'
 
 const props = defineProps({
@@ -39,17 +38,14 @@ function sourceHref(source) {
 <template>
   <div class="pt-5 pb-3 mb-0">
     <!-- Title row -->
-    <h1 class="text-xl text-gray-800 mb-1">
-      <span class="font-semibold">{{ titleLeft }}</span>
-      <template v-if="titleRight">
-        <span class="text-gray-400"> · </span>
-        <span class="font-normal text-gray-600">{{ titleRight }}</span>
-      </template>
-    </h1>
+    <div class="flex items-baseline gap-3.5 flex-wrap">
+      <h1 class="font-display font-bold text-[42px] leading-none tracking-[-0.035em] text-ink">{{ titleLeft }}</h1>
+      <span v-if="titleRight" class="text-[19px] text-ink2 tracking-[-0.01em]">{{ titleRight }}</span>
+    </div>
 
     <!-- Metadata line -->
-    <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-[#484E59]">
-      <span class="font-mono text-gray-800">{{ protein.uniprot_id }}</span>
+    <div class="flex flex-wrap gap-x-4 gap-y-1 mt-1 font-mono text-[12.5px] text-ink3">
+      <span class="text-ink">{{ protein.uniprot_id }}</span>
       <span v-if="protein.organism" class="italic">{{ protein.organism }}</span>
       <span v-if="protein.sequence_length">{{ protein.sequence_length }} aa</span>
       <span v-if="protein.disorder_mobidb_lite_dc != null">
@@ -57,11 +53,10 @@ function sourceHref(source) {
       </span>
     </div>
 
-    <!-- Source badges row: role badge + source DB links -->
+    <!-- Source badges row: role pill + source DB links -->
     <div v-if="sourceDbs.length" class="flex flex-wrap gap-2 mt-3 items-center">
-      <!-- Role badge with right-border divider -->
-      <div v-if="displayRole" class="flex items-center border-r border-slate-200 pr-3 mr-1">
-        <RoleBadge :role="displayRole" />
+      <div v-if="displayRole" class="inline-flex items-center gap-1.5 border border-brand text-brand rounded-[2px] px-2.5 py-1 text-xs font-medium">
+        <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>LLPS driver
       </div>
 
       <SourceDbBadge
