@@ -13,9 +13,9 @@ defineProps({
 // `client` had no entry until now and fell through to the gray badge showing the
 // raw string, even though the palette has always assigned it brand-green.
 const styles = {
-  driver:    'bg-[#E8F1FB] text-[#185FA5] border-[#BFD7F0]',
-  client:    'bg-[#EDF3E7] text-[#3B6D11] border-[#CBDCB8]',
-  regulator: 'bg-[#F6EFE4] text-[#854F0B] border-[#E5D3B3]',
+  driver:    'bg-[#E8F1FB] text-brand border-[#BFD7F0]',
+  client:    'bg-[#EEF1EC] text-ink3 border-border',
+  regulator: 'bg-[#F6EFE4] text-regulator border-[#E5D3B3]',
 }
 const labels = {
   driver:    'LLPS Driver',

@@ -24,21 +24,21 @@ const cards = computed(() => {
       count: r.driver ?? 0,
       label: 'LLPS Drivers',
       description: 'Proteins with direct experimental evidence of driving liquid-liquid phase separation and/or MLO formation. Annotated as driver or scaffold in at least one source database.',
-      countClass: 'text-brand-blue',
+      countClass: 'text-brand',
     },
     {
       role: 'component',
       count: r.component ?? 0,
       label: 'MLO Components',
       description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients and proteins whose role no source determined.',
-      countClass: 'text-gray-500',
+      countClass: 'text-ink3',
     },
     {
       role: 'regulator',
       count: r.regulator ?? 0,
       label: 'MLO Regulators',
       description: 'Proteins a curator annotated as regulating an organelle rather than driving or residing in it. Curator-assigned in at least one source database.',
-      countClass: 'text-amber-600',
+      countClass: 'text-regulator',
     },
   ]
 })
@@ -59,8 +59,8 @@ function navigate(role) {
       >
         <div :class="[
           'h-[3px] -mx-5 -mt-5 mb-4',
-          card.role === 'driver' ? 'bg-brand-blue' :
-          card.role === 'component' ? 'bg-gray-300' : 'bg-amber-500'
+          card.role === 'driver' ? 'bg-brand' :
+          card.role === 'component' ? 'bg-border-strong' : 'bg-regulator'
         ]"></div>
         <div :class="['text-3xl font-bold tabular-nums', card.countClass]">
           {{ formatCount(card.count) }}
