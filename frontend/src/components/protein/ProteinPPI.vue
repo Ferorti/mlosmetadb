@@ -150,8 +150,8 @@ watch(() => props.protein?.uniprot_id, () => {
 
 // ── graph rendering ───────────────────────────────────────────────────────────
 function nodeColor(d) {
-  if (d.isCenter)   return '#1B3D6F'
-  return d.has_driver ? '#60A5FA' : '#9CA3AF'
+  if (d.isCenter)   return '#0E2136'
+  return d.has_driver ? '#1560A8' : '#9CA3AF'
 }
 
 function nodeRadius(d) {
@@ -220,7 +220,7 @@ function renderGraph() {
     .text(d => d.label)
     .attr('font-size', 9)
     .attr('font-weight', '600')
-    .attr('fill', '#1B3D6F')
+    .attr('fill', '#0E2136')
     .attr('text-anchor', 'middle')
     .attr('dy', -20)
     .attr('pointer-events', 'none')
@@ -336,23 +336,23 @@ function shortSystems(systems) {
   <div class="space-y-4">
 
     <!-- Stats header -->
-    <div class="text-sm text-[#484E59] space-y-1">
+    <div class="text-[13.5px] text-ink3 space-y-1">
       <div class="flex flex-wrap gap-x-5 gap-y-1 items-baseline">
         <span>
-          <span class="font-semibold text-gray-800">{{ formatCount(protein.ppi?.partners_in_mlosmetadb ?? 0) }}</span>
+          <span class="font-semibold text-ink">{{ formatCount(protein.ppi?.partners_in_mlosmetadb ?? 0) }}</span>
           partners
-          <span v-if="inDbDriverCount > 0" class="text-gray-500">({{ formatCount(inDbDriverCount) }} drivers)</span>
+          <span v-if="inDbDriverCount > 0" class="text-muted">({{ formatCount(inDbDriverCount) }} drivers)</span>
           in MLOsMetaDB
         </span>
-        <span class="text-gray-400 text-xs">
+        <span class="text-muted text-xs">
           {{ formatCount(protein.ppi?.total_partners ?? 0) }} total known ·
-          <a href="https://thebiogrid.org/" target="_blank" rel="noopener" class="text-[#185FA5] hover:underline">BioGRID</a>
+          <a href="https://thebiogrid.org/" target="_blank" rel="noopener" class="text-brand hover:underline">BioGRID</a>
           /
-          <a href="https://string-db.org/" target="_blank" rel="noopener" class="text-[#185FA5] hover:underline">STRING</a>
+          <a href="https://string-db.org/" target="_blank" rel="noopener" class="text-brand hover:underline">STRING</a>
           for the full network
         </span>
       </div>
-      <p class="text-xs text-gray-400">
+      <p class="text-[12.5px] text-muted">
         Only partners present in MLOsMetaDB are shown. Graph edges include interactions between partners.
       </p>
     </div>
@@ -361,12 +361,12 @@ function shortSystems(systems) {
     <div class="flex flex-wrap items-center gap-3 pb-3 border-b border-gray-100">
 
       <!-- Role filter -->
-      <div class="inline-flex border border-gray-200 rounded overflow-hidden text-xs">
+      <div class="inline-flex border border-border rounded overflow-hidden text-xs">
         <button
           v-for="opt in [['driver','Drivers'],['component','Components'],['all','All roles']]"
           :key="opt[0]"
-          :class="filterRole === opt[0] ? 'bg-[#1B3D6F] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
-          class="px-3 py-1.5 border-l border-gray-200 first:border-l-0 transition-colors"
+          :class="filterRole === opt[0] ? 'bg-navy text-surface' : 'bg-surface text-ink3 hover:text-ink'"
+          class="px-3 py-1.5 border-l border-border first:border-l-0 transition-colors"
           @click="filterRole = opt[0]"
         >{{ opt[1] }}</button>
       </div>
@@ -411,13 +411,13 @@ function shortSystems(systems) {
       <div class="order-2 md:order-none w-full md:w-[52%] flex flex-col min-w-0">
         <div class="flex-1 overflow-auto border border-gray-200 rounded text-xs">
           <table class="w-full">
-            <thead class="bg-gray-50 sticky top-0 z-10">
+            <thead class="bg-page sticky top-0 z-10">
               <tr>
-                <th class="text-left px-3 py-2 font-medium text-gray-500 whitespace-nowrap">Gene</th>
-                <th class="text-left px-3 py-2 font-medium text-gray-500 whitespace-nowrap">UniProt</th>
-                <th class="text-left px-3 py-2 font-medium text-gray-500 whitespace-nowrap">Role</th>
-                <th class="text-left px-3 py-2 font-medium text-gray-500 whitespace-nowrap">MLOs</th>
-                <th class="text-left px-3 py-2 font-medium text-gray-500 whitespace-nowrap">Evidence</th>
+                <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">Gene</th>
+                <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">UniProt</th>
+                <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">Role</th>
+                <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">MLOs</th>
+                <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">Evidence</th>
               </tr>
             </thead>
             <tbody>
@@ -434,7 +434,7 @@ function shortSystems(systems) {
                 v-for="p in tableRows"
                 :key="p.partner_uniprot_id"
                 :ref="el => { if (el) rowRefs[p.partner_uniprot_id] = el; else delete rowRefs[p.partner_uniprot_id] }"
-                class="border-t border-gray-100 hover:bg-slate-50/60 transition-colors"
+                class="border-t border-border-soft hover:bg-slate-50/60 transition-colors"
                 :class="(hoveredId === p.partner_uniprot_id || selectedId === p.partner_uniprot_id) ? 'bg-blue-50/50' : ''"
                 @mouseenter="hoveredId = p.partner_uniprot_id; highlightNode(p.partner_uniprot_id)"
                 @mouseleave="hoveredId = null; highlightNode(null)"
@@ -451,9 +451,9 @@ function shortSystems(systems) {
                 <td class="px-3 py-1.5">
                   <span
                     v-if="p.has_driver"
-                    class="text-[10px] text-[#185FA5] font-medium"
+                    class="text-[10px] text-brand font-medium"
                   >Driver</span>
-                  <span v-else class="text-gray-400 text-[10px]">Component</span>
+                  <span v-else class="text-ink3 text-[10px]">Component</span>
                 </td>
                 <td class="px-3 py-1.5 text-gray-600">
                   <template v-if="filterMlos(p.mlos).length">
@@ -501,10 +501,10 @@ function shortSystems(systems) {
         <!-- Legend -->
         <div class="flex flex-wrap gap-3 mb-2 text-[10px] text-gray-500">
           <span class="flex items-center gap-1">
-            <span class="inline-block w-3 h-3 rounded-full bg-[#1B3D6F]"></span> Query protein
+            <span class="inline-block w-3 h-3 rounded-full bg-navy"></span> Query protein
           </span>
           <span class="flex items-center gap-1">
-            <span class="inline-block w-3 h-3 rounded-full bg-[#60A5FA]"></span> Driver
+            <span class="inline-block w-3 h-3 rounded-full bg-brand"></span> Driver
           </span>
           <span class="flex items-center gap-1">
             <span class="inline-block w-3 h-3 rounded-full bg-[#9CA3AF]"></span> Component
