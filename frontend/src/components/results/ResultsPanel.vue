@@ -1,14 +1,6 @@
 <script setup>
-import { ref, computed, reactive, h } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  getSortedRowModel,
-  useVueTable,
-  FlexRender,
-} from '@tanstack/vue-table'
-import RoleBadge from '@/components/ui/RoleBadge.vue'
 import SequenceFeatureViewer from '@/components/results/SequenceFeatureViewer.vue'
 import { formatMlo, formatCount, filterMlos } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
@@ -29,7 +21,6 @@ const emit = defineEmits(['page-change', 'sort-change', 'remove-filter', 'downlo
 
 const route  = useRoute()
 const router = useRouter()
-const viewMode = ref('cards') // 'cards' | 'table'
 
 // Tracks which rows have their MLO list fully expanded
 const expandedRows = reactive(new Set())
@@ -106,8 +97,6 @@ const resultsWithFeatures = computed(() => {
     return { protein: p, idrRegions, lcdRegions, domains, featureStats, featureStatsShort, hasFeatures }
   })
 })
-
-const tableSorting = ref([])
 
 const currentSort = computed(() => {
   const { sort_by, sort_order } = props.activeFilters
@@ -190,50 +179,30 @@ function shortOrganism(name) {
   return words.length > 2 ? words.slice(0, 2).join(' ') : name
 }
 
-// ---- TanStack Table ----
-const col = createColumnHelper()
+// ---- Architecture bands (shared max-length scale across all rows) ----
+const SOURCE_ORDER = ['CDCODE', 'DrLLPS', 'LLPSDB', 'PhasePro', 'PhaSepDB']
 
-// TODO: server-side sort not yet supported — currently sorts client-side on loaded page only
-const columns = [
-  col.accessor('uniprot_id',    { header: 'UniProt Acc', enableSorting: true }),
-  col.accessor('gene_name',     { header: 'Gene name',   enableSorting: true }),
-  col.accessor('organism',      { header: 'Organism',    enableSorting: true,
-    cell: info => h('span', { class: 'italic' }, info.getValue()) }),
-  col.accessor('has_driver', {
-    id: 'role', header: 'Role', enableSorting: false,
-    cell: info => {
-      const protein = info.row.original
-      const parts = []
-      if (protein.has_driver) parts.push(h(RoleBadge, { role: 'driver' }))
-      if (protein.has_regulator) {
-        parts.push(h('span', { class: 'text-[10px] font-medium text-[#854F0B]' }, 'Regulator'))
-      }
-      if (!parts.length) return h('span', { class: 'text-gray-400 text-xs' }, '—')
-      return h('div', { class: 'flex items-center gap-1.5' }, parts)
+const MAX_LENGTH = computed(() =>
+  Math.max(1, ...resultsWithFeatures.value.map(r => r.protein.sequence_length || 0))
+)
+
+function architectureBands(entry) {
+  const len = entry.protein.sequence_length
+  if (!len) return []
+  const band = (start, end, color, label) => ({
+    key: `${label}-${start}`,
+    title: `${label} ${start}–${end}`,
+    style: {
+      position: 'absolute', top: 0, bottom: 0,
+      left:  `${((start - 1) / len) * 100}%`,
+      width: `${((end - start + 1) / len) * 100}%`,
+      background: color, borderRadius: '1px',
     },
-  }),
-  col.accessor(row => filterMlos(row.mlos).length, {
-    id: 'mlos', header: 'MLOs', enableSorting: true,
-  }),
-  col.accessor('sequence_length', { header: 'Length (aa)', enableSorting: true,
-    cell: info => info.getValue() ? formatCount(info.getValue()) : '—' }),
-]
-
-const tableData = computed(() => props.results ?? [])
-
-const table = useVueTable({
-  get data()    { return tableData.value },
-  columns,
-  state:        { get sorting() { return tableSorting.value } },
-  onSortingChange: updater => {
-    tableSorting.value = typeof updater === 'function'
-      ? updater(tableSorting.value)
-      : updater
-  },
-  getCoreRowModel:    getCoreRowModel(),
-  getSortedRowModel:  getSortedRowModel(),
-  manualSorting:      false,
-})
+  })
+  const idr = entry.idrRegions.map(r => band(r.start, r.end, '#B8362B', 'IDR'))
+  const dom = entry.domains.map(r => band(r.start, r.end, '#2C7A6B', 'Domain'))
+  return [...idr, ...dom]
+}
 </script>
 
 <template>
@@ -254,24 +223,6 @@ const table = useVueTable({
       </div>
 
       <div class="flex items-center gap-2 flex-shrink-0">
-        <!-- Cards / Table toggle -->
-        <div class="inline-flex border border-gray-200 rounded overflow-hidden text-xs">
-          <button
-            :class="viewMode === 'cards' ? 'bg-[#1B3D6F] text-white' : 'bg-white text-gray-500 hover:bg-gray-50'"
-            class="px-3 py-1.5 transition-colors"
-            @click="viewMode = 'cards'"
-          >
-            Cards
-          </button>
-          <button
-            :class="viewMode === 'table' ? 'bg-[#1B3D6F] text-white' : 'bg-white text-gray-500 hover:bg-gray-50'"
-            class="px-3 py-1.5 border-l border-gray-200 transition-colors"
-            @click="viewMode = 'table'"
-          >
-            Table
-          </button>
-        </div>
-
         <!-- Sort -->
         <select
           :value="currentSort"
@@ -306,11 +257,11 @@ const table = useVueTable({
       <span
         v-for="chip in filterChips"
         :key="chip.key"
-        class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#EBF3FB] text-[#185FA5] rounded-full text-xs border border-[#C8DFF2]"
+        class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#E8F1FB] text-brand rounded-full text-xs border border-[#BFD7F0]"
       >
         {{ chip.label }}
         <button
-          class="ml-0.5 text-[#185FA5] hover:text-[#0F3D6F] leading-none"
+          class="ml-0.5 text-brand hover:text-[#0F3D6F] leading-none"
           @click="emit('remove-filter', chip.key)"
         >
           ×
@@ -366,146 +317,77 @@ const table = useVueTable({
         </div>
       </template>
 
-      <!-- Card (row) view -->
-      <template v-else-if="viewMode === 'cards'">
-
-        <!-- mlo values are raw slugs from the API — formatMlo() is display only -->
-        <div
-          v-for="{ protein, idrRegions, lcdRegions, domains, featureStats, hasFeatures } in resultsWithFeatures"
-          :key="protein.uniprot_id"
-          class="py-4 px-6 border-b border-gray-200 hover:bg-slate-50/70 transition-colors last:border-b-0"
-        >
-          <!-- Two-column layout on desktop, stacked on mobile -->
-          <div class="flex flex-col gap-3 md:flex-row md:gap-0">
-
-            <!-- Column 1: Identity (~160px on desktop, sized for ~10-char gene names, full width on mobile) -->
-            <!-- Mobile: items share one wrapping row. Desktop: stacked, one per line. -->
-            <div class="w-full md:w-[160px] md:flex-shrink-0 flex flex-row flex-wrap items-baseline gap-x-2 gap-y-0.5 md:flex-col md:items-stretch md:gap-0.5">
-              <span
-                class="md:block md:w-full text-[18px] font-semibold cursor-pointer hover:underline leading-snug truncate min-w-0"
-                :class="titleColor(protein)"
-                @click.stop="goToProtein(protein.uniprot_id)"
-              >
-                {{ protein.gene_name || protein.uniprot_id }}
-              </span>
-              <span class="text-gray-300 text-[12px] md:hidden">·</span>
-              <span class="font-mono text-[16px] text-gray-600 md:mt-0.5">
-                {{ protein.uniprot_id }}
-              </span>
-              <!-- Role labels: plain colored text, no pill, always below the UniProt acc -->
-              <template v-if="protein.has_driver">
-                <span class="text-gray-300 text-[12px] md:hidden">·</span>
-                <span class="text-[11px] font-medium text-[#185FA5] whitespace-nowrap shrink-0">LLPS Driver</span>
-              </template>
-              <template v-if="protein.has_regulator">
-                <span class="text-gray-300 text-[12px] md:hidden">·</span>
-                <span
-                  class="text-[10px] font-medium text-[#854F0B] whitespace-nowrap shrink-0"
-                  title="Annotated as a regulator of an organelle, not as a resident of it -- a curator assignment that applies to the whole protein"
-                >Regulator</span>
-              </template>
-              <span class="text-gray-300 text-[12px] md:hidden">·</span>
-              <span class="text-[12px] italic text-[#484E59] md:mt-0.5 break-words">
-                {{ shortOrganism(protein.organism) }}
-              </span>
-            </div>
-
-            <!-- Column 2: Annotations (flex-1) -->
-            <div class="flex-1 min-w-0 flex flex-col gap-1.5 justify-center">
-              <!-- MLOs row -->
-              <div v-if="displayMlos(protein).length" class="flex items-baseline gap-0" title="List of MLOs present">
-                <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">MLOs</span>
-                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 leading-snug">
-                  <template v-for="mlo in visibleMlos(protein)" :key="mlo">
-                    <span
-                      class="text-[13px] text-gray-700 cursor-pointer hover:underline"
-                      @click.stop="applyFilter('mlo', mlo)"
-                    >{{ formatMlo(mlo) }}</span>
-                  </template>
-                  <button
-                    v-if="displayMlos(protein).length > 10 && !expandedRows.has(protein.uniprot_id)"
-                    class="text-[12px] text-gray-500 hover:underline"
-                    @click.stop="expandedRows.add(protein.uniprot_id)"
-                  >+{{ displayMlos(protein).length - 10 }} more</button>
-                </div>
-              </div>
-              <!-- Sources row -->
-              <div v-if="protein.source_dbs?.length" class="flex items-baseline gap-0" title="Databases with protein annotation source">
-                <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Sources</span>
-                <span class="text-[11px] text-gray-500">{{ protein.source_dbs.join(' · ') }}</span>
-              </div>
-              <!-- Features row -->
-              <div v-if="featureStats" class="flex items-baseline gap-0">
-                <span class="text-[9px] font-medium text-gray-400 flex-shrink-0 w-14">Features</span>
-                <span class="text-[12px] text-gray-700">{{ featureStats }}</span>
-              </div>
-              <!-- Compact D3 track — aligned with value column, max 75% of column width -->
-              <div v-if="hasFeatures && protein.sequence_length" class="flex items-center gap-0">
-                <span class="flex-shrink-0 w-14"></span>
-                <div class="flex-1 min-w-0 max-w-[80%]">
-                  <SequenceFeatureViewer
-                    :sequence-length="protein.sequence_length"
-                    :idr-regions="idrRegions"
-                    :lcd-regions="lcdRegions"
-                    :domains="domains"
-                    :llps-regions="[]"
-                    :compact="true"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </div><!-- end two columns -->
-
-        </div><!-- end row -->
-      </template>
-
-      <!-- Table view -->
+      <!-- Results table -->
       <template v-else>
         <div class="overflow-x-auto -mx-6">
-          <table class="w-full text-xs">
+          <table class="w-full border-collapse">
             <thead>
-              <tr
-                v-for="headerGroup in table.getHeaderGroups()"
-                :key="headerGroup.id"
-              >
-                <th
-                  v-for="header in headerGroup.headers"
-                  :key="header.id"
-                  class="text-left px-4 py-2 text-gray-500 font-medium bg-gray-50 border-b border-gray-200 whitespace-nowrap"
-                  :class="header.column.getCanSort() ? 'cursor-pointer hover:text-gray-700 select-none' : ''"
-                  @click="header.column.getCanSort() && header.column.toggleSorting()"
-                >
-                  <FlexRender
-                    :render="header.column.columnDef.header"
-                    :props="header.getContext()"
-                  />
-                  <span v-if="header.column.getIsSorted() === 'asc'" class="ml-1">↑</span>
-                  <span v-else-if="header.column.getIsSorted() === 'desc'" class="ml-1">↓</span>
-                  <span v-else-if="header.column.getCanSort()" class="ml-1 text-gray-400">↕</span>
-                </th>
+              <tr>
+                <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEIN</th>
+                <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[210px]">ARCHITECTURE</th>
+                <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[58px]">LENGTH</th>
+                <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[52px]">MLOS</th>
+                <th class="text-center px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[96px]">SOURCES</th>
+                <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[82px]">ROLE</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="row in table.getRowModel().rows"
-                :key="row.id"
-                class="border-b border-gray-200 hover:bg-slate-50 cursor-pointer transition-colors"
-                @click="goToProtein(row.original.uniprot_id)"
+                v-for="entry in resultsWithFeatures"
+                :key="entry.protein.uniprot_id"
+                class="border-b border-border-soft hover:bg-page cursor-pointer transition-colors"
+                @click="goToProtein(entry.protein.uniprot_id)"
               >
-                <td
-                  v-for="cell in row.getVisibleCells()"
-                  :key="cell.id"
-                  class="px-4 py-2 text-gray-700"
-                >
-                  <FlexRender
-                    :render="cell.column.columnDef.cell"
-                    :props="cell.getContext()"
-                  />
+                <td class="align-top px-3 py-3.5">
+                  <div class="flex items-baseline gap-2">
+                    <span class="text-[15px] font-semibold tracking-[-0.01em]" :class="titleColor(entry.protein)">
+                      {{ entry.protein.gene_name || entry.protein.uniprot_id }}
+                    </span>
+                    <span class="font-mono text-[11.5px] text-ink3">{{ entry.protein.uniprot_id }}</span>
+                  </div>
+                  <div class="text-[13px] text-ink2 mt-0.5">{{ entry.protein.protein_name }}</div>
+                  <div class="text-[12.5px] italic text-muted mt-0.5">{{ shortOrganism(entry.protein.organism) }}</div>
+                  <div v-if="displayMlos(entry.protein).length" class="text-[12.5px] text-ink3 mt-1.5">
+                    {{ visibleMlos(entry.protein).map(formatMlo).join(' · ') }}
+                    <button
+                      v-if="displayMlos(entry.protein).length > 10 && !expandedRows.has(entry.protein.uniprot_id)"
+                      class="text-muted hover:underline"
+                      @click.stop="expandedRows.add(entry.protein.uniprot_id)"
+                    >+{{ displayMlos(entry.protein).length - 10 }} more</button>
+                  </div>
+                </td>
+                <td class="align-top px-3 py-3.5">
+                  <div class="relative h-3 bg-track rounded-[1px]" :style="{ width: entry.protein.sequence_length ? (entry.protein.sequence_length / MAX_LENGTH * 100) + '%' : '0%' }">
+                    <div v-for="b in architectureBands(entry)" :key="b.key" :title="b.title" :style="b.style"></div>
+                  </div>
+                  <div v-if="entry.featureStatsShort" class="font-mono text-[10.5px] text-ink3 mt-1.5">{{ entry.featureStatsShort }}</div>
+                </td>
+                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ formatCount(entry.protein.sequence_length) }}</td>
+                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ displayMlos(entry.protein).length }}</td>
+                <td class="align-top px-3 py-3.5">
+                  <div class="flex gap-1.5 justify-center">
+                    <span
+                      v-for="src in SOURCE_ORDER"
+                      :key="src"
+                      :title="entry.protein.source_dbs?.includes(src) ? src : `${src}: not annotated`"
+                      class="inline-block"
+                      :class="entry.protein.source_dbs?.includes(src) ? 'w-[7px] h-[7px] rounded-full bg-ink' : 'w-[7px] h-px bg-border-strong mt-[3px]'"
+                    ></span>
+                  </div>
+                </td>
+                <td class="align-top pl-3 py-3.5 text-right font-mono text-[11px]" :class="entry.protein.has_driver ? 'text-brand' : 'text-ink3'">
+                  {{ entry.protein.has_driver ? 'Driver' : 'Component' }}
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="flex flex-wrap gap-6 mt-6 pt-4 border-t border-border-soft font-mono text-[11px] text-ink2">
+          <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-idr"></span>Disordered region</div>
+          <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-domain"></span>Pfam domain</div>
+          <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] rounded-full bg-ink"></span>Annotated in source</div>
+          <div class="text-ink3">Bars share one scale · widest = {{ formatCount(MAX_LENGTH) }} aa · source order {{ SOURCE_ORDER.join(' · ') }}</div>
         </div>
       </template>
 
@@ -535,7 +417,7 @@ const table = useVueTable({
             v-else
             class="w-7 h-7 text-xs rounded border transition-colors"
             :class="p === page
-              ? 'bg-[#1B3D6F] text-white border-[#1B3D6F]'
+              ? 'bg-navy text-white border-navy'
               : 'border-gray-200 text-gray-600 hover:border-gray-400'"
             @click="emit('page-change', p)"
           >
