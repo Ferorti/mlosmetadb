@@ -169,7 +169,7 @@ const proteinRows = computed(() => (detail.value?.proteins?.items ?? []).map(p =
         <div class="flex justify-between items-baseline gap-5 border-b border-border pb-[11px] mb-4.5">
           <div class="flex items-baseline gap-3.5">
             <h2 class="text-[17px] font-medium tracking-[-0.01em] text-ink">Proteins</h2>
-            <span class="font-mono text-[11px] text-muted">{{ proteinRows.length }} shown of {{ formatCount(detail.stats.total_proteins) }}</span>
+            <span class="font-mono text-[11px] text-muted">{{ proteinRows.length }} shown of {{ formatCount(detail.proteins.total) }}</span>
           </div>
           <div class="flex gap-2">
             <button
