@@ -1,7 +1,6 @@
 <script setup>
 import { computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import SequenceFeatureViewer from '@/components/results/SequenceFeatureViewer.vue'
 import { formatMlo, formatCount, filterMlos } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
 
@@ -378,7 +377,7 @@ function architectureBands(entry) {
                 <td
                   class="align-top pl-3 py-3.5 text-right font-mono text-[11px]"
                   :class="entry.protein.has_driver ? 'text-brand' : entry.protein.has_regulator ? 'text-regulator' : 'text-ink3'"
-                  :title="!entry.protein.has_driver && entry.protein.has_regulator ? 'Annotated as a regulator of an organelle, not as a resident of it — a curator assignment that applies to the whole protein.' : undefined"
+                  :title="!entry.protein.has_driver && entry.protein.has_regulator ? 'Annotated as a regulator of this organelle, not as a resident of it — a curator assignment that applies to the whole protein, not to this compartment specifically' : undefined"
                 >
                   {{ entry.protein.has_driver ? 'Driver' : entry.protein.has_regulator ? 'Regulator' : 'Component' }}
                 </td>
