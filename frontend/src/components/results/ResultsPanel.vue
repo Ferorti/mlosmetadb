@@ -375,8 +375,12 @@ function architectureBands(entry) {
                     ></span>
                   </div>
                 </td>
-                <td class="align-top pl-3 py-3.5 text-right font-mono text-[11px]" :class="entry.protein.has_driver ? 'text-brand' : 'text-ink3'">
-                  {{ entry.protein.has_driver ? 'Driver' : 'Component' }}
+                <td
+                  class="align-top pl-3 py-3.5 text-right font-mono text-[11px]"
+                  :class="entry.protein.has_driver ? 'text-brand' : entry.protein.has_regulator ? 'text-regulator' : 'text-ink3'"
+                  :title="!entry.protein.has_driver && entry.protein.has_regulator ? 'Annotated as a regulator of an organelle, not as a resident of it — a curator assignment that applies to the whole protein.' : undefined"
+                >
+                  {{ entry.protein.has_driver ? 'Driver' : entry.protein.has_regulator ? 'Regulator' : 'Component' }}
                 </td>
               </tr>
             </tbody>
