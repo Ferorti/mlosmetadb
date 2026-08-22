@@ -5,7 +5,7 @@ const routes = [
   { path: '/',            component: HomePage },
   { path: '/results',     component: () => import('@/pages/ResultsPage.vue') },
   { path: '/protein/:id', component: () => import('@/pages/ProteinPage.vue') },
-  { path: '/mlo/:mlo',    component: () => import('@/pages/MlosPage.vue') },
+  { path: '/mlo/:mlo',    component: () => import('@/pages/MloDetailPage.vue') },
   { path: '/mlos',        component: () => import('@/pages/MlosPage.vue') },
   { path: '/api',         component: () => import('@/pages/ApiPage.vue') },
   { path: '/data',        component: () => import('@/pages/DataPage.vue') },
