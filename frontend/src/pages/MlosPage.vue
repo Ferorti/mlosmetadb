@@ -2,12 +2,12 @@
   <div class="max-w-6xl mx-auto px-6 py-8">
     <!-- Page header -->
     <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">Membraneless Organelles</h1>
-      <p class="text-sm text-gray-600 mt-1">Browse all MLOs curated in the database</p>
+      <h1 class="text-2xl font-semibold text-ink">Membraneless Organelles</h1>
+      <p class="text-sm text-ink3 mt-1">Browse all MLOs curated in the database</p>
     </div>
 
     <!-- Filter bar -->
-    <div class="bg-white border border-gray-200 rounded-lg px-4 py-3 mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+    <div class="bg-surface border border-border px-4 py-3 mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
       <!-- Text search -->
       <div class="flex items-center gap-2 min-w-[180px]">
         <i class="ti ti-search text-gray-400 text-sm"></i>
@@ -29,7 +29,7 @@
         :key="axis.key"
         v-model="axisFilters[axis.key]"
         :title="`Filter by ${axis.label.toLowerCase()}`"
-        class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1 bg-white focus:outline-none focus:border-[#185FA5]"
+        class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1 bg-white focus:outline-none focus:border-brand"
       >
         <option value="">{{ axis.allLabel }}</option>
         <option v-for="v in axisOptions[axis.key]" :key="v" :value="v">{{ axis.format(v) }}</option>
@@ -47,7 +47,7 @@
           :class="[
             'text-xs px-2 py-0.5 rounded-full border transition-colors',
             selectedSources.includes(db)
-              ? 'bg-[#185FA5] text-white border-[#185FA5]'
+              ? 'bg-brand text-white border-brand'
               : 'bg-white text-gray-600 border-gray-300 hover:border-[#185FA5] hover:text-[#185FA5]',
           ]"
         >
@@ -70,7 +70,7 @@
       <!-- Sort control -->
       <select
         v-model="sortBy"
-        class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1 bg-white focus:outline-none focus:border-[#185FA5]"
+        class="text-sm text-gray-700 border border-gray-200 rounded px-2 py-1 bg-white focus:outline-none focus:border-brand"
       >
         <option value="drivers">Most drivers</option>
         <option value="alphabetical">Alphabetical</option>
@@ -101,11 +101,11 @@
     </div>
 
     <!-- MLO list -->
-    <div v-else class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+    <div v-else class="bg-surface border border-border overflow-hidden">
       <div
         v-for="mlo in filtered"
         :key="mlo.unified_mlo"
-        class="px-5 py-4 border-b border-gray-100 last:border-b-0 hover:bg-slate-50 cursor-pointer transition-colors"
+        class="px-5 py-4 border-b border-border-soft last:border-b-0 hover:bg-page cursor-pointer transition-colors"
         :title="expandedRows.has(mlo.unified_mlo) ? 'Click to collapse' : 'Click to expand'"
         @click="toggleExpand(mlo.unified_mlo)"
       >
@@ -129,12 +129,12 @@
             <span
               v-if="mlo.spatial_location"
               :title="spatialLocationNote(mlo) || `Location: ${spatialLocationLabel(mlo.spatial_location)}`"
-              class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border flex items-center gap-1"
-              :class="isSpatialLocationProvisional(mlo) ? 'border-slate-300 border-dashed' : 'border-slate-200'"
+              class="text-xs px-2 py-0.5 rounded-full bg-page text-ink3 border flex items-center gap-1"
+              :class="isSpatialLocationProvisional(mlo) ? 'border-border-strong border-dashed' : 'border-border'"
             >
               <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" :class="spatialLocationColor(mlo.spatial_location)"></span>
               {{ spatialLocationLabel(mlo.spatial_location) }}
-              <span v-if="isSpatialLocationProvisional(mlo)" class="text-slate-400">·&nbsp;provisional</span>
+              <span v-if="isSpatialLocationProvisional(mlo)" class="text-muted">·&nbsp;provisional</span>
             </span>
             <span
               v-if="mlo.physiological_state && mlo.physiological_state !== 'constitutive'"
