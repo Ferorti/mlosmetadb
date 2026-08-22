@@ -179,7 +179,7 @@ function applyPfam() {
         <button
           v-if="hasActiveFilters"
           @click="$emit('reset-filters')"
-          class="text-xs text-[#185FA5] hover:underline"
+          class="text-xs text-brand hover:underline"
         >
           Reset filters
         </button>
@@ -366,7 +366,7 @@ function applyPfam() {
               :value="ft.value"
               :checked="activeFeatureTypes.includes(ft.value)"
               @change="toggleFeatureType(ft.value)"
-              class="w-3 h-3 rounded accent-[#185FA5] cursor-pointer"
+              class="w-3 h-3 rounded accent-brand cursor-pointer"
             />
             {{ ft.label }}
           </label>
