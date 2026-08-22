@@ -11,7 +11,7 @@ function closeMobileMenu() {
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 bg-gradient-to-r from-[#1B4F8A] to-[#2B7CD8]">
+  <nav class="sticky top-0 z-50 bg-navy">
     <div class="h-14 flex items-center">
       <div class="max-w-5xl mx-auto px-6 flex items-center justify-between w-full">
 
@@ -21,16 +21,16 @@ function closeMobileMenu() {
             <img :src="`${BASE_URL}loguito_horizontal.svg`" alt="MLOsMetaDB" class="h-[18px] w-auto relative -top-[2px]">
           </span>
           <span class="text-white font-semibold text-lg ml-2">MLOsMetaDB</span>
-          <span class="text-blue-200 text-xs ml-1">v2</span>
+          <span class="text-[#7F93A8] text-xs ml-1">v2</span>
         </RouterLink>
 
         <!-- Desktop links -->
         <div class="hidden md:flex items-center gap-6">
-          <RouterLink to="/results"  active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Search</RouterLink>
-          <RouterLink to="/mlos"     active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">MLOs</RouterLink>
-          <RouterLink to="/api"      active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">API</RouterLink>
-          <RouterLink to="/data"     active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Data</RouterLink>
-          <RouterLink to="/about"    active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">About</RouterLink>
+          <RouterLink to="/results"  active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">Search</RouterLink>
+          <RouterLink to="/mlos"     active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">MLOs</RouterLink>
+          <RouterLink to="/api"      active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">API</RouterLink>
+          <RouterLink to="/data"     active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">Data</RouterLink>
+          <RouterLink to="/about"    active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">About</RouterLink>
         </div>
 
         <!-- Mobile menu toggle -->
@@ -52,13 +52,13 @@ function closeMobileMenu() {
     </div>
 
     <!-- Mobile dropdown menu -->
-    <div v-if="mobileOpen" class="md:hidden bg-[#1B4F8A] border-t border-white/10 px-6 py-3 flex flex-col gap-3">
-      <RouterLink to="/"        @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Home</RouterLink>
-      <RouterLink to="/results" @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Search</RouterLink>
-      <RouterLink to="/mlos"    @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">MLOs</RouterLink>
-      <RouterLink to="/api"     @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">API</RouterLink>
-      <RouterLink to="/data"    @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">Data</RouterLink>
-      <RouterLink to="/about"   @click="closeMobileMenu" active-class="text-white font-medium" class="text-blue-100 hover:text-white text-sm transition-colors">About</RouterLink>
+    <div v-if="mobileOpen" class="md:hidden bg-navy border-t border-white/10 px-6 py-3 flex flex-col gap-3">
+      <RouterLink to="/"        @click="closeMobileMenu" active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">Home</RouterLink>
+      <RouterLink to="/results" @click="closeMobileMenu" active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">Search</RouterLink>
+      <RouterLink to="/mlos"    @click="closeMobileMenu" active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">MLOs</RouterLink>
+      <RouterLink to="/api"     @click="closeMobileMenu" active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">API</RouterLink>
+      <RouterLink to="/data"    @click="closeMobileMenu" active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">Data</RouterLink>
+      <RouterLink to="/about"   @click="closeMobileMenu" active-class="text-[#EEF2F7] font-medium" class="text-[#A6B6C6] hover:text-[#EEF2F7] text-sm transition-colors">About</RouterLink>
     </div>
   </nav>
 </template>
