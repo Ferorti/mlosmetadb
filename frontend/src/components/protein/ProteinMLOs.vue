@@ -8,20 +8,6 @@ const props = defineProps({
   uniprotId:      { type: String, required: true },
 })
 
-const SOURCE_ORDER = ['PhaSepDB', 'CDCODE', 'LLPSDB', 'PhasePro', 'DrLLPS']
-
-const SOURCE_COLORS = {
-  PhaSepDB: '#1B4F8A',
-  CDCODE:   '#854F0B',
-  LLPSDB:   '#0F6E56',
-  PhasePro: '#6B21A8',
-  DrLLPS:   '#484E59',
-}
-
-function sourceColor(source) {
-  return SOURCE_COLORS[source] ?? SOURCE_COLORS.DrLLPS
-}
-
 // Deduplicate by (unified_mlo, source_db, source_mlo)
 const dedupedAnnotations = computed(() => {
   const seen = new Set()
@@ -60,7 +46,9 @@ function groupRole(anns) {
   return null
 }
 
-const groupedRows = computed(() => {
+const MATRIX_SOURCES = ['CDCODE', 'DrLLPS', 'LLPSDB', 'PhasePro', 'PhaSepDB']
+
+const matrixRows = computed(() => {
   if (!dedupedAnnotations.value.length) return []
 
   const groups = {}
@@ -70,15 +58,6 @@ const groupedRows = computed(() => {
     groups[key].push(ann)
   }
 
-  for (const mlo of Object.keys(groups)) {
-    groups[mlo].sort((a, b) => {
-      const ai = SOURCE_ORDER.indexOf(a.source_db)
-      const bi = SOURCE_ORDER.indexOf(b.source_db)
-      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi)
-    })
-  }
-
-  // Sort groups: driver annotations first, then by number of source DBs desc
   const sortedEntries = Object.entries(groups).sort(([, annsA], [, annsB]) => {
     const aIsDriver = annsA.some(a => a.unified_role === 'driver') ? 0 : 1
     const bIsDriver = annsB.some(b => b.unified_role === 'driver') ? 0 : 1
@@ -86,22 +65,18 @@ const groupedRows = computed(() => {
     return annsB.length - annsA.length
   })
 
-  const rows = []
-  let groupIndex = 0
-  for (const [, anns] of sortedEntries) {
-    anns.forEach((ann, i) => {
-      rows.push({
-        isFirstInGroup: i === 0,
-        groupIndex,
-        unified_mlo:  ann.unified_mlo,
-        displayRole:  i === 0 ? groupRole(anns) : null,
-        source_db:    ann.source_db,
-        source_mlo:   ann.source_mlo,
-      })
-    })
-    groupIndex++
-  }
-  return rows
+  return sortedEntries.map(([unified_mlo, anns]) => ({
+    unified_mlo,
+    displayRole: groupRole(anns),
+    cells: MATRIX_SOURCES.map(src => {
+      const ann = anns.find(a => a.source_db === src)
+      return {
+        source: src,
+        on:     !!ann,
+        title:  ann ? `${src}: ${ann.source_mlo}` : `${src}: not annotated`,
+      }
+    }),
+  }))
 })
 
 const totalAnnotations = computed(() => dedupedAnnotations.value.length)
@@ -124,45 +99,30 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
     </div>
 
     <template v-else>
-      <p class="text-xs text-gray-500 mb-2">
-        Table of annotations in source databases (unified name, role, database name, source MLO name)
+      <p class="text-[13.5px] text-ink3 max-w-[62ch] mb-6">
+        A mark shows the organelle is annotated for this protein in that
+        database. Hover a mark for the name the source itself uses.
       </p>
 
-      <table class="w-full text-sm">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="text-left pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ORGANELLE</th>
+            <th v-for="src in MATRIX_SOURCES" :key="src" class="text-center px-2 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 w-[78px]">{{ src }}</th>
+            <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ROLE</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr
-            v-for="(row, idx) in groupedRows"
-            :key="idx"
-            :class="[
-              row.groupIndex % 2 === 0 ? 'bg-white' : 'bg-slate-50',
-              row.isFirstInGroup && row.groupIndex > 0 ? 'border-t border-slate-200' : '',
-            ]"
-          >
-            <!-- Organelle name -->
-            <td class="w-44 align-top py-0.5 pr-3">
-              <template v-if="row.isFirstInGroup">
-                <RouterLink
-                  :to="`/mlo/${row.unified_mlo}`"
-                  class="text-[#185FA5] font-medium hover:underline"
-                >
-                  {{ formatMlo(row.unified_mlo) }}
-                </RouterLink>
-              </template>
+          <tr v-for="row in matrixRows" :key="row.unified_mlo" class="border-b border-border-soft">
+            <td class="py-[11px] pr-3 text-[13.5px]">
+              <RouterLink :to="`/mlo/${row.unified_mlo}`" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
             </td>
-
-            <!-- Role badge column -->
-            <td class="w-28 align-top py-0.5 pr-3">
-              <RoleBadge v-if="row.isFirstInGroup && row.displayRole" :role="row.displayRole" />
+            <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-2 text-center">
+              <span v-if="cell.on" class="inline-block w-[7px] h-[7px] rounded-full bg-ink"></span>
+              <span v-else class="inline-block w-[7px] h-px bg-border-strong"></span>
             </td>
-
-            <!-- Source db text -->
-            <td class="w-36 align-top py-0.5 pr-4">
-              <span class="text-xs font-medium" :style="{ color: sourceColor(row.source_db) }">{{ row.source_db }}</span>
-            </td>
-
-            <!-- Source name -->
-            <td class="align-top py-0.5 text-[#484E59] italic">
-              {{ row.source_mlo }}
+            <td class="py-[11px] pl-3 text-right">
+              <RoleBadge v-if="row.displayRole" :role="row.displayRole" />
             </td>
           </tr>
         </tbody>
