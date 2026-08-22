@@ -48,7 +48,7 @@
             'text-xs px-2 py-0.5 rounded-full border transition-colors',
             selectedSources.includes(db)
               ? 'bg-brand text-white border-brand'
-              : 'bg-white text-gray-600 border-gray-300 hover:border-[#185FA5] hover:text-[#185FA5]',
+              : 'bg-white text-gray-600 border-gray-300 hover:border-brand hover:text-brand',
           ]"
         >
           {{ db }}
@@ -155,7 +155,7 @@
         <div class="mt-1 text-sm text-gray-600 flex items-baseline flex-wrap gap-x-1.5">
           <span>
             {{ formatCount(mlo.protein_count) }} proteins ·
-            <span class="text-[#185FA5]">{{ formatCount(mlo.driver_count) }} drivers</span>
+            <span class="text-brand">{{ formatCount(mlo.driver_count) }} drivers</span>
           </span>
           <!-- The taxonomic axis is derived from the organisms of the annotated
                proteins, so it describes the dataset and not the organelle. The
@@ -163,7 +163,7 @@
                asked for exactly this (63 of 177 terms rest on <=2 proteins). -->
           <span v-if="mlo.taxonomic_scope" class="text-gray-600" :title="taxonomicScopeNote(mlo)">
             · {{ taxonomicScopeLabel(mlo.taxonomic_scope) }}
-            <span :class="isTaxonomicScopeThin(mlo) ? 'text-[#854F0B]' : 'text-gray-500'" class="text-xs">
+            <span :class="isTaxonomicScopeThin(mlo) ? 'text-regulator' : 'text-gray-500'" class="text-xs">
               ({{ mlo.taxonomic_support_n }}
               protein{{ mlo.taxonomic_support_n === 1 ? '' : 's' }}<template v-if="isTaxonomicScopeThin(mlo)">, thin</template>)
             </span>
@@ -187,7 +187,7 @@
 
           <button
             @click.stop="navigateToMlo(mlo.unified_mlo)"
-            class="shrink-0 flex items-center gap-0.5 text-xs text-[#185FA5] hover:text-blue-700 mt-0.5"
+            class="shrink-0 flex items-center gap-0.5 text-xs text-brand hover:text-blue-700 mt-0.5"
           >
             <i class="ti ti-arrow-right"></i>
             Explore {{ formatMlo(mlo.unified_mlo) }} proteins
