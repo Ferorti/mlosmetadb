@@ -9,7 +9,6 @@ import OrganismGrid from '@/components/browse/OrganismGrid.vue'
 import SearchBox from '@/components/search/SearchBox.vue'
 const router = useRouter()
 const stats = ref(null)
-const BASE_URL = import.meta.env.BASE_URL
 
 onMounted(async () => {
   const res = await getStats()
@@ -37,37 +36,29 @@ function searchExample(term) {
   <div class="bg-white">
 
     <!-- Hero + Search -->
-    <section class="bg-[#EBF3FB] border-b border-[#C8DFF2] pt-8 pb-5 text-center">
-      <div class="max-w-4xl mx-auto px-6">
+    <section class="bg-surface border-b border-border">
+      <div class="max-w-[1080px] mx-auto px-8 pt-[70px] pb-9">
 
-        <div class="flex justify-center mb-1">
-          <!-- Sized larger than the 22px dots it replaced, with the gap to the
-               title tightened to match. -->
-          <img :src="`${BASE_URL}loguito_horizontal.svg`" alt="MLOsMetaDB" class="h-[28px] w-auto">
-        </div>
-
-        <h1 class="text-3xl font-bold text-[#1B3D6F] tracking-tight">
-          MLOsMetaDB
+        <h1 class="font-display font-bold text-[52px] leading-[1.05] tracking-[-0.035em] text-ink max-w-[15ch]">
+          Proteins in membraneless organelles
         </h1>
-        <p class="text-gray-500 text-sm max-w-2xl mx-auto mt-2 leading-relaxed">
+        <p class="mt-5 text-[17px] leading-relaxed text-ink2 max-w-[56ch]">
           A meta-database of proteins associated with membraneless organelles
-          involved in liquid-liquid phase separation.
-          Integrates proteins from <span class="font-medium text-gray-600">PhaSepDB, DrLLPS, PhaSePro, LLPSDB</span>
-          and <span class="font-medium text-gray-600">CD-CODE</span>.
+          involved in liquid-liquid phase separation. Integrates proteins from
+          PhaSepDB, DrLLPS, PhaSePro, LLPSDB and CD-CODE.
         </p>
 
-        <div class="mt-6 max-w-3xl mx-auto w-full px-4">
+        <div class="mt-[34px] max-w-[660px]">
           <SearchBox
             :show-search-options="true"
             :initial-query="''"
             @search="handleSearch"
           />
-        </div>
-
-        <div class="mt-2 text-xs text-gray-500">
-          Examples:
-          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('FUS')">FUS</button>·
-          <button class="text-[#2B6CB0] hover:underline text-xs mx-1" @click="searchExample('P35637')">P35637</button>
+          <div class="flex items-center gap-3 mt-3 font-mono text-[11.5px] text-muted">
+            <span>TRY</span>
+            <button class="text-brand hover:text-ink hover:underline" @click="searchExample('FUS')">FUS</button>
+            <button class="text-brand hover:text-ink hover:underline" @click="searchExample('P35637')">P35637</button>
+          </div>
         </div>
 
       </div>
@@ -82,10 +73,10 @@ function searchExample(term) {
 
     <!-- Browse by role -->
     <section class="max-w-4xl mx-auto px-6 pb-5">
-      <h2 class="text-base font-semibold text-[#1B3D6F] border-l-[3px] border-[#2B7CD8] pl-3 mb-1">
-        Browse by component role
-      </h2>
-      <p class="text-sm text-gray-600 pl-3 mb-4">
+      <div class="flex items-baseline gap-3.5 border-b border-border pb-[11px] mb-5">
+        <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Browse by component role</h2>
+      </div>
+      <p class="text-[13.5px] text-ink3 max-w-[64ch] mb-6">
         You can also reach proteins without naming one: pick the role they play across their annotations.
       </p>
       <RoleCards :stats="stats" />

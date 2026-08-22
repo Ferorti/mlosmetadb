@@ -100,9 +100,6 @@ function handleSearch() {
   emit('search', payload)
 }
 
-const chipClass = (on) => on
-  ? 'border border-[#185FA5] bg-[#185FA5] rounded-full px-2.5 py-1 text-[11px] text-white flex items-center gap-1.5 cursor-pointer transition-colors whitespace-nowrap'
-  : 'border border-gray-200 rounded-full px-2.5 py-1 text-[11px] text-gray-400 flex items-center gap-1.5 cursor-pointer hover:border-gray-300 hover:text-gray-500 transition-colors whitespace-nowrap bg-white'
 </script>
 
 <template>
@@ -125,25 +122,15 @@ const chipClass = (on) => on
         />
 
         <div class="flex items-stretch border-t sm:border-t-0 border-gray-100">
-          <div class="flex items-center justify-center gap-1.5 px-2 flex-1 sm:flex-initial">
-            <button
-              :class="chipClass(driversOnly)"
-              title="Restrict search to LLPS driver proteins"
-              @click="driversOnly = !driversOnly"
-            >
-              <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    :class="driversOnly ? 'bg-white' : 'bg-gray-300'"></span>
+          <div class="flex items-center justify-center gap-3 px-3 flex-1 sm:flex-initial">
+            <label class="flex items-center gap-1.5 text-[13px] text-ink3 cursor-pointer" title="Restrict search to LLPS driver proteins">
+              <input type="checkbox" v-model="driversOnly" class="accent-brand w-3.5 h-3.5 m-0" />
               Drivers only
-            </button>
-            <button
-              :class="chipClass(exactMatch)"
-              title="Match the gene name or UniProt accession exactly (e.g. FUS, not FUSED)"
-              @click="exactMatch = !exactMatch"
-            >
-              <span class="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    :class="exactMatch ? 'bg-white' : 'bg-gray-300'"></span>
+            </label>
+            <label class="flex items-center gap-1.5 text-[13px] text-ink3 cursor-pointer" title="Match the gene name or UniProt accession exactly (e.g. FUS, not FUSED)">
+              <input type="checkbox" v-model="exactMatch" class="accent-brand w-3.5 h-3.5 m-0" />
               Exact match
-            </button>
+            </label>
           </div>
           <div class="border-l border-gray-200 self-stretch"></div>
           <button
