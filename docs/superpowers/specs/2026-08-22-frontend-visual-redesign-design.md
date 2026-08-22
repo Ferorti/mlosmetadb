@@ -249,12 +249,21 @@ de partners de PPI + grafo.
   `NotInformed` (§ "NotInformed display rule" de `frontend/CLAUDE.md`)
   preservado — el mock no lo contempla porque su dataset de ejemplo no
   tiene ningún caso `NotInformed`, no porque lo excluya a propósito.
-- **Corrección de dato falso**: el mock de la tab Interactions dice
-  *"503 further interactions are known in BioGRID and STRING"* — este
-  proyecto no integra STRING (confirmado: cero menciones en
-  `api/CLAUDE.md`, `BIOLOGY.md`, `scripts/`). Pasa a *"N further
-  interactions are known in BioGRID"*, con N real desde el endpoint de
-  PPI (`total_partners` menos partners en DB), no el 503 de ejemplo.
+- **Corrección de un hallazgo previo de esta spec**: en la versión
+  anterior de este documento yo había marcado la mención a STRING del
+  mock como un dato inventado, basado solo en que `api/CLAUDE.md` y
+  `BIOLOGY.md` no la mencionan. Al leer el componente real
+  (`ProteinPPI.vue:378-381`) encontré que la app **ya** enlaza a BioGRID
+  y a STRING como recursos externos para "the full network" — el mismo
+  patrón que los links a UniProt/AlphaFold/MobiDB/InterPro en
+  `ProteinPage.vue`. STRING no es una fuente de datos integrada (los
+  partners que se listan salen de BioGRID), pero el link externo a
+  STRING como "dónde mirar la red completa" es contenido real ya
+  existente, no algo que este cambio deba sacar. Lo único falso del mock
+  es el **número inventado** ("503 further interactions") atribuido a
+  esa combinación — se mantiene la fórmula actual (conteo real de
+  `total_partners` + los dos links externos, sin asignarle el conteo a
+  una fuente en particular), restyleada, no reescrita.
 
 ### 4.3 Datos no disponibles → ninguno
 
