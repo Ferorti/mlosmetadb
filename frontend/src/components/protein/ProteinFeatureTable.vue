@@ -11,7 +11,7 @@ const emit = defineEmits(['hover', 'select'])
 
 function rowClass(feature) {
   if (props.pinnedId === feature.id)  return 'bg-[#E8F1FB]'
-  if (props.hoveredId === feature.id) return 'bg-slate-100'
+  if (props.hoveredId === feature.id) return 'bg-page'
   return ''
 }
 </script>
@@ -27,7 +27,7 @@ function rowClass(feature) {
               class="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
               :style="{ backgroundColor: group.color }"
             ></span>
-            <span class="text-[#484E59] font-medium text-[10px]">{{ group.label }}</span>
+            <span class="font-mono text-[10.5px] text-ink2 tracking-[0.07em]">{{ group.label }}</span>
           </div>
         </td>
       </tr>
@@ -38,17 +38,17 @@ function rowClass(feature) {
         <tr
           v-for="item in group.items"
           :key="item.id"
-          class="border-t border-slate-100 cursor-pointer transition-colors"
+          class="border-t border-border-soft cursor-pointer transition-colors"
           :class="rowClass(item)"
           @mouseenter="emit('hover', item.id)"
           @mouseleave="emit('hover', null)"
           @click="emit('select', item.id)"
         >
-          <td class="py-1 px-2 font-mono text-[#484E59] text-[10px]">{{ item.accession }}</td>
-          <td colspan="2" class="py-1 px-2 font-mono text-gray-700 tabular-nums text-right whitespace-nowrap">
+          <td class="py-1 px-2 font-mono text-ink3 text-[10px]">{{ item.accession }}</td>
+          <td colspan="2" class="py-1 px-2 font-mono text-ink2 tabular-nums text-right whitespace-nowrap">
             {{ formatRanges(item.ranges) }}
           </td>
-          <td class="py-1 px-2 text-gray-700">{{ item.label }}</td>
+          <td class="py-1 px-2 text-ink2">{{ item.label }}</td>
         </tr>
       </template>
 
@@ -57,16 +57,16 @@ function rowClass(feature) {
         <tr
           v-for="item in group.items"
           :key="item.id"
-          class="border-t border-slate-100 cursor-pointer transition-colors"
+          class="border-t border-border-soft cursor-pointer transition-colors"
           :class="rowClass(item)"
           @mouseenter="emit('hover', item.id)"
           @mouseleave="emit('hover', null)"
           @click="emit('select', item.id)"
         >
-          <td class="py-1 px-2 text-[#484E59]">{{ item.label }}</td>
-          <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.ranges[0].start }}</td>
-          <td class="py-1 px-2 w-14 font-mono text-gray-700 tabular-nums text-right">{{ item.ranges[0].end }}</td>
-          <td class="py-1 px-2 text-[#484E59]">
+          <td class="py-1 px-2 text-ink3">{{ item.label }}</td>
+          <td class="py-1 px-2 w-14 font-mono text-ink2 tabular-nums text-right">{{ item.ranges[0].start }}</td>
+          <td class="py-1 px-2 w-14 font-mono text-ink2 tabular-nums text-right">{{ item.ranges[0].end }}</td>
+          <td class="py-1 px-2 text-ink3">
             {{ group.type === 'LCD' ? '' : formatSource(item.source) }}
           </td>
         </tr>

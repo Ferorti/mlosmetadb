@@ -137,7 +137,7 @@ watch(() => props.protein.uniprot_id, () => {
         <div class="text-sm font-medium text-gray-700">Protein sequence</div>
         <div class="text-xs text-[#484E59]">{{ sequence.length.toLocaleString() }} aa</div>
       </div>
-      <div class="rounded border border-slate-200 bg-slate-50/60 px-3 py-2 overflow-x-auto">
+      <div class="border border-border bg-page px-3.5 py-3 overflow-x-auto">
         <ProteinSequence
           :sequence="sequence"
           :spans="featureSpans"

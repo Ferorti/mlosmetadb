@@ -248,14 +248,14 @@ onUnmounted(() => {
         ></div>
 
         <span
-          class="relative z-10 text-right text-[#484E59] tabular-nums flex-shrink-0 select-none"
+          class="relative z-10 text-right text-ink3 tabular-nums flex-shrink-0 select-none"
           :style="{ width: `${numberW}px`, marginRight: `${GUTTER_GAP}px` }"
         >{{ line.start }}</span>
 
         <span class="relative z-10 whitespace-pre text-gray-800">{{ line.text }}</span>
 
         <span
-          class="relative z-10 text-[#484E59] tabular-nums flex-shrink-0 select-none"
+          class="relative z-10 text-ink3 tabular-nums flex-shrink-0 select-none"
           :style="{ marginLeft: `${GUTTER_GAP}px` }"
         >{{ line.end }}</span>
       </div>
