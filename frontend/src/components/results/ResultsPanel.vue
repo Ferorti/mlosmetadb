@@ -168,7 +168,7 @@ function goToProtein(id) {
 }
 
 function titleColor(protein) {
-  if (protein.has_driver) return 'text-[#185FA5]'
+  if (protein.has_driver) return 'text-brand'
   return 'text-[#4B5563]'
 }
 

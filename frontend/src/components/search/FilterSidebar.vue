@@ -384,7 +384,7 @@ function applyPfam() {
               />
               <button
                 v-if="pfamInput"
-                class="text-xs text-white bg-[#1B3D6F] rounded px-2 py-1 hover:bg-[#24508F] transition-colors"
+                class="text-xs text-white bg-navy rounded px-2 py-1 hover:bg-[#24508F] transition-colors"
                 @click="applyPfam"
               >
                 Go

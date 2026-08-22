@@ -64,13 +64,13 @@ watch(() => route.params.id, async (id) => {
     </div>
 
     <!-- Not found -->
-    <div v-else-if="error === 'not_found'" class="py-24 text-center text-sm text-[#484E59]">
+    <div v-else-if="error === 'not_found'" class="py-24 text-center text-sm text-ink3">
       Protein not found.
-      <RouterLink to="/" class="ml-2 text-[#185FA5] hover:underline">← Back to home</RouterLink>
+      <RouterLink to="/" class="ml-2 text-brand hover:underline">← Back to home</RouterLink>
     </div>
 
     <!-- Generic error -->
-    <div v-else-if="error" class="py-24 text-center text-sm text-[#484E59]">
+    <div v-else-if="error" class="py-24 text-center text-sm text-ink3">
       Could not load protein data.
     </div>
 
@@ -78,7 +78,7 @@ watch(() => route.params.id, async (id) => {
     <template v-else-if="protein">
 
       <!-- Header with blue background -->
-      <div class="bg-[#EBF3FB] border-b border-[#C8DFF2]">
+      <div class="bg-surface border-b border-border">
         <div class="max-w-6xl mx-auto px-6">
           <ProteinHeader :protein="protein" />
         </div>
@@ -112,25 +112,25 @@ watch(() => route.params.id, async (id) => {
             <a
               :href="`https://www.uniprot.org/uniprotkb/${protein.uniprot_id}`"
               target="_blank" rel="noopener"
-              class="text-[#185FA5] hover:underline"
+              class="text-brand hover:underline"
             >UniProt</a>
-            <span class="text-[#484E59]"> · </span>
+            <span class="text-ink3"> · </span>
             <a
               :href="`https://mobidb.org/${protein.uniprot_id}`"
               target="_blank" rel="noopener"
-              class="text-[#185FA5] hover:underline"
+              class="text-brand hover:underline"
             >MobiDB</a>
-            <span class="text-[#484E59]"> · </span>
+            <span class="text-ink3"> · </span>
             <a
               :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
               target="_blank" rel="noopener"
-              class="text-[#185FA5] hover:underline"
+              class="text-brand hover:underline"
             >AlphaFold DB</a>
-            <span class="text-[#484E59]"> · </span>
+            <span class="text-ink3"> · </span>
             <a
               :href="`https://www.ebi.ac.uk/interpro/protein/UniProt/${protein.uniprot_id}`"
               target="_blank" rel="noopener"
-              class="text-[#185FA5] hover:underline"
+              class="text-brand hover:underline"
             >InterPro</a>
           </div>
         </div>

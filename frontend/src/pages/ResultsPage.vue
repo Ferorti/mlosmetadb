@@ -240,7 +240,7 @@ function onResetFilters() {
   <div class="flex flex-col min-h-0">
 
     <!-- Search bar: full width with own background -->
-    <div class="bg-[#EBF3FB] border-b border-[#C8DFF2]">
+    <div class="bg-surface border-b border-border">
       <div class="max-w-6xl mx-auto px-6 py-3">
         <SearchBox
           compact
@@ -259,7 +259,7 @@ function onResetFilters() {
         Filters
         <span
           v-if="activeFilterCount"
-          class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-[#185FA5] text-white text-[11px] leading-none"
+          class="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-brand text-white text-[11px] leading-none"
         >{{ activeFilterCount }}</span>
       </button>
     </div>

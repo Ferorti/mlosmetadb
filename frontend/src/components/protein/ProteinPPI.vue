@@ -374,7 +374,7 @@ function shortSystems(systems) {
       <!-- MLO filter -->
       <select
         v-model="filterMlo"
-        class="text-xs border border-gray-200 rounded px-2 py-1.5 text-gray-600 focus:outline-none focus:border-[#185FA5] max-w-[190px]"
+        class="text-xs border border-gray-200 rounded px-2 py-1.5 text-gray-600 focus:outline-none focus:border-brand max-w-[190px]"
       >
         <option value="">All organelles</option>
         <option v-for="m in mloOptions" :key="m" :value="m">{{ formatMlo(m) }}</option>
@@ -383,7 +383,7 @@ function shortSystems(systems) {
       <!-- Reset -->
       <button
         v-if="filterRole !== 'all' || filterMlo"
-        class="text-xs text-[#185FA5] hover:underline"
+        class="text-xs text-brand hover:underline"
         @click="resetFilters"
       >Reset filters</button>
     </div>
@@ -397,10 +397,10 @@ function shortSystems(systems) {
       Loading interactions…
     </div>
     <div v-else-if="error" class="text-sm text-red-500 py-4">{{ error }}</div>
-    <div v-else-if="!protein.ppi?.total_partners" class="text-sm text-[#484E59] py-4">
+    <div v-else-if="!protein.ppi?.total_partners" class="text-sm text-ink3 py-4">
       No PPI data available for this protein.
     </div>
-    <div v-else-if="!allPartners.length" class="text-sm text-[#484E59] py-4">
+    <div v-else-if="!allPartners.length" class="text-sm text-ink3 py-4">
       This protein has {{ formatCount(protein.ppi?.total_partners) }} known interaction partner(s), but none are currently in MLOsMetaDB.
     </div>
 
@@ -425,7 +425,7 @@ function shortSystems(systems) {
                 <td colspan="5" class="px-3 py-8 text-center text-gray-400">
                   <template v-if="filterRole === 'driver'">
                     No driver partners found.
-                    <button class="text-[#185FA5] hover:underline ml-1" @click="filterRole = 'all'">Show all roles</button>
+                    <button class="text-brand hover:underline ml-1" @click="filterRole = 'all'">Show all roles</button>
                   </template>
                   <template v-else>No partners match current filters.</template>
                 </td>
@@ -441,7 +441,7 @@ function shortSystems(systems) {
               >
                 <td class="px-3 py-1.5 font-medium">
                   <span
-                    class="text-[#185FA5] hover:underline cursor-pointer"
+                    class="text-brand hover:underline cursor-pointer"
                     @click="router.push(`/protein/${p.partner_uniprot_id}`)"
                   >{{ p.partner_gene || p.partner_uniprot_id }}</span>
                 </td>
@@ -536,7 +536,7 @@ function shortSystems(systems) {
             <div class="mt-1">
               <span
                 v-if="tooltip.partner.has_driver"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-[#185FA5] border border-[#BFD7F0]"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
               >Driver</span>
               <span v-else class="text-gray-500 text-[10px]">Component</span>
             </div>

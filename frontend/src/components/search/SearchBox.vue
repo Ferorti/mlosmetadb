@@ -134,7 +134,7 @@ function handleSearch() {
           </div>
           <div class="border-l border-gray-200 self-stretch"></div>
           <button
-            class="bg-[#1B3D6F] hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
+            class="bg-navy hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
             @click="handleSearch"
           >
             Search
@@ -153,7 +153,7 @@ function handleSearch() {
           @blur="closeDropdown"
         />
         <button
-          class="bg-[#1B3D6F] hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
+          class="bg-navy hover:bg-[#24508F] text-white text-sm font-medium px-5 transition-colors flex-shrink-0"
           @click="handleSearch"
         >
           Search
@@ -174,11 +174,11 @@ function handleSearch() {
         :key="protein.uniprot_id"
         :class="[
           'flex items-baseline gap-2 px-3 py-2 cursor-pointer transition-colors',
-          activeIndex === i ? 'bg-[#EBF3FB]' : 'hover:bg-gray-50'
+          activeIndex === i ? 'bg-page' : 'hover:bg-gray-50'
         ]"
         @mousedown.prevent="selectProtein(protein)"
       >
-        <span class="text-sm font-medium text-[#185FA5] truncate">
+        <span class="text-sm font-medium text-brand truncate">
           {{ protein.gene_name || protein.uniprot_id }}
         </span>
         <span class="font-mono text-[11px] text-gray-500 flex-shrink-0">{{ protein.uniprot_id }}</span>

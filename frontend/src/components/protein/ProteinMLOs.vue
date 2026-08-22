@@ -88,13 +88,13 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
     <!-- Section header -->
     <div class="mb-4">
       <span class="text-lg font-semibold text-gray-800">MLOs</span>
-      <span v-if="totalAnnotations" class="text-sm text-[#484E59] ml-2 font-normal">
+      <span v-if="totalAnnotations" class="text-sm text-ink3 ml-2 font-normal">
         {{ totalAnnotations }} record{{ totalAnnotations !== 1 ? 's' : '' }} across
         {{ groupCount }} organelle{{ groupCount !== 1 ? 's' : '' }}
       </span>
     </div>
 
-    <div v-if="!dedupedAnnotations.length" class="text-sm text-[#484E59]">
+    <div v-if="!dedupedAnnotations.length" class="text-sm text-ink3">
       No MLO annotations found for this protein.
     </div>
 

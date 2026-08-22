@@ -116,7 +116,7 @@ watch(() => props.protein.uniprot_id, () => {
         @hover="onHover"
         @select="onSelect"
       />
-      <div v-if="stats" class="text-xs text-center text-[#484E59] mt-1">{{ stats }}</div>
+      <div v-if="stats" class="text-xs text-center text-ink3 mt-1">{{ stats }}</div>
 
       <div v-if="hasFeatures" class="flex flex-wrap gap-6 mt-4 pt-3 border-t border-border-soft">
         <div
@@ -129,13 +129,13 @@ watch(() => props.protein.uniprot_id, () => {
         </div>
       </div>
     </div>
-    <div v-else class="text-sm text-[#484E59]">No sequence features available.</div>
+    <div v-else class="text-sm text-ink3">No sequence features available.</div>
 
     <!-- Band 2 — sequence, full width -->
     <div v-if="sequence" class="mt-6">
       <div class="flex items-baseline justify-between mb-2">
         <div class="text-sm font-medium text-gray-700">Protein sequence</div>
-        <div class="text-xs text-[#484E59]">{{ sequence.length.toLocaleString() }} aa</div>
+        <div class="text-xs text-ink3">{{ sequence.length.toLocaleString() }} aa</div>
       </div>
       <div class="border border-border bg-page px-3.5 py-3 overflow-x-auto">
         <ProteinSequence
@@ -164,7 +164,7 @@ watch(() => props.protein.uniprot_id, () => {
         <a
           :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
           target="_blank" rel="noopener"
-          class="text-xs text-[#185FA5] mt-1 inline-block hover:underline"
+          class="text-xs text-brand mt-1 inline-block hover:underline"
         >View in AlphaFold DB →</a>
       </div>
 
@@ -178,7 +178,7 @@ watch(() => props.protein.uniprot_id, () => {
           @hover="onHover"
           @select="onSelect"
         />
-        <div v-else class="text-sm text-[#484E59]">No sequence features available.</div>
+        <div v-else class="text-sm text-ink3">No sequence features available.</div>
       </div>
     </div>
   </div>

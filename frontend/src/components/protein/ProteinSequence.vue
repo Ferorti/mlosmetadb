@@ -232,7 +232,7 @@ onUnmounted(() => {
             width: `${ov.width}px`,
             backgroundColor: ov.color,
             opacity: ov.pinned ? 0.9 : 0.55,
-            boxShadow: ov.pinned ? 'inset 0 0 0 1px #185FA5' : 'none',
+            boxShadow: ov.pinned ? 'inset 0 0 0 1px #1560A8' : 'none',
           }"
         ></div>
 
@@ -243,7 +243,7 @@ onUnmounted(() => {
           :style="{
             left:  `${residueBox.left}px`,
             width: `${residueBox.width}px`,
-            boxShadow: 'inset 0 0 0 1px #185FA5',
+            boxShadow: 'inset 0 0 0 1px #1560A8',
           }"
         ></div>
 
@@ -263,7 +263,7 @@ onUnmounted(() => {
 
     <button
       v-if="collapsible"
-      class="mt-2 text-xs text-[#185FA5] hover:underline"
+      class="mt-2 text-xs text-brand hover:underline"
       @click="expanded = !expanded"
     >
       {{ expanded
