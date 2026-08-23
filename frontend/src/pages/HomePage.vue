@@ -55,6 +55,8 @@ const sourceRows = computed(() => {
   }))
 })
 
+const totalOrganismCount = computed(() => Object.keys(stats.value?.proteins?.by_organism ?? {}).length)
+
 const organismRows = computed(() => {
   const byOrg = stats.value?.proteins?.by_organism ?? {}
   const entries = Object.entries(byOrg).sort((a, b) => b[1] - a[1])
@@ -73,11 +75,12 @@ const coverageRows = computed(() => {
       spatial_location: m.spatial_location,
       protein_count: m.protein_count,
       cells: SOURCE_ORDER.map(src => {
-        const def = (m.definitions ?? []).find(d => d.source_db === src)
+        const on  = m.sources?.includes(src) ?? false
+        const def = (m.definitions ?? []).find(d => d.source_db?.toLowerCase() === src.toLowerCase())
         return {
           source: src,
-          on:     !!def,
-          title:  def ? `${src}: ${def.source_name ?? def.definition ?? ''}` : `${src}: not annotated`,
+          on,
+          title:  on ? `${src}: ${def?.source_name ?? def?.definition ?? 'annotated'}` : `${src}: not annotated`,
         }
       }),
     }))
@@ -174,7 +177,7 @@ function searchExample(term) {
       <div>
         <div class="flex items-baseline gap-3.5 border-b border-border pb-[11px] mb-5">
           <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Model organisms</h2>
-          <span class="font-mono text-[11px] text-muted">{{ organismRows.length }} species</span>
+          <span class="font-mono text-[11px] text-muted">top {{ organismRows.length }} of {{ totalOrganismCount }} species</span>
         </div>
         <div class="flex flex-col gap-3">
           <div v-for="o in organismRows" :key="o.name" class="grid grid-cols-[1fr_74px] gap-3.5 items-start">

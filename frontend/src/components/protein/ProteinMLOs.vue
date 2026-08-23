@@ -69,11 +69,11 @@ const matrixRows = computed(() => {
     unified_mlo,
     displayRole: groupRole(anns),
     cells: MATRIX_SOURCES.map(src => {
-      const ann = anns.find(a => a.source_db === src)
+      const matches = anns.filter(a => a.source_db === src)
       return {
         source: src,
-        on:     !!ann,
-        title:  ann ? `${src}: ${ann.source_mlo}` : `${src}: not annotated`,
+        on: matches.length > 0,
+        title: matches.length ? `${src}: ${matches.map(a => a.source_mlo).join('; ')}` : `${src}: not annotated`,
       }
     }),
   }))

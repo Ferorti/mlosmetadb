@@ -63,8 +63,15 @@ const roleRows = computed(() => {
     .map(([key, meta]) => ({ ...meta, count: by[key], pct: Math.round((by[key] / max) * 100) }))
 })
 
+const SOURCE_DISPLAY_NAMES = {
+  cdcode: 'CD-CODE', drllps: 'DrLLPS', llpsdb: 'LLPSDB', phasepro: 'PhaSePro', phasepdb: 'PhaSepDB',
+}
+function sourceDisplayName(raw) {
+  return SOURCE_DISPLAY_NAMES[raw?.toLowerCase()] ?? raw
+}
+
 const termRows = computed(() => (detail.value?.definitions ?? []).map(d => ({
-  source: d.source_db, term: d.source_name ?? d.definition ?? '—',
+  source: sourceDisplayName(d.source_db), term: d.source_name ?? d.definition ?? '—',
 })))
 
 const proteinRows = computed(() => (detail.value?.proteins?.items ?? []).map(p => ({
@@ -161,6 +168,9 @@ const proteinRows = computed(() => (detail.value?.proteins?.items ?? []).map(p =
             </div>
             <div class="text-[12.5px] text-ink3 mt-1.5">{{ r.description }}</div>
           </div>
+        </div>
+        <div class="text-[12.5px] text-ink3 mt-4">
+          Counts are per annotation, not per protein: a protein annotated as both a driver and a regulator (via different sources) is counted in both bars.
         </div>
       </section>
 
