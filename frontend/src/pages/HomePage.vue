@@ -55,7 +55,7 @@ const sourceRows = computed(() => {
   }))
 })
 
-const totalOrganismCount = computed(() => Object.keys(stats.value?.proteins?.by_organism ?? {}).length)
+const totalOrganismCount = computed(() => stats.value?.proteins?.total_organisms ?? 0)
 
 const organismRows = computed(() => {
   const byOrg = stats.value?.proteins?.by_organism ?? {}
