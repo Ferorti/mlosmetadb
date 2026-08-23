@@ -111,7 +111,7 @@ function searchExample(term) {
       <div class="max-w-[1080px] mx-auto px-8 pt-[70px] pb-9">
 
         <h1 class="font-display font-bold text-[52px] leading-[1.05] tracking-[-0.035em] text-ink max-w-[15ch]">
-          Proteins in membraneless organelles
+          MLOsMetaDB
         </h1>
         <p class="mt-5 text-[17px] leading-relaxed text-ink2 max-w-[56ch]">
           A meta-database of proteins associated with membraneless organelles
@@ -125,10 +125,11 @@ function searchExample(term) {
             :initial-query="''"
             @search="handleSearch"
           />
-          <div class="flex items-center gap-3 mt-3 font-mono text-[11.5px] text-muted">
-            <span>TRY</span>
-            <button class="text-brand hover:text-ink hover:underline" @click="searchExample('FUS')">FUS</button>
-            <button class="text-brand hover:text-ink hover:underline" @click="searchExample('P35637')">P35637</button>
+          <div class="flex items-center gap-1 mt-3 text-[11.5px] text-muted">
+            <span>Examples:</span>
+            <button class="text-brand hover:text-ink hover:underline mx-1" @click="searchExample('FUS')">FUS</button>
+            <span>·</span>
+            <button class="text-brand hover:text-ink hover:underline mx-1" @click="searchExample('P35637')">P35637</button>
           </div>
         </div>
 

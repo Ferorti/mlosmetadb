@@ -56,7 +56,7 @@ function sourceHref(source) {
     <!-- Source badges row: role pill + source DB links -->
     <div v-if="sourceDbs.length" class="flex flex-wrap gap-2 mt-3 items-center">
       <div v-if="displayRole" class="inline-flex items-center gap-1.5 border border-brand text-brand rounded-[2px] px-2.5 py-1 text-xs font-medium">
-        <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>LLPS driver
+        <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>LLPS Driver
       </div>
 
       <SourceDbBadge
