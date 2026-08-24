@@ -557,17 +557,21 @@ revertir la página de detalle en sí — solo corregir este link.
 - **Lista de MLOs**: sale de la columna PROTEIN (donde quedaba apretada
   y visualmente se mezclaba con ARCHITECTURE) y pasa a ser una
   sub-sección de ancho completo (`colspan` sobre las 6 columnas) debajo
-  de cada fila, en grid (`grid-cols-[repeat(auto-fill,minmax(150px,1fr))]`)
-  para que quede alineada en columnas en vez de texto corrido con "·".
+  de cada fila. El texto es el mismo formato de siempre — nombres
+  unidos con " · " — solo que ahora vive en esa sub-fila ancha en vez
+  de adentro de PROTEIN; hubo un paso intermedio donde se probó un
+  layout en grid (`grid-cols-[repeat(auto-fill,minmax(150px,1fr))]`,
+  una MLO por celda) para alinear columnas, pero el usuario pidió
+  volver al texto corrido con "·" — el grid no quedó.
 - **Truncado**: se mantiene el comportamiento original — hasta 10 MLOs
   visibles, con un "+N more" clickeable que expande el resto
   (`expandedRows`/`visibleMlos`, mismo mecanismo que ya existía
-  pre-rediseño). *Nota: hubo una vuelta atrás acá — en un primer paso se
+  pre-rediseño). *Nota: hubo idas y vueltas acá — en un primer paso se
   sacó el truncado completamente (mostrar siempre todas las MLOs) a
   pedido del usuario, junto con la sub-fila; en un pedido posterior el
   usuario pidió revertir específicamente el truncado (volver a +N more)
-  mantendiendo el resto de los cambios de esa misma sub-fila (formato
-  fila completa, grid). Cada MLO individual **no** es clickeable para
+  manteniendo el resto de los cambios de esa misma sub-fila (formato
+  fila completa). Cada MLO individual **no** es clickeable para
   filtrar — se agregó esa interacción sin que se pidiera y se revirtió
   en el mismo ciclo (ver lección de §9.1: no agregar comportamiento no
   pedido, ni siquiera "restaurando" algo que existía en una versión
