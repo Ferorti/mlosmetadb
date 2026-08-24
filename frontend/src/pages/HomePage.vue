@@ -11,6 +11,7 @@ import SearchBox from '@/components/search/SearchBox.vue'
 const router = useRouter()
 const stats = ref(null)
 const mlos = ref([])
+const BASE_URL = import.meta.env.BASE_URL
 
 onMounted(async () => {
   const [statsRes, mlosRes] = await Promise.all([getStats(), getMlos()])
@@ -107,25 +108,29 @@ function searchExample(term) {
   <div class="bg-white">
 
     <!-- Hero + Search -->
-    <section class="bg-surface border-b border-border">
-      <div class="max-w-[1080px] mx-auto px-8 pt-[70px] pb-9">
+    <section class="bg-surface border-b border-border text-center">
+      <div class="max-w-3xl mx-auto px-8 pt-14 pb-9">
 
-        <h1 class="font-display font-bold text-[52px] leading-[1.05] tracking-[-0.035em] text-ink max-w-[15ch]">
+        <div class="flex justify-center mb-1">
+          <img :src="`${BASE_URL}loguito_horizontal.svg`" alt="MLOsMetaDB" class="h-7 w-auto">
+        </div>
+
+        <h1 class="font-display font-bold text-[30px] leading-tight tracking-[-0.015em] text-ink">
           MLOsMetaDB
         </h1>
-        <p class="mt-5 text-[17px] leading-relaxed text-ink2 max-w-[56ch]">
+        <p class="mt-3 text-[15px] leading-relaxed text-ink2">
           A meta-database of proteins associated with membraneless organelles
           involved in liquid-liquid phase separation. Integrates proteins from
           PhaSepDB, DrLLPS, PhaSePro, LLPSDB and CD-CODE.
         </p>
 
-        <div class="mt-[34px] max-w-[660px]">
+        <div class="mt-6">
           <SearchBox
             :show-search-options="true"
             :initial-query="''"
             @search="handleSearch"
           />
-          <div class="flex items-center gap-1 mt-3 text-[11.5px] text-muted">
+          <div class="flex items-center justify-center gap-1 mt-3 text-[11.5px] text-muted">
             <span>Examples:</span>
             <button class="text-brand hover:text-ink hover:underline mx-1" @click="searchExample('FUS')">FUS</button>
             <span>·</span>
