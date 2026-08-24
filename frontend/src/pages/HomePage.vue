@@ -209,14 +209,13 @@ function searchExample(term) {
             <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">COMPARTMENT</th>
             <th v-for="c in SOURCE_ORDER" :key="c" class="text-center px-1 pb-[9px] border-b border-border-strong font-mono text-[10px] font-normal text-ink3">{{ c }}</th>
             <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEINS</th>
-            <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">DRIVERS</th>
-            <th class="pb-[9px] border-b border-border-strong"></th>
+            <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">DRIVERS</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="row in mloRows" :key="row.unified_mlo" class="border-b border-border-soft">
             <td class="py-[11px] pr-3 text-[13.5px]">
-              <RouterLink :to="{ path: '/results', query: { mlo: row.unified_mlo } }" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
+              <RouterLink :to="{ path: '/results', query: { mlo: row.unified_mlo } }" class="text-brand hover:text-ink hover:underline">{{ formatMlo(row.unified_mlo) }}</RouterLink>
             </td>
             <td class="py-[11px] px-3 font-mono text-[11px] text-muted">{{ spatialLocationLabel(row.spatial_location) }}</td>
             <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-1 text-center">
@@ -224,10 +223,7 @@ function searchExample(term) {
               <span v-else class="inline-block w-[7px] h-px bg-border-strong"></span>
             </td>
             <td class="py-[11px] px-3 text-right font-mono text-xs text-ink">{{ formatCount(row.protein_count) }}</td>
-            <td class="py-[11px] px-3 text-right font-mono text-xs text-brand">{{ formatCount(row.driver_count) }}</td>
-            <td class="py-[11px] pl-3 text-right">
-              <RouterLink :to="{ path: '/results', query: { mlo: row.unified_mlo } }" class="font-mono text-[11px] text-brand hover:text-ink hover:underline whitespace-nowrap">Explore →</RouterLink>
-            </td>
+            <td class="py-[11px] pl-3 text-right font-mono text-xs text-brand">{{ formatCount(row.driver_count) }}</td>
           </tr>
         </tbody>
       </table>
@@ -244,7 +240,7 @@ function searchExample(term) {
           <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Model organisms</h2>
           <span class="font-mono text-[11px] text-muted">top {{ organismRows.length }} of {{ totalOrganismCount }} species</span>
         </div>
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1.5">
           <div v-for="o in organismRows" :key="o.name">
             <span class="text-[13.5px] italic text-ink">{{ o.name }}</span>
             <div class="flex items-center gap-2 mt-1">
