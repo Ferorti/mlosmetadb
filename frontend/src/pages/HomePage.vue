@@ -108,7 +108,7 @@ function searchExample(term) {
   <div class="bg-white">
 
     <!-- Hero + Search -->
-    <section class="bg-surface border-b border-border text-center">
+    <section class="bg-[#EAF2FA] border-b border-[#D2E3F1] text-center">
       <div class="max-w-3xl mx-auto px-8 pt-14 pb-9">
 
         <div class="flex justify-center mb-1">
