@@ -382,19 +382,13 @@ function architectureBands(entry) {
                 class="border-b border-border-soft group-hover:bg-page cursor-pointer transition-colors"
                 @click="goToProtein(entry.protein.uniprot_id)"
               >
-                <td colspan="6" class="px-3 pb-3.5 pt-0">
-                  <div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-x-5 gap-y-1">
-                    <span
-                      v-for="mlo in visibleMlos(entry.protein)"
-                      :key="mlo"
-                      class="text-[12.5px] text-ink3 truncate"
-                    >{{ formatMlo(mlo) }}</span>
-                    <button
-                      v-if="displayMlos(entry.protein).length > 10 && !expandedRows.has(entry.protein.uniprot_id)"
-                      class="text-[12.5px] text-muted hover:underline text-left"
-                      @click.stop="expandedRows.add(entry.protein.uniprot_id)"
-                    >+{{ displayMlos(entry.protein).length - 10 }} more</button>
-                  </div>
+                <td colspan="6" class="px-3 pb-3.5 pt-0 text-[12.5px] text-ink3">
+                  {{ visibleMlos(entry.protein).map(formatMlo).join(' · ') }}
+                  <button
+                    v-if="displayMlos(entry.protein).length > 10 && !expandedRows.has(entry.protein.uniprot_id)"
+                    class="text-muted hover:underline"
+                    @click.stop="expandedRows.add(entry.protein.uniprot_id)"
+                  >+{{ displayMlos(entry.protein).length - 10 }} more</button>
                 </td>
               </tr>
             </tbody>
