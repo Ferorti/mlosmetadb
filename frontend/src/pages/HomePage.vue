@@ -65,6 +65,7 @@ const organismRows = computed(() => {
   const entries = Object.entries(byOrg).sort((a, b) => b[1] - a[1])
   const max = entries[0]?.[1] ?? 1
   return entries.slice(0, 10).map(([name, count]) => ({
+    rawName: name,
     name: formatOrganism(name),
     count,
     driverCount: byDrivers[name] ?? 0,
@@ -188,7 +189,7 @@ function searchExample(term) {
         </div>
         <RouterLink to="/mlos" class="font-mono text-[11.5px] text-brand hover:text-ink hover:underline">All organelles →</RouterLink>
       </div>
-      <p class="text-[13.5px] text-ink3 max-w-[64ch] mb-4">
+      <p class="text-[13.5px] text-ink3 mb-4">
         Or find proteins by the organelle they are associated with. The filter
         also reads the names each source database uses, so "GW-body" finds
         P body. A mark below shows the organelle is annotated in that
@@ -240,18 +241,21 @@ function searchExample(term) {
           <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Model organisms</h2>
           <span class="font-mono text-[11px] text-muted">top {{ organismRows.length }} of {{ totalOrganismCount }} species</span>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <div v-for="o in organismRows" :key="o.name">
-            <span class="text-[13.5px] italic text-ink">{{ o.name }}</span>
-            <div class="flex items-center gap-2 mt-1">
-              <div class="flex-1 h-[5px] bg-track rounded-[1px]">
-                <div class="h-[5px] bg-brand rounded-[1px]" :style="{ width: o.pct + '%' }"></div>
-              </div>
-              <div class="font-mono text-[11px] text-ink whitespace-nowrap">
-                {{ formatCount(o.count) }}<span class="text-muted"> · {{ formatCount(o.driverCount) }} drivers</span>
-              </div>
+        <div class="flex flex-col gap-2">
+          <RouterLink
+            v-for="o in organismRows"
+            :key="o.name"
+            :to="{ path: '/results', query: { organism: o.rawName } }"
+            class="grid grid-cols-[170px_1fr_140px] items-center gap-3 hover:opacity-75 transition-opacity"
+          >
+            <span class="text-[13.5px] italic text-ink truncate">{{ o.name }}</span>
+            <div class="h-[5px] bg-track rounded-[1px]">
+              <div class="h-[5px] bg-brand rounded-[1px]" :style="{ width: o.pct + '%' }"></div>
             </div>
-          </div>
+            <div class="font-mono text-[11px] text-ink text-right whitespace-nowrap">
+              {{ formatCount(o.count) }}<span class="text-muted"> · {{ formatCount(o.driverCount) }} drivers</span>
+            </div>
+          </RouterLink>
         </div>
       </div>
 
