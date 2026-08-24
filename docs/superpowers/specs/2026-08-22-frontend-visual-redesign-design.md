@@ -1,7 +1,11 @@
 # Design: sistema visual v3 (rediseño de layout/estilo, sin tocar datos)
 
-**Date**: 2026-08-22
-**Status**: draft, pendiente de revisión del usuario
+**Date**: 2026-08-22 (implementado y mergeado a `frontend/visual-redesign` 2026-08-23; iterado con el usuario post-merge hasta 2026-08-24, ver §9)
+**Status**: implementado — las 16 tareas del plan + revisión final +
+correcciones post-merge de §9 están todas mergeadas en
+`frontend/visual-redesign`. No queda en el worktree/branch de
+implementación (`frontend/visual-redesign-impl`), que ya se borró tras
+el merge.
 **Scope**: `frontend/` completo (Tailwind config, fuentes, y las cuatro
 pantallas cubiertas por los mockups: Home, Search Results/ResultsPage,
 Protein Page, MLO detail). No toca `api/`, `database/`, `scripts/`,
@@ -430,3 +434,169 @@ componente) para poder volver a un estado intermedio.
   (ARCHITECTURE, matrices de fuente) más allá de lo que ya dicta
   `overflow-x` estándar — el documento no lo cubre y no hay mockup
   mobile.
+
+---
+
+## 9. Correcciones post-merge (revisión directa del usuario sobre la app corriendo, 2026-08-23/24)
+
+Las 16 tareas del plan se ejecutaron vía subagent-driven-development en
+un worktree aislado (`frontend/visual-redesign-impl`), pasaron su
+revisión final, y se mergearon a `frontend/visual-redesign` (fast-forward,
+commit `c988f22`). El worktree y la branch de implementación ya no
+existen — todo lo de esta sección son commits directos sobre
+`frontend/visual-redesign`, hechos por el usuario mirando la app real con
+`npm run dev` y pidiendo ajustes puntuales. Ninguna de estas correcciones
+pasó por el proceso de subagentes/revisión del plan original; son
+ediciones directas, cada una en su propio commit.
+
+### 9.1 Tres reversiones de copy (commit `2b86fe7`)
+
+El usuario detectó que, pese a la regla de prioridad de §0, tres textos
+reales habían sido reemplazados por copy inventado del mock durante la
+Task 5 del plan:
+
+- Home H1: **"Proteins in membraneless organelles"** (tagline del mock) →
+  vuelve a **"MLOsMetaDB"** (nombre real del producto).
+- Home hero, línea de ejemplos: **"TRY"** → vuelve a **"Examples:"**.
+- `ProteinHeader.vue`, pill de rol: **"LLPS driver"** (minúscula, casing
+  del mock) → vuelve a **"LLPS Driver"** (label verbatim de
+  `RoleBadge.vue`).
+
+**Lección para cualquier trabajo futuro sobre este código**: la regla de
+§0 ("todo el texto existente se mantiene, solo layout/estilo/tipografía
+cambia") aplica a **cualquier** copy visible, no solo a categorías/roles/
+identificadores en el sentido de datos de la base. Un H1 con el nombre
+del producto, una etiqueta de UI, el casing exacto de un label — todo
+eso es "texto existente" y no se reemplaza por la redacción del mock sin
+preguntar primero, aunque parezca una mejora de UX defendible en el
+momento. Ya pasó tres veces en esta misma sesión (ver también §9.5 con
+el click-to-filter de MLOs, mismo patrón pero de comportamiento en vez
+de texto).
+
+### 9.2 Home hero (commits `f60266c`, `741c4ef`)
+
+- Vuelve a estar centrado (`text-center`), con el logo
+  (`loguito_horizontal.svg`) arriba del título, título más chico (30px
+  en vez de 52px), y todo el bloque (logo, título, párrafo, buscador,
+  ejemplos) dentro de un único contenedor `max-w-3xl mx-auto` en vez de
+  cada hijo con su propio ancho — así quedan alineados al mismo borde.
+- Padding vertical reducido (`pt-14/pb-9` → `pt-8/pb-7`) — había
+  demasiado espacio en blanco arriba y entre los ejemplos y la línea
+  divisoria de abajo.
+- Fondo celeste restaurado: `#EAF2FA` / borde `#D2E3F1` — un tinte del
+  `brand` nuevo (`#1560A8`) mezclado con blanco a la misma claridad que
+  el `#EBF3FB` pre-rediseño, no el hex viejo reciclado. Valores inline,
+  no promovidos a token todavía.
+
+### 9.3 Home — "Browse by MLO" reconstruido (commits `5ace99e`, `1d746d7`, `ebb617b`, `e6c2d3a`)
+
+La sección "Organelle coverage" que salió de la Task 6 del plan (top-14
+por protein_count, solo informativa, sin filtro, sin link a explorar)
+**reemplazaba** — sin que el usuario lo hubiera pedido — a la sección
+original "Browse by MLO" (`MloBadges.vue`, ya no usado): un grid de
+cards con filtro de texto, ordenado por driver_count, con conteo de
+proteínas y de drivers, y click a `/results?mlo=X`. El usuario pidió
+mantener el formato tabla (más informativo, matriz de 5 fuentes) pero
+recuperando el comportamiento completo del original:
+
+- Filtro de texto (`filterMlosByQuery`, mismo util que ya usaba
+  `MlosPage.vue`), ordenado por `driver_count` desc, tope de 20
+  filas sin filtrar / 30 filtrando, con "N more match — view all".
+- Columnas: ORGANELLE (link) | COMPARTMENT | 5 puntos de fuente |
+  PROTEINS | DRIVERS.
+- El nombre de la organela linkea a **`/results?mlo=X`** (browsear
+  proteínas), no a `/mlo/:mlo` — error real detectado por el usuario:
+  clickear "Stress granule" llevaba a la página nueva de detalle de MLO
+  en vez de a resultados, que es lo que hacía el original. La columna
+  "Explore →" que existía como link redundante a lo mismo se sacó; el
+  nombre (coloreado `text-brand`, con `hover:underline`) cumple esa
+  función solo.
+- Sección movida: ahora va **antes** de "Model organisms"/"Source
+  databases" (antes iba después, como "Organelle coverage").
+- El párrafo introductorio ya no tiene `max-w-[64ch]` — antes quedaba a
+  la mitad del ancho de la sección.
+
+**Importante para quien retome esto**: `/mlo/:mlo` (la página nueva de
+detalle de MLO, Tasks 13-14 del plan) sigue existiendo y sigue
+funcionando — solo se sacó como destino de este link puntual del Home.
+`ProteinMLOs.vue` (pestaña MLO Annotations de la página de proteína)
+sigue linkeando a `/mlo/:mlo}` tal como lo hacía desde antes del
+rediseño (confirmado contra el commit pre-rediseño, no es algo que este
+trabajo haya introducido). El usuario decidió explícitamente **no**
+revertir la página de detalle en sí — solo corregir este link.
+
+### 9.4 Home — Model organisms / Source databases (commits `ebb617b`, `e6c2d3a`)
+
+- Orden de columnas swapeado: **Model organisms a la izquierda**, Source
+  databases a la derecha (antes era al revés).
+- Organisms: top 10 (antes top 8). Fila compacta de una sola línea
+  (nombre, barra, conteo) en vez de dos líneas — el usuario adjuntó una
+  captura de referencia mostrando el formato compacto deseado.
+- La barra usa `grid-cols-[170px_1fr_140px]` (columna fija para el
+  conteo) en vez de `flex-1` compartiendo espacio con el texto del
+  conteo — con flex, el ancho renderizado de la barra variaba según la
+  cantidad de dígitos del número de esa fila (bug real detectado por el
+  usuario, no cosmético: la barra vacía no terminaba en el mismo punto
+  en todas las filas).
+- Cada fila es ahora un `RouterLink` a `/results?organism=X`, usando el
+  nombre **crudo** del organismo (`rawName`, antes de `formatOrganism()`)
+  como valor del query param — mismo patrón que ya usa
+  `FilterSidebar.vue` para este filtro (`value: name` sin formatear,
+  `label: formatOrganism(name)` solo para mostrar).
+- El subtítulo "top N of M species" se dejó tal cual a pedido explícito
+  del usuario (se le preguntó si sacar "top" o cambiar "species" por
+  "model organisms"; respondió dejarlo como está).
+- "Browse by component role": ancho unificado a `max-w-[1080px] px-8`
+  (antes `max-w-4xl px-6`, más angosto que el resto de las secciones).
+
+### 9.5 Search Results — `ResultsPanel.vue` (commits `858a382`, `77c87a8`, `53e544f`)
+
+- **Orden de columnas**: PROTEIN, ROLE, SOURCES, ARCHITECTURE, LENGTH,
+  MLOS (antes PROTEIN, ARCHITECTURE, LENGTH, MLOS, SOURCES, ROLE) — rol
+  y fuente se leen primero, antes del detalle de arquitectura/longitud.
+- **Lista de MLOs**: sale de la columna PROTEIN (donde quedaba apretada
+  y visualmente se mezclaba con ARCHITECTURE) y pasa a ser una
+  sub-sección de ancho completo (`colspan` sobre las 6 columnas) debajo
+  de cada fila, en grid (`grid-cols-[repeat(auto-fill,minmax(150px,1fr))]`)
+  para que quede alineada en columnas en vez de texto corrido con "·".
+- **Truncado**: se mantiene el comportamiento original — hasta 10 MLOs
+  visibles, con un "+N more" clickeable que expande el resto
+  (`expandedRows`/`visibleMlos`, mismo mecanismo que ya existía
+  pre-rediseño). *Nota: hubo una vuelta atrás acá — en un primer paso se
+  sacó el truncado completamente (mostrar siempre todas las MLOs) a
+  pedido del usuario, junto con la sub-fila; en un pedido posterior el
+  usuario pidió revertir específicamente el truncado (volver a +N more)
+  mantendiendo el resto de los cambios de esa misma sub-fila (formato
+  fila completa, grid). Cada MLO individual **no** es clickeable para
+  filtrar — se agregó esa interacción sin que se pidiera y se revirtió
+  en el mismo ciclo (ver lección de §9.1: no agregar comportamiento no
+  pedido, ni siquiera "restaurando" algo que existía en una versión
+  anterior, sin confirmarlo primero).*
+- **SOURCES**: nombres de fuente apilados uno por línea (solo las que
+  anotan a esa proteína, orden canónico) en vez del patrón de 5 puntos
+  encendido/apagado.
+- **Hover unificado**: cada proteína (fila principal + sub-fila de MLOs)
+  vive en su propio `<tbody class="group">`, con `group-hover:bg-page`
+  en ambos `<tr>` en vez de `hover:bg-page` independiente por fila — al
+  pasar el mouse por cualquiera de las dos partes se resaltan ambas como
+  una sola sección clickeable (la división en dos `<tr>` es solo un
+  recurso de layout, no dos filas reales del dato).
+
+### 9.6 Patrón general de esta iteración
+
+Todas las correcciones de esta sección salieron de que el usuario miró
+la app real (`npm run dev`) y comparó contra lo que esperaba — no de
+releer el spec. Dos categorías de error se repitieron y vale la pena
+que quien siga desde acá las tenga presentes:
+
+1. **Copy/comportamiento inventado sin preguntar** (§9.1, la mitad de
+   §9.5): pasa cuando una decisión de la Task N del plan se redactó
+   como "esto no es dato, es UX, lo cambio directamente" sin marcarlo
+   como pregunta. La regla real es más estricta que como se aplicó: ante
+   la duda, preguntar — no decidir y seguir.
+2. **Reemplazar una sección funcional por una versión "más linda pero
+   menos capaz"** (§9.3): la Task 6 original cambió "Browse by MLO"
+   (con filtro y navegación) por "Organelle coverage" (solo lectura) sin
+   que estuviera explícitamente aprobado que se perdiera esa
+   funcionalidad — el plan lo documentó como una decisión de diseño
+   propia, no como algo que el usuario hubiera pedido perder.
