@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { formatMlo, formatCount, filterMlos } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
@@ -25,6 +25,15 @@ const router = useRouter()
 // no other MLO in this scope — see filterMlos() in utils/format.js.
 function displayMlos(protein) {
   return filterMlos(protein.mlos)
+}
+
+// Tracks which rows have their MLO list fully expanded
+const expandedRows = reactive(new Set())
+
+function visibleMlos(protein) {
+  const mlos = displayMlos(protein)
+  if (expandedRows.has(protein.uniprot_id)) return mlos
+  return mlos.slice(0, 10)
 }
 
 function hasIdr(protein) {
@@ -376,11 +385,15 @@ function architectureBands(entry) {
                 <td colspan="6" class="px-3 pb-3.5 pt-0">
                   <div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-x-5 gap-y-1">
                     <span
-                      v-for="mlo in displayMlos(entry.protein)"
+                      v-for="mlo in visibleMlos(entry.protein)"
                       :key="mlo"
-                      class="text-[12.5px] text-ink3 hover:text-brand hover:underline cursor-pointer truncate"
-                      @click.stop="applyFilter('mlo', mlo)"
+                      class="text-[12.5px] text-ink3 truncate"
                     >{{ formatMlo(mlo) }}</span>
+                    <button
+                      v-if="displayMlos(entry.protein).length > 10 && !expandedRows.has(entry.protein.uniprot_id)"
+                      class="text-[12.5px] text-muted hover:underline text-left"
+                      @click.stop="expandedRows.add(entry.protein.uniprot_id)"
+                    >+{{ displayMlos(entry.protein).length - 10 }} more</button>
                   </div>
                 </td>
               </tr>
