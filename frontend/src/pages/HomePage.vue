@@ -5,6 +5,7 @@ import { getStats } from '@/api/stats'
 import { getMlos } from '@/api/mlos'
 import { formatMlo, formatCount, formatOrganism } from '@/utils/format'
 import { spatialLocationLabel } from '@/utils/mloAxes'
+import { filterMlosByQuery } from '@/utils/mloMatch'
 import StatBar from '@/components/ui/StatBar.vue'
 import RoleCards from '@/components/browse/RoleCards.vue'
 import SearchBox from '@/components/search/SearchBox.vue'
@@ -59,33 +60,52 @@ const sourceRows = computed(() => {
 const totalOrganismCount = computed(() => stats.value?.proteins?.total_organisms ?? 0)
 
 const organismRows = computed(() => {
-  const byOrg = stats.value?.proteins?.by_organism ?? {}
+  const byOrg     = stats.value?.proteins?.by_organism ?? {}
+  const byDrivers = stats.value?.proteins?.by_organism_drivers ?? {}
   const entries = Object.entries(byOrg).sort((a, b) => b[1] - a[1])
   const max = entries[0]?.[1] ?? 1
-  return entries.slice(0, 8).map(([name, count]) => ({
-    name: formatOrganism(name), count, pct: Math.round((count / max) * 100),
+  return entries.slice(0, 10).map(([name, count]) => ({
+    name: formatOrganism(name),
+    count,
+    driverCount: byDrivers[name] ?? 0,
+    pct: Math.round((count / max) * 100),
   }))
 })
 
-const coverageRows = computed(() => {
-  return [...mlos.value]
-    .sort((a, b) => (b.protein_count ?? 0) - (a.protein_count ?? 0))
-    .slice(0, 14)
-    .map(m => ({
-      unified_mlo:   m.unified_mlo,
-      spatial_location: m.spatial_location,
-      protein_count: m.protein_count,
-      cells: SOURCE_ORDER.map(src => {
-        const on  = m.sources?.includes(src) ?? false
-        const def = (m.definitions ?? []).find(d => d.source_db?.toLowerCase() === src.toLowerCase())
-        return {
-          source: src,
-          on,
-          title:  on ? `${src}: ${def?.source_name ?? def?.definition ?? 'annotated'}` : `${src}: not annotated`,
-        }
-      }),
-    }))
-})
+// Browse by MLO — same behavior as the pre-redesign MloBadges.vue: text
+// filter over the unified name and every source alias, sorted by driver
+// count desc, capped at 20 unfiltered / 30 filtered (a filter can
+// legitimately match many). Now rendered as a table row instead of a card,
+// with the 5-source coverage dots added alongside the original
+// protein/driver counts and the "explore proteins" link.
+const MLO_DISPLAY_LIMIT  = 20
+const MLO_FILTERED_LIMIT = 30
+const mloFilter = ref('')
+
+const mlosByDrivers = computed(() =>
+  [...mlos.value].sort((a, b) => (b.driver_count ?? 0) - (a.driver_count ?? 0))
+)
+const mloMatches = computed(() => filterMlosByQuery(mlosByDrivers.value, mloFilter.value))
+const mloShown = computed(() =>
+  mloMatches.value.slice(0, mloFilter.value.trim() ? MLO_FILTERED_LIMIT : MLO_DISPLAY_LIMIT)
+)
+const mloHiddenCount = computed(() => Math.max(0, mloMatches.value.length - mloShown.value.length))
+
+const mloRows = computed(() => mloShown.value.map(m => ({
+  unified_mlo:      m.unified_mlo,
+  spatial_location: m.spatial_location,
+  protein_count:    m.protein_count,
+  driver_count:     m.driver_count,
+  cells: SOURCE_ORDER.map(src => {
+    const on  = m.sources?.includes(src) ?? false
+    const def = (m.definitions ?? []).find(d => d.source_db?.toLowerCase() === src.toLowerCase())
+    return {
+      source: src,
+      on,
+      title:  on ? `${src}: ${def?.source_name ?? def?.definition ?? 'annotated'}` : `${src}: not annotated`,
+    }
+  }),
+})))
 
 // No `field` is emitted any more: a protein search always covers accession,
 // gene name and protein name at once. Organelles are not searched here — the
@@ -109,7 +129,7 @@ function searchExample(term) {
 
     <!-- Hero + Search -->
     <section class="bg-[#EAF2FA] border-b border-[#D2E3F1] text-center">
-      <div class="max-w-3xl mx-auto px-8 pt-14 pb-9">
+      <div class="max-w-3xl mx-auto px-8 pt-8 pb-7">
 
         <div class="flex justify-center mb-1">
           <img :src="`${BASE_URL}loguito_horizontal.svg`" alt="MLOsMetaDB" class="h-7 w-auto">
@@ -149,7 +169,7 @@ function searchExample(term) {
     <div class=" mx-6 my-4"></div>
 
     <!-- Browse by role -->
-    <section class="max-w-4xl mx-auto px-6 pb-5">
+    <section class="max-w-[1080px] mx-auto px-8 pb-16">
       <div class="flex items-baseline gap-3.5 border-b border-border pb-[11px] mb-5">
         <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Browse by component role</h2>
       </div>
@@ -159,8 +179,86 @@ function searchExample(term) {
       <RoleCards :stats="stats" />
     </section>
 
-    <!-- Source databases + Model organisms -->
+    <!-- Browse by MLO -->
+    <section class="max-w-[1080px] mx-auto px-8 pb-16">
+      <div class="flex items-baseline justify-between gap-5 border-b border-border pb-[11px] mb-3">
+        <div class="flex items-baseline gap-3.5">
+          <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Membraneless organelles (MLOs)</h2>
+          <span class="font-mono text-[11px] text-muted">{{ mloRows.length }} of {{ mlos.length }} unified terms</span>
+        </div>
+        <RouterLink to="/mlos" class="font-mono text-[11.5px] text-brand hover:text-ink hover:underline">All organelles →</RouterLink>
+      </div>
+      <p class="text-[13.5px] text-ink3 max-w-[64ch] mb-4">
+        Or find proteins by the organelle they are associated with. The filter
+        also reads the names each source database uses, so "GW-body" finds
+        P body. A mark below shows the organelle is annotated in that
+        database — hover a mark for the term the source itself uses.
+      </p>
+
+      <input
+        v-model="mloFilter"
+        type="text"
+        placeholder="Filter organelles — try GW-body, foci, nucleolus"
+        class="w-full max-w-md text-[13px] text-ink border border-border rounded-[2px] px-3 py-2 mb-4 focus:outline-none focus:border-brand"
+      />
+
+      <table class="w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="text-left pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ORGANELLE</th>
+            <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">COMPARTMENT</th>
+            <th v-for="c in SOURCE_ORDER" :key="c" class="text-center px-1 pb-[9px] border-b border-border-strong font-mono text-[10px] font-normal text-ink3">{{ c }}</th>
+            <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEINS</th>
+            <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">DRIVERS</th>
+            <th class="pb-[9px] border-b border-border-strong"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in mloRows" :key="row.unified_mlo" class="border-b border-border-soft">
+            <td class="py-[11px] pr-3 text-[13.5px]">
+              <RouterLink :to="`/mlo/${row.unified_mlo}`" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
+            </td>
+            <td class="py-[11px] px-3 font-mono text-[11px] text-muted">{{ spatialLocationLabel(row.spatial_location) }}</td>
+            <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-1 text-center">
+              <span v-if="cell.on" class="inline-block w-[7px] h-[7px] rounded-full bg-ink"></span>
+              <span v-else class="inline-block w-[7px] h-px bg-border-strong"></span>
+            </td>
+            <td class="py-[11px] px-3 text-right font-mono text-xs text-ink">{{ formatCount(row.protein_count) }}</td>
+            <td class="py-[11px] px-3 text-right font-mono text-xs text-brand">{{ formatCount(row.driver_count) }}</td>
+            <td class="py-[11px] pl-3 text-right">
+              <RouterLink :to="{ path: '/results', query: { mlo: row.unified_mlo } }" class="font-mono text-[11px] text-brand hover:text-ink hover:underline whitespace-nowrap">Explore →</RouterLink>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p v-if="mloHiddenCount" class="mt-3 text-[12px] text-ink3">
+        {{ mloHiddenCount }} more match{{ mloHiddenCount === 1 ? 'es' : '' }} — refine the filter or <RouterLink to="/mlos" class="text-brand hover:underline">view all</RouterLink>.
+      </p>
+    </section>
+
+    <!-- Model organisms + Source databases -->
     <section class="max-w-[1080px] mx-auto px-8 pb-16 grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
+      <div>
+        <div class="flex items-baseline gap-3.5 border-b border-border pb-[11px] mb-5">
+          <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Model organisms</h2>
+          <span class="font-mono text-[11px] text-muted">top {{ organismRows.length }} of {{ totalOrganismCount }} species</span>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div v-for="o in organismRows" :key="o.name">
+            <span class="text-[13.5px] italic text-ink">{{ o.name }}</span>
+            <div class="flex items-center gap-2 mt-1">
+              <div class="flex-1 h-[5px] bg-track rounded-[1px]">
+                <div class="h-[5px] bg-brand rounded-[1px]" :style="{ width: o.pct + '%' }"></div>
+              </div>
+              <div class="font-mono text-[11px] text-ink whitespace-nowrap">
+                {{ formatCount(o.count) }}<span class="text-muted"> · {{ formatCount(o.driverCount) }} drivers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div class="border-b border-border pb-[11px] mb-5">
           <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Source databases</h2>
@@ -179,61 +277,6 @@ function searchExample(term) {
           organelle name, both the unified term and the original string are kept.
         </p>
       </div>
-
-      <div>
-        <div class="flex items-baseline gap-3.5 border-b border-border pb-[11px] mb-5">
-          <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Model organisms</h2>
-          <span class="font-mono text-[11px] text-muted">top {{ organismRows.length }} of {{ totalOrganismCount }} species</span>
-        </div>
-        <div class="flex flex-col gap-3">
-          <div v-for="o in organismRows" :key="o.name" class="grid grid-cols-[1fr_74px] gap-3.5 items-start">
-            <div>
-              <span class="text-[13.5px] italic text-ink">{{ o.name }}</span>
-              <div class="h-[5px] bg-track rounded-[1px] mt-1">
-                <div class="h-[5px] bg-brand rounded-[1px]" :style="{ width: o.pct + '%' }"></div>
-              </div>
-            </div>
-            <div class="font-mono text-xs text-ink text-right leading-[18px]">{{ formatCount(o.count) }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Organelle coverage -->
-    <section class="max-w-[1080px] mx-auto px-8 pb-16">
-      <div class="flex items-baseline justify-between gap-5 border-b border-border pb-[11px] mb-3">
-        <div class="flex items-baseline gap-3.5">
-          <h2 class="font-sans text-[17px] font-medium tracking-[-0.01em] text-ink">Organelle coverage</h2>
-          <span class="font-mono text-[11px] text-muted">top {{ coverageRows.length }} of {{ mlos.length }} unified terms</span>
-        </div>
-        <RouterLink to="/mlos" class="font-mono text-[11.5px] text-brand hover:text-ink hover:underline">All organelles →</RouterLink>
-      </div>
-      <p class="text-[13.5px] text-ink3 max-w-[64ch] mb-6">
-        A mark shows the organelle is annotated in that database. Hover a mark for the term the source itself uses.
-      </p>
-      <table class="w-full border-collapse">
-        <thead>
-          <tr>
-            <th class="text-left pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ORGANELLE</th>
-            <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">COMPARTMENT</th>
-            <th v-for="c in SOURCE_ORDER" :key="c" class="text-center px-2 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 w-[78px]">{{ c }}</th>
-            <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEINS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in coverageRows" :key="row.unified_mlo" class="border-b border-border-soft">
-            <td class="py-[11px] pr-3 text-[13.5px]">
-              <RouterLink :to="`/mlo/${row.unified_mlo}`" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
-            </td>
-            <td class="py-[11px] px-3 font-mono text-[11px] text-muted">{{ spatialLocationLabel(row.spatial_location) }}</td>
-            <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-2 text-center">
-              <span v-if="cell.on" class="inline-block w-[7px] h-[7px] rounded-full bg-ink"></span>
-              <span v-else class="inline-block w-[7px] h-px bg-border-strong"></span>
-            </td>
-            <td class="py-[11px] pl-3 text-right font-mono text-xs text-ink">{{ formatCount(row.protein_count) }}</td>
-          </tr>
-        </tbody>
-      </table>
     </section>
 
     <!-- Get the data -->
