@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { formatMlo, formatCount, filterMlos } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
@@ -21,19 +21,10 @@ const emit = defineEmits(['page-change', 'sort-change', 'remove-filter', 'downlo
 const route  = useRoute()
 const router = useRouter()
 
-// Tracks which rows have their MLO list fully expanded
-const expandedRows = reactive(new Set())
-
 // 'NotInformed' should only surface as "No MLO associated" when the protein has
 // no other MLO in this scope — see filterMlos() in utils/format.js.
 function displayMlos(protein) {
   return filterMlos(protein.mlos)
-}
-
-function visibleMlos(protein) {
-  const mlos = displayMlos(protein)
-  if (expandedRows.has(protein.uniprot_id)) return mlos
-  return mlos.slice(0, 10)
 }
 
 function hasIdr(protein) {
@@ -181,6 +172,13 @@ function shortOrganism(name) {
 // ---- Architecture bands (shared max-length scale across all rows) ----
 const SOURCE_ORDER = ['CDCODE', 'DrLLPS', 'LLPSDB', 'PhasePro', 'PhaSepDB']
 
+// Only the sources that actually annotate this protein, in the canonical
+// display order -- not all 5 with an on/off state.
+function sourceNames(protein) {
+  const dbs = protein.source_dbs ?? []
+  return SOURCE_ORDER.filter(src => dbs.includes(src))
+}
+
 const MAX_LENGTH = computed(() =>
   Math.max(1, ...resultsWithFeatures.value.map(r => r.protein.sequence_length || 0))
 )
@@ -326,62 +324,60 @@ function architectureBands(entry) {
                 <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[210px]">ARCHITECTURE</th>
                 <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[58px]">LENGTH</th>
                 <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[52px]">MLOS</th>
-                <th class="text-center px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[96px]">SOURCES</th>
+                <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[90px]">SOURCES</th>
                 <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[82px]">ROLE</th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="entry in resultsWithFeatures"
-                :key="entry.protein.uniprot_id"
-                class="border-b border-border-soft hover:bg-page cursor-pointer transition-colors"
-                @click="goToProtein(entry.protein.uniprot_id)"
-              >
-                <td class="align-top px-3 py-3.5">
-                  <div class="flex items-baseline gap-2">
-                    <span class="text-[15px] font-semibold tracking-[-0.01em]" :class="titleColor(entry.protein)">
-                      {{ entry.protein.gene_name || entry.protein.uniprot_id }}
-                    </span>
-                    <span class="font-mono text-[11.5px] text-ink3">{{ entry.protein.uniprot_id }}</span>
-                  </div>
-                  <div class="text-[13px] text-ink2 mt-0.5">{{ entry.protein.protein_name }}</div>
-                  <div class="text-[12.5px] italic text-muted mt-0.5">{{ shortOrganism(entry.protein.organism) }}</div>
-                  <div v-if="displayMlos(entry.protein).length" class="text-[12.5px] text-ink3 mt-1.5">
-                    {{ visibleMlos(entry.protein).map(formatMlo).join(' · ') }}
-                    <button
-                      v-if="displayMlos(entry.protein).length > 10 && !expandedRows.has(entry.protein.uniprot_id)"
-                      class="text-muted hover:underline"
-                      @click.stop="expandedRows.add(entry.protein.uniprot_id)"
-                    >+{{ displayMlos(entry.protein).length - 10 }} more</button>
-                  </div>
-                </td>
-                <td class="align-top px-3 py-3.5">
-                  <div class="relative h-3 bg-track rounded-[1px]" :style="{ width: entry.protein.sequence_length ? (entry.protein.sequence_length / MAX_LENGTH * 100) + '%' : '0%' }">
-                    <div v-for="b in architectureBands(entry)" :key="b.key" :title="b.title" :style="b.style"></div>
-                  </div>
-                  <div v-if="entry.featureStatsShort" class="font-mono text-[10.5px] text-ink3 mt-1.5">{{ entry.featureStatsShort }}</div>
-                </td>
-                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ formatCount(entry.protein.sequence_length) }}</td>
-                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ displayMlos(entry.protein).length }}</td>
-                <td class="align-top px-3 py-3.5">
-                  <div class="flex gap-1.5 justify-center">
-                    <span
-                      v-for="src in SOURCE_ORDER"
-                      :key="src"
-                      :title="entry.protein.source_dbs?.includes(src) ? src : `${src}: not annotated`"
-                      class="inline-block"
-                      :class="entry.protein.source_dbs?.includes(src) ? 'w-[7px] h-[7px] rounded-full bg-ink' : 'w-[7px] h-px bg-border-strong mt-[3px]'"
-                    ></span>
-                  </div>
-                </td>
-                <td
-                  class="align-top pl-3 py-3.5 text-right font-mono text-[11px]"
-                  :class="entry.protein.has_driver ? 'text-brand' : entry.protein.has_regulator ? 'text-regulator' : 'text-ink3'"
-                  :title="!entry.protein.has_driver && entry.protein.has_regulator ? 'Annotated as a regulator of this organelle, not as a resident of it — a curator assignment that applies to the whole protein, not to this compartment specifically' : undefined"
+              <template v-for="entry in resultsWithFeatures" :key="entry.protein.uniprot_id">
+                <tr
+                  class="hover:bg-page cursor-pointer transition-colors"
+                  :class="displayMlos(entry.protein).length ? 'border-b-0' : 'border-b border-border-soft'"
+                  @click="goToProtein(entry.protein.uniprot_id)"
                 >
-                  {{ [entry.protein.has_driver && 'Driver', entry.protein.has_regulator && 'Regulator'].filter(Boolean).join(' · ') || 'Component' }}
-                </td>
-              </tr>
+                  <td class="align-top px-3 py-3.5">
+                    <div class="flex items-baseline gap-2">
+                      <span class="text-[15px] font-semibold tracking-[-0.01em]" :class="titleColor(entry.protein)">
+                        {{ entry.protein.gene_name || entry.protein.uniprot_id }}
+                      </span>
+                      <span class="font-mono text-[11.5px] text-ink3">{{ entry.protein.uniprot_id }}</span>
+                    </div>
+                    <div class="text-[13px] text-ink2 mt-0.5">{{ entry.protein.protein_name }}</div>
+                    <div class="text-[12.5px] italic text-muted mt-0.5">{{ shortOrganism(entry.protein.organism) }}</div>
+                  </td>
+                  <td class="align-top px-3 py-3.5">
+                    <div class="relative h-3 bg-track rounded-[1px]" :style="{ width: entry.protein.sequence_length ? (entry.protein.sequence_length / MAX_LENGTH * 100) + '%' : '0%' }">
+                      <div v-for="b in architectureBands(entry)" :key="b.key" :title="b.title" :style="b.style"></div>
+                    </div>
+                    <div v-if="entry.featureStatsShort" class="font-mono text-[10.5px] text-ink3 mt-1.5">{{ entry.featureStatsShort }}</div>
+                  </td>
+                  <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ formatCount(entry.protein.sequence_length) }}</td>
+                  <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ displayMlos(entry.protein).length }}</td>
+                  <td class="align-top px-3 py-3.5">
+                    <div class="flex flex-col gap-0.5">
+                      <span v-for="src in sourceNames(entry.protein)" :key="src" class="font-mono text-[10.5px] text-ink3 whitespace-nowrap">{{ src }}</span>
+                    </div>
+                  </td>
+                  <td
+                    class="align-top pl-3 py-3.5 text-right font-mono text-[11px]"
+                    :class="entry.protein.has_driver ? 'text-brand' : entry.protein.has_regulator ? 'text-regulator' : 'text-ink3'"
+                    :title="!entry.protein.has_driver && entry.protein.has_regulator ? 'Annotated as a regulator of this organelle, not as a resident of it — a curator assignment that applies to the whole protein, not to this compartment specifically' : undefined"
+                  >
+                    {{ [entry.protein.has_driver && 'Driver', entry.protein.has_regulator && 'Regulator'].filter(Boolean).join(' · ') || 'Component' }}
+                  </td>
+                </tr>
+                <!-- Expanded MLO sub-row: full width, not squeezed into the PROTEIN column, never truncated -->
+                <tr
+                  v-if="displayMlos(entry.protein).length"
+                  class="border-b border-border-soft hover:bg-page cursor-pointer transition-colors"
+                  @click="goToProtein(entry.protein.uniprot_id)"
+                >
+                  <td colspan="6" class="px-3 pb-3.5 pt-0 text-[12.5px] text-ink3">
+                    <span class="font-mono text-[9px] text-muted tracking-[0.07em] mr-2">MLOS</span>
+                    {{ displayMlos(entry.protein).map(formatMlo).join(' · ') }}
+                  </td>
+                </tr>
+              </template>
             </tbody>
           </table>
         </div>
@@ -389,8 +385,7 @@ function architectureBands(entry) {
         <div class="flex flex-wrap gap-6 mt-6 pt-4 border-t border-border-soft font-mono text-[11px] text-ink2">
           <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-idr"></span>Disordered region</div>
           <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-domain"></span>Pfam domain</div>
-          <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] rounded-full bg-ink"></span>Annotated in source</div>
-          <div class="text-ink3">Bars share one scale · widest = {{ formatCount(MAX_LENGTH) }} aa · source order {{ SOURCE_ORDER.join(' · ') }}</div>
+          <div class="text-ink3">Bars share one scale · widest = {{ formatCount(MAX_LENGTH) }} aa</div>
         </div>
       </template>
 
