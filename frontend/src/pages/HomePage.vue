@@ -216,7 +216,7 @@ function searchExample(term) {
         <tbody>
           <tr v-for="row in mloRows" :key="row.unified_mlo" class="border-b border-border-soft">
             <td class="py-[11px] pr-3 text-[13.5px]">
-              <RouterLink :to="`/mlo/${row.unified_mlo}`" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
+              <RouterLink :to="{ path: '/results', query: { mlo: row.unified_mlo } }" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
             </td>
             <td class="py-[11px] px-3 font-mono text-[11px] text-muted">{{ spatialLocationLabel(row.spatial_location) }}</td>
             <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-1 text-center">
