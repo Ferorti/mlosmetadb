@@ -119,10 +119,10 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
         </thead>
         <tbody>
           <tr v-for="row in matrixRows" :key="row.unified_mlo" class="border-b border-border-soft">
-            <td class="py-[11px] pr-3 align-top text-[13.5px] text-ink">
+            <td class="py-[11px] pr-3 align-top text-[14.5px] text-ink">
               {{ formatMlo(row.unified_mlo) }}
             </td>
-            <td v-for="cell in row.cells" :key="cell.source" class="py-[11px] px-2 align-top text-[12.5px] text-ink2">
+            <td v-for="cell in row.cells" :key="cell.source" class="py-[11px] px-2 align-top text-[11.5px] text-ink2">
               <template v-if="cell.names.length">
                 <div v-for="name in cell.names" :key="name">{{ name }}</div>
               </template>

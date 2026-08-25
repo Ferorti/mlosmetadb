@@ -47,6 +47,10 @@ const SOURCE_DISPLAY_NAMES = { CDCODE: 'CD-CODE', DrLLPS: 'DrLLPS', LLPSDB: 'LLP
 // and mlo_annotations.by_source both use unmodified.
 const UNIQUE_BY_SOURCE_KEY = { CDCODE: 'CD-CODE', DrLLPS: 'DrLLPS', LLPSDB: 'LLPSDB', PhaSepDB: 'PhaSepDB', PhasePro: 'PhaSePro' }
 
+// Column order for the Browse-by-MLO table's per-source coverage marks --
+// independent of SOURCE_ORDER (the Source databases section's own order).
+const MLO_TABLE_SOURCE_ORDER = ['PhaSepDB', 'CDCODE', 'DrLLPS', 'PhasePro', 'LLPSDB']
+
 const sourceRows = computed(() => {
   const counts = stats.value?.mlo_annotations?.unique_proteins_by_source ?? {}
   return SOURCE_ORDER.map(key => ({
@@ -86,9 +90,18 @@ const mlosByDrivers = computed(() =>
   [...mlos.value].sort((a, b) => (b.driver_count ?? 0) - (a.driver_count ?? 0))
 )
 const mloMatches = computed(() => filterMlosByQuery(mlosByDrivers.value, mloFilter.value))
-const mloShown = computed(() =>
-  mloMatches.value.slice(0, mloFilter.value.trim() ? MLO_FILTERED_LIMIT : MLO_DISPLAY_LIMIT)
-)
+// "In vitro droplet" is pinned to the last row regardless of its driver
+// count -- it reads as a catch-all experimental condition rather than a
+// distinct organelle, so it doesn't compete for a rank among the others.
+const mloShown = computed(() => {
+  const list = mloMatches.value.slice(0, mloFilter.value.trim() ? MLO_FILTERED_LIMIT : MLO_DISPLAY_LIMIT)
+  const idx = list.findIndex(m => m.unified_mlo === 'in_vitro_droplet')
+  if (idx === -1) return list
+  const reordered = [...list]
+  const [pinned] = reordered.splice(idx, 1)
+  reordered.push(pinned)
+  return reordered
+})
 const mloHiddenCount = computed(() => Math.max(0, mloMatches.value.length - mloShown.value.length))
 
 const mloRows = computed(() => mloShown.value.map(m => ({
@@ -96,7 +109,7 @@ const mloRows = computed(() => mloShown.value.map(m => ({
   spatial_location: m.spatial_location,
   protein_count:    m.protein_count,
   driver_count:     m.driver_count,
-  cells: SOURCE_ORDER.map(src => {
+  cells: MLO_TABLE_SOURCE_ORDER.map(src => {
     const on  = m.sources?.includes(src) ?? false
     const def = (m.definitions ?? []).find(d => d.source_db?.toLowerCase() === src.toLowerCase())
     return {
@@ -209,7 +222,7 @@ function searchExample(term) {
             <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">COMPARTMENT</th>
             <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEINS</th>
             <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">DRIVERS</th>
-            <th v-for="c in SOURCE_ORDER" :key="c" class="text-center px-1 pb-[9px] border-b border-border-strong font-mono text-[10px] font-normal text-ink3">{{ c }}</th>
+            <th v-for="c in MLO_TABLE_SOURCE_ORDER" :key="c" class="text-center px-1 pb-[9px] border-b border-border-strong font-mono text-[10px] font-normal text-ink3">{{ c }}</th>
           </tr>
         </thead>
         <tbody>
