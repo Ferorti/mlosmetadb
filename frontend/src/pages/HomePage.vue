@@ -25,15 +25,14 @@ onMounted(async () => {
 // mlo_annotations.source_db (used unmodified by /stats' by_source).
 const SOURCE_ORDER = ['CDCODE', 'DrLLPS', 'LLPSDB', 'PhasePro', 'PhaSepDB']
 
-// Real per-source blurbs, copied verbatim from
-// components/unification/SourcesSection.vue:26-30 -- not the mock's
-// invented text (spec §2.2).
+// Each source's own tagline, kept in sync with
+// components/unification/SourcesSection.vue's SOURCE_BLURBS.
 const SOURCE_BLURBS = {
-  CDCODE:   'Community-editable database of biomolecular condensates.',
-  DrLLPS:   'Scaffold, regulator, and client proteins involved in LLPS.',
-  LLPSDB:   'Proteins with LLPS behavior observed in vitro, with experimental conditions.',
-  PhaSepDB: 'Manually curated database of proteins linked to LLPS.',
-  PhasePro: 'Proteins and regions experimentally validated as LLPS drivers.',
+  CDCODE:   'Crowdsourcing condensate database and encyclopedia.',
+  DrLLPS:   'Data resource of liquid-liquid phase separation.',
+  LLPSDB:   'Proteins undergoing liquid-liquid phase separation in vitro.',
+  PhaSepDB: 'The comprehensive knowledgebase for protein phase separation and biomolecular condensates.',
+  PhasePro: 'Comprehensive database of proteins driving liquid-liquid phase separation (LLPS) in living cells.',
 }
 const SOURCE_DISPLAY_NAMES = { CDCODE: 'CD-CODE', DrLLPS: 'DrLLPS', LLPSDB: 'LLPSDB', PhaSepDB: 'PhaSepDB', PhasePro: 'PhasePro' }
 
@@ -208,9 +207,9 @@ function searchExample(term) {
           <tr>
             <th class="text-left pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ORGANELLE</th>
             <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">COMPARTMENT</th>
-            <th v-for="c in SOURCE_ORDER" :key="c" class="text-center px-1 pb-[9px] border-b border-border-strong font-mono text-[10px] font-normal text-ink3">{{ c }}</th>
             <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEINS</th>
-            <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">DRIVERS</th>
+            <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">DRIVERS</th>
+            <th v-for="c in SOURCE_ORDER" :key="c" class="text-center px-1 pb-[9px] border-b border-border-strong font-mono text-[10px] font-normal text-ink3">{{ c }}</th>
           </tr>
         </thead>
         <tbody>
@@ -219,12 +218,12 @@ function searchExample(term) {
               <RouterLink :to="{ path: '/results', query: { mlo: row.unified_mlo } }" class="text-brand hover:text-ink hover:underline">{{ formatMlo(row.unified_mlo) }}</RouterLink>
             </td>
             <td class="py-[11px] px-3 font-mono text-[11px] text-muted">{{ spatialLocationLabel(row.spatial_location) }}</td>
+            <td class="py-[11px] px-3 text-right font-mono text-xs text-ink">{{ formatCount(row.protein_count) }}</td>
+            <td class="py-[11px] px-3 text-right font-mono text-xs text-brand">{{ formatCount(row.driver_count) }}</td>
             <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-1 text-center">
-              <span v-if="cell.on" class="inline-block w-[7px] h-[7px] rounded-full bg-ink"></span>
+              <span v-if="cell.on" class="text-ink3 text-[11px] leading-none">✓</span>
               <span v-else class="inline-block w-[7px] h-px bg-border-strong"></span>
             </td>
-            <td class="py-[11px] px-3 text-right font-mono text-xs text-ink">{{ formatCount(row.protein_count) }}</td>
-            <td class="py-[11px] pl-3 text-right font-mono text-xs text-brand">{{ formatCount(row.driver_count) }}</td>
           </tr>
         </tbody>
       </table>

@@ -63,7 +63,7 @@ function buildExtraFilters(f, overrides = {}) {
   params.sort_by    = f.sort_by?.trim()    || 'mlo_count'
   params.sort_order = f.sort_order?.trim() || 'desc'
   params.page     = Number(f.page)     || 1
-  params.per_page = Number(f.per_page) || 20
+  params.per_page = Number(f.per_page) || 25
   return { ...params, ...overrides }
 }
 
@@ -217,15 +217,12 @@ function onFiltersUpdate(newFilters) {
   router.push({ query: { ...newFilters, page: 1 } })
 }
 
-function onRemoveFilter(key) {
-  const q = { ...route.query }
-  delete q[key]
-  q.page = 1
-  router.push({ query: q })
-}
-
 function onPageChange(page) {
   router.push({ query: { ...route.query, page } })
+}
+
+function onPerPageChange(perPage) {
+  router.push({ query: { ...route.query, per_page: perPage, page: 1 } })
 }
 
 function onResetFilters() {
@@ -278,14 +275,14 @@ function onResetFilters() {
         :results="results"
         :total="total"
         :page="Number(route.query.page ?? 1)"
-        :per-page="Number(route.query.per_page ?? 20)"
+        :per-page="Number(route.query.per_page ?? 25)"
         :loading="loading"
         :query="route.query.q ?? ''"
         :active-filters="activeFilters"
         :error="error"
         :download-loading="downloadLoading"
         @page-change="onPageChange"
-        @remove-filter="onRemoveFilter"
+        @per-page-change="onPerPageChange"
         @download="downloadResults"
       />
     </div>

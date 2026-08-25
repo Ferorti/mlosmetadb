@@ -13,7 +13,6 @@ defineProps({
 // `client` had no entry until now and fell through to the gray badge showing the
 // raw string, even though the palette has always assigned it brand-green.
 const styles = {
-  driver:    'bg-[#E8F1FB] text-brand border-[#BFD7F0]',
   client:    'bg-[#EEF1EC] text-ink3 border-border',
   regulator: 'bg-[#F6EFE4] text-regulator border-[#E5D3B3]',
 }
@@ -31,6 +30,13 @@ const titles = {
 
 <template>
   <span
+    v-if="role === 'driver'"
+    class="text-brand text-[11px] font-medium whitespace-nowrap"
+  >
+    {{ labels.driver }}
+  </span>
+  <span
+    v-else
     class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border whitespace-nowrap shrink-0"
     :class="styles[role] ?? 'bg-gray-100 text-gray-500 border-gray-200'"
     :title="titles[role]"

@@ -14,19 +14,84 @@ const props = defineProps({
 const emit = defineEmits(['hover', 'select'])
 
 // ─── SVG geometry — all layers share a single centerY ────────────────────────
-// Sized for the full-width band. The layers are nested rather than stacked, so
-// their heights have to stay ordered Domain > IDR > LCD or an inner one hides:
-// LCD sits inside IDR, and both sit inside the domain bar.
-const TRACK_HEIGHT = 88
+// Sized for the full-width band. IDR and Domain fill the background band at
+// the same height; LCD nests inside IDR, both centered on CENTER_Y. MoRF
+// keeps its own thin height and sits above the band as a separate strip
+// (its y is pinned to stay clear of the band top, not derived from it), so
+// LCD/MoRF still need their own vertical bounds for hit-testing.
+const TRACK_HEIGHT = 66
 const CENTER_Y = 40
-const BG_Y = CENTER_Y - 11         // 29
-const BG_H = 22
+const BG_Y = CENTER_Y - 15         // 25 -- matches IDR/Domain's h/2 below
+const BG_H = 30
 
 const LAYERS = {
-  IDR:    { y: CENTER_Y - 10, h: 20 },
-  LCD:    { y: CENTER_Y - 6,  h: 12 },
-  Domain: { y: CENTER_Y - 14, h: 28 },
-  MoRF:   { y: CENTER_Y - 21, h: 7 },
+  IDR:    { y: CENTER_Y - 15, h: 30, textFill: '#3F1710' },
+  LCD:    { y: CENTER_Y - 9,  h: 18, textFill: '#ffffff' },
+  Domain: { y: CENTER_Y - 15, h: 30, textFill: '#ffffff' },
+  MoRF:   { y: CENTER_Y - 25, h: 7,  textFill: '#3B2A52' },
+}
+
+const LABEL_SIZE  = 12
+const LINE_HEIGHT = 13
+const MIN_CHARS = 3
+
+// Truncates `str` to the longest prefix (plus an ellipsis) that measures
+// <= avail px, using `node`'s actual rendered width -- a character-count
+// estimate under/overshoots depending on how wide the glyphs in that word
+// actually are, which is what produced overflowing and mid-word-truncated
+// labels before this measured the real SVG text length.
+function truncateToWidth(node, str, avail) {
+  node.textContent = str
+  if (node.getComputedTextLength() <= avail) return str
+  let lo = 0, hi = str.length
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2)
+    node.textContent = str.slice(0, mid) + '…'
+    if (node.getComputedTextLength() <= avail) lo = mid
+    else hi = mid - 1
+  }
+  return lo >= MIN_CHARS ? str.slice(0, lo) + '…' : null
+}
+
+// Greedily fits whole words onto the first line; a single word wider than
+// `avail` on its own is hard-broken by character instead of overflowing.
+function fitFirstLine(node, label, avail) {
+  const words = label.split(' ')
+  let line = ''
+  let i = 0
+  for (; i < words.length; i++) {
+    const attempt = line ? `${line} ${words[i]}` : words[i]
+    node.textContent = attempt
+    if (node.getComputedTextLength() <= avail) {
+      line = attempt
+    } else {
+      if (!line) { line = truncateToWidth(node, words[i], avail) ?? ''; i++ }
+      break
+    }
+  }
+  return { line, rest: words.slice(i).join(' ') }
+}
+
+// Splits a label into up to two lines that fit `avail` px width, measured
+// against the real font metrics via `node` (a live, attached SVG <text>).
+// The second line is ellipsis-truncated if it still doesn't fit.
+function wrapLabel(node, label, avail) {
+  if (!label) return []
+  node.textContent = label
+  if (node.getComputedTextLength() <= avail) return [label]
+  const { line: line1, rest } = fitFirstLine(node, label, avail)
+  if (!line1) return []
+  if (!rest) return [line1]
+  const line2 = truncateToWidth(node, rest, avail)
+  return line2 ? [line1, line2] : [line1]
+}
+
+// Only domains and LCDs carry an in-track label, and only when the rect is
+// wide enough for a domain's.
+function spanLabel(span, widthPx) {
+  if (span.type === 'Domain' && widthPx <= 40) return null
+  if (span.type === 'Domain' || span.type === 'LCD') return span.label
+  return null
 }
 
 // ─── D3 rendering ────────────────────────────────────────────────────────────
@@ -58,6 +123,14 @@ function render(width) {
     .attr('stroke-width', 1)
     .attr('rx', 2)
 
+  // Hidden text node used only to measure real glyph widths for wrapLabel()
+  // -- removed once every span has been laid out.
+  const measureNode = svg.append('text')
+    .attr('font-size', `${LABEL_SIZE}px`).attr('font-weight', '600')
+    .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
+    .attr('visibility', 'hidden')
+    .node()
+
   // Feature spans — props.spans is already in paint order
   const regions = svg.append('g').attr('class', 'regions')
   for (const span of props.spans) {
@@ -76,10 +149,26 @@ function render(width) {
       .attr('stroke', 'none')
       .attr('stroke-width', 2)
 
-    // No in-track text label -- see Task 2's rationale (LCD's fill fails
-    // WCAG AA for overlaid text). Type/label/range/source is still
-    // available on hover via showTooltip().
+    const lines = wrapLabel(measureNode, spanLabel(span, rw), Math.max(0, rw - 8))
+    if (lines.length) {
+      const cy = layer.y + layer.h / 2
+      const startY = lines.length === 1 ? cy : cy - LINE_HEIGHT / 2
+      const text = g.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('fill', layer.textFill)
+        .attr('font-size', `${LABEL_SIZE}px`).attr('font-weight', '600')
+        .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
+        .attr('pointer-events', 'none')
+      lines.forEach((line, i) => {
+        text.append('tspan')
+          .attr('x', rx + rw / 2).attr('y', startY + i * LINE_HEIGHT)
+          .attr('dominant-baseline', 'middle')
+          .text(line)
+      })
+    }
   }
+
+  measureNode.remove()
 
   // Residue marker, hidden until the sequence reports a position
   svg.append('line')
@@ -88,15 +177,6 @@ function render(width) {
     .attr('stroke', '#1560A8').attr('stroke-width', 1)
     .attr('pointer-events', 'none')
     .style('display', 'none')
-
-  // Sequence length label
-  svg.append('text')
-    .attr('x', width - 2).attr('y', TRACK_HEIGHT - 6)
-    .attr('text-anchor', 'end')
-    .attr('fill', '#4E5762')
-    .attr('font-size', '11px')
-    .attr('font-family', 'ui-sans-serif, system-ui, sans-serif')
-    .text(`${props.sequenceLength} aa`)
 
   // One transparent hit area for the whole track: overlapping spans are resolved
   // by paint order (topmost wins), which per-rect hit areas cannot do.

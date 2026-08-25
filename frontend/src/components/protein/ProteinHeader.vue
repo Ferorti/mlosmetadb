@@ -53,18 +53,31 @@ function sourceHref(source) {
       </span>
     </div>
 
-    <!-- Source badges row: role pill + source DB links -->
-    <div v-if="sourceDbs.length" class="flex flex-wrap gap-2 mt-3 items-center">
-      <div v-if="displayRole" class="inline-flex items-center gap-1.5 border border-brand text-brand rounded-[2px] px-2.5 py-1 text-xs font-medium">
-        <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>LLPS Driver
+    <!-- Source badges row: role pill + source DB links, external resources right-aligned -->
+    <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 mt-3">
+      <div v-if="sourceDbs.length" class="flex flex-wrap gap-2 items-center">
+        <div v-if="displayRole" class="inline-flex items-center gap-1.5 border border-brand text-brand rounded-[2px] px-2.5 py-1 text-xs font-medium">
+          <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>LLPS Driver
+        </div>
+
+        <SourceDbBadge
+          v-for="src in sourceDbs"
+          :key="src"
+          :source="src"
+          :href="sourceHref(src)"
+        />
       </div>
 
-      <SourceDbBadge
-        v-for="src in sourceDbs"
-        :key="src"
-        :source="src"
-        :href="sourceHref(src)"
-      />
+      <div class="hidden sm:flex items-center gap-1.5 text-xs">
+        <span class="font-medium text-ink">External resources</span>
+        <a :href="`https://www.uniprot.org/uniprotkb/${protein.uniprot_id}`" target="_blank" rel="noopener" class="text-brand hover:underline">UniProt</a>
+        <span class="text-ink3">·</span>
+        <a :href="`https://mobidb.org/${protein.uniprot_id}`" target="_blank" rel="noopener" class="text-brand hover:underline">MobiDB</a>
+        <span class="text-ink3">·</span>
+        <a :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`" target="_blank" rel="noopener" class="text-brand hover:underline">AlphaFold DB</a>
+        <span class="text-ink3">·</span>
+        <a :href="`https://www.ebi.ac.uk/interpro/protein/UniProt/${protein.uniprot_id}`" target="_blank" rel="noopener" class="text-brand hover:underline">InterPro</a>
+      </div>
     </div>
   </div>
 </template>

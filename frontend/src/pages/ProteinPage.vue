@@ -94,7 +94,7 @@ watch(() => route.params.id, async (id) => {
             v-for="tab in TABS"
             :key="tab.id"
             :href="`#${tab.id}`"
-            class="pb-3 text-[14px] font-medium tracking-[-0.005em] text-ink3 border-b-2 border-transparent hover:text-ink transition-colors"
+            class="pt-2 pb-2 text-[14px] font-medium tracking-[-0.005em] text-ink3 border-b-2 border-transparent hover:text-ink transition-colors"
           >
             {{ tab.label }}
           </a>
@@ -104,36 +104,6 @@ watch(() => route.params.id, async (id) => {
       <!-- Overview -->
       <div id="overview" class="scroll-mt-28">
         <ProteinOverview :protein="protein" />
-
-        <!-- External resources -->
-        <div class="mt-6">
-          <div class="text-sm font-medium text-gray-700 mb-2">External resources</div>
-          <div class="text-sm">
-            <a
-              :href="`https://www.uniprot.org/uniprotkb/${protein.uniprot_id}`"
-              target="_blank" rel="noopener"
-              class="text-brand hover:underline"
-            >UniProt</a>
-            <span class="text-ink3"> · </span>
-            <a
-              :href="`https://mobidb.org/${protein.uniprot_id}`"
-              target="_blank" rel="noopener"
-              class="text-brand hover:underline"
-            >MobiDB</a>
-            <span class="text-ink3"> · </span>
-            <a
-              :href="`https://alphafold.ebi.ac.uk/entry/${protein.uniprot_id}`"
-              target="_blank" rel="noopener"
-              class="text-brand hover:underline"
-            >AlphaFold DB</a>
-            <span class="text-ink3"> · </span>
-            <a
-              :href="`https://www.ebi.ac.uk/interpro/protein/UniProt/${protein.uniprot_id}`"
-              target="_blank" rel="noopener"
-              class="text-brand hover:underline"
-            >InterPro</a>
-          </div>
-        </div>
       </div>
 
       <!-- MLO Annotations -->

@@ -21,13 +21,14 @@ const SOURCE_COLORS = {
 
 // One-line context per source so the chart is legible without leaving the
 // page. Full descriptions and citations live on the About page instead of
-// being duplicated here in full.
+// being duplicated here in full. Kept in sync with HomePage.vue's own
+// SOURCE_BLURBS.
 const SOURCE_BLURBS = [
-  { key: 'CDCODE', name: 'CD-CODE', blurb: 'Community-editable database of biomolecular condensates.' },
-  { key: 'DrLLPS', name: 'DrLLPS', blurb: 'Scaffold, regulator, and client proteins involved in LLPS.' },
-  { key: 'LLPSDB', name: 'LLPSDB', blurb: 'Proteins with LLPS behavior observed in vitro, with experimental conditions.' },
-  { key: 'PhaSepDB', name: 'PhaSepDB', blurb: 'Manually curated database of proteins linked to LLPS.' },
-  { key: 'PhasePro', name: 'PhasePro', blurb: 'Proteins and regions experimentally validated as LLPS drivers.' },
+  { key: 'CDCODE', name: 'CD-CODE', blurb: 'Crowdsourcing condensate database and encyclopedia.' },
+  { key: 'DrLLPS', name: 'DrLLPS', blurb: 'Data resource of liquid-liquid phase separation.' },
+  { key: 'LLPSDB', name: 'LLPSDB', blurb: 'Proteins undergoing liquid-liquid phase separation in vitro.' },
+  { key: 'PhaSepDB', name: 'PhaSepDB', blurb: 'The comprehensive knowledgebase for protein phase separation and biomolecular condensates.' },
+  { key: 'PhasePro', name: 'PhasePro', blurb: 'Comprehensive database of proteins driving liquid-liquid phase separation (LLPS) in living cells.' },
 ]
 
 const METRICS = [

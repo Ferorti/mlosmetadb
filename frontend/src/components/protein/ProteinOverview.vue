@@ -116,27 +116,25 @@ watch(() => props.protein.uniprot_id, () => {
         @hover="onHover"
         @select="onSelect"
       />
-      <div v-if="stats" class="text-xs text-center text-ink3 mt-1">{{ stats }}</div>
-
-      <div v-if="hasFeatures" class="flex flex-wrap gap-6 mt-4 pt-3 border-t border-border-soft">
-        <div
-          v-for="group in groups"
-          :key="group.type"
-          class="flex items-center gap-2 font-mono text-[11px] text-ink2"
-        >
-          <span class="w-[9px] h-[9px]" :style="{ background: group.color }"></span>
-          {{ group.label }}
+      <div class="flex flex-wrap items-center justify-between gap-4 mt-2">
+        <div class="flex flex-wrap gap-4">
+          <div
+            v-for="group in groups"
+            :key="group.type"
+            class="flex items-center gap-2 font-mono text-[11px] text-ink2"
+          >
+            <span class="w-[9px] h-[9px]" :style="{ background: group.color }"></span>
+            {{ group.label }}
+          </div>
         </div>
+        <div v-if="stats" class="text-xs text-ink3">{{ stats }}</div>
       </div>
     </div>
     <div v-else class="text-sm text-ink3">No sequence features available.</div>
 
     <!-- Band 2 — sequence, full width -->
-    <div v-if="sequence" class="mt-6">
-      <div class="flex items-baseline justify-between mb-2">
-        <div class="text-sm font-medium text-gray-700">Protein sequence</div>
-        <div class="text-xs text-ink3">{{ sequence.length.toLocaleString() }} aa</div>
-      </div>
+    <div v-if="sequence" class="mt-4">
+      <div class="text-sm font-medium text-gray-700 mb-2">Protein sequence</div>
       <div class="border border-border bg-page px-3.5 py-3 overflow-x-auto">
         <ProteinSequence
           :sequence="sequence"

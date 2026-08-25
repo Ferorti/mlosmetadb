@@ -19,9 +19,9 @@ export default {
         },
         track:     '#E8ECF3',
         feature: {
-          idr:     '#B8362B',
-          domain:  '#2C7A6B',
-          lcd:     '#98A2B3',
+          idr:     '#DD9088',
+          domain:  '#519185',
+          lcd:     '#E67E33',
           morf:    '#6B4E8F',
         },
         // Kept as-is from the pre-redesign palette (RoleBadge.vue), not

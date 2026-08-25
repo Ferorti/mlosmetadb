@@ -18,8 +18,8 @@ import {
  */
 
 export const FEATURE_COLORS = {
-  IDR:    '#B8362B',
-  LCD:    '#98A2B3',
+  IDR:    '#DD9088',
+  LCD:    '#E67E33',
   Domain: '#2C7A6B',
   MoRF:   '#6B4E8F',
 }
@@ -106,7 +106,7 @@ export function useProteinFeatures(featuresSource, lengthSource) {
   const features = computed(() => [
     ...domainFeatures.value,
     ...idrRegions.value.map(r => simpleFeature('IDR', r, 'IDR')),
-    ...lcdRegions.value.map(r => simpleFeature('LCD', r, 'Low complexity region')),
+    ...lcdRegions.value.map(r => simpleFeature('LCD', r, 'Low complexity')),
     ...morfRegions.value.map(r => simpleFeature('MoRF', r, r.label ?? 'MoRF')),
   ])
 

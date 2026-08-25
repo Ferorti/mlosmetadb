@@ -210,7 +210,7 @@ const proteinRows = computed(() => (detail.value?.proteins?.items ?? []).map(p =
               <td class="py-2.5 px-3">
                 <div class="flex gap-1.5 justify-center">
                   <span v-for="src in MATRIX_SOURCES" :key="src" :title="p.sources.includes(src) ? src : `${src}: not annotated`"
-                        class="inline-block" :class="p.sources.includes(src) ? 'w-[7px] h-[7px] rounded-full bg-ink' : 'w-[7px] h-px bg-border-strong mt-[3px]'"></span>
+                        class="inline-block leading-none" :class="p.sources.includes(src) ? 'text-ink3 text-[11px]' : 'w-[7px] h-px bg-border-strong mt-[6px]'">{{ p.sources.includes(src) ? '✓' : '' }}</span>
                 </div>
               </td>
               <td class="py-2.5 pl-3 text-right">

@@ -46,7 +46,16 @@ function groupRole(anns) {
   return null
 }
 
-const MATRIX_SOURCES = ['CDCODE', 'DrLLPS', 'LLPSDB', 'PhasePro', 'PhaSepDB']
+// Raw ingestion tags paired with their canonical display name (see
+// policy.py's CANONICAL_SOURCE_NAMES) -- "CDCODE" -> "CD-CODE" and
+// "PhasePro" -> "PhaSePro", the other three pass through unchanged.
+const MATRIX_SOURCES = [
+  { key: 'PhaSepDB', label: 'PhaSepDB' },
+  { key: 'CDCODE',   label: 'CD-CODE' },
+  { key: 'DrLLPS',   label: 'DrLLPS' },
+  { key: 'PhasePro', label: 'PhaSePro' },
+  { key: 'LLPSDB',   label: 'LLPSDB' },
+]
 
 const matrixRows = computed(() => {
   if (!dedupedAnnotations.value.length) return []
@@ -68,14 +77,10 @@ const matrixRows = computed(() => {
   return sortedEntries.map(([unified_mlo, anns]) => ({
     unified_mlo,
     displayRole: groupRole(anns),
-    cells: MATRIX_SOURCES.map(src => {
-      const matches = anns.filter(a => a.source_db === src)
-      return {
-        source: src,
-        on: matches.length > 0,
-        title: matches.length ? `${src}: ${matches.map(a => a.source_mlo).join('; ')}` : `${src}: not annotated`,
-      }
-    }),
+    cells: MATRIX_SOURCES.map(src => ({
+      source: src.key,
+      names: [...new Set(anns.filter(a => a.source_db === src.key).map(a => a.source_mlo).filter(Boolean))],
+    })),
   }))
 })
 
@@ -100,28 +105,30 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
 
     <template v-else>
       <p class="text-[13.5px] text-ink3 max-w-[62ch] mb-6">
-        A mark shows the organelle is annotated for this protein in that
-        database. Hover a mark for the name the source itself uses.
+        The name each source database uses for this organelle, where annotated.
+        LLPSDB only annotates proteins with LLPS behavior observed in vitro.
       </p>
 
       <table class="w-full border-collapse">
         <thead>
           <tr>
             <th class="text-left pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ORGANELLE</th>
-            <th v-for="src in MATRIX_SOURCES" :key="src" class="text-center px-2 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 w-[78px]">{{ src }}</th>
+            <th v-for="src in MATRIX_SOURCES" :key="src.key" class="text-left px-2 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[150px]">{{ src.label }}</th>
             <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ROLE</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="row in matrixRows" :key="row.unified_mlo" class="border-b border-border-soft">
-            <td class="py-[11px] pr-3 text-[13.5px]">
-              <RouterLink :to="`/mlo/${row.unified_mlo}`" class="text-ink hover:text-brand">{{ formatMlo(row.unified_mlo) }}</RouterLink>
+            <td class="py-[11px] pr-3 align-top text-[13.5px] text-ink">
+              {{ formatMlo(row.unified_mlo) }}
             </td>
-            <td v-for="cell in row.cells" :key="cell.source" :title="cell.title" class="py-[11px] px-2 text-center">
-              <span v-if="cell.on" class="inline-block w-[7px] h-[7px] rounded-full bg-ink"></span>
-              <span v-else class="inline-block w-[7px] h-px bg-border-strong"></span>
+            <td v-for="cell in row.cells" :key="cell.source" class="py-[11px] px-2 align-top text-[12.5px] text-ink2">
+              <template v-if="cell.names.length">
+                <div v-for="name in cell.names" :key="name">{{ name }}</div>
+              </template>
+              <span v-else class="text-border-strong">—</span>
             </td>
-            <td class="py-[11px] pl-3 text-right">
+            <td class="py-[11px] pl-3 align-top text-right">
               <RoleBadge v-if="row.displayRole" :role="row.displayRole" />
             </td>
           </tr>

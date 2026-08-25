@@ -76,9 +76,10 @@ const displayedOrgs = computed(() => {
   if (props.facets?.by_organism) {
     return Object.entries(props.facets.by_organism)
       .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
       .map(([name, count]) => ({ value: name, label: formatOrganism(name), count }))
   }
-  return allOrganisms.slice(0, 9).map(name => ({ value: name, label: formatOrganism(name), count: null }))
+  return allOrganisms.slice(0, 12).map(name => ({ value: name, label: formatOrganism(name), count: null }))
 })
 
 async function onOrganismSearch() {
@@ -344,69 +345,17 @@ function applyPfam() {
         </div>
       </div>
 
-      <!-- Molecular features (collapsed by default) -->
-      <div class="border-b border-border-soft pb-3">
-        <button
-          class="flex items-center justify-between w-full font-mono text-[10.5px] text-ink3 tracking-[0.07em] py-2 border-b border-border pb-[9px]"
-          @click="open.features = !open.features"
-        >
-          MOLECULAR FEATURES
-          <svg class="w-3.5 h-3.5 text-gray-500 transition-transform" :class="open.features ? '' : 'rotate-180'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-          </svg>
-        </button>
-        <div v-if="open.features" class="space-y-0.5 mt-1">
-          <label
-            v-for="ft in featureTypeOptions"
-            :key="ft.value"
-            class="flex items-center gap-2 py-1 cursor-pointer text-xs text-gray-600 hover:text-gray-800"
-          >
-            <input
-              type="checkbox"
-              :value="ft.value"
-              :checked="activeFeatureTypes.includes(ft.value)"
-              @change="toggleFeatureType(ft.value)"
-              class="w-3 h-3 rounded accent-brand cursor-pointer"
-            />
-            {{ ft.label }}
-          </label>
-
-          <!-- Pfam domain text input -->
-          <div class="mt-2">
-            <label class="text-[10px] text-gray-500 font-medium block mb-1">Pfam domain</label>
-            <div class="flex gap-1">
-              <input
-                v-model="pfamInput"
-                type="text"
-                placeholder="e.g. PF00076 or RRM_1"
-                class="flex-1 text-xs border border-border rounded px-2 py-1 focus:outline-none focus:border-brand"
-                @keyup.enter="applyPfam"
-              />
-              <button
-                v-if="pfamInput"
-                class="text-xs text-white bg-navy rounded px-2 py-1 hover:bg-[#24508F] transition-colors"
-                @click="applyPfam"
-              >
-                Go
-              </button>
-            </div>
-            <div v-if="isFilterActive('feature_accession')" class="flex items-center gap-1 mt-1.5">
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-[#E8F1FB] border border-[#BFD7F0] text-brand">
-                {{ filters.feature_accession }}
-                <button @click="removeFilter('feature_accession'); pfamInput = ''" class="ml-1 hover:text-[#0C447C] leading-none" aria-label="Remove Pfam filter">×</button>
-              </span>
-            </div>
-          </div>
-
-          <div class="mt-2 opacity-50">
-            <label class="text-[10px] text-gray-500 font-medium block mb-1">
-              Disorder content (%)
-              <span class="text-gray-500 font-normal ml-1" title="Coming soon — requires API update">ⓘ Coming soon</span>
-            </label>
-            <input type="range" min="0" max="100" disabled class="w-full cursor-not-allowed" />
-          </div>
-        </div>
-      </div>
+      <!-- Molecular features -- hidden 2026-08-24 at the user's request: checking
+           two or more feature-type checkboxes at once silently returns zero
+           results, because the API only matches feature_type as a single exact
+           string (see search_queries.py's `LOWER(sf.feature_type) = LOWER(?)`)
+           while this UI joins multiple selections with a comma. The Pfam text
+           input (feature_accession) works fine on its own, but the whole
+           section is hidden together rather than shipping the broken checkboxes
+           next to a still-working field. Script-side logic (featureTypeOptions,
+           toggleFeatureType, pfamInput, applyPfam) is left in place for when
+           the API is fixed to accept multiple feature_type values -- don't
+           delete it as dead code. -->
 
     </div>
   </aside>

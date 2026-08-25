@@ -31,7 +31,10 @@ const cards = computed(() => {
       count: r.component ?? 0,
       label: 'MLO Components',
       description: 'Proteins associated with membraneless organelles without direct evidence of driving phase separation. Includes clients and proteins whose role no source determined.',
-      countClass: 'text-ink3',
+      // A very faint green, not the gray used for "component" everywhere
+      // else -- specific to this card, deliberately understated so it
+      // doesn't compete with the driver/regulator cards' stronger colors.
+      countClass: 'text-[#65A397]',
     },
     {
       role: 'regulator',
@@ -60,7 +63,7 @@ function navigate(role) {
         <div :class="[
           'h-[3px] -mx-5 -mt-5 mb-4',
           card.role === 'driver' ? 'bg-brand' :
-          card.role === 'component' ? 'bg-border-strong' : 'bg-regulator'
+          card.role === 'component' ? 'bg-[#D1E3E0]' : 'bg-regulator'
         ]"></div>
         <div :class="['text-3xl font-bold tabular-nums', card.countClass]">
           {{ formatCount(card.count) }}

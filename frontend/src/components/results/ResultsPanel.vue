@@ -8,7 +8,7 @@ const props = defineProps({
   results:         { type: Array,   default: null },
   total:           { type: Number,  default: 0 },
   page:            { type: Number,  default: 1 },
-  perPage:         { type: Number,  default: 20 },
+  perPage:         { type: Number,  default: 25 },
   loading:         { type: Boolean, default: false },
   query:           { type: String,  default: '' },
   activeFilters:   { type: Object,  default: () => ({}) },
@@ -16,7 +16,7 @@ const props = defineProps({
   downloadLoading: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['page-change', 'sort-change', 'remove-filter', 'download'])
+const emit = defineEmits(['page-change', 'per-page-change', 'sort-change', 'download'])
 
 const route  = useRoute()
 const router = useRouter()
@@ -27,13 +27,22 @@ function displayMlos(protein) {
   return filterMlos(protein.mlos)
 }
 
-// Tracks which rows have their MLO list fully expanded
+// Tracks which rows have their MLO list fully expanded (beyond the first 10)
 const expandedRows = reactive(new Set())
 
 function visibleMlos(protein) {
   const mlos = displayMlos(protein)
   if (expandedRows.has(protein.uniprot_id)) return mlos
   return mlos.slice(0, 10)
+}
+
+// Tracks which rows have the MLO sub-row open at all -- hidden by default,
+// toggled by clicking the MLOS count.
+const openMlos = reactive(new Set())
+
+function toggleMlos(uniprotId) {
+  if (openMlos.has(uniprotId)) openMlos.delete(uniprotId)
+  else openMlos.add(uniprotId)
 }
 
 function hasIdr(protein) {
@@ -87,7 +96,8 @@ const resultsWithFeatures = computed(() => {
     const idrRegions   = parseIdrRegions(p.idr_regions)
     const lcdRegions   = parseLcdRegions(p.lcr_regions)
     const domains      = parseDomains(p.domains)
-    const featureStats = buildFeatureStats({ idrRegions, lcdRegions, domains, sequenceLength: p.sequence_length })
+    // LCD omitted here on purpose: the results row only shows IDRs and domains.
+    const featureStats = buildFeatureStats({ idrRegions, lcdRegions: [], domains, sequenceLength: p.sequence_length })
     // Strip the trailing " · NNN aa" so column 3 can show length separately
     const featureStatsShort = featureStats
       ? featureStats.replace(/\s*·\s*[\d,]+ aa$/, '').trim()
@@ -102,6 +112,10 @@ const currentSort = computed(() => {
   return `${sort_by || 'mlo_count'}:${sort_order || 'desc'}`
 })
 
+function onPerPageSelect(event) {
+  emit('per-page-change', Number(event.target.value))
+}
+
 function onSortSelect(event) {
   const val = event.target.value
   if (!val) return
@@ -113,30 +127,6 @@ function onSortSelect(event) {
     delete q.sort_order
   }
   router.push({ query: q })
-}
-
-// ---- Active filter chips (exclude q, page, per_page, mode) ----
-const SKIP_KEYS = new Set(['page', 'per_page', 'mode', 'sort_by', 'sort_order'])
-const ROLE_LABELS = { driver: 'Driver', component: 'MLO component' }
-
-const filterChips = computed(() =>
-  Object.entries(props.activeFilters)
-    .filter(([k, v]) => !SKIP_KEYS.has(k) && k !== 'q' && v)
-    .map(([k, v]) => ({
-      key: k,
-      label: k === 'role'
-        ? `Role: ${ROLE_LABELS[v] ?? v}`
-        : `${chipLabel(k)}: ${v}`,
-    }))
-)
-
-function chipLabel(key) {
-  const map = {
-    role: 'Role', mlo: 'MLO', organism: 'Organism',
-    source_db: 'Source', feature_type: 'Feature', feature_accession: 'Pfam',
-    field: 'Field',
-  }
-  return map[key] ?? key
 }
 
 // ---- Pagination ----
@@ -188,10 +178,6 @@ function sourceNames(protein) {
   return SOURCE_ORDER.filter(src => dbs.includes(src))
 }
 
-const MAX_LENGTH = computed(() =>
-  Math.max(1, ...resultsWithFeatures.value.map(r => r.protein.sequence_length || 0))
-)
-
 function architectureBands(entry) {
   const len = entry.protein.sequence_length
   if (!len) return []
@@ -205,8 +191,8 @@ function architectureBands(entry) {
       background: color, borderRadius: '1px',
     },
   })
-  const idr = entry.idrRegions.map(r => band(r.start, r.end, '#B8362B', 'IDR'))
-  const dom = entry.domains.map(r => band(r.start, r.end, '#2C7A6B', 'Domain'))
+  const idr = entry.idrRegions.map(r => band(r.start, r.end, '#DD9088', 'IDR'))
+  const dom = entry.domains.map(r => band(r.start, r.end, '#519185', 'Domain'))
   return [...idr, ...dom]
 }
 </script>
@@ -214,25 +200,68 @@ function architectureBands(entry) {
 <template>
   <div class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-white">
 
-    <!-- Results header bar -->
+    <!-- Results header bar: browsing text, per-page, pagination, sort, download -- all one line -->
     <div class="border-b border-gray-200 px-6 py-3 flex items-center justify-between gap-4 flex-shrink-0">
-      <div>
-        <span class="text-sm text-gray-700">
+      <div class="flex-shrink-0">
+        <span class="text-xs text-gray-500">
           <template v-if="query">
-            Results for <span class="font-medium">"{{ query }}"</span>
+            Results for <span class="font-medium text-gray-700">"{{ query }}"</span> —
           </template>
-          <template v-else-if="total > 0">Browsing proteins</template>
-        </span>
-        <span v-if="total > 0" class="text-xs text-gray-500 ml-3">
+          <template v-else-if="total > 0">Browsing</template>
           {{ rangeStart }}–{{ rangeEnd }} of {{ total.toLocaleString() }} proteins
         </span>
       </div>
 
       <div class="flex items-center gap-2 flex-shrink-0">
+        <!-- Per-page -->
+        <select
+          :value="perPage"
+          class="h-7 text-xs border border-gray-200 rounded px-2 text-gray-600 bg-white focus:outline-none"
+          @change="onPerPageSelect"
+        >
+          <option :value="10">10</option>
+          <option :value="25">25</option>
+          <option :value="50">50</option>
+          <option :value="100">100</option>
+        </select>
+
+        <!-- Pagination -->
+        <div v-if="results && results.length > 0 && totalPages > 1" class="flex items-center gap-1">
+          <button
+            class="h-7 px-2 text-xs rounded border border-gray-200 text-gray-500 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            :disabled="page <= 1"
+            @click="emit('page-change', page - 1)"
+          >
+            ← Prev
+          </button>
+
+          <template v-for="p in pageRange()" :key="p">
+            <span v-if="p === '...'" class="px-1 text-xs text-gray-400">…</span>
+            <button
+              v-else
+              class="w-7 h-7 flex-shrink-0 text-xs rounded border transition-colors"
+              :class="p === page
+                ? 'bg-gray-200 text-gray-800 border-gray-300 font-medium'
+                : 'border-gray-200 text-gray-600 hover:border-gray-400'"
+              @click="emit('page-change', p)"
+            >
+              {{ p }}
+            </button>
+          </template>
+
+          <button
+            class="h-7 px-2 text-xs rounded border border-gray-200 text-gray-500 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            :disabled="page >= totalPages"
+            @click="emit('page-change', page + 1)"
+          >
+            Next →
+          </button>
+        </div>
+
         <!-- Sort -->
         <select
           :value="currentSort"
-          class="text-xs border border-gray-200 rounded px-2 py-1.5 text-gray-600 focus:outline-none"
+          class="h-7 text-xs border border-gray-200 rounded px-2 text-gray-600 bg-white focus:outline-none"
           @change="onSortSelect"
         >
           <option value="mlo_count:desc">Most MLOs</option>
@@ -246,7 +275,7 @@ function architectureBands(entry) {
 
         <!-- Download -->
         <button
-          class="text-xs border border-gray-200 rounded px-2 py-1.5 transition-colors"
+          class="h-7 text-xs border border-gray-200 rounded px-2 transition-colors"
           :class="downloadLoading
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-gray-500 hover:border-gray-400'"
@@ -256,23 +285,6 @@ function architectureBands(entry) {
           {{ downloadLoading ? 'Downloading…' : '↓ Download' }}
         </button>
       </div>
-    </div>
-
-    <!-- Active filter chips -->
-    <div v-if="filterChips.length" class="px-6 py-2 flex flex-wrap gap-1.5 border-b border-gray-100 flex-shrink-0">
-      <span
-        v-for="chip in filterChips"
-        :key="chip.key"
-        class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#E8F1FB] text-brand rounded-full text-xs border border-[#BFD7F0]"
-      >
-        {{ chip.label }}
-        <button
-          class="ml-0.5 text-brand hover:text-[#0F3D6F] leading-none"
-          @click="emit('remove-filter', chip.key)"
-        >
-          ×
-        </button>
-      </span>
     </div>
 
     <!-- Content area -->
@@ -329,21 +341,21 @@ function architectureBands(entry) {
           <table class="w-full border-collapse">
             <thead>
               <tr>
-                <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">PROTEIN</th>
+                <th class="text-left pl-6 pr-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[300px]">PROTEIN</th>
                 <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[82px]">ROLE</th>
                 <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[90px]">SOURCES</th>
-                <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[210px]">ARCHITECTURE</th>
                 <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[58px]">LENGTH</th>
-                <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[52px]">MLOS</th>
+                <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[52px]">MLOS</th>
+                <th class="text-left pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] min-w-[210px]">ARCHITECTURE</th>
               </tr>
             </thead>
             <tbody v-for="entry in resultsWithFeatures" :key="entry.protein.uniprot_id" class="group">
               <tr
                 class="group-hover:bg-page cursor-pointer transition-colors"
-                :class="displayMlos(entry.protein).length ? 'border-b-0' : 'border-b border-border-soft'"
+                :class="openMlos.has(entry.protein.uniprot_id) ? 'border-b-0' : 'border-b border-border-soft'"
                 @click="goToProtein(entry.protein.uniprot_id)"
               >
-                <td class="align-top px-3 py-3.5">
+                <td class="align-top pl-6 pr-3 py-3.5">
                   <div class="flex items-baseline gap-2">
                     <span class="text-[15px] font-semibold tracking-[-0.01em]" :class="titleColor(entry.protein)">
                       {{ entry.protein.gene_name || entry.protein.uniprot_id }}
@@ -365,20 +377,31 @@ function architectureBands(entry) {
                     <span v-for="src in sourceNames(entry.protein)" :key="src" class="font-mono text-[10.5px] text-ink3 whitespace-nowrap">{{ src }}</span>
                   </div>
                 </td>
-                <td class="align-top px-3 py-3.5">
-                  <div class="relative h-3 bg-track rounded-[1px]" :style="{ width: entry.protein.sequence_length ? (entry.protein.sequence_length / MAX_LENGTH * 100) + '%' : '0%' }">
+                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ formatCount(entry.protein.sequence_length) }}</td>
+                <td class="align-top px-3 py-3.5 text-right">
+                  <button
+                    v-if="displayMlos(entry.protein).length"
+                    class="font-mono text-xs text-ink hover:text-brand inline-flex items-center gap-1"
+                    :title="openMlos.has(entry.protein.uniprot_id) ? 'Hide MLOs' : 'Show MLOs'"
+                    @click.stop="toggleMlos(entry.protein.uniprot_id)"
+                  >
+                    {{ displayMlos(entry.protein).length }}
+                    <span class="text-[9px] text-ink3">{{ openMlos.has(entry.protein.uniprot_id) ? '▾' : '▸' }}</span>
+                  </button>
+                  <span v-else class="font-mono text-xs text-ink3">0</span>
+                </td>
+                <td class="align-top pl-3 py-3.5">
+                  <div class="relative h-3 bg-track rounded-[1px] w-[95%]">
                     <div v-for="b in architectureBands(entry)" :key="b.key" :title="b.title" :style="b.style"></div>
                   </div>
                   <div v-if="entry.featureStatsShort" class="font-mono text-[10.5px] text-ink3 mt-1.5">{{ entry.featureStatsShort }}</div>
                 </td>
-                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ formatCount(entry.protein.sequence_length) }}</td>
-                <td class="align-top pl-3 py-3.5 text-right font-mono text-xs text-ink">{{ displayMlos(entry.protein).length }}</td>
               </tr>
-              <!-- Expanded MLO section: full width, not squeezed into the PROTEIN column, never
-                   truncated. Same tbody + group-hover as the row above, so the two are one
+              <!-- MLO sub-row: hidden by default, opened by clicking the MLOS count above.
+                   Same tbody + group-hover as the row above, so the two are one
                    clickable/hoverable unit -- the split into two <tr>s is a layout device only. -->
               <tr
-                v-if="displayMlos(entry.protein).length"
+                v-if="openMlos.has(entry.protein.uniprot_id) && displayMlos(entry.protein).length"
                 class="border-b border-border-soft group-hover:bg-page cursor-pointer transition-colors"
                 @click="goToProtein(entry.protein.uniprot_id)"
               >
@@ -398,50 +421,98 @@ function architectureBands(entry) {
         <div class="flex flex-wrap gap-6 mt-6 pt-4 border-t border-border-soft font-mono text-[11px] text-ink2">
           <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-idr"></span>Disordered region</div>
           <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-domain"></span>Pfam domain</div>
-          <div class="text-ink3">Bars share one scale · widest = {{ formatCount(MAX_LENGTH) }} aa</div>
+          <div class="text-ink3">Each bar is normalized to its own protein's length</div>
         </div>
       </template>
 
     </div>
 
-    <!-- Pagination -->
+    <!-- Results footer bar: exact copy of the header bar, so paging doesn't require scrolling back up -->
     <div
-      v-if="results?.length && total > perPage"
-      class="border-t border-gray-200 px-6 py-3 flex items-center justify-between flex-shrink-0"
+      v-if="results && results.length > 0"
+      class="border-t border-gray-200 px-6 py-3 flex items-center justify-between gap-4 flex-shrink-0"
     >
-      <span class="text-xs text-gray-500">
-        Showing {{ rangeStart }}–{{ rangeEnd }} of {{ total.toLocaleString() }} proteins
-      </span>
+      <div class="flex-shrink-0">
+        <span class="text-xs text-gray-500">
+          <template v-if="query">
+            Results for <span class="font-medium text-gray-700">"{{ query }}"</span> —
+          </template>
+          <template v-else-if="total > 0">Browsing</template>
+          {{ rangeStart }}–{{ rangeEnd }} of {{ total.toLocaleString() }} proteins
+        </span>
+      </div>
 
-      <div class="flex items-center gap-1">
-        <button
-          class="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          :disabled="page <= 1"
-          @click="emit('page-change', page - 1)"
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <!-- Per-page -->
+        <select
+          :value="perPage"
+          class="h-7 text-xs border border-gray-200 rounded px-2 text-gray-600 bg-white focus:outline-none"
+          @change="onPerPageSelect"
         >
-          ← Prev
-        </button>
+          <option :value="10">10</option>
+          <option :value="25">25</option>
+          <option :value="50">50</option>
+          <option :value="100">100</option>
+        </select>
 
-        <template v-for="p in pageRange()" :key="p">
-          <span v-if="p === '...'" class="px-1 text-xs text-gray-400">…</span>
+        <!-- Pagination -->
+        <div v-if="totalPages > 1" class="flex items-center gap-1">
           <button
-            v-else
-            class="w-7 h-7 text-xs rounded border transition-colors"
-            :class="p === page
-              ? 'bg-navy text-white border-navy'
-              : 'border-gray-200 text-gray-600 hover:border-gray-400'"
-            @click="emit('page-change', p)"
+            class="h-7 px-2 text-xs rounded border border-gray-200 text-gray-500 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            :disabled="page <= 1"
+            @click="emit('page-change', page - 1)"
           >
-            {{ p }}
+            ← Prev
           </button>
-        </template>
 
-        <button
-          class="px-2 py-1 text-xs rounded border border-gray-200 text-gray-500 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          :disabled="page >= totalPages"
-          @click="emit('page-change', page + 1)"
+          <template v-for="p in pageRange()" :key="p">
+            <span v-if="p === '...'" class="px-1 text-xs text-gray-400">…</span>
+            <button
+              v-else
+              class="w-7 h-7 flex-shrink-0 text-xs rounded border transition-colors"
+              :class="p === page
+                ? 'bg-gray-200 text-gray-800 border-gray-300 font-medium'
+                : 'border-gray-200 text-gray-600 hover:border-gray-400'"
+              @click="emit('page-change', p)"
+            >
+              {{ p }}
+            </button>
+          </template>
+
+          <button
+            class="h-7 px-2 text-xs rounded border border-gray-200 text-gray-500 hover:border-gray-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            :disabled="page >= totalPages"
+            @click="emit('page-change', page + 1)"
+          >
+            Next →
+          </button>
+        </div>
+
+        <!-- Sort -->
+        <select
+          :value="currentSort"
+          class="h-7 text-xs border border-gray-200 rounded px-2 text-gray-600 bg-white focus:outline-none"
+          @change="onSortSelect"
         >
-          Next →
+          <option value="mlo_count:desc">Most MLOs</option>
+          <option value="gene_name:asc">Gene name A→Z</option>
+          <option value="gene_name:desc">Gene name Z→A</option>
+          <option value="source_db_count:desc">Best supported</option>
+          <option value="disorder_mobidb_lite_dc:desc">Highly disordered</option>
+          <option value="disorder_mobidb_lite_dc:asc">Least disordered</option>
+          <option value="role:asc">Drivers first</option>
+        </select>
+
+        <!-- Download -->
+        <button
+          class="h-7 text-xs border border-gray-200 rounded px-2 transition-colors"
+          :class="downloadLoading
+            ? 'text-gray-400 cursor-not-allowed'
+            : 'text-gray-500 hover:border-gray-400'"
+          :disabled="downloadLoading"
+          @click="emit('download')"
+        >
+          {{ downloadLoading ? 'Downloading…' : '↓ Download' }}
         </button>
       </div>
     </div>
