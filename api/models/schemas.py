@@ -158,7 +158,8 @@ class PpiInteractionItem(BaseModel):
     partner_gene: str | None
     in_mlosmetadb: bool
     evidence_types: list[str]
-    pubmed_id: str | None
+    evidence_count: int
+    pubmed_ids: list[str]
     source: str
 
 
@@ -196,6 +197,7 @@ class PpiPartner(BaseModel):
     partner_uniprot_id: str
     partner_gene: str | None
     has_driver: bool
+    has_regulator: bool
     mlos: list[str]
     experimental_systems: list[str]
     evidence_count: int

@@ -18,8 +18,9 @@ const loading      = ref(false)
 const error        = ref(null)
 
 // ── filters ──────────────────────────────────────────────────────────────────
-const filterRole   = ref('driver')   // 'all' | 'driver' | 'component'
+const filterRole   = ref('driver')   // 'all' | 'driver' | 'regulator' | 'component'
 const filterMlo    = ref('')         // unified_mlo slug or ''
+const showInterEdges = ref(true)     // partner-partner edges on, or hub-only
 
 // ── table pagination ──────────────────────────────────────────────────────────
 const tablePage    = ref(1)
@@ -42,11 +43,23 @@ const mloOptions = computed(() => {
   return Array.from(set).sort()
 })
 
+// A partner is at most one of these three for filtering/coloring purposes --
+// driver takes priority (matches how the rest of the app badges a
+// driver-and-regulator protein primarily as a driver), then regulator, then
+// component. has_regulator is has_driver=false's exact complement of the
+// mutually-exclusive "regulator, never a driver" bucket the API's
+// role=regulator filter uses (see api/queries/protein_queries.py::get_ppi_all),
+// so this partition lines up with that filter without duplicating its SQL.
+function partnerRole(p) {
+  if (p.has_driver)    return 'driver'
+  if (p.has_regulator) return 'regulator'
+  return 'component'
+}
+
 // ── filtered partners ─────────────────────────────────────────────────────────
 const filteredPartners = computed(() => {
   let list = allPartners.value
-  if (filterRole.value === 'driver')    list = list.filter(p => p.has_driver)
-  if (filterRole.value === 'component') list = list.filter(p => !p.has_driver)
+  if (filterRole.value !== 'all') list = list.filter(p => partnerRole(p) === filterRole.value)
   if (filterMlo.value) {
     const mlo = filterMlo.value
     list = list.filter(p => p.mlos.includes(mlo))
@@ -69,8 +82,9 @@ watch(filteredPartners, () => {
   selectedId.value = null
 })
 
-// ── driver count (all in-db partners, no filter) ──────────────────────────────
-const inDbDriverCount = computed(() => allPartners.value.filter(p => p.has_driver).length)
+// ── driver/regulator counts (all in-db partners, no filter) ───────────────────
+const inDbDriverCount     = computed(() => allPartners.value.filter(p => p.has_driver).length)
+const inDbRegulatorCount  = computed(() => allPartners.value.filter(p => partnerRole(p) === 'regulator').length)
 
 // ── graph data ────────────────────────────────────────────────────────────────
 // Smart cap: always show all drivers first, fill remainder with components
@@ -97,11 +111,12 @@ const graphData = computed(() => {
       mlos:       [],
     },
     ...visible.map(p => ({
-      id:         p.partner_uniprot_id,
-      label:      p.partner_gene || p.partner_uniprot_id,
-      isCenter:   false,
-      has_driver: p.has_driver,
-      mlos:       p.mlos,
+      id:            p.partner_uniprot_id,
+      label:         p.partner_gene || p.partner_uniprot_id,
+      isCenter:      false,
+      has_driver:    p.has_driver,
+      has_regulator: p.has_regulator,
+      mlos:          p.mlos,
     })),
   ]
 
@@ -112,10 +127,13 @@ const graphData = computed(() => {
     isHub:    true,
   }))
 
-  // Inter-partner edges (filtered to visible nodes only)
-  const partnerLinks = interEdges.value
-    .filter(e => visibleSet.has(e.source) && visibleSet.has(e.target))
-    .map(e => ({ source: e.source, target: e.target, isHub: false }))
+  // Inter-partner edges (filtered to visible nodes only), skipped entirely
+  // when showInterEdges is off -- hub-only view, one link per partner.
+  const partnerLinks = showInterEdges.value
+    ? interEdges.value
+        .filter(e => visibleSet.has(e.source) && visibleSet.has(e.target))
+        .map(e => ({ source: e.source, target: e.target, isHub: false }))
+    : []
 
   return { nodes, links: [...hubLinks, ...partnerLinks] }
 })
@@ -149,14 +167,20 @@ watch(() => props.protein?.uniprot_id, () => {
 })
 
 // ── graph rendering ───────────────────────────────────────────────────────────
+// Brand-amber regulator color, matching RoleBadge.vue and ResultsPanel.vue's
+// existing #854F0B regulator token elsewhere in the app.
 function nodeColor(d) {
-  if (d.isCenter)   return '#0E2136'
-  return d.has_driver ? '#1560A8' : '#9CA3AF'
+  if (d.isCenter)      return '#0E2136'
+  if (d.has_driver)    return '#1560A8'
+  if (d.has_regulator) return '#854F0B'
+  return '#9CA3AF'
 }
 
 function nodeRadius(d) {
-  if (d.isCenter)   return 16
-  return d.has_driver ? 8 : 6
+  if (d.isCenter)      return 16
+  if (d.has_driver)    return 8
+  if (d.has_regulator) return 7
+  return 6
 }
 
 function renderGraph() {
@@ -341,7 +365,12 @@ function shortSystems(systems) {
         <span>
           <span class="font-semibold text-ink">{{ formatCount(protein.ppi?.partners_in_mlosmetadb ?? 0) }}</span>
           partners
-          <span v-if="inDbDriverCount > 0" class="text-muted">({{ formatCount(inDbDriverCount) }} drivers)</span>
+          <span v-if="inDbDriverCount > 0 || inDbRegulatorCount > 0" class="text-muted">
+            ({{ [
+              inDbDriverCount > 0 ? `${formatCount(inDbDriverCount)} drivers` : null,
+              inDbRegulatorCount > 0 ? `${formatCount(inDbRegulatorCount)} regulators` : null,
+            ].filter(Boolean).join(', ') }})
+          </span>
           in MLOsMetaDB
         </span>
         <span class="text-muted text-xs">
@@ -353,7 +382,7 @@ function shortSystems(systems) {
         </span>
       </div>
       <p class="text-[12.5px] text-muted">
-        Only partners present in MLOsMetaDB are shown. Graph edges include interactions between partners.
+        Only partners present in MLOsMetaDB are shown. The graph can optionally show interactions between partners themselves, not just with the query protein. A partner's Driver/Regulator/Component label reflects its own curator-assigned MLO role, not the nature of this particular interaction: a PPI with a regulator partner is not itself evidence of a regulatory interaction.
       </p>
     </div>
 
@@ -363,7 +392,7 @@ function shortSystems(systems) {
       <!-- Role filter -->
       <div class="inline-flex border border-border rounded overflow-hidden text-xs">
         <button
-          v-for="opt in [['driver','Drivers'],['component','Components'],['all','All roles']]"
+          v-for="opt in [['driver','Drivers'],['regulator','Regulators'],['component','Components'],['all','All roles']]"
           :key="opt[0]"
           :class="filterRole === opt[0] ? 'bg-navy text-surface' : 'bg-surface text-ink3 hover:text-ink'"
           class="px-3 py-1.5 border-l border-border first:border-l-0 transition-colors"
@@ -423,8 +452,8 @@ function shortSystems(systems) {
             <tbody>
               <tr v-if="!filteredPartners.length">
                 <td colspan="5" class="px-3 py-8 text-center text-gray-400">
-                  <template v-if="filterRole === 'driver'">
-                    No driver partners found.
+                  <template v-if="filterRole === 'driver' || filterRole === 'regulator'">
+                    No {{ filterRole }} partners found.
                     <button class="text-brand hover:underline ml-1" @click="filterRole = 'all'">Show all roles</button>
                   </template>
                   <template v-else>No partners match current filters.</template>
@@ -449,10 +478,8 @@ function shortSystems(systems) {
                   {{ p.partner_uniprot_id }}
                 </td>
                 <td class="px-3 py-1.5">
-                  <span
-                    v-if="p.has_driver"
-                    class="text-[10px] text-brand font-medium"
-                  >Driver</span>
+                  <span v-if="p.has_driver" class="text-[10px] text-brand font-medium">Driver</span>
+                  <span v-else-if="p.has_regulator" class="text-[10px] text-regulator font-medium">Regulator</span>
                   <span v-else class="text-ink3 text-[10px]">Component</span>
                 </td>
                 <td class="px-3 py-1.5 text-gray-600">
@@ -507,15 +534,24 @@ function shortSystems(systems) {
             <span class="inline-block w-3 h-3 rounded-full bg-brand"></span> Driver
           </span>
           <span class="flex items-center gap-1">
+            <span class="inline-block w-3 h-3 rounded-full bg-regulator"></span> Regulator
+          </span>
+          <span class="flex items-center gap-1">
             <span class="inline-block w-3 h-3 rounded-full bg-[#9CA3AF]"></span> Component
           </span>
           <span class="flex items-center gap-1 ml-3 text-gray-400">
             <span class="inline-block w-5 border-t border-gray-300"></span> hub edge
           </span>
-          <span class="flex items-center gap-1">
+          <span v-if="showInterEdges" class="flex items-center gap-1">
             <span class="inline-block w-5 border-t-2 border-[#C7D9F0]"></span> partner–partner
           </span>
         </div>
+
+        <!-- Edge display toggle -->
+        <label class="flex items-center gap-1.5 mb-2 text-[11px] text-gray-500 cursor-pointer select-none">
+          <input type="checkbox" v-model="showInterEdges" class="h-3 w-3 accent-brand" />
+          Show partner–partner edges
+        </label>
 
         <!-- Graph canvas -->
         <div
@@ -538,6 +574,10 @@ function shortSystems(systems) {
                 v-if="tooltip.partner.has_driver"
                 class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
               >Driver</span>
+              <span
+                v-else-if="tooltip.partner.has_regulator"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#F6EFE4] text-regulator border border-[#E5D3B3]"
+              >Regulator</span>
               <span v-else class="text-gray-500 text-[10px]">Component</span>
             </div>
             <div v-if="filterMlos(tooltip.partner.mlos).length" class="mt-1 text-gray-500">

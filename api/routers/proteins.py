@@ -229,14 +229,16 @@ def _build_mlo_annotation(row: dict) -> MloAnnotation:
 
 
 def _build_ppi_item(row: dict) -> PpiInteractionItem:
-    exp = row.get("experimental_system")
+    evidence_types = [s for s in (row.get("experimental_systems") or "").split(",") if s]
+    pubmed_ids = [p for p in (row.get("pubmed_ids") or "").split(",") if p and p.upper() != "NONE"]
     return PpiInteractionItem(
         partner_uniprot_id=row["partner_uniprot_id"],
         partner_gene=row.get("partner_gene"),
         in_mlosmetadb=bool(row.get("in_db")),
-        evidence_types=[exp] if exp else [],
-        pubmed_id=row.get("pubmed_id"),
-        source=row.get("source") or "",
+        evidence_types=evidence_types,
+        evidence_count=row.get("evidence_count", 1),
+        pubmed_ids=pubmed_ids,
+        source=row.get("sources") or "",
     )
 
 
@@ -292,6 +294,9 @@ async def get_protein(
     )
 
 
+_VALID_PPI_ROLES = {"driver", "component", "regulator"}
+
+
 @router.get("/protein/{uniprot_id}/ppi", response_model=PpiAllResponse)
 async def get_protein_ppi(
     uniprot_id: str,
@@ -299,6 +304,11 @@ async def get_protein_ppi(
     mlo: str | None = Query(default=None),
     limit: int = Query(default=500, ge=1, le=2000),
 ):
+    if role is not None and role not in _VALID_PPI_ROLES:
+        raise HTTPException(422, {
+            "error": "invalid_parameter",
+            "message": f"role must be one of: {', '.join(sorted(_VALID_PPI_ROLES))}",
+        })
     try:
         meta = await get_protein_meta(uniprot_id)
     except aiosqlite.Error:
@@ -323,6 +333,7 @@ async def get_protein_ppi(
             partner_uniprot_id=r["partner_uniprot_id"],
             partner_gene=r.get("partner_gene"),
             has_driver=bool(r.get("has_driver")),
+            has_regulator=bool(r.get("has_regulator")),
             mlos=mlos,
             experimental_systems=exp_systems,
             evidence_count=r.get("evidence_count", 1),
