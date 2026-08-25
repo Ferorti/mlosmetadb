@@ -38,7 +38,10 @@ INSERT INTO proteins (uniprot_id, gene_name, protein_name, organism, taxon_id, l
     -- exact mode must be able to return more than one row: same gene_name,
     -- different organism, neither one deduplicated away
     ('P00011', 'DUPGENE', 'Duplicate gene protein one',         'Homo sapiens', 9606, 100, 1),
-    ('P00012', 'DUPGENE', 'Duplicate gene protein two',         'Mus musculus', 10090, 100, 1);
+    ('P00012', 'DUPGENE', 'Duplicate gene protein two',         'Mus musculus', 10090, 100, 1),
+    -- docs/issues/005: mode=exact q="FUS" must match only FUS, not FUS3 too
+    ('P00013', 'FUS',     'FUS protein',                        'Homo sapiens', 9606, 100, 1),
+    ('P00014', 'FUS3',    'FUS-like protein 3',                 'Saccharomyces cerevisiae', 4932, 100, 1);
 
 INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count, mlo_count, mlos, source_dbs) VALUES
     ('P00001', 1, 0, 2, 2, '["stress_granule","nucleolus"]', 'PhaSepDB,DrLLPS'),
@@ -50,7 +53,9 @@ INSERT INTO protein_summary (uniprot_id, has_driver, has_client, source_db_count
     ('P00007', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00008', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
     ('P00011', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
-    ('P00012', 0, 0, 1, 0, NULL,                             'PhaSepDB');
+    ('P00012', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00013', 0, 0, 1, 0, NULL,                             'PhaSepDB'),
+    ('P00014', 0, 0, 1, 0, NULL,                             'PhaSepDB');
 
 INSERT INTO mlo_vocabulary (unified_mlo, spatial_location, spatial_location_evidence,
                             taxonomic_scope, taxonomic_support_n, physiological_state,

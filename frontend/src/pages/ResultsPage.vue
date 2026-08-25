@@ -94,7 +94,7 @@ async function runSearch(f, overrides = {}) {
       // capped at 50 and ignored `page`), the sort runs server-side over the
       // whole match set rather than client-side over one page, and the response
       // carries facets.
-      return searchAdvanced({ q, ...extraFilters })
+      return searchAdvanced({ q, mode: f.mode, ...extraFilters })
     } else if (field === 'uniprot_id') {
       return getProteins({ uniprot_id: q, ...extraFilters })
     } else if (field === 'gene_name') {

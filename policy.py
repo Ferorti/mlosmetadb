@@ -183,3 +183,30 @@ def canonical_source_case_sql(column: str = "source_db") -> str:
     Falls back to the raw value via ELSE for any tag not in the map."""
     whens = " ".join(f"WHEN '{raw}' THEN '{canon}'" for raw, canon in CANONICAL_SOURCE_NAMES.items())
     return f"CASE {column} {whens} ELSE {column} END"
+
+
+_RAW_SOURCE_DB_BY_CANONICAL_NAME: dict[str, str] = {
+    canonical: raw for raw, canonical in CANONICAL_SOURCE_NAMES.items()
+}
+
+
+def normalize_source_db(value: str) -> str | None:
+    """Resolve a `source_db` filter value to the raw `mlo_annotations.source_db`
+    tag it names, accepting either the raw tag itself or the canonical display
+    name CANONICAL_SOURCE_NAMES maps it to (e.g. both "CDCODE" and "CD-CODE"
+    resolve to "CDCODE"). Returns None when `value` is neither -- callers
+    decide how to fail on that (see docs/issues/002).
+
+    Without this, a query filter matched only the raw tag while /stats and
+    /proteins/citations displayed the canonical name for the two tags where
+    they differ -- a client copying the value it was just shown got zero rows
+    back, silently."""
+    if value in CANONICAL_SOURCE_NAMES:
+        return value
+    return _RAW_SOURCE_DB_BY_CANONICAL_NAME.get(value)
+
+
+def valid_source_db_values() -> list[str]:
+    """Every value normalize_source_db() accepts -- raw tags and canonical
+    display names combined -- sorted, for a client-facing error message."""
+    return sorted(set(CANONICAL_SOURCE_NAMES) | set(CANONICAL_SOURCE_NAMES.values()))

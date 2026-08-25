@@ -79,6 +79,19 @@ def _parse_source_dbs(val: str | None) -> list[str]:
     return [s for s in val.split(",") if s]
 
 
+def _normalize_source_db(value: str) -> str:
+    """Accept either the raw source_db tag or its canonical display name
+    (see policy.normalize_source_db); reject anything else with a 422
+    instead of silently matching zero rows. See docs/issues/002."""
+    normalized = policy.normalize_source_db(value)
+    if normalized is None:
+        raise HTTPException(422, {
+            "error": "invalid_parameter",
+            "message": f"source_db must be one of: {', '.join(policy.valid_source_db_values())}",
+        })
+    return normalized
+
+
 def _flatten_labeled_regions(val: str | None) -> str:
     parsed = _parse_json(val)
     if not parsed:
@@ -466,6 +479,8 @@ async def list_proteins(
     if sort_order.lower() not in {"asc", "desc"}:
         raise HTTPException(422, {"error": "invalid_parameter", "message": "sort_order must be 'asc' or 'desc'"})
     sort_order = sort_order.lower()
+    if source_db is not None:
+        source_db = _normalize_source_db(source_db)
     try:
         total, rows = await get_proteins_page(organism, taxon_id, mlo, role, source_db, uniprot_id, sort_by, sort_order, page, per_page)
         facets_data = await get_proteins_facets(organism, taxon_id, mlo, role, source_db, uniprot_id)
@@ -526,6 +541,8 @@ async def export_proteins(
         raise HTTPException(422, {"error": "invalid_parameter", "message": "fields must be 'basic' or 'full'"})
     if format not in {"tsv", "json"}:
         raise HTTPException(422, {"error": "invalid_parameter", "message": "format must be 'tsv' or 'json'"})
+    if source_db:
+        source_db = [_normalize_source_db(v) for v in source_db]
 
     try:
         rows = await get_proteins_export(organism, taxon_id, mlo, role, source_db)

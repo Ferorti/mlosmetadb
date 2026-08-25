@@ -87,6 +87,7 @@ def _build_advanced_clauses(
     feature_label: str | None,
     feature_accession: str | None,
     q: str | None = None,
+    mode: str = "fuzzy",
 ) -> tuple[list[str], list[str], list]:
     joins = ["FROM proteins p"]
     conditions: list[str] = []
@@ -98,13 +99,24 @@ def _build_advanced_clauses(
     # from what /search matched to a single column, and a query that matched
     # by gene_name via /search returned nothing the moment a filter was
     # touched via /search/advanced.
+    #
+    # mode="exact" swaps LIKE for a full-field equality, mirroring
+    # search_proteins_exact_identifier's pattern -- without this, the
+    # frontend's "Exact match" checkbox had nothing to bind to here (every
+    # free-text search from the results page goes through this function, not
+    # /search's own mode=exact, since the /search/advanced consolidation) and
+    # q="FUS" matched "FUS3" too. See docs/issues/005.
     if q:
-        conditions.append(
-            "(LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\'"
-            " OR LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\')"
-        )
-        sub = like_contains(q)
-        params.extend([sub, sub])
+        if mode == "exact":
+            conditions.append("(LOWER(p.uniprot_id) = LOWER(?) OR LOWER(p.gene_name) = LOWER(?))")
+            params.extend([q, q])
+        else:
+            conditions.append(
+                "(LOWER(p.uniprot_id) LIKE LOWER(?) ESCAPE '\\'"
+                " OR LOWER(p.gene_name) LIKE LOWER(?) ESCAPE '\\')"
+            )
+            sub = like_contains(q)
+            params.extend([sub, sub])
 
     need_mlo = any(x is not None for x in [mlo, role, source_db])
     need_feat = any(x is not None for x in [feature_type, feature_label, feature_accession])
@@ -169,10 +181,11 @@ async def get_advanced_search_facets(
     feature_label: str | None,
     feature_accession: str | None,
     q: str | None = None,
+    mode: str = "fuzzy",
 ) -> dict:
     joins, conditions, params = _build_advanced_clauses(
         gene_name, uniprot_id, organism, taxon_id, mlo, role, source_db,
-        feature_type, feature_label, feature_accession, q,
+        feature_type, feature_label, feature_accession, q, mode,
     )
     from_clause = " ".join(joins)
     where = ("WHERE " + " AND ".join(conditions)) if conditions else ""
@@ -196,7 +209,7 @@ async def get_advanced_search_facets(
     # way it did in protein_queries.get_proteins_facets -- see that function's docstring).
     _, conditions_no_role, params_no_role = _build_advanced_clauses(
         gene_name, uniprot_id, organism, taxon_id, mlo, None, source_db,
-        feature_type, feature_label, feature_accession, q,
+        feature_type, feature_label, feature_accession, q, mode,
     )
     where_no_role = ("WHERE " + " AND ".join(conditions_no_role)) if conditions_no_role else ""
     base_cte_no_role = f"SELECT DISTINCT p.uniprot_id {from_clause} {where_no_role}"
@@ -241,12 +254,13 @@ async def advanced_search(
     sort_by: str | None = None,
     sort_order: str = "desc",
     q: str | None = None,
+    mode: str = "fuzzy",
 ) -> tuple[int, list[dict]]:
     from database import fetchval
 
     joins, conditions, params = _build_advanced_clauses(
         gene_name, uniprot_id, organism, taxon_id, mlo, role, source_db,
-        feature_type, feature_label, feature_accession, q,
+        feature_type, feature_label, feature_accession, q, mode,
     )
     if sort_by in _SORT_NEEDS_PS:
         joins.append("LEFT JOIN protein_summary ps_s ON p.uniprot_id = ps_s.uniprot_id")

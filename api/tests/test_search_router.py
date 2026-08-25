@@ -57,3 +57,20 @@ def test_mlo_search_still_matches_the_raw_slug(test_db):
         r = client.get("/search", params={"q": "stress_granule"})
     assert r.status_code == 200
     assert "stress_granule" in [m["unified_mlo"] for m in r.json()["mlos"]]
+
+
+def test_advanced_search_source_db_filter_accepts_the_canonical_display_name(test_db):
+    """docs/issues/002, /search/advanced side: same canonical-vs-raw source_db
+    bug as /proteins and /proteins/export."""
+    with TestClient(app) as client:
+        raw = client.get("/search/advanced", params={"source_db": "CDCODE"})
+        canonical = client.get("/search/advanced", params={"source_db": "CD-CODE"})
+    assert raw.status_code == canonical.status_code == 200
+    assert canonical.json()["total"] == raw.json()["total"] == 1
+
+
+def test_advanced_search_source_db_filter_rejects_an_unrecognized_value(test_db):
+    with TestClient(app) as client:
+        r = client.get("/search/advanced", params={"source_db": "NotARealSourceDB"})
+    assert r.status_code == 422
+    assert r.json()["error"] == "invalid_parameter"

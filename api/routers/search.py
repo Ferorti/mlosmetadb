@@ -4,6 +4,7 @@ import logging
 import aiosqlite
 from fastapi import APIRouter, HTTPException, Query
 
+import policy
 from config import DEFAULT_PAGE, DEFAULT_PER_PAGE, MAX_PER_PAGE
 from models.schemas import (
     ProteinsResponse,
@@ -44,6 +45,19 @@ def _parse_source_dbs(val: str | None) -> list[str]:
     if not val:
         return []
     return [s for s in val.split(",") if s]
+
+
+def _normalize_source_db(value: str) -> str:
+    """Accept either the raw source_db tag or its canonical display name
+    (see policy.normalize_source_db); reject anything else with a 422
+    instead of silently matching zero rows. See docs/issues/002."""
+    normalized = policy.normalize_source_db(value)
+    if normalized is None:
+        raise HTTPException(422, {
+            "error": "invalid_parameter",
+            "message": f"source_db must be one of: {', '.join(policy.valid_source_db_values())}",
+        })
+    return normalized
 
 
 router = APIRouter()
@@ -124,6 +138,7 @@ async def search_advanced(
     # /search uses. `gene_name` stays for callers that really do want a
     # single-column match; the UI sends `q`.
     q: str | None = None,
+    mode: str = Query(default="fuzzy", pattern="^(exact|fuzzy)$"),
     gene_name: str | None = None,
     uniprot_id: str | None = None,
     organism: str | None = None,
@@ -144,6 +159,8 @@ async def search_advanced(
     if sort_order.lower() not in {"asc", "desc"}:
         raise HTTPException(422, {"error": "invalid_parameter", "message": "sort_order must be 'asc' or 'desc'"})
     sort_order = sort_order.lower()
+    if source_db is not None:
+        source_db = _normalize_source_db(source_db)
 
     filters = {k: v for k, v in {
         "q": q,
@@ -166,6 +183,7 @@ async def search_advanced(
     try:
         total, rows = await advanced_search(
             q=q,
+            mode=mode,
             gene_name=gene_name,
             uniprot_id=uniprot_id,
             organism=organism,
@@ -183,6 +201,7 @@ async def search_advanced(
         )
         facets_data = await get_advanced_search_facets(
             q=q,
+            mode=mode,
             gene_name=gene_name,
             uniprot_id=uniprot_id,
             organism=organism,

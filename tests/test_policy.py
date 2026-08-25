@@ -14,7 +14,9 @@ from policy import (
     canonical_source_case_sql,
     component_role_clause,
     excluded_mlo_spatial_clause,
+    normalize_source_db,
     regulator_annotation_clause,
+    valid_source_db_values,
 )
 from schemas.intermediate import SOURCE_DBS
 
@@ -140,3 +142,45 @@ def test_canonical_source_case_sql_honours_a_custom_column():
     sql = canonical_source_case_sql("ma.source_db")
     assert sql.startswith("CASE ma.source_db ")
     assert sql.endswith("ELSE ma.source_db END")
+
+
+# ---------------------------------------------------------------------------
+# normalize_source_db / valid_source_db_values
+#
+# docs/issues/002-source-db-filter-rejects-canonical-display-names.md: the
+# source_db query filter matched only the raw ingestion tag, so a client that
+# read a canonical display name off /stats or /proteins/citations (CD-CODE,
+# PhaSePro) and passed it back in as a filter got zero rows, silently.
+# ---------------------------------------------------------------------------
+
+def test_normalize_source_db_accepts_the_raw_tag():
+    for raw in CANONICAL_SOURCE_NAMES:
+        assert normalize_source_db(raw) == raw
+
+
+def test_normalize_source_db_accepts_the_canonical_display_name():
+    assert normalize_source_db("CD-CODE") == "CDCODE"
+    assert normalize_source_db("PhaSePro") == "PhasePro"
+
+
+def test_normalize_source_db_is_a_noop_where_raw_and_canonical_already_match():
+    assert normalize_source_db("PhaSepDB") == "PhaSepDB"
+    assert normalize_source_db("DrLLPS") == "DrLLPS"
+    assert normalize_source_db("LLPSDB") == "LLPSDB"
+
+
+def test_normalize_source_db_returns_none_for_an_unrecognized_value():
+    assert normalize_source_db("cdcode") is None  # case matters, like the raw column
+    assert normalize_source_db("MadeUpDB") is None
+    assert normalize_source_db("") is None
+
+
+def test_valid_source_db_values_covers_every_raw_tag_and_canonical_name():
+    values = valid_source_db_values()
+    assert set(CANONICAL_SOURCE_NAMES) <= set(values)
+    assert set(CANONICAL_SOURCE_NAMES.values()) <= set(values)
+
+
+def test_valid_source_db_values_has_no_duplicates_and_is_sorted():
+    values = valid_source_db_values()
+    assert values == sorted(set(values))

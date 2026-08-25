@@ -93,6 +93,57 @@ def test_free_text_results_paginate_with_a_real_total(search_db):
     assert not (ids_first & ids_second), "pages must not overlap"
 
 
+# ── mode=exact (docs/issues/005) ─────────────────────────────────────────────
+#
+# Every free-text search from the results page goes through /search/advanced
+# (this file's whole reason for existing), so mode=exact has to work HERE for
+# the "Exact match" checkbox to mean anything -- /search's own mode=exact was
+# never actually reachable from that checkbox after the escalation consolidation.
+
+def test_advanced_mode_exact_matches_only_the_exact_gene_name(search_db):
+    """The reported bug: q="FUS" under exact mode must not also match "FUS3"."""
+    with TestClient(app) as c:
+        assert advanced(c, q="FUS", mode="exact") == {"P00013"}
+
+
+def test_advanced_mode_exact_is_case_insensitive(search_db):
+    with TestClient(app) as c:
+        assert advanced(c, q="fus", mode="exact") == {"P00013"}
+
+
+def test_advanced_mode_fuzzy_still_matches_the_substring(search_db):
+    """Unchanged default behaviour: fuzzy is the LIKE search this file already
+    covers everywhere else."""
+    with TestClient(app) as c:
+        assert advanced(c, q="FUS", mode="fuzzy") == {"P00013", "P00014"}
+
+
+def test_advanced_mode_exact_returns_empty_for_a_pure_substring_query(search_db):
+    """"kinase" matches three proteins by substring (gene_name or uniprot_id)
+    but is not literally any of their gene_name/uniprot_id values."""
+    with TestClient(app) as c:
+        assert advanced(c, q="kinase", mode="fuzzy") == {"P00001", "P00004", "KINASE9"}
+        assert advanced(c, q="kinase", mode="exact") == set()
+
+
+def test_advanced_mode_exact_still_composes_with_a_filter(search_db):
+    with TestClient(app) as c:
+        assert advanced(c, q="FUS", mode="exact", organism="Homo sapiens") == {"P00013"}
+        assert advanced(c, q="FUS", mode="exact", organism="Saccharomyces cerevisiae") == set()
+
+
+def test_advanced_default_mode_is_fuzzy_when_omitted(search_db):
+    with TestClient(app) as c:
+        assert advanced(c, q="FUS") == {"P00013", "P00014"}
+
+
+def test_advanced_rejects_an_invalid_mode(search_db):
+    with TestClient(app) as c:
+        r = c.get("/search/advanced", params={"q": "FUS", "mode": "bogus"})
+    assert r.status_code == 422
+    assert r.json()["error"] == "invalid_parameter"
+
+
 def test_free_text_respects_sorting(search_db):
     with TestClient(app) as c:
         asc = [p["uniprot_id"] for p in c.get(

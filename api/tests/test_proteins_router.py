@@ -170,6 +170,24 @@ def test_export_endpoint_source_db_filter_serves_regulators_not_excluded_rows(te
     assert {row["uniprot_id"] for row in r.json()} == {"QREG01"}
 
 
+def test_export_endpoint_source_db_filter_accepts_the_canonical_display_name(test_db):
+    """docs/issues/002: 'CD-CODE' is what /stats and /proteins/citations show
+    for the 'CDCODE' raw tag PNULLROLE carries -- it must filter identically
+    to the raw tag, not silently return zero rows."""
+    with TestClient(app) as client:
+        raw = client.get("/proteins/export", params={"source_db": ["CDCODE"], "format": "json"})
+        canonical = client.get("/proteins/export", params={"source_db": ["CD-CODE"], "format": "json"})
+    assert raw.status_code == canonical.status_code == 200
+    assert {row["uniprot_id"] for row in canonical.json()} == {row["uniprot_id"] for row in raw.json()} == {"PNULLROLE"}
+
+
+def test_export_endpoint_source_db_filter_rejects_an_unrecognized_value(test_db):
+    with TestClient(app) as client:
+        r = client.get("/proteins/export", params={"source_db": ["NotARealSourceDB"], "format": "json"})
+    assert r.status_code == 422
+    assert r.json()["error"] == "invalid_parameter"
+
+
 def test_export_endpoint_tsv_has_attachment_header_and_basic_columns(test_db):
     with TestClient(app) as client:
         r = client.get("/proteins/export", params={"format": "tsv", "fields": "basic"})
@@ -190,6 +208,24 @@ def test_export_endpoint_invalid_format_returns_422(test_db):
 def test_export_endpoint_invalid_fields_returns_422(test_db):
     with TestClient(app) as client:
         r = client.get("/proteins/export", params={"fields": "everything"})
+    assert r.status_code == 422
+    assert r.json()["error"] == "invalid_parameter"
+
+
+def test_list_proteins_source_db_filter_accepts_the_canonical_display_name(test_db):
+    """docs/issues/002, /proteins side: same canonical-vs-raw source_db bug
+    as the export endpoint, in the paginated list."""
+    with TestClient(app) as client:
+        raw = client.get("/proteins", params={"source_db": "CDCODE"})
+        canonical = client.get("/proteins", params={"source_db": "CD-CODE"})
+    assert raw.status_code == canonical.status_code == 200
+    assert canonical.json()["total"] == raw.json()["total"] == 1
+    assert canonical.json()["filters_applied"]["source_db"] == "CDCODE"
+
+
+def test_list_proteins_source_db_filter_rejects_an_unrecognized_value(test_db):
+    with TestClient(app) as client:
+        r = client.get("/proteins", params={"source_db": "NotARealSourceDB"})
     assert r.status_code == 422
     assert r.json()["error"] == "invalid_parameter"
 
