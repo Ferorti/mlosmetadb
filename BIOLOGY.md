@@ -74,6 +74,62 @@ name, this means an experimentally confirmed LLPS event with **no cellular MLO
 assigned** — an in vitro reconstitution, not a named organelle. Map this to
 `source_mlo = "in vitro droplet"`, not to any cellular compartment.
 
+### PhaSepDB in vitro reclassification (implemented 2026-08-25)
+
+`phasedb_detail.csv`'s driver rows can leave `MLO` empty for two biologically
+different reasons: the record is a real cellular observation whose specific
+condensate was never named, or the record is an in vitro reconstitution with
+no cellular claim at all — the same case "Droplet" captures for DrLLPS/LLPSDB.
+Before this fix, both cases fell into `NotInformed` (a curated "no compartment
+named" bucket, see below), collapsing them into one label.
+
+`phasedb_detail.csv` carries two columns the parser previously discarded,
+`Location` and `Experiment Types`, that distinguish the two cases directly —
+no literature review needed, this is a mapping fix (reading a source field
+correctly), not evidence curation. `parsers/parse_phasesepdb.py`'s
+`parse_detail()` now reclassifies a detail row to `source_mlo = "in vitro
+droplet"` instead of `NotInformed` when, after the summary-export fallback
+also fails to resolve a name:
+
+- `Location == "NA"` — no cellular compartment reported at all, and
+- `Experiment Types` names only in-vitro assays (contains "in vitro", never
+  "in vivo").
+
+Any row with a reported `Location` (`Cytoplasm`, `Nucleus`, or a compound of
+the two) is left as `NotInformed`, even with no named condensate — a known
+cytoplasmic/nuclear location is a real cellular claim, not an in vitro one.
+Rows whose `Experiment Types` mixes in-vitro and in-vivo assays are also left
+as `NotInformed`: mixed evidence is not an in-vitro-only claim.
+
+**Verified counts (this dataset, `database/raw/phasedb_detail.csv`)**: 311 `phasedb_detail.csv` rows
+reclassified, covering 272 distinct proteins — confirmed independently by PMID
+overlap against LLPSDB/DrLLPS: of the proteins that carry both a PhaSepDB
+`NotInformed` row and an LLPSDB/DrLLPS `in_vitro_droplet` row, 71/100 cite the
+exact same PMID, i.e. PhaSepDB is citing the identical in-vitro paper without
+naming a compartment. PhaSepDB's `NotInformed` protein count drops from 930 to
+694; `unified_mlo = 'in_vitro_droplet'` protein count rises from 551
+(DrLLPS 171 + LLPSDB 380) to 823 (+ PhaSepDB 272). `mlo_annotations` gains 36
+net rows (35,732 → 35,768) — the byproduct of the row grain
+`(uniprot_id, source_db, source_mlo, source_role)`: a protein whose collapsed
+`NotInformed` row absorbed PMIDs from several `phasedb_detail.csv` records now
+splits into two rows (`in vitro droplet` + the remaining `NotInformed`) when
+some but not all of those records qualify for reclassification.
+
+**Known gap left open by this fix**: `evidence_type` is assigned from
+`(source_db, source_role)` only (`compute_evidence_type()` in
+`scripts/integrate.py`), not per-row from `source_mlo`. These 272 proteins'
+reclassified rows keep `source_role = "driver"` and therefore
+`evidence_type = "cellular_requirement"` ("perturbing it disrupts the
+condensate in cells") even though they now read as `in_vitro_droplet`
+("purified protein phase-separates; no cellular claim") — the same
+inconsistency `evidence_type` was introduced to catch elsewhere (see
+"`evidence_type`" in `SCHEMA.md`). Fixing this would mean making
+`evidence_type` a per-row function of `source_mlo` as well, which changes the
+"verified exhaustive and homogeneous per (source_db, source_role) pair"
+property the external audit checked — left open rather than reversed
+silently. Do not "fix" this by hand without re-deriving that exhaustiveness
+check.
+
 ---
 
 ## MLO mapping decisions (source_mlo → unified_mlo)
@@ -260,6 +316,12 @@ for the implementation (`filterMlos()` in `frontend/src/utils/format.js`).
 
 - "MLO Component" (client) is a chosen simplification of underlying complexity in
   source annotation practices — see "Driver vs. Component" above.
+- **272 PhaSepDB proteins now carry `unified_mlo = 'in_vitro_droplet'` with
+  `evidence_type = 'cellular_requirement'`**, a combination that reads as
+  contradictory (`cellular_requirement` means "disrupts the condensate in
+  cells"; these rows have no cellular claim) — see "PhaSepDB in vitro
+  reclassification" above for why this was left open rather than fixed at the
+  same time.
 - CD-CODE contributes MLO associations with **no role data at all** — always `NULL`,
   not an oversight to be "fixed" by inferring a role.
 - **There are five source databases, not six.** `PhaseDB` and `PhasePDB` were

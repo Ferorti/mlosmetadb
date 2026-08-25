@@ -26289,28 +26289,28 @@ Q8NE35	PhasePro	P-body	p_body	driver	driver	in_vitro_llps	1	31416913	Homo sapien
 P35974	PhasePro	inclusion body	inclusion_body	driver	driver	in_vitro_llps	1	31375591	Measles virus
 Q12888	PhasePro	nuclear body	nuclear_body	driver	driver	in_vitro_llps	1	31267591	Homo sapiens
 A0A8C0MIV5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40015268	Canis lupus familiaris
-C0HK44	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34165838	Lasioglossum laticeps
+C0HK44	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34165838	Lasioglossum laticeps
 P46804	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32601486;36251431	Trichonephila clavipes
 P19837	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32601486	Trichonephila clavipes
-A0A088MEP7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39922493	Doryteuthis opalescens
+A0A088MEP7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39922493	Doryteuthis opalescens
 Q5XXP4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	22837213	Chikungunya virus (strain 37997)
 P53155	PhaSepDB	Hyperosmotic shock foci	hyperosmotic_shock_foci	driver	driver	cellular_requirement	1	31285266	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P08659	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38876374;36342014	Photinus pyralis
-P05434	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38150475	Chlamydomonas reinhardtii
+P05434	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38150475	Chlamydomonas reinhardtii
 O65934	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31366629	Mycobacterium tuberculosis (strain ATCC 25618 / H37Rv)
-A0QSY1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31366629	Mycolicibacterium smegmatis (strain ATCC 700084 / mc(2)155)
-P02259	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39116133	Gallus gallus
-P08287	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39116133	Gallus gallus
-Q3YL59	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	23865482	Pinctada fucata
+A0QSY1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31366629	Mycolicibacterium smegmatis (strain ATCC 700084 / mc(2)155)
+P02259	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39116133	Gallus gallus
+P08287	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39116133	Gallus gallus
+Q3YL59	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	23865482	Pinctada fucata
 Q769N4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39705355	Human norovirus Saitama
-P17763	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34375636	Dengue virus type 1 (strain Nauru/West Pac/1974)
+P17763	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34375636	Dengue virus type 1 (strain Nauru/West Pac/1974)
 A0A3Q9VF17	PhaSepDB	VRO-associated condensate	replication_compartment	driver	driver	cellular_requirement	1	38484009	Nicotiana benthamiana
-Q32ZE1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34375636	Zika virus
+Q32ZE1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34375636	Zika virus
 A0A2U8QNT7	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	33077592	Artemia franciscana
 A0A178VP50	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38327052	Arabidopsis thaliana
 A0A8V0ZZD0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39029469	Gallus gallus
 P03630	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36357399	Pseudomonas phage PP7
-P03612	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36357399	Escherichia phage MS2
+P03612	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36357399	Escherichia phage MS2
 A2T3P0	PhaSepDB	Viroplasm	viroplasm	driver	driver	cellular_requirement	1	36700549	Rotavirus A (isolate RVA/Monkey/South Africa/SA11-H96/1958/G3P5B[2])
 C4NFL9	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	37047525	Nyamanini virus (isolate Tick/Thailand/39/1968)
 C4NFL9	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	37047525	Nyamanini virus (isolate Tick/Thailand/39/1968)
@@ -26322,7 +26322,7 @@ A0A286NGJ8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1
 P00648	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35853451	Bacillus amyloliquefaciens
 H9JB09	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37029111	Bombyx mori
 G7JS36	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35610973	Medicago truncatula
-Q6LD62	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37027309	Homo sapiens
+Q6LD62	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37027309	Homo sapiens
 K9N638	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35129074	Middle East respiratory syndrome-related coronavirus (isolate United Kingdom/H123990006/2012)
 A0A072VLI9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35610973	Medicago truncatula
 A0AAU7YSI3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36798397	Eremothecium sp
@@ -26330,14 +26330,14 @@ Q4JIM5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	378
 O14639	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35858327	Homo sapiens
 Q6GQW0	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	37261953	Mus musculus
 Q23390	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
-P31787	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38923199	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P31787	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38923199	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P62740	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37838354	Oryctolagus cuniculus
 P60709	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39932799	Homo sapiens
-P35609	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34049882	Homo sapiens
+P35609	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34049882	Homo sapiens
 O43707	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39932799	Homo sapiens
 P61160	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38459060	Homo sapiens
 Q8VHH7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739811	Mus musculus
-Q8WXG9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36964137	Homo sapiens
+Q8WXG9	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36964137	Homo sapiens
 P00330	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38515267	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q60612	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739811	Mus musculus
 P34971	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739811	Mus musculus
@@ -26358,7 +26358,7 @@ Q8BUE4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	373
 O43823	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	32719551;33235917;38711442	Homo sapiens
 O43823	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	32719551;33235917;38711442	Homo sapiens
 Q96B36	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35790738	Homo sapiens
-P02769	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39648588;37815312;37853127;36511362;39971992;39642205	Bos taurus
+P02769	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39648588;37815312;37853127;36511362;39971992;39642205	Bos taurus
 P02768	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37321990	Homo sapiens
 P07724	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37321990	Mus musculus
 P54115	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38025775	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -26380,7 +26380,8 @@ P14904	PhaSepDB	Pre-autophagosomal structure	pre_autophagosomal_structure	driver
 P27695	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36200829	Homo sapiens
 P27695	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38436697	Homo sapiens
 P02649	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33822768	Homo sapiens
-P05067	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39854227;37718544	Homo sapiens
+P05067	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39854227	Homo sapiens
+P05067	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37718544	Homo sapiens
 P10275	PhaSepDB	enhancer condensate	enhancer_condensate	driver	driver	cellular_requirement	1	36577061;37738977;36229685;36535377;33978290;30244836;34986150	Homo sapiens
 P10275	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36577061;36229685;37791849;36535377;33978290;30244836;34986150	Homo sapiens
 P46672	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	26359986	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -26389,7 +26390,8 @@ Q9ES28	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular
 O55043	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32780989	Rattus norvegicus
 A2BH40	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34605568	Mus musculus
 O14497	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38326345;37788668;39095374;34018649	Homo sapiens
-Q8NFD5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34018649;37788668;36354291;38326345	Homo sapiens
+Q8NFD5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34018649	Homo sapiens
+Q8NFD5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37788668;36354291;38326345	Homo sapiens
 Q6J5K9	PhaSepDB	Yb body	yb_body	driver	driver	cellular_requirement	1	31267711	Drosophila melanogaster
 Q8IZT6	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	40122889	Homo sapiens
 Q8IXJ9	PhaSepDB	Paraspeckle	paraspeckle	driver	driver	cellular_requirement	1	34433054	Homo sapiens
@@ -26416,7 +26418,7 @@ Q8WWM7	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement
 P54252	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38654122	Homo sapiens
 O14965	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	38746663	Homo sapiens
 Q91820	PhaSepDB	Spindle apparatus	spindle_apparatus	driver	driver	cellular_requirement	1	29074706	Xenopus laevis
-Q96GD4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31481798	Homo sapiens
+Q96GD4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31481798	Homo sapiens
 O15169	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	33060621;33723425;39384753;16263762;36037369;36342472	Homo sapiens
 O15169	PhaSepDB	Destruction complex condensate	wnt_destruction_complex	driver	driver	cellular_requirement	1	33060621;38279052;33723425;39384753;16263762;37873736;37721093;37611590;36342472	Homo sapiens
 O15169	PhaSepDB	Wnt signalodroplet	wnt_signaling_condensate	driver	driver	cellular_requirement	1	33060621;33723425;39384753;16263762;36342472;36266931	Homo sapiens
@@ -26429,18 +26431,20 @@ Q9DBJ3	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requireme
 Q9UHR4	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	39192031	Homo sapiens
 Q79LN3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34046916	Staphylococcus aureus
 O70445	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	35809564	Mus musculus
-Q05175	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32750402	Rattus norvegicus
+Q05175	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32750402	Rattus norvegicus
 Q86NX9	PhaSepDB	Par complex	cell_polarity_condensate	driver	driver	cellular_requirement	1	32385244	Drosophila melanogaster
 Q61140	PhaSepDB	Integrin adhesion complex	integrin_adhesion_complex	driver	driver	cellular_requirement	1	35049497	Mus musculus
 O95999	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35727133	Homo sapiens
 Q59U10	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38091321	Candida albicans (strain SC5314 / ATCC MYA-2876)
-Q9VHP0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37980572	Drosophila melanogaster
+Q9VHP0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37980572	Drosophila melanogaster
 Q00994	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32142787	Homo sapiens
-Q9LD45	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39111320	Arabidopsis thaliana
+Q9LD45	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39111320	Arabidopsis thaliana
 Q8TD16	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	37724036	Homo sapiens
-P11709	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36536177;39885130	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P11709	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36536177	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P11709	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39885130	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P40013	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36536177	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-O15392	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38456462;31481798	Homo sapiens
+O15392	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38456462	Homo sapiens
+O15392	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31481798	Homo sapiens
 P54132	PhaSepDB	Assemblysome	assemblysome	driver	driver	cellular_requirement	1	39038850;37460154	Homo sapiens
 P54132	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	39038850;31171703	Homo sapiens
 P54132	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39038850;37503837	Homo sapiens
@@ -26448,11 +26452,11 @@ Q8WV28	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	320
 P0C717	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34015248;36250941	Epstein-Barr virus (strain AG876)
 P35226	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	34620850;37756159	Homo sapiens
 P35226	PhaSepDB	Polycomb body	polycomb_body	driver	driver	cellular_requirement	1	34620850;33169020	Homo sapiens
-P12643	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38063842	Homo sapiens
+P12643	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38063842	Homo sapiens
 Q91Z96	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36739695	Mus musculus
 Q12830	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35073946	Homo sapiens
 P88989	PhaSepDB	Cytoplasmic virion assembly compartment	viral_factory	driver	driver	cellular_requirement	1	34015248;36250941	Murid herpesvirus 4
-P15056	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33645620	Homo sapiens
+P15056	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33645620	Homo sapiens
 C3XWA2	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	25562883;36257947	Branchiostoma floridae
 P38398	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	36092926;38578830	Homo sapiens
 P48754	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	34980897	Mus musculus
@@ -26472,23 +26476,24 @@ O02374	PhaSepDB	Oskar granule	oskar_granule	driver	driver	cellular_requirement	1
 H0WFA5	PhaSepDB	Balbiani body	balbiani_body	driver	driver	cellular_requirement	1	27471966;35065906;39793567;30086300;36207377	Danio rerio
 A8DZ09	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37872148	Drosophila melanogaster
 P98086	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38942014	Mus musculus
-P02745	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38942014	Homo sapiens
+P02745	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38942014	Homo sapiens
 A0A854QGF5	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	37217653	Cryptococcus neoformans var. grubii Tu259-1
 Q6ZUJ4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38175751	Homo sapiens
 Q96LT7	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37471224;32730793	Homo sapiens
 Q96LT7	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	32730793	Homo sapiens
 Q96LT7	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	32730793;35325178	Homo sapiens
 Q96LT7	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	32730793;35325178	Homo sapiens
-A0A290MZ23	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides
+A0A290MZ23	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides
 O55017	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	driver	driver	cellular_requirement	1	30661983;33202250	Mus musculus
-O88602	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33927400;31492534	Mus musculus
+O88602	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33927400;31492534	Mus musculus
 J7M3T1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36067153	Ramazzottius varieornatus
 Q13137	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39420095	Homo sapiens
-P11275	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38440150;36827181;33235361	Rattus norvegicus
+P11275	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38440150	Rattus norvegicus
+P11275	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36827181;33235361	Rattus norvegicus
 Q13554	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39742665	Homo sapiens
 Q96RR4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37774095	Homo sapiens
 Q8NCB2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38255303	Homo sapiens
-Q8C1B1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35762204	Mus musculus
+Q8C1B1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35762204	Mus musculus
 A0A0D2X5H4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37295429	Capsaspora owczarzaki (strain ATCC 30864)
 Q14444	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36279435;39172789;40028898;38012130;32302572;34400613;32302570;38626504;31439799;39079611;34074792;35072355	Homo sapiens
 Q14444	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	40028898;32302572;34400613;38626504;31439799;34074792	Homo sapiens
@@ -26496,17 +26501,18 @@ Q14444	PhaSepDB	RNP transport granule	neuronal_granule	driver	driver	cellular_re
 Q9XW17	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	24176641;35801939;37505984;37703874	Caenorhabditis elegans
 Q9XW17	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	24176641;39167497	Caenorhabditis elegans
 Q9H257	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35727133	Homo sapiens
-J7RUA5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588591	Staphylococcus aureus
+J7RUA5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588591	Staphylococcus aureus
 O14936	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36137748	Homo sapiens
 P42574	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37119817	Homo sapiens
 P55210	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37119817	Homo sapiens
 Q03135	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568658	Homo sapiens
 O54724	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568658	Mus musculus
-P00880	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30498228	Synechococcus sp. (strain ATCC 27144 / PCC 6301 / SAUG 1402/1)
-O85040	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38971311;32123388	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
-P00879	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32979320	Nostoc sp. (strain PCC 7120 / SAG 25.82 / UTEX 2576)
-Q31NB3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34759380	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
-P0C916	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30498228	Acidithiobacillus ferrooxidans
+P00880	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30498228	Synechococcus sp. (strain ATCC 27144 / PCC 6301 / SAUG 1402/1)
+O85040	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38971311	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
+O85040	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32123388	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
+P00879	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32979320	Nostoc sp. (strain PCC 7120 / SAG 25.82 / UTEX 2576)
+Q31NB3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34759380	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
+P0C916	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30498228	Acidithiobacillus ferrooxidans
 Q31NB2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30675061	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
 P33322	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	33836082	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P83916	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	32101700;33660589;31543422;37398008	Homo sapiens
@@ -26526,13 +26532,14 @@ Q61686	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	3
 O95931	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	37756159	Homo sapiens
 Q8VDS3	PhaSepDB	Polycomb body	polycomb_body	driver	driver	cellular_requirement	1	34637753	Mus musculus
 Q9HC52	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	37756159	Homo sapiens
-P27134	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34759380	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
+P27134	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34759380	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
 Q16204	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33848463;38805286	Homo sapiens
 A0A2H4FYY8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38805286	Homo sapiens
 E9Q6B2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37352102	Mus musculus
 Q17345	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	24176641	Caenorhabditis elegans
-P13501	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38949655	Homo sapiens
-Q03513	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34759380;30675061	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
+P13501	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38949655	Homo sapiens
+Q03513	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34759380	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
+Q03513	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30675061	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
 P78396	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37024934	Homo sapiens
 O60563	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37660293;35037420;35393539;38721279;39174527;38172614	Homo sapiens
 O60563	PhaSepDB	Elongation complex	transcriptional_condensate	driver	driver	cellular_requirement	1	37660293;35037420;38721279;39174527;32270036;38172614	Homo sapiens
@@ -26548,17 +26555,17 @@ Q00684	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3383608
 Q09822	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37746062;36749320	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 P00549	PhaSepDB	Glycolytic body	glycolytic_body	driver	driver	cellular_requirement	1	38025775;32298230	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P00546	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36108633	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P06704	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38150475	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P06704	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38150475	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P25655	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36972455	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-Q9VSM9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342;34951585	Drosophila melanogaster
+Q9VSM9	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342;34951585	Drosophila melanogaster
 Q53HL2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31481798;37945831;38456462	Homo sapiens
-Q99PF4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38408254	Mus musculus
+Q99PF4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38408254	Mus musculus
 P50750	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32270036	Homo sapiens
 P24100	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37378595	Arabidopsis thaliana
 P46527	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35790738	Homo sapiens
 Q8N726	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	39528457	Homo sapiens
 Q64364	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36220893	Mus musculus
-Q9H211	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Homo sapiens
+Q9H211	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342	Homo sapiens
 Q9Y232	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35918147	Homo sapiens
 P49715	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	37903757;37516962;38969762	Homo sapiens
 P17676	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	37094986	Homo sapiens
@@ -26569,7 +26576,7 @@ P28659	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	3
 Q92879	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	35642886	Homo sapiens
 Q92879	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	35642886	Homo sapiens
 P49450	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37243594	Homo sapiens
-Q02224	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38614097	Homo sapiens
+Q02224	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38614097	Homo sapiens
 Q5PR68	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39349455	Mus musculus
 Q8N8E3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39349455	Homo sapiens
 O94986	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	33658185;33208041	Homo sapiens
@@ -26578,8 +26585,8 @@ A2AUM9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	336
 Q86XR8	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	38857398	Homo sapiens
 Q96MT8	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	38857398;33208041	Homo sapiens
 Q96MT8	PhaSepDB	Pericentriolar matrix	centrosome	driver	driver	cellular_requirement	1	38857398;33208041	Homo sapiens
-P41208	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38150475	Homo sapiens
-P13569	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40063811	Homo sapiens
+P41208	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38150475	Homo sapiens
+P13569	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	40063811	Homo sapiens
 Q9FWS3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773271	Arabidopsis thaliana
 P01215	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36173346	Homo sapiens
 Q8N884	PhaSepDB	cGAS-DNA complex	cgas_dna_complex	driver	driver	cellular_requirement	1	33606975;35670106;29976794;34015248;34779554;36382803;39322678;31142647	Homo sapiens
@@ -26596,7 +26603,7 @@ Q9H444	PhaSepDB	Abscission checkpoint body	abscission_checkpoint_body	driver	dri
 Q96CF2	PhaSepDB	Abscission checkpoint body	abscission_checkpoint_body	driver	driver	cellular_requirement	1	37450591	Homo sapiens
 P08172	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739811	Homo sapiens
 Q9ERZ4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739811	Mus musculus
-Q10239	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773107	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+Q10239	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38773107	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 Q8L793	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37295429	Arabidopsis thaliana
 P56198	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34508658	Mus musculus
 Q14011	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	32234784;22579281;24267890;33991007;34738012	Homo sapiens
@@ -26604,20 +26611,20 @@ A0A8M6Z3G7	PhaSepDB	Balbiani body	balbiani_body	driver	driver	cellular_requireme
 A0A8M1P6M4	PhaSepDB	Balbiani body	balbiani_body	driver	driver	cellular_requirement	1	35065906	Danio rerio
 Q3TXU6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34813726	Mus musculus
 Q07065	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39528501	Homo sapiens
-Q14008	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33349959	Homo sapiens
+Q14008	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33349959	Homo sapiens
 O23249	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37378595	Arabidopsis thaliana
 P30622	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37603768;34890409	Homo sapiens
 P49760	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	39119950	Homo sapiens
 P56523	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773107	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 O60016	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	39477922	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
-P10909	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39476948	Homo sapiens
+P10909	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39476948	Homo sapiens
 Q03690	PhaSepDB	Hyperosmotic shock foci	hyperosmotic_shock_foci	driver	driver	cellular_requirement	1	31285266	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P62633	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37963251;37186134	Homo sapiens
 A0A1W5T566	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35766380	Escherichia coli
 O75128	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36791197	Homo sapiens
 Q5NBX1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36791197	Mus musculus
 P38432	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	36224177;39602297	Homo sapiens
-P02465	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35504270	Bos taurus
+P02465	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35504270	Bos taurus
 P15954	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36220893	Homo sapiens
 A0A2Z5T4U1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36613855	Citrus vein enation virus
 Q43349	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38723165	Arabidopsis thaliana
@@ -26628,26 +26635,28 @@ Q7Z5Q1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	225
 Q8NE35	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	31416913	Homo sapiens
 Q7TN99	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	31416913;36716374	Mus musculus
 Q7TN99	PhaSepDB	Neuronal granule	neuronal_granule	driver	driver	cellular_requirement	1	36716374	Mus musculus
-Q17RY0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34787433;27802129	Homo sapiens
+Q17RY0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34787433	Homo sapiens
+Q17RY0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	27802129	Homo sapiens
 A0A8J1MNV6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	27802129	Xenopus laevis
 Q6NVF9	PhaSepDB	HIV-1-MLO	viral_factory	driver	driver	cellular_requirement	1	39623137;34605568	Mus musculus
 Q16630	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	39623137;38762180;32857953;39258548;37414787;36314049;37777964	Homo sapiens
 Q16630	PhaSepDB	Paraspeckle	paraspeckle	driver	driver	cellular_requirement	1	39623137;38762180;32857953;39258548	Homo sapiens
-P45481	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34605568	Mus musculus
+P45481	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34605568	Mus musculus
 Q92793	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32632103;33651988	Homo sapiens
 Q55804	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36920190	Synechocystis sp. (strain ATCC 27184 / PCC 6803 / Kazusa)
 Q9UJA2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38322995	Homo sapiens
-P0ACJ8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588591	Escherichia coli (strain K12)
+P0ACJ8	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588591	Escherichia coli (strain K12)
 Q53ET0	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	35037420	Homo sapiens
 F4HRT5	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37335899	Arabidopsis thaliana
 Q9SAF6	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37335899	Arabidopsis thaliana
 Q96524	PhaSepDB	Photobody	plant_photobody	driver	driver	cellular_requirement	1	38066290;34650267	Arabidopsis thaliana
 P02511	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39932799;36931259	Homo sapiens
-P07320	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33755443	Homo sapiens
+P07320	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33755443	Homo sapiens
 P48729	PhaSepDB	Destruction complex condensate	wnt_destruction_complex	driver	driver	cellular_requirement	1	38279052	Homo sapiens
 P68400	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33723425	Homo sapiens
 P45689	PhaSepDB	Carboxysome	carboxysome	driver	driver	cellular_requirement	1	38971311	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
-O85041	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38971311;32123388	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
+O85041	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38971311	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
+O85041	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32123388	Halothiobacillus neapolitanus (strain ATCC 23641 / c2)
 Q61164	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37748139;35768498	Mus musculus
 P35222	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39316611;31563432;38279052	Homo sapiens
 P35222	PhaSepDB	Destruction complex condensate	wnt_destruction_complex	driver	driver	cellular_requirement	1	37657935;37873736;38279052	Homo sapiens
@@ -26655,16 +26664,16 @@ P35222	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	36037
 Q02248	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	34859820	Mus musculus
 Q9JJN6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31563432	Mus musculus
 Q6PD62	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36603581	Homo sapiens
-Q14247	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30531905;30078712	Homo sapiens
+Q14247	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30531905;30078712	Homo sapiens
 B9EJA2	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	35562389	Mus musculus
 Q13618	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	30244836	Homo sapiens
 Q9ZVH4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32810437	Arabidopsis thaliana
 P61073	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36396954	Homo sapiens
 P50756	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
-P99999	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39108706	Homo sapiens
+P99999	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39108706	Homo sapiens
 A3QMT0	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	36130731	Cyprinid herpesvirus 3
 A3QMT0	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36130731	Cyprinid herpesvirus 3
-Q9XUS9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588311	Caenorhabditis elegans
+Q9XUS9	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588311	Caenorhabditis elegans
 Q5A0W9	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	33087900;32719507	Candida albicans (strain SC5314 / ATCC MYA-2876)
 Q9NYF0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33723425	Homo sapiens
 Q9UER7	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	31845799;30244836	Homo sapiens
@@ -26672,7 +26681,8 @@ O35613	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	3
 Q9UER7	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	31434890;36822200	Homo sapiens
 Q9UER7	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	31434890	Homo sapiens
 P03265	PhaSepDB	Replication compartment	replication_compartment	driver	driver	cellular_requirement	1	34578359	Human adenovirus C serotype 5
-P24784	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39222785;38637545;31435012	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P24784	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39222785;38637545	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P24784	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31435012	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P24783	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	31435012	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q6PAC3	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37615668	Mus musculus
 Q9SP32	PhaSepDB	Nuclear dicing body	nuclear_dicing_body	driver	driver	cellular_requirement	1	33288888	Arabidopsis thaliana
@@ -26692,7 +26702,7 @@ Q9UJW0	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	314348
 Q9UJW0	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	34862482;36810259	Homo sapiens
 P40087	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38408252	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P35638	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34018649	Homo sapiens
-Q80TS7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34330769	Mus musculus
+Q80TS7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34330769	Mus musculus
 Q08345	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36475898;37833282	Homo sapiens
 O62372	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40082670	Caenorhabditis elegans
 Q9NVP1	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	40069174;39738032	Homo sapiens
@@ -26708,7 +26718,7 @@ A0A8M2BG36	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1
 O15523	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	35588748;37980572	Homo sapiens
 Q9NQI0	PhaSepDB	Nuage	nuage	driver	driver	cellular_requirement	1	37094074;37980572;38721279;35975930;37791635;39168125;25747659;38637545;39505696;30500534;28894006;31540706;31974256;32929202	Homo sapiens
 Q9NQI0	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	37094074;37980572;38721279;35975930;37791635;39168125;38637545;30500534;31540706;31974256;32929202	Homo sapiens
-O42107	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37980572	Danio rerio
+O42107	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37980572	Danio rerio
 Q61496	PhaSepDB	Nuage	nuage	driver	driver	cellular_requirement	1	36526633	Mus musculus
 Q8QGG8	PhaSepDB	Nuage	nuage	driver	driver	cellular_requirement	1	37463577	Danio rerio
 A0A1A7ZGA7	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	38810650	Nothobranchius furzeri
@@ -26716,9 +26726,9 @@ P26196	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	31435012;3876
 P26196	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	31435012;32302570	Homo sapiens
 P0A9P6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31435012	Escherichia coli (strain K12)
 P06634	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	31435012;26359986;32359423;34232232;32661370;39222785;26777405	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-O43583	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37743569	Homo sapiens
+O43583	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37743569	Homo sapiens
 Q9N303	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	30833787;39354132;32843637;36750365	Caenorhabditis elegans
-P02542	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37838354	Gallus gallus
+P02542	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37838354	Gallus gallus
 P17661	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39932799	Homo sapiens
 Q05D60	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33658185	Homo sapiens
 Q7M6Y5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33658185	Mus musculus
@@ -26729,15 +26739,15 @@ O60832	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3726711
 Q12959	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35869063	Homo sapiens
 P78352	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	30078712;36693856;31492534;27565345;38452102	Homo sapiens
 Q62108	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	37261953	Mus musculus
-P31016	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33235361	Rattus norvegicus
-P78352-1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33927400	Homo sapiens
-P97836	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33235361	Rattus norvegicus
+P31016	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33235361	Rattus norvegicus
+P78352-1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33927400	Homo sapiens
+P97836	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33235361	Rattus norvegicus
 Q9D415	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	31492534	Mus musculus
-O14490	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30078712	Homo sapiens
+O14490	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30078712	Homo sapiens
 O95886	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	35819332	Homo sapiens
 P0ACB0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39603490	Escherichia coli (strain K12)
 A0A085R2T8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39603490	Vibrio cholerae
-P0AEF0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39603490	Escherichia coli (strain K12)
+P0AEF0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39603490	Escherichia coli (strain K12)
 P31689	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	33229560	Homo sapiens
 P31689	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	33229560	Homo sapiens
 P25685	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	33229560	Homo sapiens
@@ -26750,7 +26760,7 @@ O04492	PhaSepDB	Nuclear dicing body	nuclear_dicing_body	driver	driver	cellular_r
 Q93413	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38987544	Caenorhabditis elegans
 O13801	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	35622527	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 P48510	PhaSepDB	Proteasome Storage Granule	proteasome_storage_granule	driver	driver	cellular_requirement	1	38408252	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-Q7JVY2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34951585;31560342	Drosophila melanogaster
+Q7JVY2	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34951585;31560342	Drosophila melanogaster
 F4KD71	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37220754	Arabidopsis thaliana
 Q9JIM4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38440150	Rattus norvegicus
 O14641	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	16263761;39652469;38264908;16263762;32632103;36398662;36342472;35867833	Homo sapiens
@@ -26778,18 +26788,19 @@ O43324	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	398
 P13639	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37592155	Homo sapiens
 G5EET6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39305484	Caenorhabditis elegans
 Q59X67	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38091321;33087900;38297837;32719507	Candida albicans (strain SC5314 / ATCC MYA-2876)
-Q9D8Y0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31456657	Mus musculus
-Q96C19	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31456657	Homo sapiens
+Q9D8Y0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31456657	Mus musculus
+Q96C19	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31456657	Homo sapiens
 Q15029	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	39602297	Homo sapiens
 C0P279	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38987544	Caenorhabditis elegans
-P00533	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33848463;35231400;35507881;36396954;35490741	Homo sapiens
+P00533	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33848463;35507881;36396954;35490741	Homo sapiens
+P00533	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35231400	Homo sapiens
 G5EBQ3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38987544	Caenorhabditis elegans
 P19525	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31772125	Homo sapiens
 Q14152	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38012130	Homo sapiens
 P55884	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39306064;30893049;29262335	Homo sapiens
 P60842	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40069174	Homo sapiens
-Q6NU02	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40069174	Xenopus laevis
-P23588	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39384813	Homo sapiens
+Q6NU02	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	40069174	Xenopus laevis
+P23588	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39384813	Homo sapiens
 P06730	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	40090627	Homo sapiens
 P06730	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	38072230	Homo sapiens
 Q9NRA8	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	37370689	Homo sapiens
@@ -26804,7 +26815,7 @@ O82804	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requireme
 O44490	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	driver	driver	cellular_requirement	1	33208945	Caenorhabditis elegans
 O00472	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32270036	Homo sapiens
 D3YT16	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38987544	Caenorhabditis elegans
-P15502	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33755443	Homo sapiens
+P15502	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33755443	Homo sapiens
 Q8CB77	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	33334895	Mus musculus
 Q9HC35	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33976114;33848463	Homo sapiens
 J7MA22	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34661367;33976114;38284990	Homo sapiens
@@ -26820,16 +26831,17 @@ Q09472	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	dri
 B2RWS6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33651988	Mus musculus
 Q95XR4	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	30173914	Caenorhabditis elegans
 P29317	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37980165	Homo sapiens
-P42566	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39914390;33820972	Homo sapiens
-P04626	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35231400	Homo sapiens
-Q15303	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35231400	Homo sapiens
+P42566	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39914390	Homo sapiens
+P42566	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33820972	Homo sapiens
+P04626	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35231400	Homo sapiens
+Q15303	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35231400	Homo sapiens
 Q811U3	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	driver	driver	cellular_requirement	1	33202250;33761347;38552623	Rattus norvegicus
 Q99MI1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31537859	Mus musculus
 Q8IUD2	PhaSepDB	ELKS condensate	elks_condensate	driver	driver	cellular_requirement	1	37172719	Homo sapiens
 Q8K3M6	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	driver	driver	cellular_requirement	1	33761347	Rattus norvegicus
-Q6PH08	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33202250	Mus musculus
+Q6PH08	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33202250	Mus musculus
 Q03468	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	39555660	Homo sapiens
-P42763	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33469149	Arabidopsis thaliana
+P42763	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33469149	Arabidopsis thaliana
 P25087	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	25761633	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 O75460	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39232130;38714852	Homo sapiens
 Q8RY71	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37721949	Arabidopsis thaliana
@@ -26846,7 +26858,7 @@ Q9Y624	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	361
 O00254	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36179489	Homo sapiens
 P26568	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	38309957	Arabidopsis thaliana
 Q9LFF6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36323776	Arabidopsis thaliana
-A0A290MWV4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides
+A0A290MWV4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides
 Q9NZB2	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	26777405	Homo sapiens
 Q3UXZ6	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	38452102	Mus musculus
 P07149	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	25761633	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -26862,12 +26874,12 @@ O14526	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	338
 Q0JRZ9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33820972	Homo sapiens
 P32055	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37191277	Escherichia coli (strain K12)
 Q9SCZ4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38157854	Arabidopsis thaliana
-P59113	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35049497	Mus musculus
+P59113	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35049497	Mus musculus
 Q96AC1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39492718	Homo sapiens
-P61328	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39158730	Homo sapiens
+P61328	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39158730	Homo sapiens
 P70379	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39260418	Mus musculus
-P09038	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39158730	Homo sapiens
-P11362	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35231400	Homo sapiens
+P09038	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39158730	Homo sapiens
+P11362	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35231400	Homo sapiens
 P21802	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35231400	Homo sapiens
 Q9SE97	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34210966	Arabidopsis thaliana
 Q9FJX6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34210966	Arabidopsis thaliana
@@ -26877,7 +26889,7 @@ Q94AH9	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3454336
 F4IGH3	PhaSepDB	Photobody	plant_photobody	driver	driver	cellular_requirement	1	38066290	Arabidopsis thaliana
 Q9ZSZ8	PhaSepDB	Photobody	plant_photobody	driver	driver	cellular_requirement	1	34650267	Arabidopsis thaliana
 Q7YTS3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
-P0A6R3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588591	Escherichia coli (strain K12)
+P0A6R3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588591	Escherichia coli (strain K12)
 Q0V7X4	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	38393070	Arabidopsis thaliana
 Q5T1M5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36396954	Homo sapiens
 O74191	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36423630	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
@@ -26885,10 +26897,10 @@ P54397	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3261521
 Q7K0L8	PhaSepDB	Histone locus body	histone_locus_body	driver	driver	cellular_requirement	1	32579968	Drosophila melanogaster
 P11088	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32165560	Mus musculus
 P20930	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32165560	Homo sapiens
-Q01543	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37287827	Homo sapiens
+Q01543	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37287827	Homo sapiens
 P21333	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36806943	Homo sapiens
 Q59QW5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38091321	Candida albicans (strain SC5314 / ATCC MYA-2876)
-P17948	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35231400	Homo sapiens
+P17948	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35231400	Homo sapiens
 Q84TD8	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	31043738	Arabidopsis thaliana
 P35922	PhaSepDB	Neuronal granule	neuronal_granule	driver	driver	cellular_requirement	1	31999954	Mus musculus
 Q06787	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	30765518;31439799;34251416;40102453;40090627;39106863;36375840;38587486	Homo sapiens
@@ -26903,8 +26915,9 @@ P19970	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	385
 M9NDC3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36482422	Drosophila melanogaster
 P02794	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36066504;39988734;40087540	Homo sapiens
 P02792	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36066504	Homo sapiens
-P0A9A6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30523075;36854378;36315857;33581219;40174834;27725777	Escherichia coli (strain K12)
+P0A9A6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30523075;36854378	Escherichia coli (strain K12)
 A0A7Y4IHA3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37380708	Myxococcus xanthus
+P0A9A6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36315857;33581219;40174834;27725777	Escherichia coli (strain K12)
 Q96I24	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37537343	Homo sapiens
 P35637	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37549257;37782826;34496937;36931259;37145883;37231298;37000871;38622120;34018649;34648275;29677513;39174527;24268778;26317470;39556435;39496836;35033560;39535884;39473462;35767424;37179431;37094074;35902591;32661370;39642205;30982603;26412307;35238639;35911965;33947944;36758221;36444977;35787038;38056002;36256816;35551189;36690069;37790538;37126687;36361989;30500534;34862761;35366418;33200826;39920231;40164149;33512148;40087540;35445401;29425497;28790177;38326345;28924037;34759379;35203243;38320550;39112465;30826182;33547841;30893049;38782886;26286827;33349959;33097688;39591966;31019288;33607084;31171724;24267890;31805282;31270472;34487489;34588591;33704371;34163069;33597515;28306503;38049424;32929202;34552246;34251416;31437398;34131277;26455390	Homo sapiens
 P35637	PhaSepDB	Mesh-like condensate	mesh_condensate	driver	driver	cellular_requirement	1	37549257;37782826;34496937;36931259;37145883;37231298;37000871;38622120;34018649;34648275;29677513;39174527;24268778;39556435;39496836;35033560;39535884;39473462;35767424;37179431;37094074;35902591;32661370;39642205;30982603;26412307;35238639;35911965;33947944;36758221;36444977;35787038;38056002;36256816;35551189;36690069;37790538;37126687;36361989;30500534;34862761;35366418;33200826;39920231;40164149;33512148;40087540;35445401;29425497;38326345;28924037;34759379;35203243;38320550;39112465;30826182;33547841;30893049;38782886;26286827;33349959;33097688;39591966;31019288;33607084;31171724;24267890;31805282;31270472;34487489;34588591;34163069;33597515;28306503;38049424;32929202;33650968;34552246;34251416;31437398;34131277;26455390	Homo sapiens
@@ -26938,14 +26951,15 @@ P97855	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement
 Q9UN86	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	28377462;26238190;32692974;40145738;39951026;33495715;32302572;37398029;35652658;39306064;34400613	Homo sapiens
 P97379	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37230995	Mus musculus
 Q9UN86	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	34400613	Homo sapiens
-P62813	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33139925	Rattus norvegicus
-P23576	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33139925	Rattus norvegicus
+P62813	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33139925	Rattus norvegicus
+P23576	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33139925	Rattus norvegicus
 P20236	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	33139925	Rattus norvegicus
-P12493	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32320662	Human immunodeficiency virus type 1 group M subtype B (isolate NY5)
+P12493	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32320662	Human immunodeficiency virus type 1 group M subtype B (isolate NY5)
 P03322	PhaSepDB	Virion assembly compartment	viral_factory	driver	driver	cellular_requirement	1	37328094	Rous sarcoma virus subgroup C (strain Prague)
-Q79665	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37385580	Human immunodeficiency virus type 1 group O (isolate MVP5180)
+Q79665	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37385580	Human immunodeficiency virus type 1 group O (isolate MVP5180)
 Q77372	PhaSepDB	HIV-1-MLO	viral_factory	driver	driver	cellular_requirement	1	36001979	Human immunodeficiency virus type 1 group O (isolate ANT70)
-P19659	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30449618;36327976;39717019	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P19659	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30449618	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P19659	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36327976;39717019	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 H9C955	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38515267	Nicotiana benthamiana
 P28007	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	33836082;26359986	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 A0A1L8HLZ2	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37943867;35607824	Xenopus laevis
@@ -26955,7 +26969,7 @@ Q9CZD3	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement
 P41250	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36738734	Homo sapiens
 P23771	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	30833784	Homo sapiens
 P23771	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	30833784	Homo sapiens
-P23772	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33159853	Mus musculus
+P23772	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33159853	Mus musculus
 P25555	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	26359986	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 F4I2I5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34040255	Arabidopsis thaliana
 F4KG14	PhaSepDB	GBPL defense-activated condensates	gbpl_condensate	driver	driver	cellular_requirement	1	34040255;38773271	Arabidopsis thaliana
@@ -26964,7 +26978,7 @@ Q8IWJ2	PhaSepDB	Golgin condensate	golgin_condensate	driver	driver	cellular_requi
 P32501	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32293990	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P03069	PhaSepDB	Mediator condensate	mediator_condensate	driver	driver	cellular_requirement	1	39717019;30449618	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P03069	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39717019;30449618	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P42212	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	27392146	Aequorea victoria
+P42212	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	27392146	Aequorea victoria
 Q68FF6	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	32780989	Mus musculus
 Q53GS7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30893049	Homo sapiens
 Q9XW62	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	40082670	Caenorhabditis elegans
@@ -26981,19 +26995,21 @@ Q92805	PhaSepDB	Golgin condensate	golgin_condensate	driver	driver	cellular_requi
 Q08379	PhaSepDB	Golgin condensate	golgin_condensate	driver	driver	cellular_requirement	1	32668013;38992139	Homo sapiens
 Q08378	PhaSepDB	Golgin condensate	golgin_condensate	driver	driver	cellular_requirement	1	32668013	Homo sapiens
 Q13439	PhaSepDB	Golgin condensate	golgin_condensate	driver	driver	cellular_requirement	1	32668013	Homo sapiens
-Q9BQQ3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38917877	Homo sapiens
-Q9H8Y8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38917877	Homo sapiens
+Q9BQQ3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38917877	Homo sapiens
+Q9H8Y8	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38917877	Homo sapiens
 Q03555	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	33139925	Rattus norvegicus
 P06744	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35490741	Homo sapiens
 Q86YR5	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	30404823	Homo sapiens
 Q86YR5	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38264908	Homo sapiens
 Q8VDU0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39218187	Mus musculus
-P62993	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	27056844;31268421;33080222;30846600;37126554;36322659	Homo sapiens
+P62993	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	27056844;33080222;36322659	Homo sapiens
+P62993	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31268421;30846600;37126554	Homo sapiens
 Q60631	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36460640	Mus musculus
-Q04410	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38923199	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+Q04410	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38923199	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q12879	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36693856	Homo sapiens
-Q00960	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33235361;36827181	Rattus norvegicus
-Q01097	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31492534;38452102;33927400	Mus musculus
+Q00960	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33235361;36827181	Rattus norvegicus
+Q01097	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31492534;38452102	Mus musculus
+Q01097	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33927400	Mus musculus
 A4D1B5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35298330	Homo sapiens
 Q3TCV3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35298330	Mus musculus
 P49841	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	35790738	Homo sapiens
@@ -27001,22 +27017,23 @@ P49841	PhaSepDB	Destruction complex condensate	wnt_destruction_complex	driver	dr
 Q21351	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31378567	Caenorhabditis elegans
 A8E612	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35607824	Xenopus laevis
 P46655	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	26359986	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-D5DYJ4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38553608	Priestia megaterium (strain ATCC 12872 / QMB1551)
-P04776	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37770422;37968398;37217523	Glycine max
+D5DYJ4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38553608	Priestia megaterium (strain ATCC 12872 / QMB1551)
+P04776	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37770422;37968398;37217523	Glycine max
 Q16046	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35490741	Homo sapiens
 P07305	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35140358	Homo sapiens
-G3N131	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34422830	Bos taurus
+G3N131	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34422830	Bos taurus
 Q92522	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35140358	Homo sapiens
 P16403	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35140358;34108453	Homo sapiens
 P16402	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35140358	Homo sapiens
 P10412	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	37432033;32111972;31543265	Homo sapiens
 P10412	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37432033;32111972;31543265	Homo sapiens
-P16401	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30301810;35140358	Homo sapiens
+P16401	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30301810	Homo sapiens
+P16401	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35140358	Homo sapiens
 Q8IZA3	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	37689690	Homo sapiens
 P60008	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35484234;31952807;37468629	Homo sapiens
 Q92646	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31952807	Homo sapiens
-P0C0S8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33852305	Homo sapiens
-P84243	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35158124	Homo sapiens
+P0C0S8	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33852305	Homo sapiens
+P84243	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35158124	Homo sapiens
 P68433	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	37072228	Mus musculus
 Q71DI3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38459060	Homo sapiens
 P62805	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	35158124;36795767;37116470	Homo sapiens
@@ -27033,11 +27050,11 @@ Q9NEM5	PhaSepDB	Z granule	z_granule	driver	driver	cellular_requirement	1	3935413
 O94992	PhaSepDB	Elongation complex	transcriptional_condensate	driver	driver	cellular_requirement	1	32270036	Homo sapiens
 P0A6X3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36577380	Escherichia coli (strain K12)
 B8GW92	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides (strain NA1000 / CB15N)
-P53551	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37432033	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P53551	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37432033	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P61830	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36854718	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q16665	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32482854	Homo sapiens
 P52789	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39622827	Homo sapiens
-Q7BH47	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588591	Lactococcus lactis
+Q7BH47	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588591	Lactococcus lactis
 Q43386	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	39014153	Arabidopsis thaliana
 P17096	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36336658	Homo sapiens
 P09429	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36755093	Homo sapiens
@@ -27056,7 +27073,7 @@ A0A7M4CIF6	PhaSepDB	L-body	l_body	driver	driver	cellular_requirement	1	39537752	
 O60812	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35687109	Homo sapiens
 Q14103	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	28709000	Homo sapiens
 O14979	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31995753	Homo sapiens
-P52597	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33349959	Homo sapiens
+P52597	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33349959	Homo sapiens
 P31943	PhaSepDB	Nuclear stress body	nuclear_stress_body	driver	driver	cellular_requirement	1	34873036	Homo sapiens
 P61978	PhaSepDB	Nuclear stress body	nuclear_stress_body	driver	driver	cellular_requirement	1	39941124;39824183;40011431;37248433	Homo sapiens
 P61978	PhaSepDB	Paraspeckle	paraspeckle	driver	driver	cellular_requirement	1	39941124;39824183;40011431;37248433	Homo sapiens
@@ -27064,14 +27081,14 @@ P61978	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement
 P61979	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39824183	Mus musculus
 P14866	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34916619	Homo sapiens
 Q9Z2Y3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37318128	Mus musculus
-Q86YM7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37318128	Homo sapiens
+Q86YM7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37318128	Homo sapiens
 Q9NSC5	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	37318128;30078712	Homo sapiens
-Q9Z2X5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33235361	Rattus norvegicus
-Q99JP6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31492534	Mus musculus
+Q9Z2X5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33235361	Rattus norvegicus
+Q99JP6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31492534	Mus musculus
 P31271	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	32386547	Homo sapiens
 P31269	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	34163069	Homo sapiens
-P14653	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38969762	Homo sapiens
-P09017	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38969762	Homo sapiens
+P14653	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38969762	Homo sapiens
+P09017	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38969762	Homo sapiens
 P35453	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	32386547	Homo sapiens
 P09016	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38969762	Homo sapiens
 Q9VCU6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	28636597	Drosophila melanogaster
@@ -27108,23 +27125,23 @@ P38646	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement
 P04792	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36075972;32231288;36701233	Homo sapiens
 Q16082	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	28854361;37146746	Homo sapiens
 Q12988	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37146746;28854361	Homo sapiens
-Q9UJY1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34487489	Homo sapiens
-P04913	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773107	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
-Q02645	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37655159	Drosophila melanogaster
+Q9UJY1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34487489	Homo sapiens
+P04913	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38773107	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+Q02645	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37655159	Drosophila melanogaster
 P42858	PhaSepDB	Htt inclusion	inclusion_body	driver	driver	cellular_requirement	1	34888656;29754822;31527136;38654122	Homo sapiens
 P42858	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	34888656;29358329;31527136;38654122	Homo sapiens
 P42858	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	34888656;40090627;31527136;38654122	Homo sapiens
-P0ACF0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39445815;36963493	Escherichia coli (strain K12)
-P0ACF4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36963493;39445815	Escherichia coli (strain K12)
+P0ACF0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39445815;36963493	Escherichia coli (strain K12)
+P0ACF4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36963493;39445815	Escherichia coli (strain K12)
 P0C054	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39865082	Escherichia coli (strain K12)
 P04485	PhaSepDB	ICP22 condensate	icp22_condensate	driver	driver	cellular_requirement	1	39383039	Human herpesvirus 1 (strain 17)
 P08392	PhaSepDB	Replication compartment	replication_compartment	driver	driver	cellular_requirement	1	33923223	Human herpesvirus 1 (strain 17)
 Q8VYU8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38172572	Arabidopsis thaliana
-Q46822	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32343131	Escherichia coli (strain K12)
+Q46822	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32343131	Escherichia coli (strain K12)
 Q21814	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
 Q17641	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
 Q9U2B8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
-O16463	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
+O16463	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36259463	Caenorhabditis elegans
 Q5PP75	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40145738	Suid herpesvirus 1
 Q9NZI8	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	32668274;39891203;38525957;29463567;36214649;37036576;36288717	Homo sapiens
 Q9Y6M1	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39041323;32668274;38657551;36109629	Homo sapiens
@@ -27135,7 +27152,8 @@ Q9Y6K9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	354
 O88522	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37683611	Mus musculus
 Q12906	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40011431	Homo sapiens
 Q3KP66	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34251416	Homo sapiens
-Q9NQS7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31481798;38456462	Homo sapiens
+Q9NQS7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31481798	Homo sapiens
+Q9NQS7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38456462	Homo sapiens
 Q3HNM7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39218187	Mus musculus
 Q8NFU5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33290695	Homo sapiens
 O94829	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36482422	Homo sapiens
@@ -27143,13 +27161,14 @@ P10914	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	36894
 P10914	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	36894639	Homo sapiens
 Q8IU81	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	39602297	Homo sapiens
 Q14653	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	35879450;37188808;34453890;39384753;35879453	Homo sapiens
-Q92985	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35879453;35879450	Homo sapiens
-P40541	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+Q92985	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35879453	Homo sapiens
+Q92985	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35879450	Homo sapiens
+P40541	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P35569	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35790738;37528084	Mus musculus
 P35568	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35790738	Homo sapiens
-P22939	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32343131	Escherichia coli (strain K12)
+P22939	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32343131	Escherichia coli (strain K12)
 Q96J02	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37549262	Homo sapiens
-P05556	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38862544	Homo sapiens
+P05556	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38862544	Homo sapiens
 P23458	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35766380	Homo sapiens
 O60674	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35766380	Homo sapiens
 Q15652	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39450904	Homo sapiens
@@ -27167,33 +27186,34 @@ Q9H7Z6	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_require
 P48543	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739811	Mus musculus
 Q9H3F6	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	39565307	Homo sapiens
 O60341	PhaSepDB	enhancer condensate	enhancer_condensate	driver	driver	cellular_requirement	1	36877164;38461301;39523439	Homo sapiens
-Q6ZQ88	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34764296	Mus musculus
+Q6ZQ88	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34764296	Mus musculus
 Q9Y2K7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35887017	Homo sapiens
 O94953	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35887017	Homo sapiens
 O15550	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34526716	Homo sapiens
 Q5NCY0	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	35672304	Mus musculus
 O15054	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	35672304	Homo sapiens
 Q6ZMT4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32935279	Homo sapiens
-P35968	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35231400	Homo sapiens
+P35968	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35231400	Homo sapiens
 Q14145	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	30126895	Homo sapiens
-Q07666	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38287096;36256816	Homo sapiens
+Q07666	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38287096	Homo sapiens
+Q07666	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36256816	Homo sapiens
 A0A0B4LH59	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36807601	Drosophila melanogaster
 Q12756	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37724036	Homo sapiens
 O60333	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38898313	Homo sapiens
 O43896	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	38898313	Homo sapiens
 O43896	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38898313	Homo sapiens
-Q99661	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38323478	Homo sapiens
+Q99661	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38323478	Homo sapiens
 P33176	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37724036	Homo sapiens
 Q9BW19	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	37100870;37724036	Homo sapiens
 P42168	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31050339	Caenorhabditis elegans
 Q940B8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38172572	Arabidopsis thaliana
 F4J8L3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37721949	Arabidopsis thaliana
-Q03164	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37945831	Homo sapiens
+Q03164	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37945831	Homo sapiens
 O14686	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	33169020;34526716	Homo sapiens
 Q6Q783	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	33326747	Mus musculus
 Q9VFP5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39029469	Drosophila melanogaster
 Q14974	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36482422	Homo sapiens
-P01116	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33645620	Homo sapiens
+P01116	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33645620	Homo sapiens
 P13179	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	39066190	Chandipura virus (strain I653514)
 P03523	PhaSepDB	Viroplasm	viroplasm	driver	driver	cellular_requirement	1	30181255	Vesicular stomatitis Indiana virus (strain San Juan)
 Q05318	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	37443171	Zaire ebolavirus (strain Mayinga-76)
@@ -27206,14 +27226,14 @@ P03252	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	3
 Q17604	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38010234	Caenorhabditis elegans
 Q8WQE8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38010234	Caenorhabditis elegans
 D0PV95	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	32078766;37191277;39171763;29064502;30061688;38049424;35918061;38316988;32393642;34588591;30833787;26015579;33645620;31540706	Caenorhabditis elegans
-E9P9U1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38637545	Saccharomyces cerevisiae
+E9P9U1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38637545	Saccharomyces cerevisiae
 Q4G0J3	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	40113991	Homo sapiens
 Q4G0J3	PhaSepDB	Elongation complex	transcriptional_condensate	driver	driver	cellular_requirement	1	32270036	Homo sapiens
 O43561	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	31268421;33080222;30846600;27056844;33929486;35490741;37126554;36322659	Homo sapiens
 O54957	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36460640	Mus musculus
 O95835	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36475898;34267352	Homo sapiens
 Q9NRM7	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	38200110;36300003	Homo sapiens
-H9KVH9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38633880	Moraxella bovis
+H9KVH9	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38633880	Moraxella bovis
 Q94ET8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	28938114	Chlamydomonas reinhardtii
 P06239	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37399423	Homo sapiens
 Q38796	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	27114519	Arabidopsis thaliana
@@ -27222,9 +27242,11 @@ Q9UJU2	PhaSepDB	Destruction complex condensate	wnt_destruction_complex	driver	dr
 Q9UJU2	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39316611	Homo sapiens
 Q8NC56	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32494070	Homo sapiens
 Q8WVC0	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	37851801	Homo sapiens
-P17931	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33952698;39248370;39591966;28893908	Homo sapiens
-Q02796	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32214243;37470705	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P49916	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39496836	Homo sapiens
+P17931	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33952698;39591966	Homo sapiens
+P17931	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39248370;28893908	Homo sapiens
+Q02796	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32214243	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+Q02796	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37470705	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P49916	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39496836	Homo sapiens
 Q9UGP4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33891898	Homo sapiens
 Q9U489	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39167497	Caenorhabditis elegans
 Q8K3Y3	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	34331666;38341436	Mus musculus
@@ -27235,11 +27257,11 @@ P43586	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3955816
 A0A3Q7HSV3	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	35287709;40179886	Solanum lycopersicum
 A0A8V0Z3J5	PhaSepDB	Balbiani body	balbiani_body	driver	driver	cellular_requirement	1	36207377	Gallus gallus
 O44991	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36329008	Caenorhabditis elegans
-P06858	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37253728	Homo sapiens
+P06858	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37253728	Homo sapiens
 P11152	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37253728	Mus musculus
 P32099	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40087540;40069234	Escherichia coli (strain K12)
 O75581	PhaSepDB	Wnt signalodroplet	wnt_signaling_condensate	driver	driver	cellular_requirement	1	36266931	Homo sapiens
-P70587	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33927400	Rattus norvegicus
+P70587	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33927400	Rattus norvegicus
 Q6UWE0	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36738734	Homo sapiens
 P47017	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	35876801;36972455	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q8ND56	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	37370689;31324804;38769438	Homo sapiens
@@ -27248,7 +27270,7 @@ P40070	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	26238190	Sacc
 P53905	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39897563;35764627	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P53905	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	35764627	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 O94822	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35325613	Homo sapiens
-P0DTC5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33479198	Severe acute respiratory syndrome coronavirus 2
+P0DTC5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33479198	Severe acute respiratory syndrome coronavirus 2
 Q9YS22	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	38421168	Bovine orthopneumovirus
 P04545	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	38072230	Human respiratory syncytial virus A (strain A2)
 P12419	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	38809580	Reovirus type 3 (strain Dearing)
@@ -27262,7 +27284,7 @@ Q9GZQ8	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	295073
 P20357	PhaSepDB	XY body	xy_body	driver	driver	cellular_requirement	1	38175751	Mus musculus
 Q6ZN16	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33649309	Homo sapiens
 Q99683	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39103333	Homo sapiens
-Q9SIS3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37497046	Arabidopsis thaliana
+Q9SIS3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37497046	Arabidopsis thaliana
 P27361	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36108633	Homo sapiens
 P45984	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39103333	Homo sapiens
 Q15691	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	38445984;32997736;39749826;36536176;38323478	Homo sapiens
@@ -27275,7 +27297,7 @@ P10636	PhaSepDB	Tau condensate	tau_condensate	driver	driver	cellular_requirement
 P29966	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37774095	Homo sapiens
 A7M8K7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38665676	Euprosthenops australis
 O15232	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38193601	Homo sapiens
-P0A8N0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40174834	Escherichia coli (strain K12)
+P0A8N0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	40174834	Escherichia coli (strain K12)
 P43243	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31019288;33097688;35252808	Homo sapiens
 Q8K310	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37381832;32908311	Mus musculus
 Q7Z434	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	36768473;34239064	Homo sapiens
@@ -27289,9 +27311,9 @@ Q9XTF3	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	3451678
 Q9NR56	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	35642886	Homo sapiens
 Q9NR56	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	35642886	Homo sapiens
 P04370	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	23762018	Mus musculus
-Q12158	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+Q12158	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q8GJM6	PhaSepDB	Carboxysome	carboxysome	driver	driver	cellular_requirement	1	38622124;31899489;37668016	Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)
-U5QDB5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31899489	Gloeobacter kilaueensis (strain ATCC BAA-2537 / CCAP 1431/1 / ULC 316 / JS1)
+U5QDB5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31899489	Gloeobacter kilaueensis (strain ATCC BAA-2537 / CCAP 1431/1 / ULC 316 / JS1)
 P29469	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	26777405	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P33993	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32935279	Homo sapiens
 Q14676	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	31267591	Homo sapiens
@@ -27299,7 +27321,8 @@ Q5PSV9	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requireme
 Q5PSV9	PhaSepDB	XY body	xy_body	driver	driver	cellular_requirement	1	34980897	Mus musculus
 Q00987	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38825770	Homo sapiens
 P23128	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	34655524	Drosophila melanogaster
-Q27433	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39747604;37857834	Caenorhabditis elegans
+Q27433	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39747604	Caenorhabditis elegans
+Q27433	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37857834	Caenorhabditis elegans
 Q9Z2D6	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	35809564;38719804;32698189;32101700;35156529	Mus musculus
 P51608	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	38719804;32698189;32111972;35156529	Homo sapiens
 P51608	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	38719804;32111972;35156529	Homo sapiens
@@ -27311,7 +27334,7 @@ Q15648	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	dri
 Q93074	PhaSepDB	Nuclear stress body	nuclear_stress_body	driver	driver	cellular_requirement	1	36971000	Homo sapiens
 Q93074	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36971000	Homo sapiens
 A2AGH6	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	34605568	Mus musculus
-Q5SWW4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34605568	Mus musculus
+Q5SWW4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34605568	Mus musculus
 Q924H2	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	34605568;34789250	Mus musculus
 Q96RN5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34789250	Homo sapiens
 Q9Y2X0	PhaSepDB	Mediator condensate	mediator_condensate	driver	driver	cellular_requirement	1	32727915	Homo sapiens
@@ -27323,17 +27346,17 @@ Q21126	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	2553583
 Q9TXM1	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	34106046;25535836;27914198;30833787;31975687;39637853;34223818;34516789	Caenorhabditis elegans
 Q9TXM1	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	39637853;35801939	Caenorhabditis elegans
 Q9TZK8	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	25535836	Caenorhabditis elegans
-P37355	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32343131	Escherichia coli (strain K12)
+P37355	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32343131	Escherichia coli (strain K12)
 Q24564	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39116228	Drosophila melanogaster
 P00958	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	26359986	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-A0A0H3C5U2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides (strain NA1000 / CB15N)
+A0A0H3C5U2	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37815915	Caulobacter vibrioides (strain NA1000 / CB15N)
 Q9HCE5	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	39169036	Homo sapiens
 Q9HCE5	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	35143475	Homo sapiens
 Q86U44	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	35143475;39007267;39234824	Homo sapiens
 Q86U44	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	39007267;39169036;39234824	Homo sapiens
 H2L067	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	35801939;39167497	Caenorhabditis elegans
 A1L020	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	38565536	Homo sapiens
-Q9H3U5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38614097	Homo sapiens
+Q9H3U5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38614097	Homo sapiens
 Q3TN34	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33976349	Mus musculus
 P78953	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31243991	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 Q18509	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	34223818	Caenorhabditis elegans
@@ -27343,7 +27366,7 @@ P46013	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3915347
 Q5UEC7	PhaSepDB	Spindle apparatus	spindle_apparatus	driver	driver	cellular_requirement	1	35033560	Homo sapiens
 Q03111	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36272410	Homo sapiens
 Q03111	PhaSepDB	Elongation complex	transcriptional_condensate	driver	driver	cellular_requirement	1	32270036	Homo sapiens
-P42568	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32826896	Homo sapiens
+P42568	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32826896	Homo sapiens
 Q93ZJ9	PhaSepDB	Antiviral condensate	antiviral_condensate	driver	driver	cellular_requirement	1	36642157	Arabidopsis thaliana
 Q96BY2	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	33393215	Homo sapiens
 A0A0B4K7A6	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	28115706	Drosophila melanogaster
@@ -27358,17 +27381,17 @@ Q9D1F5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	359
 Q6NTE8	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	35551189	Homo sapiens
 O22607	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32692742	Arabidopsis thaliana
 Q6PDM1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37279389	Mus musculus
-Q9LYG9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37547488	Arabidopsis thaliana
-F4IME2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37547488	Arabidopsis thaliana
-Q84M97	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37547488	Arabidopsis thaliana
-P33748	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39717019	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+Q9LYG9	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37547488	Arabidopsis thaliana
+F4IME2	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37547488	Arabidopsis thaliana
+Q84M97	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37547488	Arabidopsis thaliana
+P33748	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39717019	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P28360	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39843447	Homo sapiens
 O82486	PhaSepDB	Photobody	plant_photobody	driver	driver	cellular_requirement	1	34650267;39472512	Arabidopsis thaliana
 Q94AI4	PhaSepDB	Photobody	plant_photobody	driver	driver	cellular_requirement	1	39472512;34650267	Arabidopsis thaliana
 Q99551	PhaSepDB	Mitochondrial nucleoid	mitochondrial_nucleoid	driver	driver	cellular_requirement	1	34711968	Homo sapiens
-Q5JR59	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38323478	Homo sapiens
+Q5JR59	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38323478	Homo sapiens
 P15941	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37398029	Homo sapiens
-Q1KN24	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37655159	Drosophila melanogaster
+Q1KN24	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37655159	Drosophila melanogaster
 O62011	PhaSepDB	Mutator foci	mutator_foci	driver	driver	cellular_requirement	1	36750365;30036386	Caenorhabditis elegans
 O62011	PhaSepDB	P granule	p_granule	driver	driver	cellular_requirement	1	39354132	Caenorhabditis elegans
 P20591	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33077519;36361529;38607029;31484749	Homo sapiens
@@ -27384,7 +27407,7 @@ O94832	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	354779
 Q13402	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	31644917	Homo sapiens
 Q6PIF6	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	31644917	Homo sapiens
 P15172	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	38969762	Homo sapiens
-Q9NP98	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34049882	Homo sapiens
+Q9NP98	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34049882	Homo sapiens
 P0DTC9	PhaSepDB	Replication compartment	replication_compartment	driver	driver	cellular_requirement	1	39201466;33782395;34371045;33200826;32901111;38718862;33477032;39894078;40086356;34734665;38568799;38446881;38376366;36681763;37185252;32637943;37401177;33770364;39343003;37963251;37973889;37901441	Severe acute respiratory syndrome coronavirus 2
 P0DTC9	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	39201466;33782395;34371045;33200826;40107650;32901111;38718862;33477032;39894078;40086356;34734665;38568799;38446881;38376366;36681763;37185252;32637943;33770364;39343003;37963251;37973889;37901441	Severe acute respiratory syndrome coronavirus 2
 P0DTC9	PhaSepDB	SARS-CoV-2 N condensate	sars_cov2_n_condensate	driver	driver	cellular_requirement	1	39201466;33837182;33782395;34371045;33997662;33200826;32901111;33495715;33479198;33895773;38718862;33477032;39894078;40086356;33479219;34734665;33290746;38568799;38446881;38376366;33247108;36681763;37185252;32637943;33770364;39343003;37963251;37973889;37901441	Severe acute respiratory syndrome coronavirus 2
@@ -27408,7 +27431,7 @@ Q6WBA1	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement
 Q77X51	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	38421168	Bovine orthopneumovirus
 P16285	PhaSepDB	Negri body	negri_body	driver	driver	cellular_requirement	1	36480574	Rabies virus (strain SAD B19)
 Q9UMQ5	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38811792	Homo sapiens
-Q96AH0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39286502	Homo sapiens
+Q96AH0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39286502	Homo sapiens
 Q9BQ15	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39286502	Homo sapiens
 Q9H9S0	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36646707	Homo sapiens
 O60934	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35551189	Homo sapiens
@@ -27418,7 +27441,8 @@ Q9SB64	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	391
 P16333	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	26553976;27056844;31268421;25321392	Homo sapiens
 P16333	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	26553976;27056844;31268421;25321392	Homo sapiens
 P16333	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	26553976;27056844;31268421;38161366;25321392;30846599	Homo sapiens
-Q99M51	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35049497;37649226	Mus musculus
+Q99M51	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35049497	Mus musculus
+Q99M51	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37649226	Mus musculus
 P19338	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36150385;34515347	Homo sapiens
 P20397	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35607824;37943867	Xenopus laevis
 P09405	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36727534;32101700;34515347;38341436	Mus musculus
@@ -27428,24 +27452,25 @@ Q9Y6Q9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	335
 Q13772	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39988734;36066504;35318808	Homo sapiens
 Q5U4H9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35318808	Mus musculus
 Q9WU42	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37937963	Mus musculus
-P46934	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37549262;36640330	Homo sapiens
+P46934	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37549262	Homo sapiens
+P46934	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36640330	Homo sapiens
 Q9HC98	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39523439	Homo sapiens
 Q9H3P2	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	33548202;36762438;37582808	Homo sapiens
 Q8IXH7	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	33548202	Homo sapiens
 P18615	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	33548202;36603581	Homo sapiens
 P47035	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	33836082	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-Q9H2A3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38969762	Homo sapiens
+Q9H2A3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38969762	Homo sapiens
 P35240	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39116228;36300003;34453890	Homo sapiens
 Q16236	PhaSepDB	Mediator condensate	mediator_condensate	driver	driver	cellular_requirement	1	32727915	Homo sapiens
 Q16236	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	30126895	Homo sapiens
 Q6NTV9	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35607824;37943867	Xenopus laevis
 Q9P7H0	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37284815	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
-P11632	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588591	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P11632	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588591	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q17370	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32245789	Caenorhabditis elegans
 P0A6Z6	PhaSepDB	NikR compartments	nikr_compartment	driver	driver	cellular_requirement	1	37210726	Escherichia coli (strain K12)
-Q99K10	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33927400	Mus musculus
+Q99K10	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33927400	Mus musculus
 G5EBY3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37665665	Caenorhabditis elegans
-P37524	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36289351	Bacillus subtilis (strain 168)
+P37524	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36289351	Bacillus subtilis (strain 168)
 Q14978	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	36224177	Homo sapiens
 Q14978	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36224177	Homo sapiens
 Q15233	PhaSepDB	Paraspeckle	paraspeckle	driver	driver	cellular_requirement	1	38668381;35662392;34249431;34433054;37851801;35608889;33592266;29932899;36416237;39592606	Homo sapiens
@@ -27473,7 +27498,7 @@ G5EEH9	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular
 Q17602	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	40082670	Caenorhabditis elegans
 P93002	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32810437	Arabidopsis thaliana
 P49146	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36219818	Homo sapiens
-Q15466	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39591966	Homo sapiens
+Q15466	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39591966	Homo sapiens
 P49116	PhaSepDB	SARS-CoV-2 N condensate	sars_cov2_n_condensate	driver	driver	cellular_requirement	1	33895773;39333690	Homo sapiens
 P49116	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	33895773;39333690	Homo sapiens
 P04150	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	32487073;36309135	Homo sapiens
@@ -27510,7 +27535,7 @@ Q8WUM0	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular
 P49687	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	17082456	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P49790	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	37924814	Homo sapiens
 K9ZRR1	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus tropicalis
-A0A3L6KVB1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36257947	Trypanosoma brucei equiperdum
+A0A3L6KVB1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36257947	Trypanosoma brucei equiperdum
 D3KYQ3	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	36257947;36765044;25562883	Tetrahymena thermophila
 Q8TEM1	PhaSepDB	Cytoplasmic Nucleoporin Granule	cytoplasmic_nucleoporin_granule	driver	driver	cellular_requirement	1	32706158	Homo sapiens
 Q8TEM1	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	32706158	Homo sapiens
@@ -27522,7 +27547,7 @@ Q02199	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular
 Q6DEC7	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
 K9ZTJ6	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
 P48837	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	17082456	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-A0A8J1M527	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
+A0A8J1M527	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
 P37198	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	36482422;36690069;34059832	Homo sapiens
 Q91349	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
 Q9FFK6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773271	Arabidopsis thaliana
@@ -27531,7 +27556,7 @@ P52948	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	3
 P52948	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	33469149;37100914;37400539;36138110;32706158;25562883;33479542;39648588;34903620;39922194	Homo sapiens
 P52948	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	33469149;36304323;37400539;36138110;34163069;25562883;39648588;34903620;39922194	Homo sapiens
 J7I6Y1	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus tropicalis
-A0A6I8SCP2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36257947	Xenopus tropicalis
+A0A6I8SCP2	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36257947	Xenopus tropicalis
 Q6PFD9	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	37516964	Mus musculus
 Q54EQ8	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	25562883	Dictyostelium discoideum
 Q9VCH5	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	25562883	Drosophila melanogaster
@@ -27549,15 +27574,17 @@ Q96CV9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	394
 O16810	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
 Q13415	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	39082875;37488096	Homo sapiens
 Q13415	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	39082875;37488096	Homo sapiens
-Q24168	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
-Q7K2L1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
-Q9W102	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
-Q24169	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
-Q9Y1B2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
+Q24168	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
+Q7K2L1	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
+Q9W102	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
+Q24169	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
+Q9Y1B2	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31560342	Drosophila melanogaster
 P15962	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38484009;38515267	Tomato bushy stunt virus (strain Cherry)
 Q2HRC8	PhaSepDB	Paraspeckle	paraspeckle	driver	driver	cellular_requirement	1	39592606	Human herpesvirus 8 type P (isolate GK18)
-Q2HR80	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34387695;34015248;36250941	Human herpesvirus 8 type P (isolate GK18)
-Q4JQW6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35670106;34015248	Varicella-zoster virus (strain Oka vaccine)
+Q2HR80	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34387695	Human herpesvirus 8 type P (isolate GK18)
+Q2HR80	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34015248;36250941	Human herpesvirus 8 type P (isolate GK18)
+Q4JQW6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35670106	Varicella-zoster virus (strain Oka vaccine)
+Q4JQW6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34015248	Varicella-zoster virus (strain Oka vaccine)
 Q9M1K0	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	38393070	Arabidopsis thaliana
 P38713	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32169085	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q6F380	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35630784	Oryza sativa subsp. japonica
@@ -27573,7 +27600,7 @@ P69479	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3964503
 Q9YS28	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	38421168	Bovine orthopneumovirus
 Q8B9Q8	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	35536005	Human metapneumovirus (strain CAN97-83)
 P60166	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	39642233	Mumps virus (strain SBL)
-P35974	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32270045	Measles virus (strain Edmonston-AIK-C vaccine)
+P35974	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32270045	Measles virus (strain Edmonston-AIK-C vaccine)
 P0C798	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	34606793	Borna disease virus 1
 P07237	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	32087196	Homo sapiens
 S5DU62	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	33197754	Cauliflower mosaic virus
@@ -27597,7 +27624,7 @@ O97111	PhaSepDB	Par complex	cell_polarity_condensate	driver	driver	cellular_requ
 P22996	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32679076	Escherichia coli
 P07621	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32679076	Escherichia coli
 Q84GE1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34902429	Corynebacterium glutamicum
-B8GW30	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34902429	Caulobacter vibrioides (strain NA1000 / CB15N)
+B8GW30	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34902429	Caulobacter vibrioides (strain NA1000 / CB15N)
 Q9Z340	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39218187;32385244	Rattus norvegicus
 Q99NH2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37352102	Mus musculus
 Q9JK83	PhaSepDB	Par complex	cell_polarity_condensate	driver	driver	cellular_requirement	1	32385244;39218187	Mus musculus
@@ -27614,23 +27641,23 @@ A1Z9W4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	400
 G3X9Z4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40015272	Mus musculus
 P35227	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	37756159	Homo sapiens
 Q3UK78	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34813726	Mus musculus
-Q9QYX7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38552623	Mus musculus
+Q9QYX7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38552623	Mus musculus
 Q15154	PhaSepDB	Pericentriolar matrix	centrosome	driver	driver	cellular_requirement	1	29973724	Homo sapiens
 Q15154	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	37963851	Homo sapiens
 Q9R0L6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31249032	Mus musculus
 Q9QXV0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35549000	Mus musculus
 P06169	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38515267	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-O13892	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	24862735	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+O13892	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	24862735	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 O42958	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	32513655	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
-O75340	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40118863	Homo sapiens
+O75340	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	40118863	Homo sapiens
 Q8WUM4	PhaSepDB	Abscission checkpoint body	abscission_checkpoint_body	driver	driver	cellular_requirement	1	37450591	Homo sapiens
-Q9H5P4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36964137	Homo sapiens
+Q9H5P4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36964137	Homo sapiens
 O00541	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	38654122	Homo sapiens
 Q7ZY69	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35607824	Xenopus laevis
 P80667	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37165185	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P53112	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37165185	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P35056	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37165185	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-Q8IJC7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38150475	Plasmodium falciparum (isolate 3D7)
+Q8IJC7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38150475	Plasmodium falciparum (isolate 3D7)
 O15067	PhaSepDB	Purinosome	purinosome	driver	driver	cellular_requirement	1	35307352	Homo sapiens
 Q9TZL8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32853565	Caenorhabditis elegans
 P16861	PhaSepDB	Glycolytic body	glycolytic_body	driver	driver	cellular_requirement	1	32298230	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -27660,7 +27687,7 @@ Q9N3P1	PhaSepDB	Z granule	z_granule	driver	driver	cellular_requirement	1	3343877
 Q84LH8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38664420	Arabidopsis thaliana
 Q13526	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39266551	Homo sapiens
 Q9LU77	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37721949	Arabidopsis thaliana
-Q9VB22	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37655159	Drosophila melanogaster
+Q9VB22	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37655159	Drosophila melanogaster
 P06197	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	25761633	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q9VD51	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	28115706	Drosophila melanogaster
 Q8CDG1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39029469	Mus musculus
@@ -27686,25 +27713,27 @@ Q8TCS8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	373
 B8GXA0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36418326	Caulobacter vibrioides (strain NA1000 / CB15N)
 Q9ZG88	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35124010	Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15)
 P11369	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	29930094	Mus musculus
-P06746	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39496836	Homo sapiens
+P06746	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39496836	Homo sapiens
 P20028	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	26776729	Drosophila melanogaster
 P97304	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	31399547	Mus musculus
 P24928	PhaSepDB	Splicesome	spliceosome	driver	driver	cellular_requirement	1	39266551;34667177;38326345;34759379;34916619;31391587;39383039;30127355;26455390	Homo sapiens
 P24928	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39266551;29849146;37851801;39894879;34667177;38326345;34759379;34916619;31391587;39383039;30127355;26455390	Homo sapiens
 P24928	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	36979361;34667177;38326345;34759379;34916619;31391587;39383039;30127355;26455390	Homo sapiens
 P08775	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38194964;31391587	Mus musculus
-O15514	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	24267890	Homo sapiens
+O15514	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	24267890	Homo sapiens
 P19388	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36634798	Homo sapiens
 O00411	PhaSepDB	Mitochondrial nucleoid	mitochondrial_nucleoid	driver	driver	cellular_requirement	1	34711968	Homo sapiens
 Q5EWX9	PhaSepDB	Nuclear pore complex	nuclear_pore_complex	driver	driver	cellular_requirement	1	23202855	Xenopus laevis
 Q1DEM0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39739804	Myxococcus xanthus (strain DK1622)
 O96561	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	29467404	Drosophila melanogaster
-Q9A8N4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39910287;36163138	Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15)
-Q9NUX5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35077681	Homo sapiens
-P20263	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34038708;31398323	Mus musculus
+Q9A8N4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39910287	Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15)
+Q9A8N4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36163138	Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15)
+Q9NUX5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35077681	Homo sapiens
+P20263	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34038708	Mus musculus
 Q01860	PhaSepDB	Mediator condensate	mediator_condensate	driver	driver	cellular_requirement	1	30449618	Homo sapiens
 Q01860	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	30449618	Homo sapiens
-P37231	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37516962	Homo sapiens
+P20263	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31398323	Mus musculus
+P37231	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37516962	Homo sapiens
 O70343	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	34465622	Mus musculus
 Q9UBK2	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	34465622	Homo sapiens
 O75334	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	driver	driver	cellular_requirement	1	36137748;33761347	Homo sapiens
@@ -27723,18 +27752,20 @@ P12849	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_require
 Q62074	PhaSepDB	Par complex	cell_polarity_condensate	driver	driver	cellular_requirement	1	32385244	Mus musculus
 P02319	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32169215	Mus musculus
 Q99873	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	39097054;39079611;39146246	Homo sapiens
-P04156	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37922348;37805139;34737230;31821812;39333690;39826709	Homo sapiens
-O46501	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37805139	Canis lupus familiaris
-P04925	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37922348;34102212;38657863;39983547;38065962;39476948;39739794	Mus musculus
-Q6GLY6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38657863	Xenopus laevis
+P04156	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37922348;31821812;39333690	Homo sapiens
+O46501	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37805139	Canis lupus familiaris
+P04925	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37922348;34102212;39983547;39476948	Mus musculus
+P04156	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37805139;34737230;39826709	Homo sapiens
+P04925	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38657863;38065962;39739794	Mus musculus
+Q6GLY6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38657863	Xenopus laevis
 A0A0B4K630	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	31866201	Drosophila melanogaster
 P48437	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	31866201	Mus musculus
 F1QAE1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37930995	Danio rerio
 O22785	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37714161	Arabidopsis thaliana
 Q99PV0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31391587	Mus musculus
-P35820	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38257239	Drosophila melanogaster
+P35820	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38257239	Drosophila melanogaster
 P39006	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	25761633	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-O75475	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38762180	Homo sapiens
+O75475	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38762180	Homo sapiens
 P25788	PhaSepDB	Proteasome containing foci	proteasome_foci	driver	driver	cellular_requirement	1	34572142	Homo sapiens
 P49721	PhaSepDB	Proteasome containing foci	proteasome_foci	driver	driver	cellular_requirement	1	34572142	Homo sapiens
 P28070	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34848715	Homo sapiens
@@ -27744,19 +27775,19 @@ Q8WXF1	PhaSepDB	Paraspeckle	paraspeckle	driver	driver	cellular_requirement	1	349
 Q8WXF1	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	34916619;36354291;38668381	Homo sapiens
 Q8R326	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34916619	Mus musculus
 P9WHW5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31366629	Mycobacterium tuberculosis (strain ATCC 25618 / H37Rv)
-P26599	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	29425497;34916619	Homo sapiens
+P26599	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	29425497;34916619	Homo sapiens
 P17225	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	34813726;32908311	Mus musculus
 A0A8J0V2D3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35982794	Xenopus laevis
 A0A8J0TV93	PhaSepDB	L-body	l_body	driver	driver	cellular_requirement	1	39537752	Xenopus laevis
 A0A1D8PRZ8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39908105	Candida albicans (strain SC5314 / ATCC MYA-2876)
 P34152	PhaSepDB	Integrin adhesion complex	integrin_adhesion_complex	driver	driver	cellular_requirement	1	35049497	Mus musculus
-P06454	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37468629	Homo sapiens
+P06454	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37468629	Homo sapiens
 Q8WUK0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38322995	Homo sapiens
 Q06124	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37126322;33002410;35231400	Homo sapiens
 P35235	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38451719	Mus musculus
 Q9H3S7	PhaSepDB	SINT-speckle	sint_speckle	driver	driver	cellular_requirement	1	31442668	Homo sapiens
-P29350	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35219918	Homo sapiens
-A0A8J9X6Y3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37311001;39326491	Phaeodactylum tricornutum
+P29350	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35219918	Homo sapiens
+A0A8J9X6Y3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37311001;39326491	Phaeodactylum tricornutum
 P32588	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	26412307;29898402	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q20757	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	37703874	Caenorhabditis elegans
 Q20757	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_requirement	1	24176641	Caenorhabditis elegans
@@ -27784,14 +27815,14 @@ P43351	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_require
 P06104	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32214243	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q99638	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33503405	Homo sapiens
 Q38942	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773271	Arabidopsis thaliana
-P04049	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37027309	Homo sapiens
+P04049	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37027309	Homo sapiens
 Q9SRY3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38157854	Arabidopsis thaliana
 Q9LUS7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38157854	Arabidopsis thaliana
 O95398	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	37684224	Homo sapiens
 O95398	PhaSepDB	Histone locus body	histone_locus_body	driver	driver	cellular_requirement	1	37684224	Homo sapiens
 O95398	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	37684224	Homo sapiens
 O95398	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	35442725	Homo sapiens
-Q70E73	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39914390	Homo sapiens
+Q70E73	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39914390	Homo sapiens
 P12672	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34033754	Mus musculus
 Q13702	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34033754	Homo sapiens
 P10276	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36918219	Homo sapiens
@@ -27803,11 +27834,12 @@ Q8TDY2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	363
 F4HT77	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38480885	Arabidopsis thaliana
 Q7Z6E9	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	39798570	Homo sapiens
 E9PAI6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39326491	Phaeodactylum tricornutum
-P00877	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30498228;31504763;28938114;37195994;36611062	Chlamydomonas reinhardtii
+P00877	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30498228;31504763;36611062	Chlamydomonas reinhardtii
 O03042	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31504763	Arabidopsis thaliana
-Q9TK52	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37311001	Phaeodactylum tricornutum (strain CCAP 1055/1)
-P00873	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30498228	Chlamydomonas reinhardtii
-P08475	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30498228	Chlamydomonas reinhardtii
+P00877	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	28938114;37195994	Chlamydomonas reinhardtii
+Q9TK52	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37311001	Phaeodactylum tricornutum (strain CCAP 1055/1)
+P00873	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30498228	Chlamydomonas reinhardtii
+P08475	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	30498228	Chlamydomonas reinhardtii
 Q9NWB1	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	29358748	Homo sapiens
 M9NFQ7	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	29358748	Drosophila melanogaster
 M9NFQ7	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	29358748	Drosophila melanogaster
@@ -27827,13 +27859,13 @@ Q5T481	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requireme
 Q5T481	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	33188278	Homo sapiens
 P98179	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	22579281	Homo sapiens
 Q14498	PhaSepDB	Nuclear stress body	nuclear_stress_body	driver	driver	cellular_requirement	1	31271494	Homo sapiens
-P38159	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31363225	Homo sapiens
-P0DJD4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39354680	Homo sapiens
+P38159	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31363225	Homo sapiens
+P0DJD4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39354680	Homo sapiens
 Q0WW84	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	25736060	Arabidopsis thaliana
 P62877	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	30244836	Homo sapiens
-P58555	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32979320	Nostoc sp. (strain PCC 7120 / SAG 25.82 / UTEX 2576)
+P58555	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32979320	Nostoc sp. (strain PCC 7120 / SAG 25.82 / UTEX 2576)
 Q9SG02	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	19332064	Arabidopsis thaliana
-Q04207	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34764296	Mus musculus
+Q04207	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34764296	Mus musculus
 A0A0D9R6K4	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	32878896	Chlorocebus sabaeus
 A0AAA9SLR3	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	32878896	Bos taurus
 Q04206	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	32878896;33651988	Homo sapiens
@@ -27843,7 +27875,7 @@ P07949	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	388
 P22336	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	33543712	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q9SQV1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38773271	Arabidopsis thaliana
 P25888	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31435012	Escherichia coli (strain K12)
-B6JVN3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39520300	Schizosaccharomyces japonicus (strain yFS275 / FY16936)
+B6JVN3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39520300	Schizosaccharomyces japonicus (strain yFS275 / FY16936)
 Q22038	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31050339	Caenorhabditis elegans
 P62745	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	39565307	Homo sapiens
 O94844	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39009833	Homo sapiens
@@ -27863,7 +27895,7 @@ Q9CZW6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	382
 Q9CQJ4	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	34166371;30514760	Mus musculus
 Q99496	PhaSepDB	Polycomb body	polycomb_body	driver	driver	cellular_requirement	1	34620850;31171700	Homo sapiens
 Q8ND24	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38969650	Homo sapiens
-Q9NWF9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39030428	Homo sapiens
+Q9NWF9	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39030428	Homo sapiens
 P58283	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39009640	Mus musculus
 P78317	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	39418304	Homo sapiens
 P78317	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	39418304	Homo sapiens
@@ -27885,7 +27917,7 @@ P83731	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	396
 Q9D8E6	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	34980897	Mus musculus
 Q9D8E6	PhaSepDB	XY body	xy_body	driver	driver	cellular_requirement	1	34980897	Mus musculus
 P46777	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35321919	Homo sapiens
-P47962	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38649740	Mus musculus
+P47962	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38649740	Mus musculus
 P47911	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	34980897	Mus musculus
 P47911	PhaSepDB	XY body	xy_body	driver	driver	cellular_requirement	1	34980897	Mus musculus
 P18124	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36543022	Homo sapiens
@@ -27902,8 +27934,8 @@ O13563	PhaSepDB	Proteasome Storage Granule	proteasome_storage_granule	driver	dri
 P04050	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30127355;39266551;38548891	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P0A8T7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32675239	Escherichia coli (strain K12)
 F4J339	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38480885	Arabidopsis thaliana
-Q9NQG5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39266551	Homo sapiens
-P42677	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38614097	Homo sapiens
+Q9NQG5	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39266551	Homo sapiens
+P42677	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38614097	Homo sapiens
 P62908	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	34980897	Mus musculus
 P62908	PhaSepDB	XY body	xy_body	driver	driver	cellular_requirement	1	34980897	Mus musculus
 P23396	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37582658	Homo sapiens
@@ -27919,7 +27951,7 @@ Q9Z2J9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	363
 Q13950	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39704037;32386547	Homo sapiens
 A0A1D1UQN2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36067153	Ramazzottius varieornatus
 A0A1D1VNN8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36067153	Ramazzottius varieornatus
-P28702	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37143076	Homo sapiens
+P28702	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37143076	Homo sapiens
 Q8CCI5	PhaSepDB	Polycomb body	polycomb_body	driver	driver	cellular_requirement	1	35768498	Mus musculus
 P06703	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40118863	Homo sapiens
 P31151	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38459060	Homo sapiens
@@ -27937,16 +27969,16 @@ Q60611	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3763587
 Q60611	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	37635874	Mus musculus
 Q9VCR6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36807601	Drosophila melanogaster
 Q9H4B6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36807601	Homo sapiens
-O95104	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39266551	Homo sapiens
-Q7TSH6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34605568	Mus musculus
-Q04002	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P40090	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+O95104	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39266551	Homo sapiens
+Q7TSH6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34605568	Mus musculus
+Q04002	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P40090	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q03517	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35896896	Mus musculus
 P31431	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38601993	Homo sapiens
 O00560	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38601993	Homo sapiens
 Q9ZVD0	PhaSepDB	Nuclear dicing body	nuclear_dicing_body	driver	driver	cellular_requirement	1	39472512;33288888	Arabidopsis thaliana
 Q9ZVD0	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	39472512;33288888	Arabidopsis thaliana
-Q9UTE3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39520300	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+Q9UTE3	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39520300	Schizosaccharomyces pombe (strain 972 / ATCC 24843)
 Q5XFW8	PhaSepDB	Sec body	sec_body	driver	driver	cellular_requirement	1	36325988	Rattus norvegicus
 A0A8I5ZTA3	PhaSepDB	Sec body	sec_body	driver	driver	cellular_requirement	1	36325988	Rattus norvegicus
 O15027	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37643612	Homo sapiens
@@ -27964,7 +27996,7 @@ Q8NC51	PhaSepDB	Tau condensate	tau_condensate	driver	driver	cellular_requirement
 O75920	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	38272228	Homo sapiens
 P48594	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	38459060	Homo sapiens
 P58004	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37059726	Homo sapiens
-Q01105	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39108706	Homo sapiens
+Q01105	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39108706	Homo sapiens
 Q9BYW2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34391778	Homo sapiens
 Q7Z333	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37845749	Homo sapiens
 Q8W234	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36376475	Arabidopsis thaliana
@@ -27990,11 +28022,12 @@ P25294	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	3322956
 P32790	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	34887356	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P33338	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34887356	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 P31645	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37837191	Homo sapiens
-P0C093	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36854378;36315857;30523075	Escherichia coli (strain K12)
+P0C093	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36854378;36315857	Escherichia coli (strain K12)
+P0C093	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	30523075	Escherichia coli (strain K12)
 Q14BN4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36318920	Homo sapiens
 Q8IY92	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	37059091	Homo sapiens
 P11994	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	28478667	Strongylocentrotus purpuratus
-Q15796	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38769521	Homo sapiens
+Q15796	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38769521	Homo sapiens
 P84022	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38769521;31563432	Homo sapiens
 Q13485	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38769521	Homo sapiens
 P51532	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38326345;34018649	Homo sapiens
@@ -28003,15 +28036,15 @@ O60264	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	350
 Q12824	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39095374	Homo sapiens
 Q8TAQ2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37186134	Homo sapiens
 Q96GM5	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39095374	Homo sapiens
-P32908	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P47037	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-Q12267	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38985672	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P32908	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P47037	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33568486	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+Q12267	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38985672	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q16637	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	34161763;34115980;39602297	Homo sapiens
 Q16637	PhaSepDB	Gems	gem	driver	driver	cellular_requirement	1	34115980;39602297	Homo sapiens
 Q16637	PhaSepDB	Neuronal granule	neuronal_granule	driver	driver	cellular_requirement	1	39052476;39602297	Homo sapiens
 O75940	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	37587144	Homo sapiens
 Q8BGT7	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	37587144	Mus musculus
-Q9HCE7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37549262	Homo sapiens
+Q9HCE7	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37549262	Homo sapiens
 P37840	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement	1	36459561;36802433;37585526;37293933;37238596;39556435;39384788;35276458;38951707;34165838;33386842;39549813;38086853;38272228;33771571;38714700;39116032;34871547;38825770;39591966	Homo sapiens
 P37840	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	36459561;36802433;37585526;37293933;35688132;37238596;39556435;39384788;35276458;38951707;34165838;39549813;38086853;38272228;33771571;39116032;34871547;38825770;39591966;39426376	Homo sapiens
 P37840	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	36459561;36802433;37585526;37293933;37238596;39556435;39384788;35276458;38951707;34165838;39549813;38086853;38272228;33771571;39116032;34871547;38825770;39591966	Homo sapiens
@@ -28022,7 +28055,7 @@ O55042	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	39426376	Mus 
 Q16143	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39384788	Homo sapiens
 Q7KZF4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34115980	Homo sapiens
 P38956	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35585082	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P18480	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32826896	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P18480	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32826896	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q9SWA6	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37335899	Arabidopsis thaliana
 P08621	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	36073763;31723601;39023093	Homo sapiens
 P08621	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	36073763;39023093	Homo sapiens
@@ -28040,10 +28073,11 @@ Q9R1Z8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	398
 Q07889	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	33080222;30846600;27056844;37126554;36322659	Homo sapiens
 P48431	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	36309135;33651988;33597515	Homo sapiens
 Q9VL52	PhaSepDB	Yb body	yb_body	driver	driver	cellular_requirement	1	31267711	Drosophila melanogaster
-O89090	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34605568	Mus musculus
+O89090	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34605568	Mus musculus
 P08047	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38976739	Homo sapiens
 Q9SYX2	PhaSepDB	Photobody	plant_photobody	driver	driver	cellular_requirement	1	38066290	Arabidopsis thaliana
-P23201	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38802374;31699995	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P23201	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38802374	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P23201	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31699995	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q8N0X7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37549262	Homo sapiens
 Q8TC71	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38322995	Homo sapiens
 Q91WJ7	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36827365	Mus musculus
@@ -28051,11 +28085,11 @@ P91870	PhaSepDB	Pericentriolar matrix	centrosome	driver	driver	cellular_requirem
 P91349	PhaSepDB	Pericentriolar matrix	centrosome	driver	driver	cellular_requirement	1	28575670	Caenorhabditis elegans
 P54217	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37160652	Caenorhabditis elegans
 Q62504	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34813726	Mus musculus
-P17947	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37516962	Homo sapiens
+P17947	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37516962	Homo sapiens
 Q9Y657	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38777743	Homo sapiens
 Q9A6C1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36418326	Caulobacter vibrioides (strain ATCC 19089 / CIP 103742 / CB 15)
 G5EF02	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39167497	Caenorhabditis elegans
-Q72H91	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34902429	Thermus thermophilus (strain ATCC BAA-163 / DSM 7039 / HB27)
+Q72H91	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34902429	Thermus thermophilus (strain ATCC BAA-163 / DSM 7039 / HB27)
 O43791	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	31845799;30244836	Homo sapiens
 Q6ZWS8	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	27220849;37926283	Mus musculus
 Q13501	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37194327;36997115;37837191;37774095;37847732;37683611;36701233;39774270;33822768;34645818;39420095;30853400	Homo sapiens
@@ -28066,7 +28100,7 @@ Q64337	PhaSepDB	Inclusion body	inclusion_body	driver	driver	cellular_requirement
 Q64337	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	31434890;31916398;33822768	Mus musculus
 Q64337	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	33822768;33473217	Mus musculus
 O08623	PhaSepDB	p62 cluster	p62_body	driver	driver	cellular_requirement	1	35477997	Rattus norvegicus
-P12931	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40081987	Homo sapiens
+P12931	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	40081987	Homo sapiens
 P21507	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31435012	Escherichia coli (strain K12)
 P78362	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	35674408	Homo sapiens
 Q8IYB3	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	29973724;36150385;39558160;39557835	Homo sapiens
@@ -28081,7 +28115,8 @@ Q6PDM2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	313
 Q01130	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	31391587;33731873;35752626;37285890;36150385;37105967	Homo sapiens
 Q62093	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	31391587	Mus musculus
 Q16629	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	38638569	Homo sapiens
-Q15532	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34018649;35585082;39468035;38326345	Homo sapiens
+Q15532	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34018649	Homo sapiens
+Q15532	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35585082;39468035;38326345	Homo sapiens
 Q62280	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34215745	Mus musculus
 Q8IZH1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39468035	Homo sapiens
 P10591	PhaSepDB	Hyperosmotic shock foci	hyperosmotic_shock_foci	driver	driver	cellular_requirement	1	31285266	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -28093,16 +28128,17 @@ P52630	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	355
 P42227	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37279389	Mus musculus
 P40763	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	31563432	Homo sapiens
 O95793	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38913026	Homo sapiens
-P32597	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32826896	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P32597	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32826896	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q15468	PhaSepDB	Centrosome	centrosome	driver	driver	cellular_requirement	1	33323015	Homo sapiens
 Q86WV6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33833429	Homo sapiens
 Q13188	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36807601	Homo sapiens
 Q9BXU1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34115980	Homo sapiens
 Q9UNE7	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34385323	Homo sapiens
-Q9Y0H4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37549262	Drosophila melanogaster
+Q9Y0H4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37549262	Drosophila melanogaster
 P05205	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	31866201;28636597;30425322	Drosophila melanogaster
 Q07478	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31435012	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P63165	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39038850;37782899	Homo sapiens
+P63165	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39038850	Homo sapiens
+P63165	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37782899	Homo sapiens
 P61956	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	35235714;35442725	Homo sapiens
 P55854	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	35442725;31171703	Homo sapiens
 P05453	PhaSepDB	Hyperosmotic shock foci	hyperosmotic_shock_foci	driver	driver	cellular_requirement	1	39912644;36762978;39276934;31285266;22579281	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -28123,15 +28159,15 @@ Q21049	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	drive
 Q9PUD9	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32101738	Lampetra fluviatilis
 P17600	PhaSepDB	Synapsin condensate	synapsin_condensate	driver	driver	cellular_requirement	1	39947282;33774037;38270681;29976799;39223639;38693139;37862690	Homo sapiens
 O88935	PhaSepDB	Synapsin condensate	synapsin_condensate	driver	driver	cellular_requirement	1	33202250;37250768;34496937	Mus musculus
-P09951	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37597184;38552623	Rattus norvegicus
-Q63537	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37597184	Rattus norvegicus
+P09951	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37597184;38552623	Rattus norvegicus
+Q63537	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37597184	Rattus norvegicus
 Q64332	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37597184	Mus musculus
-Q92777	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	29976799	Homo sapiens
-O70441	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37597184	Rattus norvegicus
+Q92777	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	29976799	Homo sapiens
+O70441	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37597184	Rattus norvegicus
 O60506	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	39776340	Homo sapiens
 Q7TMK9	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	39776340	Mus musculus
 Q96PV0	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	27565345;38452102;30078712	Homo sapiens
-F6SEU4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31492534	Mus musculus
+F6SEU4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31492534	Mus musculus
 Q9QUH6	PhaSepDB	Postsynaptic density	postsynaptic_density	driver	driver	cellular_requirement	1	35637289	Rattus norvegicus
 Q62277	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34496937	Mus musculus
 P08247	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39947282;39223639	Homo sapiens
@@ -28141,9 +28177,9 @@ Q9FZB2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	289
 Q9SJF3	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	35621186;25736060	Arabidopsis thaliana
 Q9NYJ8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39333690	Homo sapiens
 Q8N5C8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39333690	Homo sapiens
-G5ECG0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39305484	Caenorhabditis elegans
+G5ECG0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	39305484	Caenorhabditis elegans
 Q9JJ11	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31249032	Mus musculus
-P35189	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	32826896	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P35189	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	32826896	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q92804	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	35662392;37094074;37131610;35787038;36444977;30937520;39112465;29650702;24267890;35483357;33097688	Homo sapiens
 Q92804	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37094074;35787038;36444977;30937520;26286827;39112465;29650702;24267890;35483357;33097688	Homo sapiens
 Q92804	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	37094074;35787038;36444977;30937520;29930090;39112465;32929202;29650702;24267890;35483357;33097688	Homo sapiens
@@ -28166,12 +28202,12 @@ A0A8I6GLU8	PhaSepDB	RNP granules	cytoplasmic_rnp_granule	driver	driver	cellular_
 P04610	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	40113991	Human immunodeficiency virus type 1 group M subtype B (isolate BRU/LAI)
 Q3UKC1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38272024	Mus musculus
 Q86VP1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36066504	Homo sapiens
-Q57VP6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38150475	Trypanosoma brucei brucei (strain 927/4 GUTat10.1)
+Q57VP6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38150475	Trypanosoma brucei brucei (strain 927/4 GUTat10.1)
 Q9UHD2	PhaSepDB	STING phase-separator	sting_phase_separator	driver	driver	cellular_requirement	1	39384753;33833429	Homo sapiens
 A7MCY6	PhaSepDB	SINT-speckle	sint_speckle	driver	driver	cellular_requirement	1	31442668	Homo sapiens
 P20226	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	34916619;32386547	Homo sapiens
 P70324	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36383654	Mus musculus
-O15119	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36383654	Homo sapiens
+O15119	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36383654	Homo sapiens
 Q13428	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37586369	Homo sapiens
 Q13569	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	37307918	Homo sapiens
 A0A151NUX6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39029469	Alligator mississippiensis
@@ -28190,12 +28226,12 @@ P54274	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_require
 P54274	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	35077681	Homo sapiens
 Q15554	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	35077681;35724929	Homo sapiens
 Q15554	PhaSepDB	PML nuclear body	pml_nuclear_body	driver	driver	cellular_requirement	1	31171703;35724929	Homo sapiens
-Q9NYB0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35724929;35077681	Homo sapiens
+Q9NYB0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35724929;35077681	Homo sapiens
 O14746	PhaSepDB	Cajal body	cajal_body	driver	driver	cellular_requirement	1	37267110	Homo sapiens
 Q3URK3	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	34166371	Mus musculus
 E7F958	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38427557	Danio rerio
 A0A2R8Q4R6	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	38427557	Danio rerio
-P02787	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37503577	Homo sapiens
+P02787	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37503577	Homo sapiens
 Q00059	PhaSepDB	Mitochondrial nucleoid	mitochondrial_nucleoid	driver	driver	cellular_requirement	1	34711968;33619770	Homo sapiens
 P40630	PhaSepDB	Mitochondrial nucleoid	mitochondrial_nucleoid	driver	driver	cellular_requirement	1	34711968	Mus musculus
 Q9H5Q4	PhaSepDB	Mitochondrial nucleoid	mitochondrial_nucleoid	driver	driver	cellular_requirement	1	34711968	Homo sapiens
@@ -28207,11 +28243,11 @@ P31483	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement
 P52912	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	29298433;36112647;37481632;22579281	Mus musculus
 Q01085	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	29262335;38926365;39779212;30893049	Homo sapiens
 P70318	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	35994036;37710015	Mus musculus
-Q60610	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33927400	Mus musculus
+Q60610	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33927400	Mus musculus
 Q95QV8	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38161334	Caenorhabditis elegans
 Q9U2F5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31378567	Caenorhabditis elegans
 P39935	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38547866	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-Q9BSI4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35077681	Homo sapiens
+Q9BSI4	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35077681	Homo sapiens
 Q7Z3E1	PhaSepDB	Nuclear body	nuclear_body	driver	driver	cellular_requirement	1	32482854	Homo sapiens
 B7UM99	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37649226	Escherichia coli O127:H6 (strain E2348/69 / EPEC)
 Q86DA5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35098926;34184985	Caenorhabditis elegans
@@ -28221,8 +28257,8 @@ A0A8M3AP85	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1
 Q9UDY2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31675499	Homo sapiens
 O95049	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31675499	Homo sapiens
 A0A8M2BHQ8	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31675500	Danio rerio
-Q9Y490	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38862544	Homo sapiens
-Q9Y4G6	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38862544	Homo sapiens
+Q9Y490	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38862544	Homo sapiens
+Q9Y4G6	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38862544	Homo sapiens
 P0A8M6	PhaSepDB	TmaR condensate	tmar_condensate	driver	driver	cellular_requirement	1	36577380;40100851	Escherichia coli (strain K12)
 O14763	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36396954	Homo sapiens
 Q8NFZ5	PhaSepDB	SINT-speckle	sint_speckle	driver	driver	cellular_requirement	1	31442668	Homo sapiens
@@ -28234,9 +28270,9 @@ Q9UPQ9	PhaSepDB	miRISC	mirisc	driver	driver	cellular_requirement	1	29576456	Homo
 Q9HBL0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37011205	Homo sapiens
 Q9H0E2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40022729	Homo sapiens
 Q8IQJ5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39163855	Drosophila melanogaster
-P06786	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36342377	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
-P11388	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36342377	Homo sapiens
-Q02880	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36342377	Homo sapiens
+P06786	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36342377	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P11388	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36342377	Homo sapiens
+Q02880	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36342377	Homo sapiens
 Q92547	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	37582658;38578830;33503405	Homo sapiens
 Q6ZQF0	PhaSepDB	DNA damage foci	dna_damage_foci	driver	driver	cellular_requirement	1	34980897	Mus musculus
 Q6ZQF0	PhaSepDB	XY body	xy_body	driver	driver	cellular_requirement	1	34980897	Mus musculus
@@ -28251,22 +28287,22 @@ Q12888	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requireme
 P70399	PhaSepDB	Heterochromatin	heterochromatin	driver	driver	cellular_requirement	1	35042897	Mus musculus
 F4J8D3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37378595	Arabidopsis thaliana
 P67936	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39622827	Homo sapiens
-O14773	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35077681	Homo sapiens
+O14773	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	35077681	Homo sapiens
 Q00764	PhaSepDB	Hyperosmotic shock foci	hyperosmotic_shock_foci	driver	driver	cellular_requirement	1	31285266	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q6NUF4	PhaSepDB	Spindle apparatus	spindle_apparatus	driver	driver	cellular_requirement	1	34302807;31937751;37344496	Xenopus laevis
 G5EDE7	PhaSepDB	Pericentriolar matrix	centrosome	driver	driver	cellular_requirement	1	28575670	Caenorhabditis elegans
-P62995	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31363225	Homo sapiens
+P62995	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31363225	Homo sapiens
 Q12933	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39333690	Homo sapiens
 Q9Y4K3	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39333690;37441604	Homo sapiens
 P70196	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37441604	Mus musculus
 M9PF20	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	34655524	Drosophila melanogaster
 Q8VWK4	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38976557	Arabidopsis thaliana
-Q91XB0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	33606975	Mus musculus
+Q91XB0	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	33606975	Mus musculus
 Q9NSU2	PhaSepDB	cGAS-DNA complex	cgas_dna_complex	driver	driver	cellular_requirement	1	33606975	Homo sapiens
 P19474	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36692217;37879251	Homo sapiens
 P36406	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	38769438	Homo sapiens
 Q14258	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38750080	Homo sapiens
-Q13263	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	31543422	Homo sapiens
+Q13263	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	31543422	Homo sapiens
 Q13049	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35930602	Homo sapiens
 B1Q3L0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35930602	Homo sapiens
 Q969Q1	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35930602	Homo sapiens
@@ -28291,7 +28327,7 @@ Q01081	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	377
 P26369	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37592155;31391587	Mus musculus
 P26368	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	31271494	Homo sapiens
 Q9UBT2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	35442725	Homo sapiens
-P38820	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38942013	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+P38820	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38942013	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q5T6F2	PhaSepDB	Purinosome	purinosome	driver	driver	cellular_requirement	1	37848033	Homo sapiens
 Q14157	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	32302570;31114027;31956030	Homo sapiens
 O15205	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36997115	Homo sapiens
@@ -28318,18 +28354,18 @@ Q62768	PhaSepDB	Presynaptic active zone condensate	presynaptic_active_zone	drive
 Q9FJR0	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38384836	Arabidopsis thaliana
 P40554	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38942013	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
 Q9Y6N9	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	31644917	Homo sapiens
-Q9ES64	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38408254	Mus musculus
+Q9ES64	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38408254	Mus musculus
 Q495M9	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	31644917	Homo sapiens
-O75445	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36964137	Homo sapiens
+O75445	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36964137	Homo sapiens
 Q14694	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	37611590;32302570	Homo sapiens
 Q53GS9	PhaSepDB	Nucleolus	nucleolus	driver	driver	cellular_requirement	1	39885503	Homo sapiens
 Q9H9J4	PhaSepDB	Nuclear speckle	nuclear_speckle	driver	driver	cellular_requirement	1	33731873	Homo sapiens
 P40818	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	38795350	Homo sapiens
-O14607	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34526716	Homo sapiens
+O14607	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34526716	Homo sapiens
 P63027	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38951707	Homo sapiens
 P09052	PhaSepDB	Nuage	nuage	driver	driver	cellular_requirement	1	25842866;30260314;37980572;37384531	Drosophila melanogaster
-P50552	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	37425724;39914390;38405682	Homo sapiens
-P18206	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38862544	Homo sapiens
+P50552	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	37425724;39914390;38405682	Homo sapiens
+P18206	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	38862544	Homo sapiens
 P55072	PhaSepDB	Proteasome containing foci	proteasome_foci	driver	driver	cellular_requirement	1	35445401;32025036	Homo sapiens
 P55072	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	35445401;29804830;32025036	Homo sapiens
 Q7T226	PhaSepDB	Balbiani body	balbiani_body	driver	driver	cellular_requirement	1	27471966;34784177	Xenopus laevis
@@ -28371,8 +28407,8 @@ Q9GZV5	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	dri
 Q9EPK5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38462885	Mus musculus
 Q9GZV5	PhaSepDB	Receptor cluster	signaling_cluster	driver	driver	cellular_requirement	1	39591966;38200110;37494632	Homo sapiens
 B0RM24	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	40139193;34210966	Xanthomonas campestris pv. campestris (strain B100)
-A0A142C344	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34210966	Xanthomonas campestris pv. juglandis
-P18887	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36361989;39496836	Homo sapiens
+A0A142C344	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34210966	Xanthomonas campestris pv. juglandis
+P18887	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36361989;39496836	Homo sapiens
 P13010	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38423014	Homo sapiens
 P12956	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36092926	Homo sapiens
 P22147	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	36972455;35876801;27374333	Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
@@ -28402,11 +28438,11 @@ Q0VCZ3	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	39778834	Bos 
 Q7Z739	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	31388144;31292544;38926365;32451507;38811341	Homo sapiens
 P27348	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	39198689	Homo sapiens
 P25490	PhaSepDB	Transcriptional condensate	transcriptional_condensate	driver	driver	cellular_requirement	1	36669583;36424383;35390165;37094986	Homo sapiens
-P43403	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	27056844	Homo sapiens
-P0ADS2	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	36854378	Escherichia coli (strain K12)
+P43403	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	27056844	Homo sapiens
+P0ADS2	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	36854378	Escherichia coli (strain K12)
 Q9H171	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	38982083	Homo sapiens
 Q9NUD5	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	39983719	Homo sapiens
-G5EG83	PhaSepDB	NotInformed	NotInformed	driver	driver	cellular_requirement	1	34588311	Caenorhabditis elegans
+G5EG83	PhaSepDB	in vitro droplet	in_vitro_droplet	driver	driver	cellular_requirement	1	34588311	Caenorhabditis elegans
 Q8TCF1	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	29804830	Homo sapiens
 P26651	PhaSepDB	P-body	p_body	driver	driver	cellular_requirement	1	36130271	Homo sapiens
 P26651	PhaSepDB	Stress granule	stress_granule	driver	driver	cellular_requirement	1	36130271	Homo sapiens

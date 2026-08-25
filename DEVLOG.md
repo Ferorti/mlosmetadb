@@ -82,6 +82,38 @@ de regulador solo cuando **todas** las anotaciones de esa organela son llamados 
 regulador: 781 pares proteína-organela lo llevan y los 513 mezclados —donde otro
 recurso sí la ubica adentro— siguen sin badge en vez de ganar uno equivocado.
 
+## 2026-08-25 — PhaSepDB: 272 proteínas `NotInformed` reclasificadas a `in_vitro_droplet`
+
+El usuario sospechaba que parte de las 930 proteínas `NotInformed` de
+PhaSepDB eran en realidad casos in vitro sin compartimento celular asignado,
+igual que el patrón "Droplet" de LLPSDB/DrLLPS. La confirmación no requirió
+literatura: `database/raw/phasedb_detail.csv` trae columnas `Location` y
+`Experiment Types` que `parsers/parse_phasesepdb.py` nunca leía. Cuando una
+fila sin `MLO` (ni en el detail export ni en el fallback del summary export)
+tiene `Location == "NA"` y `Experiment Types` nombra solo ensayos in vitro
+(nunca "in vivo"), es la misma afirmación que "Droplet": LLPS confirmado sin
+MLO celular asignado. Las que sí reportan `Location` (Cytoplasm/Nucleus) se
+dejan como estaban — son un claim celular real, solo sin nombre de
+compartimento.
+
+Resultado: 311 filas / 272 proteínas reclasificadas a
+`source_mlo = "in vitro droplet"`. Confirmado de forma independiente por PMID:
+de las proteínas con fila `NotInformed` de PhaSepDB y fila `in_vitro_droplet`
+de LLPSDB/DrLLPS a la vez, 71/100 citan el mismo PMID exacto. `NotInformed`
+(PhaSepDB) baja de 930 a 694 proteínas; `in_vitro_droplet` total sube de 551 a
+823. `mlo_annotations` gana 36 filas netas (35.732 → 35.768) por el split del
+grano de fila cuando una proteína tenía PMIDs de ambos tipos colapsados en una
+sola fila `NotInformed`. Baseline de tests refrescado y confirmado — el resto
+de las secciones no cambió.
+
+**Queda abierto, documentado en `SCHEMA.md`**: `evidence_type` se calcula solo
+de `(source_db, source_role)`, nunca de `source_mlo`, así que estas 272 filas
+siguen leyendo `evidence_type = cellular_requirement` aunque ahora son
+`in_vitro_droplet`. Arreglarlo requiere que `evidence_type` dependa también de
+`source_mlo`, lo que rompe la propiedad "exhaustivo por par
+`(source_db, source_role)`" que auditó la revisión externa — no se tocó en el
+mismo cambio.
+
 ## 2026-08-10 — libro de hallazgos para el intercambio con Claude Science
 
 El intercambio con la auditoría biológica externa llevaba dos rondas

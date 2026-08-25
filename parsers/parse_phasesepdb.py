@@ -20,6 +20,12 @@ PhaSepDB exports):
   phasedb_mlo_entries.tsv                     → source_role = "client" (fixed)
   phasepdb_summary_database_2026-03-20.csv    → fallback MLO names only
 
+`phasedb_detail.csv` rows with no MLO name (in the detail file or the summary
+fallback) are not uniformly "no information": when `Location == "NA"` and
+`Experiment Types` names only in-vitro assays (never "in vivo"), the row is
+reclassified to `source_mlo = "in vitro droplet"` instead of "NotInformed" —
+see `parse_detail()` and BIOLOGY.md "PhaSepDB in vitro reclassification".
+
 Output:
   database/interim/phasesepdb.tsv
 """
@@ -96,14 +102,41 @@ def parse_detail() -> pd.DataFrame:
     _log_drop("detail", mask_no_uid.sum(), "missing uniprot_id")
     df = df[~mask_no_uid].copy()
 
-    # Empty MLO: fall back to the summary export's MLO Types, then NotInformed
+    # Empty MLO: fall back to the summary export's MLO Types, then to the
+    # in-vitro reclassification below, then NotInformed.
     mask_no_mlo = df["MLO"].isin(["", "_"]) | df["MLO"].isna()
-    df.loc[mask_no_mlo, "MLO"] = df.loc[mask_no_mlo, "UniProt ID"].map(summary_mlo).fillna("NotInformed")
+    df.loc[mask_no_mlo, "MLO"] = df.loc[mask_no_mlo, "UniProt ID"].map(summary_mlo)
+
+    # Rows still unresolved (no detail MLO, no summary fallback) are not all
+    # equally uninformative: `phasedb_detail.csv` also carries `Location` and
+    # `Experiment Types`, which this parser otherwise never reads. When
+    # `Location == "NA"` (no cellular compartment reported at all) and
+    # `Experiment Types` mentions only "in vitro" evidence (never "in vivo"),
+    # the row is the same claim LLPSDB/DrLLPS "Droplet" rows make — an in
+    # vitro reconstitution with no cellular MLO assigned — so it gets the same
+    # `source_mlo = "in vitro droplet"` token instead of falling through to
+    # NotInformed. See BIOLOGY.md "PhaSepDB in vitro reclassification".
+    mask_unresolved = df["MLO"].isna()
+    experiment_types = df["Experiment Types"].str.lower()
+    mask_in_vitro_only = (
+        mask_unresolved
+        & (df["Location"] == "NA")
+        & experiment_types.str.contains("in vitro", na=False)
+        & ~experiment_types.str.contains("in vivo", na=False)
+    )
+    df.loc[mask_in_vitro_only, "MLO"] = "in vitro droplet"
+
+    df["MLO"] = df["MLO"].fillna("NotInformed")
+
     if mask_no_mlo.sum() > 0:
+        n_in_vitro = mask_in_vitro_only.sum()
         n_notinformed = (mask_no_mlo & (df["MLO"] == "NotInformed")).sum()
-        n_fallback = mask_no_mlo.sum() - n_notinformed
+        n_fallback = mask_no_mlo.sum() - n_notinformed - n_in_vitro
         print(f"  [INFO] {mask_no_mlo.sum()} rows with empty MLO: "
-              f"{n_fallback} got the MLO Types fallback, {n_notinformed} → 'NotInformed'")
+              f"{n_fallback} got the MLO Types fallback, "
+              f"{n_in_vitro} reclassified to 'in vitro droplet' "
+              f"(Location=NA, in-vitro-only experiment types), "
+              f"{n_notinformed} → 'NotInformed'")
 
     out = pd.DataFrame({
         "uniprot_id":  df["UniProt ID"],

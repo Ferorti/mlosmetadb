@@ -19,7 +19,7 @@ sys.path.insert(0, str(REPO_ROOT / "parsers"))
 import parse_phasesepdb as parser
 
 
-DETAIL_HEADER = "Gene Name,UniProt ID,Organism,MLO,PubMed ID\n"
+DETAIL_HEADER = "Gene Name,UniProt ID,Organism,MLO,PubMed ID,Location,Experiment Types\n"
 ENTRIES_HEADER = "uniprot_id\tmlo_normalized\tpmid\torganism\n"
 SUMMARY_HEADER = "UniProt ID,MLO Types\n"
 
@@ -47,7 +47,7 @@ def run_parser(tmp_path, monkeypatch):
 
 def test_every_row_is_tagged_phasepdb_once(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,Nucleolus,111\n",
+        detail="FUS,P35637,Homo sapiens,Nucleolus,111,,\n",
         entries="P35637\tStress granule\t222\tHomo sapiens\n",
     )
     assert set(out["source_db"]) == {"PhaSepDB"}
@@ -56,7 +56,7 @@ def test_every_row_is_tagged_phasepdb_once(run_parser):
 
 def test_detail_rows_are_drivers_and_entries_rows_are_clients(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,Nucleolus,111\n",
+        detail="FUS,P35637,Homo sapiens,Nucleolus,111,,\n",
         entries="Q00001\tStress granule\t222\tHomo sapiens\n",
     )
     roles = dict(zip(out["uniprot_id"], out["source_role"]))
@@ -71,7 +71,7 @@ def test_a_protein_in_both_datasets_keeps_both_rows(run_parser):
     first exists discards real evidence.
     """
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,Nucleolus,111\n",
+        detail="FUS,P35637,Homo sapiens,Nucleolus,111,,\n",
         entries="P35637\tNucleolus\t222\tHomo sapiens\n",
     )
     rows = out[out["uniprot_id"] == "P35637"]
@@ -82,7 +82,7 @@ def test_a_protein_in_both_datasets_keeps_both_rows(run_parser):
 
 def test_empty_mlo_falls_back_to_the_summary_export(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,,111\n",
+        detail="FUS,P35637,Homo sapiens,,111,,\n",
         entries="",
         summary="P35637,Stress granule\n",
     )
@@ -91,7 +91,7 @@ def test_empty_mlo_falls_back_to_the_summary_export(run_parser):
 
 def test_empty_mlo_with_no_summary_entry_becomes_notinformed(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,,111\n",
+        detail="FUS,P35637,Homo sapiens,,111,,\n",
         entries="",
         summary="Q99999,Nucleolus\n",
     )
@@ -103,9 +103,40 @@ def test_empty_mlo_normalized_becomes_notinformed(run_parser):
     assert list(out["source_mlo"]) == ["NotInformed"]
 
 
+def test_empty_mlo_with_no_location_and_in_vitro_only_becomes_in_vitro_droplet(run_parser):
+    """BIOLOGY.md: 'PhaSepDB in vitro reclassification'.
+
+    No detail MLO, no summary fallback, no cellular Location, and Experiment
+    Types names only in-vitro assays: same claim as LLPSDB/DrLLPS "Droplet".
+    """
+    out = run_parser(
+        detail="FUS,P35637,Homo sapiens,,111,NA,in vitro droplet formation\n",
+        entries="",
+    )
+    assert list(out["source_mlo"]) == ["in vitro droplet"]
+
+
+def test_in_vitro_and_in_vivo_experiment_types_stays_notinformed(run_parser):
+    """A mix of in-vitro and in-vivo evidence is not an in-vitro-only claim."""
+    out = run_parser(
+        detail="FUS,P35637,Homo sapiens,,111,NA,in vitro droplet formation; in vivo droplet formation\n",
+        entries="",
+    )
+    assert list(out["source_mlo"]) == ["NotInformed"]
+
+
+def test_in_vitro_experiment_type_with_known_location_stays_notinformed(run_parser):
+    """A reported cellular Location is a real (if unnamed) cellular claim, not in vitro."""
+    out = run_parser(
+        detail="FUS,P35637,Homo sapiens,,111,Cytoplasm,in vitro droplet formation\n",
+        entries="",
+    )
+    assert list(out["source_mlo"]) == ["NotInformed"]
+
+
 def test_compound_mlo_strings_explode_into_one_row_each(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,Cajal body; Nucleolus,111\n",
+        detail="FUS,P35637,Homo sapiens,Cajal body; Nucleolus,111,,\n",
         entries="",
     )
     assert sorted(out["source_mlo"]) == ["Cajal body", "Nucleolus"]
@@ -115,7 +146,7 @@ def test_compound_mlo_strings_explode_into_one_row_each(run_parser):
 
 def test_summary_fallback_is_exploded_too(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,,111\n",
+        detail="FUS,P35637,Homo sapiens,,111,,\n",
         entries="",
         summary="P35637,Cajal body; Nucleolus\n",
     )
@@ -125,7 +156,7 @@ def test_summary_fallback_is_exploded_too(run_parser):
 @pytest.mark.parametrize("bad_id", ["_", ""])
 def test_rows_without_a_usable_uniprot_id_are_dropped(run_parser, bad_id):
     out = run_parser(
-        detail=f"X,{bad_id},Homo sapiens,Nucleolus,111\n",
+        detail=f"X,{bad_id},Homo sapiens,Nucleolus,111,,\n",
         entries=f"{bad_id}\tStress granule\t222\tHomo sapiens\n",
     )
     assert len(out) == 0
@@ -133,20 +164,20 @@ def test_rows_without_a_usable_uniprot_id_are_dropped(run_parser, bad_id):
 
 def test_a_missing_mlo_never_drops_the_row(run_parser):
     """BIOLOGY.md: NotInformed is a curated value, not a discard marker."""
-    out = run_parser(detail="FUS,P35637,Homo sapiens,,\n", entries="")
+    out = run_parser(detail="FUS,P35637,Homo sapiens,,,,\n", entries="")
     assert len(out) == 1
     assert out.iloc[0]["source_mlo"] == "NotInformed"
 
 
 def test_missing_pmid_and_organism_become_the_null_sentinel(run_parser):
-    out = run_parser(detail="FUS,P35637,,Nucleolus,\n", entries="")
+    out = run_parser(detail="FUS,P35637,,Nucleolus,,,\n", entries="")
     assert out.iloc[0]["evidence"] == parser.NULL
     assert out.iloc[0]["organism"] == parser.NULL
 
 
 def test_output_matches_the_intermediate_column_contract(run_parser):
     out = run_parser(
-        detail="FUS,P35637,Homo sapiens,Nucleolus,111\n",
+        detail="FUS,P35637,Homo sapiens,Nucleolus,111,,\n",
         entries="",
     )
     assert list(out.columns) == parser.COLUMNS
@@ -154,7 +185,7 @@ def test_output_matches_the_intermediate_column_contract(run_parser):
 
 def test_whitespace_is_stripped_from_every_field(run_parser):
     out = run_parser(
-        detail="FUS, P35637 , Homo sapiens , Nucleolus , 111 \n",
+        detail="FUS, P35637 , Homo sapiens , Nucleolus , 111 ,,\n",
         entries="",
     )
     row = out.iloc[0]

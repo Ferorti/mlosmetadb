@@ -114,6 +114,19 @@ ingestion. Assigned from the `(source_db, source_role)` pair, which was verified
 exhaustive and homogeneous per resource — eight pairs, five values. Two tests in
 `tests/test_dataset_invariants.py` assert no NULL and no value outside the five.
 
+**Known inconsistency (2026-08-25, not yet resolved)**: `evidence_type` is a
+function of `(source_db, source_role)` only, never of `source_mlo`. Since the
+PhaSepDB in-vitro reclassification (see `BIOLOGY.md` "PhaSepDB in vitro
+reclassification"), 272 PhaSepDB proteins carry
+`unified_mlo = 'in_vitro_droplet'` (no cellular claim, by `Location`/
+`Experiment Types` in the raw source) while still reading `source_role =
+"driver"` → `evidence_type = 'cellular_requirement'` ("perturbing it disrupts
+the condensate in cells") — the two now disagree for these rows specifically.
+Making `evidence_type` sensitive to `source_mlo` as well would fix it, but
+that changes the "exhaustive per `(source_db, source_role)` pair" property
+verified above and was left open deliberately rather than patched in the same
+change.
+
 **Row grain**: one row per `(uniprot_id, source_db, source_mlo, source_role)`,
 enforced by `scripts/integrate.py`'s `collapse_duplicates()` for every source.
 Sources that report one row per supporting publication have those rows collapsed
@@ -185,7 +198,10 @@ rows where a source gave no specific MLO name map to `unified_mlo = 'NotInformed
 `mlo_vocabulary` or from `mlo_annotations`. `spatial_location = 'unspecified'` is the
 mechanism for filtering it out of default "real MLO" views at the API/frontend
 layer (`policy.EXCLUDED_MLO_SPATIAL_LOCATIONS`), without removing the underlying rows
-(~930 in `mlo_annotations`). It is a curated value and not a gap, which is why the
+(694 proteins in `mlo_annotations`, all from PhaSepDB — CD-CODE and PhasePro
+carry no `NotInformed` rows at all; down from 930 after the PhaSepDB in-vitro
+reclassification moved 272 of those proteins to `in_vitro_droplet`, see
+`BIOLOGY.md`). It is a curated value and not a gap, which is why the
 exclusion clause is written to keep NULL-axis terms visible. Same principle as
 `dataset_active` above: filtering is presentation logic, not a reason to lose data at
 the pipeline stage.
