@@ -538,7 +538,7 @@ function studyCountLabel(pubmedIds) {
                   :title="p.experimental_systems.join(', ')"
                 >
                   {{ shortSystems(p.experimental_systems) }}
-                  <span v-if="studyCountLabel(p.pubmed_ids)" class="text-gray-400"> · {{ studyCountLabel(p.pubmed_ids) }}</span>
+                  <span v-if="studyCountLabel(p.pubmed_ids)" class="text-gray-500"> · {{ studyCountLabel(p.pubmed_ids) }}</span>
                 </td>
               </tr>
             </tbody>
