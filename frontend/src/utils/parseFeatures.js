@@ -12,8 +12,11 @@ export function parseIdrRegions(idrJson) {
     if (Array.isArray(parsed)) {
       return parsed.map(r => ({ start: r.start, end: r.end, source: r.source ?? null }))
     }
-    // Old format: {mobidb_lite: [[start, end], ...]}
-    const arr = parsed.mobidb_lite ?? parsed.alphafold ?? []
+    // Old format: {mobidb_lite: [[start, end], ...], alphafold: [[start, end], ...]}
+    if (parsed.alphafold) {
+      return parsed.alphafold.map(([start, end]) => ({ start, end, source: 'AlphaFold-disorder' }))
+    }
+    const arr = parsed.mobidb_lite ?? []
     return arr.map(([start, end]) => ({ start, end, source: 'MobiDB-lite' }))
   } catch { return [] }
 }

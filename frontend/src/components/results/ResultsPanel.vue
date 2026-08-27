@@ -1,7 +1,7 @@
 <script setup>
 import { computed, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { formatMlo, formatCount, filterMlos } from '@/utils/format'
+import { formatMlo, filterMlos } from '@/utils/format'
 import { parseIdrRegions, parseLcdRegions, parseDomains, buildFeatureStats } from '@/utils/parseFeatures'
 
 const props = defineProps({
@@ -98,12 +98,8 @@ const resultsWithFeatures = computed(() => {
     const domains      = parseDomains(p.domains)
     // LCD omitted here on purpose: the results row only shows IDRs and domains.
     const featureStats = buildFeatureStats({ idrRegions, lcdRegions: [], domains, sequenceLength: p.sequence_length })
-    // Strip the trailing " · NNN aa" so column 3 can show length separately
-    const featureStatsShort = featureStats
-      ? featureStats.replace(/\s*·\s*[\d,]+ aa$/, '').trim()
-      : ''
     const hasFeatures  = idrRegions.length > 0 || lcdRegions.length > 0 || domains.length > 0 || !!p.sequence_length
-    return { protein: p, idrRegions, lcdRegions, domains, featureStats, featureStatsShort, hasFeatures }
+    return { protein: p, idrRegions, lcdRegions, domains, featureStats, hasFeatures }
   })
 })
 
@@ -155,11 +151,6 @@ const rangeEnd   = computed(() => Math.min(props.page * props.perPage, props.tot
 // ---- Navigation ----
 function goToProtein(id) {
   router.push(`/protein/${id}`)
-}
-
-function titleColor(protein) {
-  if (protein.has_driver) return 'text-brand'
-  return 'text-[#4B5563]'
 }
 
 function shortOrganism(name) {
@@ -344,20 +335,29 @@ function architectureBands(entry) {
                 <th class="text-left pl-6 pr-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[300px]">PROTEIN</th>
                 <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[82px]">ROLE</th>
                 <th class="text-left px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[90px]">SOURCES</th>
-                <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[58px]">LENGTH</th>
                 <th class="text-right px-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[52px]">MLOS</th>
-                <th class="text-left pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] min-w-[210px]">ARCHITECTURE</th>
+                <th class="text-left pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] min-w-[210px]">
+                  <span class="inline-flex items-center gap-3">
+                    ARCHITECTURE
+                    <span class="inline-flex items-center gap-2 normal-case tracking-normal font-normal">
+                      <span class="inline-flex items-center gap-1"><span class="w-[7px] h-[7px] bg-feature-idr rounded-[1px]"></span>IDR</span>
+                      <span class="inline-flex items-center gap-1"><span class="w-[7px] h-[7px] bg-feature-domain rounded-[1px]"></span>Domain</span>
+                    </span>
+                  </span>
+                </th>
               </tr>
             </thead>
             <tbody v-for="entry in resultsWithFeatures" :key="entry.protein.uniprot_id" class="group">
               <tr
-                class="group-hover:bg-page cursor-pointer transition-colors"
+                class="group-hover:bg-page transition-colors"
                 :class="openMlos.has(entry.protein.uniprot_id) ? 'border-b-0' : 'border-b border-border-soft'"
-                @click="goToProtein(entry.protein.uniprot_id)"
               >
                 <td class="align-top pl-6 pr-3 py-3.5">
                   <div class="flex items-baseline gap-2">
-                    <span class="text-[15px] font-semibold tracking-[-0.01em]" :class="titleColor(entry.protein)">
+                    <span
+                      class="text-[15px] font-semibold tracking-[-0.01em] text-brand cursor-pointer hover:underline"
+                      @click="goToProtein(entry.protein.uniprot_id)"
+                    >
                       {{ entry.protein.gene_name || entry.protein.uniprot_id }}
                     </span>
                     <span class="font-mono text-[11.5px] text-ink3">{{ entry.protein.uniprot_id }}</span>
@@ -366,7 +366,7 @@ function architectureBands(entry) {
                   <div class="text-[12.5px] italic text-muted mt-0.5">{{ shortOrganism(entry.protein.organism) }}</div>
                 </td>
                 <td
-                  class="align-top px-3 py-3.5 font-mono text-[11px]"
+                  class="align-top px-3 py-3.5 font-mono text-[12px]"
                   :class="entry.protein.has_driver ? 'text-brand' : entry.protein.has_regulator ? 'text-regulator' : 'text-ink3'"
                   :title="!entry.protein.has_driver && entry.protein.has_regulator ? 'Annotated as a regulator of this organelle, not as a resident of it — a curator assignment that applies to the whole protein, not to this compartment specifically' : undefined"
                 >
@@ -377,7 +377,6 @@ function architectureBands(entry) {
                     <span v-for="src in sourceNames(entry.protein)" :key="src" class="font-mono text-[10.5px] text-ink3 whitespace-nowrap">{{ src }}</span>
                   </div>
                 </td>
-                <td class="align-top px-3 py-3.5 text-right font-mono text-xs text-ink">{{ formatCount(entry.protein.sequence_length) }}</td>
                 <td class="align-top px-3 py-3.5 text-right">
                   <button
                     v-if="displayMlos(entry.protein).length"
@@ -394,7 +393,7 @@ function architectureBands(entry) {
                   <div class="relative h-3 bg-track rounded-[1px] w-[95%]">
                     <div v-for="b in architectureBands(entry)" :key="b.key" :title="b.title" :style="b.style"></div>
                   </div>
-                  <div v-if="entry.featureStatsShort" class="font-mono text-[10.5px] text-ink3 mt-1.5">{{ entry.featureStatsShort }}</div>
+                  <div v-if="entry.featureStats" class="font-mono text-[10.5px] text-ink3 mt-1.5">{{ entry.featureStats }}</div>
                 </td>
               </tr>
               <!-- MLO sub-row: hidden by default, opened by clicking the MLOS count above.
@@ -405,7 +404,7 @@ function architectureBands(entry) {
                 class="border-b border-border-soft group-hover:bg-page cursor-pointer transition-colors"
                 @click="goToProtein(entry.protein.uniprot_id)"
               >
-                <td colspan="6" class="px-3 pb-3.5 pt-0 text-[12.5px] text-ink3">
+                <td colspan="5" class="px-3 pb-3.5 pt-0 text-[12.5px] text-ink3">
                   {{ visibleMlos(entry.protein).map(formatMlo).join(' · ') }}
                   <button
                     v-if="displayMlos(entry.protein).length > 10 && !expandedRows.has(entry.protein.uniprot_id)"
@@ -418,10 +417,8 @@ function architectureBands(entry) {
           </table>
         </div>
 
-        <div class="flex flex-wrap gap-6 mt-6 pt-4 border-t border-border-soft font-mono text-[11px] text-ink2">
-          <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-idr"></span>Disordered region</div>
-          <div class="flex items-center gap-2"><span class="w-[9px] h-[9px] bg-feature-domain"></span>Pfam domain</div>
-          <div class="text-ink3">Each bar is normalized to its own protein's length</div>
+        <div class="mt-6 pt-4 border-t border-border-soft font-mono text-[11px] text-ink3">
+          Each bar is normalized to its own protein's length
         </div>
       </template>
 

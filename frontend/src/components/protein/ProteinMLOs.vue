@@ -91,12 +91,9 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
 <template>
   <div>
     <!-- Section header -->
-    <div class="mb-4">
-      <span class="text-lg font-semibold text-gray-800">MLOs</span>
-      <span v-if="totalAnnotations" class="text-sm text-ink3 ml-2 font-normal">
-        {{ totalAnnotations }} record{{ totalAnnotations !== 1 ? 's' : '' }} across
-        {{ groupCount }} organelle{{ groupCount !== 1 ? 's' : '' }}
-      </span>
+    <div v-if="totalAnnotations" class="mb-4 text-sm text-ink3">
+      {{ totalAnnotations }} record{{ totalAnnotations !== 1 ? 's' : '' }} across
+      {{ groupCount }} organelle{{ groupCount !== 1 ? 's' : '' }}
     </div>
 
     <div v-if="!dedupedAnnotations.length" class="text-sm text-ink3">
@@ -113,8 +110,8 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
         <thead>
           <tr>
             <th class="text-left pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ORGANELLE</th>
+            <th class="text-left px-2 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ROLE</th>
             <th v-for="src in MATRIX_SOURCES" :key="src.key" class="text-left px-2 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em] w-[150px]">{{ src.label }}</th>
-            <th class="text-right pl-3 pb-[9px] border-b border-border-strong font-mono text-[10.5px] font-normal text-ink3 tracking-[0.07em]">ROLE</th>
           </tr>
         </thead>
         <tbody>
@@ -122,14 +119,14 @@ const groupCount = computed(() => new Set(dedupedAnnotations.value.map(a => a.un
             <td class="py-[11px] pr-3 align-top text-[14.5px] text-ink">
               {{ formatMlo(row.unified_mlo) }}
             </td>
+            <td class="py-[11px] px-2 align-top">
+              <RoleBadge v-if="row.displayRole" :role="row.displayRole" />
+            </td>
             <td v-for="cell in row.cells" :key="cell.source" class="py-[11px] px-2 align-top text-[11.5px] text-ink2">
               <template v-if="cell.names.length">
                 <div v-for="name in cell.names" :key="name">{{ name }}</div>
               </template>
               <span v-else class="text-border-strong">—</span>
-            </td>
-            <td class="py-[11px] pl-3 align-top text-right">
-              <RoleBadge v-if="row.displayRole" :role="row.displayRole" />
             </td>
           </tr>
         </tbody>

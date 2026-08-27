@@ -25,6 +25,10 @@ const filterEvidence = ref('robust') // 'robust' | 'weak' -- see isRobust(). Def
                                       // (see isRobust()'s comment), so showing everything
                                       // by default buries the well-supported partners.
 const showInterEdges = ref(true)     // partner-partner edges on, or hub-only
+// Above this many visible partners, inter-partner edges turn the graph into an
+// unreadable hairball (e.g. RTCB: 656 partners, 40k+ inter-edges) -- default
+// to hub-only in that case. Still user-toggleable afterward.
+const INTER_EDGE_DEFAULT_THRESHOLD = 50
 
 // ── table pagination ──────────────────────────────────────────────────────────
 const tablePage    = ref(1)
@@ -147,13 +151,19 @@ const graphData = computed(() => {
     isHub:    true,
   }))
 
-  // Inter-partner edges (filtered to visible nodes only), skipped entirely
-  // when showInterEdges is off -- hub-only view, one link per partner.
-  const partnerLinks = showInterEdges.value
-    ? interEdges.value
-        .filter(e => visibleSet.has(e.source) && visibleSet.has(e.target))
-        .map(e => ({ source: e.source, target: e.target, isHub: false }))
-    : []
+  // Inter-partner edges (filtered to visible nodes only). Always built, even
+  // when showInterEdges is off: they still need to exist in the graph so a
+  // clicked node's own partner-partner edges can be revealed on demand in
+  // hub-only view -- visibility is handled by linkOpacity()/renderGraph, not
+  // by omitting them here. Keeping this list independent of showInterEdges
+  // also means toggling the checkbox doesn't change graphData, so it no
+  // longer forces a full renderGraph()/simulation restart (that rebuild was
+  // tearing down the hovered node's DOM element mid-hover, since browsers
+  // don't reliably fire mouseout on a removed element -- the tooltip/highlight
+  // would then hang on whatever was hovered when the toggle was clicked).
+  const partnerLinks = interEdges.value
+    .filter(e => visibleSet.has(e.source) && visibleSet.has(e.target))
+    .map(e => ({ source: e.source, target: e.target, isHub: false }))
 
   return { nodes, links: [...hubLinks, ...partnerLinks] }
 })
@@ -167,6 +177,7 @@ async function load() {
     const res = await getProteinPpi(props.protein.uniprot_id, { limit: 500 })
     allPartners.value = res.data.items
     interEdges.value  = res.data.inter_edges ?? []
+    showInterEdges.value = filteredPartners.value.length <= INTER_EDGE_DEFAULT_THRESHOLD
   } catch (e) {
     error.value = e?.message ?? 'Error loading interactions'
   } finally {
@@ -201,6 +212,22 @@ function nodeRadius(d) {
   if (d.has_driver)    return 8
   if (d.has_regulator) return 7
   return 6
+}
+
+// Single source of truth for a link's stroke-opacity, both at rest and while
+// a node is hovered/selected (id is that node's id, or null/undefined for
+// the rest state). Partner-partner links default to invisible (0) when
+// showInterEdges is off, but still light up to 1 when they touch the
+// highlighted node -- that's what lets a click reveal one node's own
+// partner edges even in hub-only view.
+function linkOpacity(l, id) {
+  if (id != null) {
+    const sid = typeof l.source === 'object' ? l.source.id : l.source
+    const tid = typeof l.target === 'object' ? l.target.id : l.target
+    if (sid === id || tid === id) return 1
+    return l.isHub ? 0.04 : (showInterEdges.value ? 0.04 : 0)
+  }
+  return l.isHub ? 0.5 : (showInterEdges.value ? 0.8 : 0)
 }
 
 function renderGraph() {
@@ -244,7 +271,7 @@ function renderGraph() {
     .join('line')
     .attr('stroke', d => d.isHub ? '#D1D5DB' : '#93B8E8')
     .attr('stroke-width', d => d.isHub ? 0.7 : 1.4)
-    .attr('stroke-opacity', d => d.isHub ? 0.5 : 0.8)
+    .attr('stroke-opacity', d => linkOpacity(d, selectedId.value))
 
   const nodeSel = g.append('g')
     .selectAll('circle')
@@ -283,11 +310,7 @@ function renderGraph() {
       if (d.isCenter) return
       hoveredId.value = d.id
       nodeSel.attr('opacity', n => (n.id === d.id || n.isCenter) ? 1 : 0.25)
-      linkSel.attr('opacity', l => {
-        const sid = typeof l.source === 'object' ? l.source.id : l.source
-        const tid = typeof l.target === 'object' ? l.target.id : l.target
-        return sid === d.id || tid === d.id ? 1 : 0.05
-      })
+      linkSel.attr('stroke-opacity', l => linkOpacity(l, d.id))
       const rect = graphRef.value.getBoundingClientRect()
       const partner = allPartners.value.find(p => p.partner_uniprot_id === d.id)
       tooltip.value = {
@@ -304,12 +327,14 @@ function renderGraph() {
     })
     .on('mouseout', () => {
       hoveredId.value = null
-      nodeSel.attr('opacity', 1)
-      linkSel.attr('opacity', 1)
       tooltip.value = { ...tooltip.value, visible: false }
+      // Fall back to the clicked node's highlight (if any) instead of clearing
+      // it -- otherwise moving the mouse off a selected node wipes its edges.
+      highlightNode(selectedId.value)
     })
     .on('click', (e, d) => {
       if (d.isCenter) return
+      e.stopPropagation()
       selectedId.value = d.id
       highlightNode(d.id)
       const index = filteredPartners.value.findIndex(p => p.partner_uniprot_id === d.id)
@@ -317,6 +342,12 @@ function renderGraph() {
       tablePage.value = Math.floor(index / TABLE_PER) + 1
       nextTick(() => rowRefs[d.id]?.scrollIntoView({ block: 'nearest' }))
     })
+
+  // Click on empty canvas (not a node) clears the pinned selection
+  svg.on('click', () => {
+    selectedId.value = null
+    highlightNode(null)
+  })
 
   const partnerCount = nodes.length - 1
   const charge = partnerCount > 150 ? -80 : partnerCount > 50 ? -140 : -220
@@ -327,7 +358,16 @@ function renderGraph() {
       .strength(d => d.isHub ? 0.7 : 0.1))
     .force('charge',    d3.forceManyBody().strength(d => d.isCenter ? -300 : charge))
     .force('center',    d3.forceCenter(W / 2, H / 2))
-    .force('collision', d3.forceCollide().radius(d => nodeRadius(d) + 8))
+    // The center's own collision radius gets a much larger buffer than a
+    // regular node's: on a dense interactome (FUS has 656 partners and
+    // 40k+ partner-partner edges), the many weak inter-partner springs
+    // pulling a highly-connected partner toward its neighbors' centroid can
+    // land that centroid right on the ring's geometric center -- the same
+    // point the center node is pinned to -- overpowering a same-sized
+    // collision buffer. A bigger buffer here is a hard exclusion zone
+    // (forceCollide, not a spring), so it holds regardless of how strong
+    // that pull gets.
+    .force('collision', d3.forceCollide().radius(d => (d.isCenter ? nodeRadius(d) + 40 : nodeRadius(d)) + 8))
 
   simulation.value = sim
 
@@ -340,21 +380,32 @@ function renderGraph() {
   })
 }
 
+// Selected node's data, for the pinned panel that stays up after a click
+// (unlike the hover tooltip, which disappears on mouseout).
+const pinnedPartner = computed(() =>
+  allPartners.value.find(p => p.partner_uniprot_id === selectedId.value) ?? null
+)
+
+function goToPartner(uniprotId) {
+  router.push(`/protein/${uniprotId}`)
+}
+
 // highlight from table hover
 function highlightNode(id) {
   if (!graphRef.value) return
   const svg = d3.select(graphRef.value).select('svg')
   svg.selectAll('circle').attr('opacity', n => !id || n.id === id || n.isCenter ? 1 : 0.2)
-  svg.selectAll('line').attr('opacity', l => {
-    if (!id) return 1
-    const sid = typeof l.source === 'object' ? l.source.id : l.source
-    const tid = typeof l.target === 'object' ? l.target.id : l.target
-    return sid === id || tid === id ? 1 : 0.04
-  })
+  svg.selectAll('line').attr('stroke-opacity', l => linkOpacity(l, id))
 }
 
 watch(graphData, () => nextTick(renderGraph))
 watch(graphRef,  val => { if (val) nextTick(renderGraph) })
+// graphData no longer depends on showInterEdges (partner links are always
+// built, see graphData's comment), so toggling the checkbox needs its own
+// opacity-only update instead of a full renderGraph() -- rebuilding the SVG
+// mid-hover was the "stuck hover" bug: browsers don't reliably fire mouseout
+// on a DOM node that gets removed programmatically.
+watch(showInterEdges, () => highlightNode(selectedId.value))
 onUnmounted(() => simulation.value?.stop())
 
 // ── helpers ───────────────────────────────────────────────────────────────────
@@ -603,6 +654,41 @@ function studyCountLabel(pubmedIds) {
           class="relative flex-1 border border-gray-200 rounded overflow-hidden"
           style="min-height:450px"
         >
+          <!-- Pinned panel for the clicked node -- stays up after mouseout, unlike
+               the hover tooltip below, so the gene name link is reachable. -->
+          <div
+            v-if="pinnedPartner"
+            class="absolute z-20 top-2 right-2 bg-white border border-gray-200 rounded shadow-md px-3 py-2 text-xs max-w-[220px]"
+          >
+            <button
+              class="absolute top-1 right-1.5 text-gray-300 hover:text-gray-500 leading-none"
+              title="Clear selection"
+              @click="selectedId = null; highlightNode(null)"
+            >×</button>
+            <div
+              class="font-semibold text-brand hover:underline cursor-pointer pr-3"
+              @click="goToPartner(pinnedPartner.partner_uniprot_id)"
+            >
+              {{ pinnedPartner.partner_gene || pinnedPartner.partner_uniprot_id }}
+            </div>
+            <div class="text-gray-400 font-mono text-[10px]">{{ pinnedPartner.partner_uniprot_id }}</div>
+            <div class="mt-1">
+              <span
+                v-if="pinnedPartner.has_driver"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
+              >Driver</span>
+              <span
+                v-else-if="pinnedPartner.has_regulator"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#F6EFE4] text-regulator border border-[#E5D3B3]"
+              >Regulator</span>
+              <span v-else class="text-gray-500 text-[10px]">Component</span>
+            </div>
+            <div v-if="filterMlos(pinnedPartner.mlos).length" class="mt-1 text-gray-500">
+              {{ filterMlos(pinnedPartner.mlos).slice(0, 3).map(formatMlo).join(', ') }}
+              <span v-if="filterMlos(pinnedPartner.mlos).length > 3"> +{{ filterMlos(pinnedPartner.mlos).length - 3 }}</span>
+            </div>
+          </div>
+
           <!-- Tooltip -->
           <div
             v-if="tooltip.visible && tooltip.partner"

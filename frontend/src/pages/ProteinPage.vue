@@ -13,7 +13,7 @@ const { protein, loading, error, fetchProtein } = useProtein()
 
 const TABS = [
   { id: 'overview',      label: 'Overview' },
-  { id: 'mlos',          label: 'MLO Annotations' },
+  { id: 'mlos',          label: 'Membraneless Organelles' },
   { id: 'interactions',  label: 'Interactions' },
 ]
 
@@ -106,8 +106,11 @@ watch(() => route.params.id, async (id) => {
         <ProteinOverview :protein="protein" />
       </div>
 
-      <!-- MLO Annotations -->
+      <!-- Membraneless Organelles -->
       <div id="mlos" class="scroll-mt-28 mt-10">
+        <div class="text-lg font-semibold text-gray-800 mb-4">
+          Membraneless organelles associated with {{ protein.gene_name || protein.uniprot_id }}
+        </div>
         <ProteinMLOs
           v-if="mountedSections.has('mlos')"
           :mlo-annotations="protein.mlo_annotations ?? []"
@@ -117,7 +120,9 @@ watch(() => route.params.id, async (id) => {
 
       <!-- Interactions -->
       <div id="interactions" class="scroll-mt-28 mt-10">
-        <div class="text-lg font-semibold text-gray-800 mb-4">Protein–Protein Interactions</div>
+        <div class="text-lg font-semibold text-gray-800 mb-4">
+          {{ protein.gene_name || protein.uniprot_id }} protein interaction network in MLOsMetaDB
+        </div>
         <ProteinPPI v-if="mountedSections.has('interactions')" :protein="protein" />
       </div>
 

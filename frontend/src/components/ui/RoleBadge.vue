@@ -17,7 +17,7 @@ const styles = {
   regulator: 'bg-[#F6EFE4] text-regulator border-[#E5D3B3]',
 }
 const labels = {
-  driver:    'LLPS Driver',
+  driver:    'Driver',
   client:    'MLO Component',
   regulator: 'Regulator',
 }
