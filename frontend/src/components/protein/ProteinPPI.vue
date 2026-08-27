@@ -20,7 +20,10 @@ const error        = ref(null)
 // ── filters ──────────────────────────────────────────────────────────────────
 const filterRole   = ref('driver')   // 'all' | 'driver' | 'regulator' | 'component'
 const filterMlo    = ref('')         // unified_mlo slug or ''
-const filterEvidence = ref('all')    // 'all' | 'robust' | 'weak' -- see isRobust()
+const filterEvidence = ref('robust') // 'robust' | 'weak' -- see isRobust(). Defaults to
+                                      // 'robust': most partners are single-screen evidence
+                                      // (see isRobust()'s comment), so showing everything
+                                      // by default buries the well-supported partners.
 const showInterEdges = ref(true)     // partner-partner edges on, or hub-only
 
 // ── table pagination ──────────────────────────────────────────────────────────
@@ -80,11 +83,7 @@ const filteredPartners = computed(() => {
     const mlo = filterMlo.value
     list = list.filter(p => p.mlos.includes(mlo))
   }
-  if (filterEvidence.value === 'robust') {
-    list = list.filter(isRobust)
-  } else if (filterEvidence.value === 'weak') {
-    list = list.filter(p => !isRobust(p))
-  }
+  list = filterEvidence.value === 'robust' ? list.filter(isRobust) : list.filter(p => !isRobust(p))
   return list
 })
 
@@ -362,7 +361,7 @@ onUnmounted(() => simulation.value?.stop())
 function resetFilters() {
   filterRole.value = 'all'
   filterMlo.value  = ''
-  filterEvidence.value = 'all'
+  filterEvidence.value = 'robust'
 }
 
 function shortSystems(systems) {
@@ -445,7 +444,7 @@ function studyCountLabel(pubmedIds) {
       <!-- Evidence filter -->
       <div class="inline-flex border border-border rounded overflow-hidden text-xs">
         <button
-          v-for="opt in [['all','All evidence'],['robust','Multiple evidence'],['weak','Single evidence']]"
+          v-for="opt in [['robust','Multiple evidence'],['weak','Single evidence']]"
           :key="opt[0]"
           :class="filterEvidence === opt[0] ? 'bg-navy text-surface' : 'bg-surface text-ink3 hover:text-ink'"
           class="px-3 py-1.5 border-l border-border first:border-l-0 transition-colors"
@@ -455,7 +454,7 @@ function studyCountLabel(pubmedIds) {
 
       <!-- Reset -->
       <button
-        v-if="filterRole !== 'all' || filterMlo || filterEvidence !== 'all'"
+        v-if="filterRole !== 'all' || filterMlo || filterEvidence !== 'robust'"
         class="text-xs text-brand hover:underline"
         @click="resetFilters"
       >Reset filters</button>
