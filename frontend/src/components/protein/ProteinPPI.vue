@@ -20,6 +20,7 @@ const error        = ref(null)
 // ── filters ──────────────────────────────────────────────────────────────────
 const filterRole   = ref('driver')   // 'all' | 'driver' | 'regulator' | 'component'
 const filterMlo    = ref('')         // unified_mlo slug or ''
+const filterEvidence = ref('all')    // 'all' | 'robust' | 'weak' -- see isRobust()
 const showInterEdges = ref(true)     // partner-partner edges on, or hub-only
 
 // ── table pagination ──────────────────────────────────────────────────────────
@@ -56,6 +57,21 @@ function partnerRole(p) {
   return 'component'
 }
 
+// A partner's evidence is "robust" when it clears at least one of two
+// independent corroboration axes: more than one distinct experimental
+// method, or more than one distinct supporting publication. A single method
+// from a single paper (79.4% of all BioGRID pairs in the current dataset --
+// see docs/review/ppi_evidence_filter/) is usually one high-throughput
+// AP-MS/BioID screen, not independently confirmed evidence. Two dataset
+// hubs (SUCLG2, Q9UGI0) show the single-method threshold alone would be
+// wrong: both are ~2,800-partner hubs sustained by one deep single-method
+// study each, which is strong evidence despite n_methods == 1 -- hence the
+// OR on pubmed count rather than a method-count-only rule.
+function isRobust(p) {
+  return new Set(p.experimental_systems).size >= 2
+      || new Set(p.pubmed_ids).size >= 2
+}
+
 // ── filtered partners ─────────────────────────────────────────────────────────
 const filteredPartners = computed(() => {
   let list = allPartners.value
@@ -63,6 +79,11 @@ const filteredPartners = computed(() => {
   if (filterMlo.value) {
     const mlo = filterMlo.value
     list = list.filter(p => p.mlos.includes(mlo))
+  }
+  if (filterEvidence.value === 'robust') {
+    list = list.filter(isRobust)
+  } else if (filterEvidence.value === 'weak') {
+    list = list.filter(p => !isRobust(p))
   }
   return list
 })
@@ -341,6 +362,7 @@ onUnmounted(() => simulation.value?.stop())
 function resetFilters() {
   filterRole.value = 'all'
   filterMlo.value  = ''
+  filterEvidence.value = 'all'
 }
 
 function shortSystems(systems) {
@@ -353,6 +375,17 @@ function shortSystems(systems) {
   }
   const labels = [...new Set(systems.map(s => abbr[s] ?? s))]
   return labels.slice(0, 2).join(', ') + (labels.length > 2 ? ` +${labels.length - 2}` : '')
+}
+
+// Study count suffix for the Evidence column, e.g. "3 studies" / "1 study".
+// Surfaced separately from shortSystems() because n_pubmed is one of the two
+// independent robustness axes (see isRobust()) and is invisible from the
+// method list alone -- a single-method partner backed by 12 papers reads
+// identically to one backed by 1 paper without this.
+function studyCountLabel(pubmedIds) {
+  const n = new Set(pubmedIds).size
+  if (!n) return null
+  return n === 1 ? '1 study' : `${n} studies`
 }
 </script>
 
@@ -382,7 +415,7 @@ function shortSystems(systems) {
         </span>
       </div>
       <p class="text-[12.5px] text-muted">
-        Only partners present in MLOsMetaDB are shown. The graph can optionally show interactions between partners themselves, not just with the query protein. A partner's Driver/Regulator/Component label reflects its own curator-assigned MLO role, not the nature of this particular interaction: a PPI with a regulator partner is not itself evidence of a regulatory interaction.
+        Only partners present in MLOsMetaDB are shown. The graph can optionally show interactions between partners themselves, not just with the query protein. A partner's Driver/Regulator/Component label reflects its own curator-assigned MLO role, not the nature of this particular interaction: a PPI with a regulator partner is not itself evidence of a regulatory interaction. "Multiple evidence" partners have ≥2 independent experimental methods or ≥2 independent publications behind them; "Single evidence" partners rely on one method reported in one paper, typically a single high-throughput screen.
       </p>
     </div>
 
@@ -409,9 +442,20 @@ function shortSystems(systems) {
         <option v-for="m in mloOptions" :key="m" :value="m">{{ formatMlo(m) }}</option>
       </select>
 
+      <!-- Evidence filter -->
+      <div class="inline-flex border border-border rounded overflow-hidden text-xs">
+        <button
+          v-for="opt in [['all','All evidence'],['robust','Multiple evidence'],['weak','Single evidence']]"
+          :key="opt[0]"
+          :class="filterEvidence === opt[0] ? 'bg-navy text-surface' : 'bg-surface text-ink3 hover:text-ink'"
+          class="px-3 py-1.5 border-l border-border first:border-l-0 transition-colors"
+          @click="filterEvidence = opt[0]"
+        >{{ opt[1] }}</button>
+      </div>
+
       <!-- Reset -->
       <button
-        v-if="filterRole !== 'all' || filterMlo"
+        v-if="filterRole !== 'all' || filterMlo || filterEvidence !== 'all'"
         class="text-xs text-brand hover:underline"
         @click="resetFilters"
       >Reset filters</button>
@@ -494,6 +538,7 @@ function shortSystems(systems) {
                   :title="p.experimental_systems.join(', ')"
                 >
                   {{ shortSystems(p.experimental_systems) }}
+                  <span v-if="studyCountLabel(p.pubmed_ids)" class="text-gray-400"> · {{ studyCountLabel(p.pubmed_ids) }}</span>
                 </td>
               </tr>
             </tbody>
