@@ -34,6 +34,16 @@ const INTER_EDGE_DEFAULT_THRESHOLD = 50
 const tablePage    = ref(1)
 const TABLE_PER    = 20
 
+// ── table column filters ────────────────────────────────────────────────────
+// Local to the partner table only: unlike filterRole/filterMlo/filterEvidence
+// above, these never feed graphData, so typing here never triggers
+// renderGraph() or restarts the simulation.
+const tableFilters = ref({ gene: '', uniprot: '', role: '', mlo: '', evidence: '' })
+const hasTableFilters = computed(() => Object.values(tableFilters.value).some(v => v))
+function resetTableFilters() {
+  tableFilters.value = { gene: '', uniprot: '', role: '', mlo: '', evidence: '' }
+}
+
 // ── graph state ──────────────────────────────────────────────────────────────
 const graphRef     = ref(null)
 const hoveredId    = ref(null)
@@ -92,18 +102,52 @@ const filteredPartners = computed(() => {
 })
 
 // ── table ─────────────────────────────────────────────────────────────────────
-const totalPages = computed(() => Math.max(1, Math.ceil(filteredPartners.value.length / TABLE_PER)))
+// Column filters apply on top of filteredPartners, table-side only -- they
+// never touch graphData, so they never trigger a graph redraw.
+const displayedPartners = computed(() => {
+  const f = tableFilters.value
+  let list = filteredPartners.value
+  if (f.gene) {
+    const q = f.gene.toLowerCase()
+    list = list.filter(p => (p.partner_gene || p.partner_uniprot_id).toLowerCase().includes(q))
+  }
+  if (f.uniprot) {
+    const q = f.uniprot.toLowerCase()
+    list = list.filter(p => p.partner_uniprot_id.toLowerCase().includes(q))
+  }
+  if (f.role) list = list.filter(p => partnerRole(p) === f.role)
+  if (f.mlo) {
+    const q = f.mlo.toLowerCase()
+    list = list.filter(p => filterMlos(p.mlos).some(m => formatMlo(m).toLowerCase().includes(q)))
+  }
+  if (f.evidence) {
+    const q = f.evidence.toLowerCase()
+    list = list.filter(p => {
+      const text = `${shortSystems(p.experimental_systems)} ${studyCountLabel(p.pubmed_ids) ?? ''}`.toLowerCase()
+      return text.includes(q)
+    })
+  }
+  return list
+})
+
+const totalPages = computed(() => Math.max(1, Math.ceil(displayedPartners.value.length / TABLE_PER)))
 const tableRows  = computed(() => {
   const start = (tablePage.value - 1) * TABLE_PER
-  return filteredPartners.value.slice(start, start + TABLE_PER)
+  return displayedPartners.value.slice(start, start + TABLE_PER)
 })
-// Reset paging AND the persistent selection whenever the visible partner set
+// Reset the persistent selection whenever the graph-affecting filter set
 // changes: the selected row may no longer be in `filteredPartners` at all, and
 // a stale `selectedId` would either highlight nothing or (worse) light up a
-// different partner that happens to reappear later.
+// different partner that happens to reappear later. Column filters do NOT
+// clear the selection -- they only affect what's visible in the table, so a
+// selection hidden by a column filter still stays highlighted in the graph.
 watch(filteredPartners, () => {
-  tablePage.value  = 1
   selectedId.value = null
+})
+// Reset paging whenever the table's visible set changes, from either the top
+// filter bar or the column filters.
+watch(displayedPartners, () => {
+  tablePage.value = 1
 })
 
 // ── driver/regulator counts (all in-db partners, no filter) ───────────────────
@@ -337,7 +381,10 @@ function renderGraph() {
       e.stopPropagation()
       selectedId.value = d.id
       highlightNode(d.id)
-      const index = filteredPartners.value.findIndex(p => p.partner_uniprot_id === d.id)
+      // Paginate against displayedPartners (post column-filters), not
+      // filteredPartners: if a column filter hides this partner, there's no
+      // page to jump to, but the selection still highlights in the graph.
+      const index = displayedPartners.value.findIndex(p => p.partner_uniprot_id === d.id)
       if (index === -1) return
       tablePage.value = Math.floor(index / TABLE_PER) + 1
       nextTick(() => rowRefs[d.id]?.scrollIntoView({ block: 'nearest' }))
@@ -509,6 +556,13 @@ function studyCountLabel(pubmedIds) {
         class="text-xs text-brand hover:underline"
         @click="resetFilters"
       >Reset filters</button>
+
+      <!-- Clear column filters (table-only, separate from the filters above) -->
+      <button
+        v-if="hasTableFilters"
+        class="text-xs text-brand hover:underline"
+        @click="resetTableFilters"
+      >Clear column filters</button>
     </div>
 
     <!-- Loading / error / empty -->
@@ -542,6 +596,51 @@ function studyCountLabel(pubmedIds) {
                 <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">MLOs</th>
                 <th class="text-left px-3 py-2 font-mono text-[10.5px] tracking-[0.07em] text-ink3 whitespace-nowrap">Evidence</th>
               </tr>
+              <tr>
+                <th class="px-3 pb-2">
+                  <input
+                    v-model="tableFilters.gene"
+                    type="text"
+                    placeholder="Filter…"
+                    class="w-full text-[11px] font-normal tracking-normal border border-gray-200 rounded px-1.5 py-1 text-gray-600 focus:outline-none focus:border-brand"
+                  />
+                </th>
+                <th class="px-3 pb-2">
+                  <input
+                    v-model="tableFilters.uniprot"
+                    type="text"
+                    placeholder="Filter…"
+                    class="w-full text-[11px] font-normal tracking-normal border border-gray-200 rounded px-1.5 py-1 text-gray-600 focus:outline-none focus:border-brand"
+                  />
+                </th>
+                <th class="px-3 pb-2">
+                  <select
+                    v-model="tableFilters.role"
+                    class="w-full text-[11px] font-normal tracking-normal border border-gray-200 rounded px-1 py-1 text-gray-600 focus:outline-none focus:border-brand"
+                  >
+                    <option value="">All</option>
+                    <option value="driver">Driver</option>
+                    <option value="regulator">Regulator</option>
+                    <option value="component">Component</option>
+                  </select>
+                </th>
+                <th class="px-3 pb-2">
+                  <input
+                    v-model="tableFilters.mlo"
+                    type="text"
+                    placeholder="Filter…"
+                    class="w-full text-[11px] font-normal tracking-normal border border-gray-200 rounded px-1.5 py-1 text-gray-600 focus:outline-none focus:border-brand"
+                  />
+                </th>
+                <th class="px-3 pb-2">
+                  <input
+                    v-model="tableFilters.evidence"
+                    type="text"
+                    placeholder="Filter…"
+                    class="w-full text-[11px] font-normal tracking-normal border border-gray-200 rounded px-1.5 py-1 text-gray-600 focus:outline-none focus:border-brand"
+                  />
+                </th>
+              </tr>
             </thead>
             <tbody>
               <tr v-if="!filteredPartners.length">
@@ -553,16 +652,27 @@ function studyCountLabel(pubmedIds) {
                   <template v-else>No partners match current filters.</template>
                 </td>
               </tr>
+              <tr v-else-if="!displayedPartners.length">
+                <td colspan="5" class="px-3 py-8 text-center text-gray-400">
+                  No partners match these column filters.
+                  <button class="text-brand hover:underline ml-1" @click="resetTableFilters">Clear column filters</button>
+                </td>
+              </tr>
               <tr
                 v-for="p in tableRows"
                 :key="p.partner_uniprot_id"
                 :ref="el => { if (el) rowRefs[p.partner_uniprot_id] = el; else delete rowRefs[p.partner_uniprot_id] }"
-                class="border-t border-border-soft hover:bg-slate-50/60 transition-colors"
-                :class="(hoveredId === p.partner_uniprot_id || selectedId === p.partner_uniprot_id) ? 'bg-blue-50/50' : ''"
+                class="border-t border-border-soft transition-colors"
+                :class="selectedId === p.partner_uniprot_id
+                  ? 'bg-blue-100/70'
+                  : (hoveredId === p.partner_uniprot_id ? 'bg-blue-50/50' : '')"
                 @mouseenter="hoveredId = p.partner_uniprot_id; highlightNode(p.partner_uniprot_id)"
                 @mouseleave="hoveredId = null; highlightNode(null)"
               >
-                <td class="px-3 py-1.5 font-medium">
+                <td
+                  class="px-3 py-1.5 font-medium border-l-2"
+                  :class="selectedId === p.partner_uniprot_id ? 'border-brand' : 'border-transparent'"
+                >
                   <span
                     class="text-brand hover:underline cursor-pointer"
                     @click="router.push(`/protein/${p.partner_uniprot_id}`)"
@@ -598,8 +708,8 @@ function studyCountLabel(pubmedIds) {
         <!-- Table pagination -->
         <div v-if="totalPages > 1" class="flex items-center justify-between pt-2 text-xs text-gray-500">
           <span>
-            {{ (tablePage - 1) * TABLE_PER + 1 }}–{{ Math.min(tablePage * TABLE_PER, filteredPartners.length) }}
-            of {{ formatCount(filteredPartners.length) }}
+            {{ (tablePage - 1) * TABLE_PER + 1 }}–{{ Math.min(tablePage * TABLE_PER, displayedPartners.length) }}
+            of {{ formatCount(displayedPartners.length) }}
           </span>
           <div class="flex items-center gap-1">
             <button
