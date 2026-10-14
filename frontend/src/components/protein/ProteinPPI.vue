@@ -30,10 +30,6 @@ const showInterEdges = ref(true)     // partner-partner edges on, or hub-only
 // to hub-only in that case. Still user-toggleable afterward.
 const INTER_EDGE_DEFAULT_THRESHOLD = 50
 
-// ── table pagination ──────────────────────────────────────────────────────────
-const tablePage    = ref(1)
-const TABLE_PER    = 20
-
 // ── table column filters ────────────────────────────────────────────────────
 // Local to the partner table only: unlike filterRole/filterMlo/filterEvidence
 // above, these never feed graphData, so typing here never triggers
@@ -130,11 +126,6 @@ const displayedPartners = computed(() => {
   return list
 })
 
-const totalPages = computed(() => Math.max(1, Math.ceil(displayedPartners.value.length / TABLE_PER)))
-const tableRows  = computed(() => {
-  const start = (tablePage.value - 1) * TABLE_PER
-  return displayedPartners.value.slice(start, start + TABLE_PER)
-})
 // Reset the persistent selection whenever the graph-affecting filter set
 // changes: the selected row may no longer be in `filteredPartners` at all, and
 // a stale `selectedId` would either highlight nothing or (worse) light up a
@@ -143,11 +134,6 @@ const tableRows  = computed(() => {
 // selection hidden by a column filter still stays highlighted in the graph.
 watch(filteredPartners, () => {
   selectedId.value = null
-})
-// Reset paging whenever the table's visible set changes, from either the top
-// filter bar or the column filters.
-watch(displayedPartners, () => {
-  tablePage.value = 1
 })
 
 // ── driver/regulator counts (all in-db partners, no filter) ───────────────────
@@ -231,6 +217,23 @@ async function load() {
 
 onMounted(load)
 
+// The graph canvas's own height now comes from CSS (align-items: stretch on
+// the row + flex-1 on the canvas -- see the template), not a JS measurement,
+// so its box is always exactly as tall as the table with no re-tuning. But
+// the SVG's width/height attributes are plain numbers set once in
+// renderGraph(), not percentages, so they still need to be recomputed
+// whenever the canvas's actual box size changes (table height changes from
+// filters, window resize, etc.) -- this observes that box directly.
+let graphResizeObserver
+onMounted(() => {
+  graphResizeObserver = new ResizeObserver(() => nextTick(renderGraph))
+})
+watch(graphRef, (el, prevEl) => {
+  if (prevEl) graphResizeObserver?.unobserve(prevEl)
+  if (el)     graphResizeObserver?.observe(el)
+})
+onUnmounted(() => graphResizeObserver?.disconnect())
+
 // Defensive: today ProteinPage.vue unmounts this component on every route change
 // (its `mountedTabs.clear()` flips the wrapping `v-if` to false), so the protein
 // prop never changes in place. If that ever stops being true, a selection made
@@ -238,7 +241,6 @@ onMounted(load)
 watch(() => props.protein?.uniprot_id, () => {
   selectedId.value = null
   hoveredId.value  = null
-  tablePage.value  = 1
 })
 
 // ── graph rendering ───────────────────────────────────────────────────────────
@@ -305,9 +307,6 @@ function renderGraph() {
   }
 
   const g = svg.append('g')
-  svg.call(
-    d3.zoom().scaleExtent([0.1, 5]).on('zoom', e => g.attr('transform', e.transform))
-  )
 
   const linkSel = g.append('g')
     .selectAll('line')
@@ -340,14 +339,6 @@ function renderGraph() {
     .attr('dy', -20)
     .attr('pointer-events', 'none')
 
-  // drag — only non-center nodes
-  nodeSel.filter(d => !d.isCenter).call(
-    d3.drag()
-      .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y })
-      .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y })
-      .on('end',   (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null })
-  )
-
   // tooltip + highlight
   nodeSel
     .on('mouseover', (event, d) => {
@@ -379,14 +370,10 @@ function renderGraph() {
     .on('click', (e, d) => {
       if (d.isCenter) return
       e.stopPropagation()
-      selectedId.value = d.id
-      highlightNode(d.id)
-      // Paginate against displayedPartners (post column-filters), not
-      // filteredPartners: if a column filter hides this partner, there's no
-      // page to jump to, but the selection still highlights in the graph.
-      const index = displayedPartners.value.findIndex(p => p.partner_uniprot_id === d.id)
-      if (index === -1) return
-      tablePage.value = Math.floor(index / TABLE_PER) + 1
+      selectPartner(d.id)
+      // No-op if a column filter currently hides this partner's row --
+      // rowRefs won't have an entry for it, and the graph highlight still
+      // stands regardless of what's visible in the table.
       nextTick(() => rowRefs[d.id]?.scrollIntoView({ block: 'nearest' }))
     })
 
@@ -435,6 +422,13 @@ const pinnedPartner = computed(() =>
 
 function goToPartner(uniprotId) {
   router.push(`/protein/${uniprotId}`)
+}
+
+// Pin a partner as selected -- shared by a graph node click and a table row
+// click, so both produce the exact same result (pinned panel + highlight).
+function selectPartner(id) {
+  selectedId.value = id
+  highlightNode(id)
 }
 
 // highlight from table hover
@@ -581,12 +575,129 @@ function studyCountLabel(pubmedIds) {
       This protein has {{ formatCount(protein.ppi?.total_partners) }} known interaction partner(s), but none are currently in MLOsMetaDB.
     </div>
 
-    <!-- Two-column: table + graph (graph first on mobile, table first on desktop) -->
-    <div v-else-if="allPartners.length" class="flex flex-col md:flex-row gap-4" style="min-height:500px">
+    <!-- Two-column: graph (height-matched to the table via CSS stretch) + table (own scroll) -->
+    <div v-else-if="allPartners.length" class="flex flex-col md:flex-row gap-4">
 
-      <!-- LEFT: Table -->
-      <div class="order-2 md:order-none w-full md:w-[52%] flex flex-col min-w-0">
-        <div class="flex-1 overflow-auto border border-gray-200 rounded text-xs">
+      <!-- LEFT: Graph. No md:items-start on the row above -- default
+           align-items: stretch makes this column exactly as tall as the
+           table (the row's cross-size = the tallest child's natural height,
+           which is the table's), and the canvas below fills it with flex-1. -->
+      <div class="w-full md:w-[500px] md:flex-none flex flex-col">
+
+        <div>
+          <!-- Legend -->
+          <div class="flex flex-wrap gap-3 mb-2 text-[10px] text-gray-500">
+            <span class="flex items-center gap-1">
+              <span class="inline-block w-3 h-3 rounded-full bg-navy"></span> Query protein
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="inline-block w-3 h-3 rounded-full bg-brand"></span> Driver
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="inline-block w-3 h-3 rounded-full bg-regulator"></span> Regulator
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="inline-block w-3 h-3 rounded-full bg-[#9CA3AF]"></span> Component
+            </span>
+            <span class="flex items-center gap-1 ml-3 text-gray-400">
+              <span class="inline-block w-5 border-t border-gray-300"></span> hub edge
+            </span>
+            <span v-if="showInterEdges" class="flex items-center gap-1">
+              <span class="inline-block w-5 border-t-2 border-[#C7D9F0]"></span> partner–partner
+            </span>
+          </div>
+
+          <!-- Edge display toggle -->
+          <div class="flex items-center justify-between mb-2">
+            <label class="flex items-center gap-1.5 text-[11px] text-gray-500 cursor-pointer select-none">
+              <input type="checkbox" v-model="showInterEdges" class="h-3 w-3 accent-brand" />
+              Show partner–partner edges
+            </label>
+            <span class="text-[10px] text-gray-400">Click to select in table</span>
+          </div>
+        </div>
+
+        <!-- Graph canvas: on mobile (stacked, no stretch context) it's a
+             plain width-driven square (aspect-square). On desktop, the
+             column has already been stretched to the table's height by the
+             row above, and flex-1 + min-h-0 here just claims whatever's left
+             under the legend/toggle -- so the canvas's own bottom edge
+             always lines up with the table's, with zero JS involved. -->
+        <div
+          ref="graphRef"
+          class="relative w-full aspect-square md:aspect-auto md:flex-1 md:min-h-0 border border-gray-200 rounded overflow-hidden"
+        >
+          <!-- Pinned panel for the clicked node -- stays up after mouseout, unlike
+               the hover tooltip below, so the gene name link is reachable. -->
+          <div
+            v-if="pinnedPartner"
+            class="absolute z-20 top-2 right-2 bg-white border border-gray-200 rounded shadow-md px-3 py-2 text-xs max-w-[220px]"
+          >
+            <button
+              class="absolute top-1 right-1.5 text-gray-300 hover:text-gray-500 leading-none"
+              title="Clear selection"
+              @click="selectedId = null; highlightNode(null)"
+            >×</button>
+            <div
+              class="font-semibold text-brand hover:underline cursor-pointer pr-3"
+              title="Go to protein page"
+              @click="goToPartner(pinnedPartner.partner_uniprot_id)"
+            >
+              {{ pinnedPartner.partner_gene || pinnedPartner.partner_uniprot_id }}
+            </div>
+            <div class="text-gray-400 font-mono text-[10px]">{{ pinnedPartner.partner_uniprot_id }}</div>
+            <div class="mt-1">
+              <span
+                v-if="pinnedPartner.has_driver"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
+              >Driver</span>
+              <span
+                v-else-if="pinnedPartner.has_regulator"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#F6EFE4] text-regulator border border-[#E5D3B3]"
+              >Regulator</span>
+              <span v-else class="text-gray-500 text-[10px]">Component</span>
+            </div>
+            <div v-if="filterMlos(pinnedPartner.mlos).length" class="mt-1 text-gray-500">
+              {{ filterMlos(pinnedPartner.mlos).slice(0, 3).map(formatMlo).join(', ') }}
+              <span v-if="filterMlos(pinnedPartner.mlos).length > 3"> +{{ filterMlos(pinnedPartner.mlos).length - 3 }}</span>
+            </div>
+          </div>
+
+          <!-- Tooltip -->
+          <div
+            v-if="tooltip.visible && tooltip.partner"
+            class="absolute z-20 bg-white border border-gray-200 rounded shadow-md px-3 py-2 text-xs max-w-[220px] pointer-events-none"
+            :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }"
+          >
+            <div class="font-semibold text-gray-800">
+              {{ tooltip.partner.label || tooltip.partner.partner_uniprot_id }}
+            </div>
+            <div class="text-gray-400 font-mono text-[10px]">{{ tooltip.partner.partner_uniprot_id }}</div>
+            <div class="mt-1">
+              <span
+                v-if="tooltip.partner.has_driver"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
+              >Driver</span>
+              <span
+                v-else-if="tooltip.partner.has_regulator"
+                class="px-1.5 py-0.5 rounded text-[10px] bg-[#F6EFE4] text-regulator border border-[#E5D3B3]"
+              >Regulator</span>
+              <span v-else class="text-gray-500 text-[10px]">Component</span>
+            </div>
+            <div v-if="filterMlos(tooltip.partner.mlos).length" class="mt-1 text-gray-500">
+              {{ filterMlos(tooltip.partner.mlos).slice(0, 3).map(formatMlo).join(', ') }}
+              <span v-if="filterMlos(tooltip.partner.mlos).length > 3"> +{{ filterMlos(tooltip.partner.mlos).length - 3 }}</span>
+            </div>
+            <div v-if="tooltip.partner.experimental_systems?.length" class="mt-1 text-gray-400">
+              {{ shortSystems(tooltip.partner.experimental_systems) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Table (own internal scroll, no pagination) -->
+      <div class="flex-1 min-w-0 flex flex-col">
+        <div class="overflow-y-auto border border-gray-200 rounded text-xs md:max-h-[600px]">
           <table class="w-full">
             <thead class="bg-page sticky top-0 z-10">
               <tr>
@@ -659,7 +770,7 @@ function studyCountLabel(pubmedIds) {
                 </td>
               </tr>
               <tr
-                v-for="p in tableRows"
+                v-for="p in displayedPartners"
                 :key="p.partner_uniprot_id"
                 :ref="el => { if (el) rowRefs[p.partner_uniprot_id] = el; else delete rowRefs[p.partner_uniprot_id] }"
                 class="border-t border-border-soft transition-colors"
@@ -668,6 +779,7 @@ function studyCountLabel(pubmedIds) {
                   : (hoveredId === p.partner_uniprot_id ? 'bg-blue-50/50' : '')"
                 @mouseenter="hoveredId = p.partner_uniprot_id; highlightNode(p.partner_uniprot_id)"
                 @mouseleave="hoveredId = null; highlightNode(null)"
+                @click="selectPartner(p.partner_uniprot_id)"
               >
                 <td
                   class="px-3 py-1.5 font-medium border-l-2"
@@ -675,7 +787,8 @@ function studyCountLabel(pubmedIds) {
                 >
                   <span
                     class="text-brand hover:underline cursor-pointer"
-                    @click="router.push(`/protein/${p.partner_uniprot_id}`)"
+                    title="Go to protein page"
+                    @click.stop="router.push(`/protein/${p.partner_uniprot_id}`)"
                   >{{ p.partner_gene || p.partner_uniprot_id }}</span>
                 </td>
                 <td class="px-3 py-1.5 font-mono text-gray-500">
@@ -704,135 +817,6 @@ function studyCountLabel(pubmedIds) {
             </tbody>
           </table>
         </div>
-
-        <!-- Table pagination -->
-        <div v-if="totalPages > 1" class="flex items-center justify-between pt-2 text-xs text-gray-500">
-          <span>
-            {{ (tablePage - 1) * TABLE_PER + 1 }}–{{ Math.min(tablePage * TABLE_PER, displayedPartners.length) }}
-            of {{ formatCount(displayedPartners.length) }}
-          </span>
-          <div class="flex items-center gap-1">
-            <button
-              class="px-2 py-1 border border-gray-200 rounded disabled:opacity-40 hover:border-gray-400 transition-colors"
-              :disabled="tablePage <= 1"
-              @click="tablePage--"
-            >← Prev</button>
-            <span class="px-2">{{ tablePage }} / {{ totalPages }}</span>
-            <button
-              class="px-2 py-1 border border-gray-200 rounded disabled:opacity-40 hover:border-gray-400 transition-colors"
-              :disabled="tablePage >= totalPages"
-              @click="tablePage++"
-            >Next →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: Graph -->
-      <div class="order-1 md:order-none w-full md:w-[48%] flex flex-col">
-
-        <!-- Legend -->
-        <div class="flex flex-wrap gap-3 mb-2 text-[10px] text-gray-500">
-          <span class="flex items-center gap-1">
-            <span class="inline-block w-3 h-3 rounded-full bg-navy"></span> Query protein
-          </span>
-          <span class="flex items-center gap-1">
-            <span class="inline-block w-3 h-3 rounded-full bg-brand"></span> Driver
-          </span>
-          <span class="flex items-center gap-1">
-            <span class="inline-block w-3 h-3 rounded-full bg-regulator"></span> Regulator
-          </span>
-          <span class="flex items-center gap-1">
-            <span class="inline-block w-3 h-3 rounded-full bg-[#9CA3AF]"></span> Component
-          </span>
-          <span class="flex items-center gap-1 ml-3 text-gray-400">
-            <span class="inline-block w-5 border-t border-gray-300"></span> hub edge
-          </span>
-          <span v-if="showInterEdges" class="flex items-center gap-1">
-            <span class="inline-block w-5 border-t-2 border-[#C7D9F0]"></span> partner–partner
-          </span>
-        </div>
-
-        <!-- Edge display toggle -->
-        <label class="flex items-center gap-1.5 mb-2 text-[11px] text-gray-500 cursor-pointer select-none">
-          <input type="checkbox" v-model="showInterEdges" class="h-3 w-3 accent-brand" />
-          Show partner–partner edges
-        </label>
-
-        <!-- Graph canvas -->
-        <div
-          ref="graphRef"
-          class="relative flex-1 border border-gray-200 rounded overflow-hidden"
-          style="min-height:450px"
-        >
-          <!-- Pinned panel for the clicked node -- stays up after mouseout, unlike
-               the hover tooltip below, so the gene name link is reachable. -->
-          <div
-            v-if="pinnedPartner"
-            class="absolute z-20 top-2 right-2 bg-white border border-gray-200 rounded shadow-md px-3 py-2 text-xs max-w-[220px]"
-          >
-            <button
-              class="absolute top-1 right-1.5 text-gray-300 hover:text-gray-500 leading-none"
-              title="Clear selection"
-              @click="selectedId = null; highlightNode(null)"
-            >×</button>
-            <div
-              class="font-semibold text-brand hover:underline cursor-pointer pr-3"
-              @click="goToPartner(pinnedPartner.partner_uniprot_id)"
-            >
-              {{ pinnedPartner.partner_gene || pinnedPartner.partner_uniprot_id }}
-            </div>
-            <div class="text-gray-400 font-mono text-[10px]">{{ pinnedPartner.partner_uniprot_id }}</div>
-            <div class="mt-1">
-              <span
-                v-if="pinnedPartner.has_driver"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
-              >Driver</span>
-              <span
-                v-else-if="pinnedPartner.has_regulator"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#F6EFE4] text-regulator border border-[#E5D3B3]"
-              >Regulator</span>
-              <span v-else class="text-gray-500 text-[10px]">Component</span>
-            </div>
-            <div v-if="filterMlos(pinnedPartner.mlos).length" class="mt-1 text-gray-500">
-              {{ filterMlos(pinnedPartner.mlos).slice(0, 3).map(formatMlo).join(', ') }}
-              <span v-if="filterMlos(pinnedPartner.mlos).length > 3"> +{{ filterMlos(pinnedPartner.mlos).length - 3 }}</span>
-            </div>
-          </div>
-
-          <!-- Tooltip -->
-          <div
-            v-if="tooltip.visible && tooltip.partner"
-            class="absolute z-20 bg-white border border-gray-200 rounded shadow-md px-3 py-2 text-xs max-w-[220px] pointer-events-none"
-            :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }"
-          >
-            <div class="font-semibold text-gray-800">
-              {{ tooltip.partner.label || tooltip.partner.partner_uniprot_id }}
-            </div>
-            <div class="text-gray-400 font-mono text-[10px]">{{ tooltip.partner.partner_uniprot_id }}</div>
-            <div class="mt-1">
-              <span
-                v-if="tooltip.partner.has_driver"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#E8F1FB] text-brand border border-[#BFD7F0]"
-              >Driver</span>
-              <span
-                v-else-if="tooltip.partner.has_regulator"
-                class="px-1.5 py-0.5 rounded text-[10px] bg-[#F6EFE4] text-regulator border border-[#E5D3B3]"
-              >Regulator</span>
-              <span v-else class="text-gray-500 text-[10px]">Component</span>
-            </div>
-            <div v-if="filterMlos(tooltip.partner.mlos).length" class="mt-1 text-gray-500">
-              {{ filterMlos(tooltip.partner.mlos).slice(0, 3).map(formatMlo).join(', ') }}
-              <span v-if="filterMlos(tooltip.partner.mlos).length > 3"> +{{ filterMlos(tooltip.partner.mlos).length - 3 }}</span>
-            </div>
-            <div v-if="tooltip.partner.experimental_systems?.length" class="mt-1 text-gray-400">
-              {{ shortSystems(tooltip.partner.experimental_systems) }}
-            </div>
-          </div>
-        </div>
-
-        <p class="text-[10px] text-gray-400 mt-1">
-          Scroll to zoom · drag canvas to pan · drag nodes to reposition · click to select in table
-        </p>
       </div>
 
     </div>
