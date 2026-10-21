@@ -210,6 +210,8 @@ __marimo__/
 CLAUDE.md
 # Deployment runbook for mistic — names internal hosts, paths and ports
 DEPLOY.md
+# Same reason — deploy package for the mistic3 production server
+deploy/mistic3/
 
 # =============================================================
 # MLOsMetaDB — project-specific
